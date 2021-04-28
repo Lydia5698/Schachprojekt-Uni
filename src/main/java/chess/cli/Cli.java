@@ -12,7 +12,8 @@ public class Cli {
             System.out.println(board.showBoard());
             String input = "e2-e4";
             Move move = new Move(input);
-
+            board.applyMove(move);
+            System.out.println(board.showBoard());
             break; //todo playerInput
         }
     }

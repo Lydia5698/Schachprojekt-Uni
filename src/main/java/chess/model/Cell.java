@@ -5,11 +5,14 @@ import chess.model.Figures.Position;
 
 
 public class Cell {
+
+    private Minions minion;
+
     public Minions getMinion() {
         return minion;
     }
 
-    Minions minion;
+
 
     public Cell(Minions minion){
         this.minion = minion;
@@ -23,7 +26,12 @@ public class Cell {
     }
 
 
+    public boolean isEmpty() {
+        return minion == null;
+    }
 
-
+    public void setMinion(Minions minion) {
+        this.minion = minion;
+    }
 }
 
