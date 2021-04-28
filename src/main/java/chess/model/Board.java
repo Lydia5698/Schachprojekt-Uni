@@ -33,7 +33,7 @@ public class Board {
             }
             output.append("\n");
         }
-        output.append("  a b c d e f g h\n");
+        output.append("  ").append(String.join(" ", columns)).append("\n");
         return output.toString();
     }
 
