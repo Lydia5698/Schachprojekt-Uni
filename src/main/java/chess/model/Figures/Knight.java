@@ -1,6 +1,6 @@
-package chess.model;
+package chess.model.Figures;
 
-public class Knight extends Minions{ // Hotte Hü
+public class Knight extends Minions { // Hotte Hü
 
     public Knight(Position pos, boolean black) {
         super(pos, black);

@@ -1,6 +1,6 @@
-package chess.model;
+package chess.model.Figures;
 
-public class Pawn extends Minions{ //Bauer
+public class Pawn extends Minions { //Bauer
 
     public Pawn(Position pos, boolean black) {
         super(pos, black);

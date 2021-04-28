@@ -1,6 +1,9 @@
-package chess.model;
+package chess.model.Figures;
 
-public class Rook extends Minions{ //Turm
+import chess.model.Figures.Minions;
+import chess.model.Figures.Position;
+
+public class Rook extends Minions { //Turm
 
     public Rook(Position pos, boolean black) {
         super(pos, black);

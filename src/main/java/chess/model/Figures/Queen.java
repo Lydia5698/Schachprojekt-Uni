@@ -1,6 +1,9 @@
-package chess.model;
+package chess.model.Figures;
 
-public class Queen extends Minions{ //Dame
+import chess.model.Figures.Minions;
+import chess.model.Figures.Position;
+
+public class Queen extends Minions { //Dame
 
     public Queen(Position pos, boolean black) {
         super(pos, black);
