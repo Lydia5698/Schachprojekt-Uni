@@ -1,12 +1,12 @@
 package chess.model.Figures;
 
-public class Knight extends Minions { // Hotte Hü
+public class King extends Minions{ //König
 
-    public Knight(boolean black) {
+    public King(boolean black) {
         super(black);
-        this.minion_type = 'N';
+        this.minion_type = 'K';
         if(black) {
-            print_minion_type = "n";
+            print_minion_type = "k";
         }
         else{
             print_minion_type = String.valueOf(minion_type);

@@ -5,8 +5,8 @@ import chess.model.Figures.Position;
 
 public class Queen extends Minions { //Dame
 
-    public Queen(Position pos, boolean black) {
-        super(pos, black);
+    public Queen(boolean black) {
+        super(black);
         this.minion_type = 'Q';
         if(black) {
             print_minion_type = "q";

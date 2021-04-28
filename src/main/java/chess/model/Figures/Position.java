@@ -9,13 +9,4 @@ public class Position { //2d array;
         this.horizont=horizont;
     }
 
-    public int getVertical() {
-        return vertical;
-    }
-
-   public int getHorizont() {
-        return horizont;
-    }
-
-
 }

@@ -5,8 +5,8 @@ import chess.model.Figures.Position;
 
 public class Rook extends Minions { //Turm
 
-    public Rook(Position pos, boolean black) {
-        super(pos, black);
+    public Rook(boolean black) {
+        super(black);
         this.minion_type = 'R';
         if(black) {
             print_minion_type = "r";
