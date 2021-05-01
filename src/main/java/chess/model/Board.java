@@ -103,11 +103,4 @@ public class Board {
         String startRowString = stringIndex.substring(1, 2);
         return new CellIndex(8-Integer.parseInt(startRowString), columns.indexOf(startColumn));
     }
-
-
-
-
-
-
-
 }
