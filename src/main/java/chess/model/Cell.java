@@ -1,7 +1,6 @@
 package chess.model;
 
 import chess.model.Figures.Minions;
-import chess.model.Figures.Position;
 
 
 public class Cell {

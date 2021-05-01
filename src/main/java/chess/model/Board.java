@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Board {
-    private Cell[][] checkerBoard = new Cell[8][8]; //feldgröße
+    Cell[][] checkerBoard = new Cell[8][8]; //feldgröße
     private char[] officerline = "RNBQKBNR".toCharArray();
     private char[] frontline = "PPPPPPPP".toCharArray();
     static List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
@@ -77,19 +77,37 @@ public class Board {
         return row;
     }
 
-    public void applyMove(Move move) {
-        Cell startCell = getCell(move.getStart());
+    public void applyMove(Move move) { // check for valid move
+        CellIndex startIndex = cellIndexFor(move.getStart());
+        Cell startCell =  checkerBoard[startIndex.row][startIndex.column]; //getCell(move.getStart());
         Minions minion = startCell.getMinion();
-        startCell.setMinion(null);
-        Cell endCell = getCell(move.getEnd());
-        endCell.setMinion(minion);
+
+        CellIndex endIndex = cellIndexFor(move.getEnd());
+        Cell endCell =  checkerBoard[endIndex.row][endIndex.column];
+
+        //startCell.setMinion(null);
+        //endCell.setMinion(minion);
+
+        // check valid move
+        if(minion.validMove(startIndex, endIndex)){
+            startCell.setMinion(null);
+            endCell.setMinion(minion);
+        }
+        else{
+            System.out.println("!Move not allowed");
+        }
     }
 
-    public Cell getCell(String cellIndex) {
-        int row = Integer.parseInt(cellIndex.substring(1, 2));
-        int column = columns.indexOf(cellIndex.substring(0, 1));
-        return checkerBoard[8 - row][column];
+    CellIndex cellIndexFor(String stringIndex) {
+        String startColumn =  stringIndex.substring(0, 1);
+        String startRowString = stringIndex.substring(1, 2);
+        return new CellIndex(8-Integer.parseInt(startRowString), columns.indexOf(startColumn));
     }
+
+
+
+
+
 
 
 }

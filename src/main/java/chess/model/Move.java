@@ -1,7 +1,5 @@
 package chess.model;
 
-import chess.model.Figures.Position;
-
 import java.util.Arrays;
 import java.util.List;
 

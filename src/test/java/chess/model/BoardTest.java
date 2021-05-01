@@ -19,24 +19,33 @@ class BoardTest {
     void applyMoveE2E4MovesMinionIntoNewCell() {
         Move move = new Move("e2-e4");
         Board board = new Board();
-        Cell startCell = board.getCell("e2");
+        Cell startCell = board.checkerBoard[8-2][4];//board.getCell("e2");
         Minions minion = startCell.getMinion();
         board.applyMove(move);
         assertTrue(startCell.isEmpty());
-        Cell endCell = board.getCell("e4");
+        Cell endCell = board.checkerBoard[8-4][4];
         assertEquals(endCell.getMinion(), minion);
     }
+
     @Test
-    void applyMoveE2E3MovesMinionIntoNewCell() {
-        Move move = new Move("e2-e3");
+    void validMoveA1A5CheckIfValidMove() {
+        Move move = new Move("a1-a5");
         Board board = new Board();
-        Cell startCell = board.getCell("e2");
+        CellIndex startIndex = board.cellIndexFor(move.getStart());
+        CellIndex endIndex = board.cellIndexFor(move.getEnd());
+        Cell startCell = board.checkerBoard[7][0];
         Minions minion = startCell.getMinion();
-        board.applyMove(move);
-        assertTrue(startCell.isEmpty());
-        Cell endCell = board.getCell("e3");
-        assertEquals(endCell.getMinion(), minion);
+        assertTrue(minion.validMove(startIndex, endIndex));
+
     }
 
+    @Test
+    void cellIndexForB2GetsCellIndexInNumbers(){
+        String input = "b2";
+        Board board =new Board();
+        CellIndex index = board.cellIndexFor(input);
+        assertEquals(index.getRow(),8-2);
+        assertEquals(index.getColumn(),1);
 
+    }
 }

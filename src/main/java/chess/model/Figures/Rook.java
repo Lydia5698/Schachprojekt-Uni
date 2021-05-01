@@ -1,7 +1,6 @@
 package chess.model.Figures;
 
-import chess.model.Figures.Minions;
-import chess.model.Figures.Position;
+import chess.model.CellIndex;
 
 public class Rook extends Minions { //Turm
 
@@ -14,5 +13,16 @@ public class Rook extends Minions { //Turm
         else{
             print_minion_type = String.valueOf(minion_type);
         }
+    }
+
+    @Override
+    public boolean validMove(CellIndex startIndex, CellIndex endIndex){
+        // true false
+        int diffRow =  endIndex.getRow() - startIndex.getRow();
+        int diffColumn = endIndex.getColumn() - startIndex.getColumn();
+        // nur diffRow oder! diffColumn darf  nicht null sein,
+        return diffColumn == 0 && diffRow != 0 || diffRow == 0 && diffColumn != 0;
+
+
     }
 }
