@@ -7,7 +7,7 @@ import chess.model.CellIndex;
  * @author Jasmin Wojtkiewicz
  */
 
-public class Pawn extends Minions {
+public class Pawn extends Minion {
 
     /**
      * Creates a new Pawn instance. The Pawn can be placed on a Cell.

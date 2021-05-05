@@ -7,7 +7,7 @@ import chess.model.CellIndex;
  * @author Jasmin Wojtkiewicz
  */
 
-public class Bishop extends Minions { //Läufer
+public class Bishop extends Minion { //Läufer
     /**
      * Creates a new Bishop instance. The Bishop can be placed on a Cell.
      * @param black A boolean that determines if the Bishop is a white or a black one.

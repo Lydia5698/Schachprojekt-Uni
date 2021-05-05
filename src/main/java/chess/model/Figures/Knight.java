@@ -7,7 +7,7 @@ import chess.model.CellIndex;
  * @author Jasmin Wojtkiewicz
  */
 
-public class Knight extends Minions {
+public class Knight extends Minion {
     /**
      * Creates a new Knight instance. The Knight can be placed on a Cell.
      * @param black A boolean that determines if the Knight is a white or a black one.

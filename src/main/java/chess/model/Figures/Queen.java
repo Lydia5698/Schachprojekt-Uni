@@ -7,7 +7,7 @@ import chess.model.CellIndex;
  * @author Jasmin Wojtkiewicz
  */
 
-public class Queen extends Minions {
+public class Queen extends Minion {
 
     /**
      * Creates a new Queen instance. The Queen can be placed on a Cell.

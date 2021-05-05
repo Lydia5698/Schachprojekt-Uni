@@ -23,11 +23,9 @@ public class Cli {
                 String input = br.readLine();
                 Move move = new Move(input);
                 board.applyMove(move);
-                System.out.println(output);
-
-            } catch (IOException e) { // Exception schreiben fängt schon alle ungültigen eingaben ab. Pawn zu queen etc noch erlauben
+            } catch (IOException e) {
                 e.printStackTrace();
-
+                break;
             }
         }
     }

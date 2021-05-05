@@ -7,7 +7,7 @@ import chess.model.CellIndex;
  * @author Jasmin Wojtkiewicz
  */
 
-public class Rook extends Minions {
+public class Rook extends Minion {
 
     /**
      * Creates a new Rook instance. The Rook can be placed on a Cell.

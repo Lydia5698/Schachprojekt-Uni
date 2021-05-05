@@ -105,15 +105,21 @@ public class Board {
      */
     public void applyMove(Move move) { // check for valid move
         CellIndex startIndex = cellIndexFor(move.getStart());
-        Cell startCell = checkerBoard[startIndex.row][startIndex.column]; //getCell(move.getStart());
+        Cell startCell =  checkerBoard[startIndex.row][startIndex.column]; //getCell(move.getStart());
         Minion minion = startCell.getMinion();
-        CellIndex endIndex = cellIndexFor(move.getEnd());
-        Cell endCell = checkerBoard[endIndex.row][endIndex.column];
 
-        if (minion.validMove(startIndex, endIndex)) {
+        CellIndex endIndex = cellIndexFor(move.getEnd());
+        Cell endCell =  checkerBoard[endIndex.row][endIndex.column];
+
+        //startCell.setMinion(null);
+        //endCell.setMinion(minion);
+
+        // check valid move
+        if(minion.validMove(startIndex, endIndex)){
             startCell.setMinion(null);
             endCell.setMinion(minion);
-        } else {
+        }
+        else{
             System.out.println("!Move not allowed");
         }
     }
@@ -125,9 +131,10 @@ public class Board {
      * @param stringIndex a String with an letter and an int
      * @return a CellIndex with two int
      */
+
     CellIndex cellIndexFor(String stringIndex) {
-        String startColumn = stringIndex.substring(0, 1);
+        String startColumn =  stringIndex.substring(0, 1);
         String startRowString = stringIndex.substring(1, 2);
-        return new CellIndex(8 - Integer.parseInt(startRowString), columns.indexOf(startColumn));
+        return new CellIndex(8-Integer.parseInt(startRowString), columns.indexOf(startColumn));
     }
 }
