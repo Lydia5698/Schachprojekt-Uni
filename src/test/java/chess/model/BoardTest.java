@@ -1,6 +1,6 @@
 package chess.model;
 
-import chess.model.Figures.Minions;
+import chess.model.Figures.Minion;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,7 +20,7 @@ class BoardTest {
         Move move = new Move("e2-e4");
         Board board = new Board();
         Cell startCell = board.checkerBoard[8-2][4];//board.getCell("e2");
-        Minions minion = startCell.getMinion();
+        Minion minion = startCell.getMinion();
         board.applyMove(move);
         assertTrue(startCell.isEmpty());
         Cell endCell = board.checkerBoard[8-4][4];
@@ -34,7 +34,7 @@ class BoardTest {
         CellIndex startIndex = board.cellIndexFor(move.getStart());
         CellIndex endIndex = board.cellIndexFor(move.getEnd());
         Cell startCell = board.checkerBoard[7][0];
-        Minions minion = startCell.getMinion();
+        Minion minion = startCell.getMinion();
         assertTrue(minion.validMove(startIndex, endIndex));
 
     }

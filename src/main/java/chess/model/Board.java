@@ -5,6 +5,16 @@ import chess.model.Figures.*;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Board is a Checkerboard with Cells where Minions can be in it
+ *
+ * @author Lydia Günther
+ * @version ?
+ * @see Cell
+ * @see Minion
+ * @since ?
+ */
+
 public class Board {
     Cell[][] checkerBoard = new Cell[8][8]; //feldgröße
     private char[] officerline = "RNBQKBNR".toCharArray();
@@ -69,6 +79,11 @@ public class Board {
         }
     }
 
+    /**
+     * Adds empty Cells to the Checkerboard for the Cells on a Chessboard without Minions at the beginning of the Game
+     *
+     * @return a Cell array row with empty Cells
+     */
     private Cell[] emptyCells() {
         Cell[] row = new Cell[8];
         for (int i = 0; i < 8; i++) {
@@ -77,30 +92,42 @@ public class Board {
         return row;
     }
 
+    /**
+     * ApplyMove gets the start and end Index for the Cells from the move
+     * Gets the Cell from the board with the indices and gets the Minions or the Empty Cell from the Cell
+     * Checks if the minion from the start Cell can make the move to the end Cell uses the methode validMove from Minion
+     * Writes the String "!Move not allowed" on the Console when illegal move
+     *
+     * @param move is a Move move from Cli is already split in Start and End
+     * @see CellIndex
+     * @see Cell
+     * @see Minion
+     */
     public void applyMove(Move move) { // check for valid move
         CellIndex startIndex = cellIndexFor(move.getStart());
-        Cell startCell =  checkerBoard[startIndex.row][startIndex.column]; //getCell(move.getStart());
-        Minions minion = startCell.getMinion();
-
+        Cell startCell = checkerBoard[startIndex.row][startIndex.column]; //getCell(move.getStart());
+        Minion minion = startCell.getMinion();
         CellIndex endIndex = cellIndexFor(move.getEnd());
-        Cell endCell =  checkerBoard[endIndex.row][endIndex.column];
+        Cell endCell = checkerBoard[endIndex.row][endIndex.column];
 
-        //startCell.setMinion(null);
-        //endCell.setMinion(minion);
-
-        // check valid move
-        if(minion.validMove(startIndex, endIndex)){
+        if (minion.validMove(startIndex, endIndex)) {
             startCell.setMinion(null);
             endCell.setMinion(minion);
-        }
-        else{
+        } else {
             System.out.println("!Move not allowed");
         }
     }
 
+    /**
+     * Creates the CellIndex for the input. Splits the input in row and column and gets the index of the letter
+     * from the List columns.
+     *
+     * @param stringIndex a String with an letter and an int
+     * @return a CellIndex with two int
+     */
     CellIndex cellIndexFor(String stringIndex) {
-        String startColumn =  stringIndex.substring(0, 1);
+        String startColumn = stringIndex.substring(0, 1);
         String startRowString = stringIndex.substring(1, 2);
-        return new CellIndex(8-Integer.parseInt(startRowString), columns.indexOf(startColumn));
+        return new CellIndex(8 - Integer.parseInt(startRowString), columns.indexOf(startColumn));
     }
 }
