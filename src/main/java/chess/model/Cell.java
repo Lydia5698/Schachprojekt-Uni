@@ -6,8 +6,6 @@ import chess.model.Figures.Minion;
  * A Cell is an object that contains other objects.
  *
  * @author Lydia Günther
- * @version ?
- * @since ?
  */
 
 public class Cell {

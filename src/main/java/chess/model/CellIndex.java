@@ -3,8 +3,6 @@ package chess.model;
  * CellIndex the Index of a Cell on the Board. With a row and a column coordinate
  *
  * @author Lydia Günther
- * @version ?
- * @since ?
  */
 public class CellIndex {
 

@@ -9,10 +9,9 @@ import java.util.List;
  * Board is a Checkerboard with Cells where Minions can be in it
  *
  * @author Lydia Günther
- * @version ?
  * @see Cell
  * @see Minion
- * @since ?
+ *
  */
 
 public class Board {
