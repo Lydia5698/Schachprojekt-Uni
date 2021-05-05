@@ -2,7 +2,7 @@ package chess.model.Figures;
 
 import chess.model.CellIndex;
 
-public class King extends Minions{ //König
+public class King extends Minion { //König
 
     public King(boolean black) {
         super(black);

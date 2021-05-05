@@ -2,7 +2,7 @@ package chess.model.Figures;
 
 import chess.model.CellIndex;
 
-public class Pawn extends Minions { //Bauer
+public class Pawn extends Minion { //Bauer
 
     public Pawn(boolean black) {
         super(black);

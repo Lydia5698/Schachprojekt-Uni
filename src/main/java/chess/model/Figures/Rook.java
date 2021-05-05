@@ -2,7 +2,7 @@ package chess.model.Figures;
 
 import chess.model.CellIndex;
 
-public class Rook extends Minions { //Turm
+public class Rook extends Minion { //Turm
 
     public Rook(boolean black) {
         super(black);
