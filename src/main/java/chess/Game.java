@@ -4,10 +4,15 @@ import chess.model.Minions;
 import chess.model.Position;
 import chess.model.*;
 
+import java.util.ArrayList;
+
+
 public class Game {
     private Minions[][] board=new Minions[8][8]; //feldgröße
     private char[] officerline = "RNBQKBNR".toCharArray();
     private char[] frontline = "PPPPPPPP".toCharArray();
+    private Manuals basicManuals = new Manuals(this);
+    private ArrayList<Minions>  beatenMinions = new ArrayList<>();
 
     public Game(boolean black){
         initHorizont(0, !black);
@@ -37,6 +42,37 @@ public class Game {
             }
         }
     }
-    public void updaterBoard(String userCommands){}
+
+
+    public void updateBoard(Vector currentMove) {
+        Minions selectedMinion = board[currentMove.getOrigin().getHorizont()][currentMove.getOrigin().getVertical()];
+        ArrayList<Position> updatedPositions = basicManuals.updateValidPositions(currentMove.getOrigin(), selectedMinion.isBlack(), selectedMinion.getMinion_type());
+        selectedMinion.setPosition_valid(updatedPositions);
+        updatedPositions.forEach(position -> {
+            if (position.getHorizont() == currentMove.getNextPos().getHorizont() && position.getVertical() == currentMove.getNextPos().getVertical()) {
+                System.out.println("Valid Move");
+                selectedMinion.setCurrentPosition(currentMove.getNextPos());
+                Minions oldMinion = board[currentMove.getNextPos().getHorizont()][currentMove.getNextPos().getVertical()];
+                if (oldMinion != null) {
+                    this.beatenMinions.add(oldMinion);
+                }
+                board[currentMove.getNextPos().getHorizont()][currentMove.getNextPos().getVertical()] = selectedMinion;
+                board[currentMove.getOrigin().getHorizont()][currentMove.getOrigin().getVertical()] = null;
+            }
+        });
+    }
+
     public Minions[][] getBoard() { return board; }
+
+    public boolean checkPosition(Position pos) {
+        try {
+            if (board[pos.getHorizont()][pos.getVertical()] == null) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

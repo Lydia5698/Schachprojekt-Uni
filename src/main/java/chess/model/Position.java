@@ -8,4 +8,18 @@ public class Position { //2d array;
         this.vertical=vertical;
         this.horizont=horizont;
     }
+
+    public int getVertical() {
+        return vertical;
+    }
+
+    public int getHorizont() {
+        return horizont;
+    }
+
+    public void setVertical(int vertical) {
+        this.vertical=vertical;}
+
+    public void setHorizont(int horizont) {
+        this.horizont=horizont;}
 }

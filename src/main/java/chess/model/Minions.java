@@ -14,4 +14,9 @@ public abstract class Minions {
         this.black=black;
     }
     public String print_minions(){return this.print_minion_type;}
+    public char getMinion_type(){ return minion_type;}
+    public void setPosition_valid(ArrayList<Position> position_valid){this.position_valid=position_valid;}
+    public boolean isBlack(){return black;}
+    public Position getCurrent_position(){return current_position;}
+    public void setCurrentPosition(Position current_position){this.current_position=current_position;}
 }
