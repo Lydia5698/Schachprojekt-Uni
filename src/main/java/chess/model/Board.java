@@ -3,7 +3,6 @@ package chess.model;
 import chess.Manuals;
 import chess.model.Figures.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -108,26 +107,19 @@ public class Board extends Manuals {
      */
     public void applyMove(Move move) { // check for valid move
         CellIndex startIndex = cellIndexFor(move.getStart());
-        Cell startCell =  checkerBoard[startIndex.row][startIndex.column]; //getCell(move.getStart());
+        CellIndex endIndex = cellIndexFor(move.getEnd());
+        Cell startCell = checkerBoard[startIndex.getRow()][startIndex.getColumn()];
+        Cell endCell = checkerBoard[endIndex.getRow()][endIndex.getColumn()];
         Minion minion = startCell.getMinion();
 
-        CellIndex endIndex = cellIndexFor(move.getEnd());
-        Cell endCell =  checkerBoard[endIndex.row][endIndex.column];
-
-        // schaue nach unblocked feldern
-        // check valid move
-        if(minion.validMove(startIndex, endIndex)){
-            //unblocked? yes, apply, no dont do it
-            if(super.checkIfWayIsNotOccupied(startIndex, endIndex, checkerBoard)){
-                startCell.setMinion(null);
-                endCell.setMinion(minion);
-
-            }
-            else{
-                System.out.println("!Move not allowed"); //never true always false
+        if(super.checkIfValidMove(startIndex, endIndex, checkerBoard)){
+            startCell.setMinion(null);
+            endCell.setMinion(minion);
+            if(!(super.getAttackers(!(minion.isBlack()), checkerBoard).isEmpty())){
+                System.out.println("!Check");
             }
         }
-        else{
+        else {
             System.out.println("!Move not allowed");
         }
     }

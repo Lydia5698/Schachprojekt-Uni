@@ -23,6 +23,7 @@ public class Manuals {
         boolean colourEnd ;
         boolean notOccupied = true;
 
+
         // endfeld nicht leer
         if(!(endCell.isEmpty())){
             colourEnd = endCell.getMinion().isBlack();
@@ -83,5 +84,51 @@ public class Manuals {
     public List<String> getBeaten(){
         return beaten;
     }
+
+    public List getAttackers(Boolean colour, Cell[][] checker){
+        List<Cell> attackers = new ArrayList<Cell>();
+        CellIndex kingIndex = coordinatesKing(colour, checker);
+        boolean kingColour = checker[kingIndex.getRow()][kingIndex.getColumn()].getMinion().isBlack();
+
+        for(int row=0; row<8; row++){
+            for(int col=0; col<8; col++){
+                Cell tmpCell = checker[row][col];
+                if(!(tmpCell.isEmpty())) {/*add is Valid movement of minion on field tempcell to king cell && kingcolour != tempcolour*/
+                    if ((checkIfValidMove(new CellIndex(row, col), kingIndex, checker)) && kingColour != tmpCell.getMinion().isBlack()) {
+                        attackers.add(tmpCell);
+                    }
+                }
+            }
+        }
+        return attackers;
+    }
+
+    CellIndex coordinatesKing(boolean colour, Cell[][] checkerBoard){
+        CellIndex kingCell = new CellIndex(9, 9);
+        for(int row = 0; row < 8; row++){
+            for(int column = 0; column < 8; column++){
+                if(!checkerBoard[row][column].isEmpty()){
+                    if(String.valueOf(checkerBoard[row][column].getMinion().getMinion_type()).equals("K") && checkerBoard[row][column].getMinion().isBlack() == colour){
+                        kingCell.setRow(row);
+                        kingCell.setColumn(column);
+                    }
+                }
+            }
+        }
+        return kingCell;
+    }
+
+    protected boolean checkIfValidMove(CellIndex start, CellIndex end, Cell [][] checkerboard){
+        Cell startCell = checkerboard[start.getRow()][start.getColumn()];
+        Minion minion = startCell.getMinion();
+        if(minion.validMove(start, end)) {
+            //unblocked? yes, apply, no dont do it
+            return checkIfWayIsNotOccupied(start, end, checkerboard);
+        }
+        return false;
+    }
+
+
+
 }
 

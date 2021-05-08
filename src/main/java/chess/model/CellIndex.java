@@ -27,4 +27,12 @@ public class CellIndex {
     public int getColumn() {
         return column;
     }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public void setColumn(int column) {
+        this.column = column;
+    }
 }
