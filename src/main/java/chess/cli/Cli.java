@@ -28,8 +28,12 @@ public class Cli {
                     output = board.showBoard();
                     System.out.println(output);
                 }
-                else if(input.equals("quit")){
-                    break;
+                else if(input.equals("beaten")){
+                    String beatenString = "Beaten Figures";
+                    for (String beatenMinion: board.getBeaten()) {
+                        beatenString = String.join(",",beatenString, beatenMinion);
+                    }
+                    System.out.println(beatenString);
                 }
                 else{
                     System.out.println("!Invalid move");

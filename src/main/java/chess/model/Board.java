@@ -1,7 +1,9 @@
 package chess.model;
 
+import chess.Manuals;
 import chess.model.Figures.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,11 +16,13 @@ import java.util.List;
  *
  */
 
-public class Board {
+public class Board extends Manuals {
     Cell[][] checkerBoard = new Cell[8][8]; //feldgröße
     private char[] officerline = "RNBQKBNR".toCharArray();
     private char[] frontline = "PPPPPPPP".toCharArray();
     static List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
+    //public List<String> beaten = new ArrayList<>();
+
 
     public Board() {
         initHorizont(0, true);
@@ -110,13 +114,18 @@ public class Board {
         CellIndex endIndex = cellIndexFor(move.getEnd());
         Cell endCell =  checkerBoard[endIndex.row][endIndex.column];
 
-        //startCell.setMinion(null);
-        //endCell.setMinion(minion);
-
+        // schaue nach unblocked feldern
         // check valid move
         if(minion.validMove(startIndex, endIndex)){
-            startCell.setMinion(null);
-            endCell.setMinion(minion);
+            //unblocked? yes, apply, no dont do it
+            if(super.checkIfWayIsNotOccupied(startIndex, endIndex, checkerBoard)){
+                startCell.setMinion(null);
+                endCell.setMinion(minion);
+
+            }
+            else{
+                System.out.println("!Move not allowed"); //never true always false
+            }
         }
         else{
             System.out.println("!Move not allowed");
@@ -136,4 +145,5 @@ public class Board {
         String startRowString = stringIndex.substring(1, 2);
         return new CellIndex(8-Integer.parseInt(startRowString), columns.indexOf(startColumn));
     }
+
 }

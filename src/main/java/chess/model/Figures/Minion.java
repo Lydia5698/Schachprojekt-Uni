@@ -20,6 +20,14 @@ public class Minion {
     }
     public String print_minions(){return this.print_minion_type;}
 
+    public boolean isBlack() {
+        return black;
+    }
+
+    public char getMinion_type() {
+        return minion_type;
+    }
+
     /**
      * Method validMoves checks if the move from one Cell to another is a valid move for a Minion.
      * Is overridden in the subclasses for the specific move pattern of the Minion.
