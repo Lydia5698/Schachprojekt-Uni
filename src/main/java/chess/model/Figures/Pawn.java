@@ -42,5 +42,7 @@ public class Pawn extends Minion {
         }
         //two fields if first move (check start row)
         return startIndex.getRow() == 8 - 2 && !black && diffColumn == 0 && diffRow == 2 || startIndex.getRow() == 1 && black && diffColumn == 0 && diffRow == -2;
+        // check if enpassant is true
+        // -> enpassantCellIndex1 und enpassantCellIndex2 ok als move && endIndex== empty
     }
 }

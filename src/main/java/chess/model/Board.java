@@ -117,7 +117,7 @@ public class Board extends Manuals {
             endCell.setMinion(minion);
             if(!(super.getAttackers(!(minion.isBlack()), checkerBoard).isEmpty())){
                 System.out.println("!Check");
-            }
+            }// check if bauer 2 felder, dann enable enpassant und erstelle epIndx1 & epIdx2, wenn da ein bauer steht
         }
         else {
             System.out.println("!Move not allowed");
