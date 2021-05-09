@@ -1,4 +1,4 @@
-package chess;
+package chess.model;
 
 
 import chess.model.Cell;
@@ -83,9 +83,9 @@ public class Manuals {
         return beaten;
     }
 
-    public List<Cell> getAttackers(Boolean colour, Cell[][] checker) {
+    public List<Cell> getAttackers(Boolean isBlack, Cell[][] checker) {
         List<Cell> attackers = new ArrayList<>();
-        CellIndex kingIndex = coordinatesKing(colour, checker);
+        CellIndex kingIndex = coordinatesKing(isBlack, checker);
         boolean kingColour = checker[kingIndex.getRow()][kingIndex.getColumn()].getMinion().isBlack();
 
         for (int row = 0; row < 8; row++) {
@@ -101,12 +101,12 @@ public class Manuals {
         return attackers;
     }
 
-    CellIndex coordinatesKing(boolean colour, Cell[][] checkerBoard) {
+    CellIndex coordinatesKing(boolean isBlack, Cell[][] checkerBoard) {
         CellIndex kingCell = new CellIndex(9, 9);
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
                 if (!checkerBoard[row][column].isEmpty()) {
-                    if (String.valueOf(checkerBoard[row][column].getMinion().getMinion_type()).equals("K") && checkerBoard[row][column].getMinion().isBlack() == colour) {
+                    if (String.valueOf(checkerBoard[row][column].getMinion().getMinion_type()).equals("K") && checkerBoard[row][column].getMinion().isBlack() == isBlack) {
                         kingCell.setRow(row);
                         kingCell.setColumn(column);
                     }

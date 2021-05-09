@@ -1,6 +1,5 @@
 package chess.model;
 
-import chess.Manuals;
 import chess.model.Figures.*;
 
 import java.util.Arrays;
