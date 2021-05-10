@@ -1,8 +1,6 @@
 package chess.model;
 
 
-import chess.model.Cell;
-import chess.model.CellIndex;
 import chess.model.Figures.Minion;
 
 import java.util.ArrayList;
@@ -29,6 +27,27 @@ public class Manuals {
             if (colourStart == colourEnd) {
                 notOccupied = false;
             }
+
+        }
+        // pawn nur auf leere felder nach vorne ziehen
+        if(String.valueOf(startCell.getMinion().getMinion_type()).equals("P") && !(pawnBeats(start, end, checkerBoard))){
+            notOccupied = false;
+            // geradeaus pruefen
+            int diffRow = start.getRow() - end.getRow(); //positiv dann gehen wir nach oben, negativ nach unten (weil wir von oben zählen)
+            int diffColumn = start.getColumn() - end.getColumn(); //negativ nach rechts, positiv nach links
+            Cell nextCell = checkerBoard[start.getRow()-1][start.getColumn()];//weiß bzw black=false
+            if(startCell.getMinion().isBlack()){
+                nextCell = checkerBoard[start.getRow()+1][start.getColumn()];
+            }
+
+            //zwischenzelle(bei zweifeldzug)/endzelle vertikal und leer
+            if(Math.abs(diffColumn) == 0 && Math.abs(diffRow)== 1 && nextCell.isEmpty()){
+                notOccupied = true;
+            }
+            if(Math.abs(diffColumn) == 0 && Math.abs(diffRow)== 2 && endCell.isEmpty()){
+                notOccupied = true;
+            }
+            return notOccupied;
         }
         // check if minion = knigth ja- prüfe endfeld nein-prüfe zwischen felder
         if (String.valueOf(startCell.getMinion().getMinion_type()).equals("N")) {
@@ -110,11 +129,29 @@ public class Manuals {
     protected boolean checkIfValidMove(CellIndex start, CellIndex end, Cell[][] checkerboard) {
         Cell startCell = checkerboard[start.getRow()][start.getColumn()];
         Minion minion = startCell.getMinion();
-        if (minion.validMove(start, end)) {
+        if (minion.validMove(start, end) || pawnBeats(start, end, checkerboard)) {
             //unblocked? yes, apply, no dont do it
             return checkIfWayIsNotOccupied(start, end, checkerboard);
         }
         return false;
+    }
+
+    // bauer schlagen
+    protected boolean pawnBeats(CellIndex startIndex, CellIndex endIndex, Cell[][] checkerBoard){
+        Cell startCell = checkerBoard[startIndex.getRow()][startIndex.getColumn()];
+        Cell endCell = checkerBoard[endIndex.getRow()][endIndex.getColumn()];
+        Minion minion = startCell.getMinion();
+        Minion isBeaten = endCell.getMinion();
+        boolean pawnBeats = false;
+        boolean fieldWithEnemy = String.valueOf(minion.getMinion_type()).equals("P") && isBeaten!=null && isBeaten.isBlack()!= minion.isBlack();
+        // startcellfarbe und richtung
+        int diffRow = startIndex.getRow() - endIndex.getRow(); //positiv dann gehen wir nach oben, negativ nach unten (weil wir von oben zählen)
+        int diffColumn = startIndex.getColumn() - endIndex.getColumn();//negativ nach rechts, positiv nach links
+
+        if((Math.abs(diffColumn) == 1 && minion.isBlack() && diffRow== -1 || !minion.isBlack() && diffRow == 1 && Math.abs(diffColumn) == 1) && fieldWithEnemy){
+             pawnBeats = true;
+        }
+        return pawnBeats;
     }
 
 
