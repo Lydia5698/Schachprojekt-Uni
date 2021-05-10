@@ -130,20 +130,21 @@ class ManualsTest {
         assertTrue(board.manuals.getAttackers(true, board.checkerBoard).isEmpty());
     }
 
-   /*@Test
-    void GetAttackersKingBlackUnderAttack() {
+   @Test
+    void GetAttackersKingWhiteUnderAttack() {
         Board board = new Board();
         Move movePawn = new Move("e7-e5"); // Move Pawn E7-E5
         board.applyMove(movePawn);
         Move moveBishop = new Move("f8-b4"); // Move Bishop F8-B4
         board.applyMove(moveBishop);
         Move moveBishopCheck = new Move("b4-d2"); //Move B4-D2
-        board.applyMove(moveBishopCheck);
-        assertFalse((board.getAttackers(true, board.checkerBoard)).isEmpty());
+        board.applyMove(moveBishopCheck);// white king under attack, list not empty -> false
+        boolean attackers = (board.manuals.getAttackers(false, board.checkerBoard)).isEmpty();
+        assertFalse(attackers);
     }
 
     @Test
-    void GetAttackersKingWhiteUnderAttack() {
+    void GetAttackersKingBlackUnderAttack() {
         Board board = new Board();
         Move movePawn = new Move("e2-e4"); // Move Pawn F2-F4
         board.applyMove(movePawn);
@@ -151,10 +152,11 @@ class ManualsTest {
         board.applyMove(moveBishop);
         Move moveBishopCheck = new Move("b5-d7"); //Move B5-D7
         board.applyMove(moveBishopCheck);
-        assertFalse(board.getAttackers(false, board.checkerBoard).isEmpty());
+        boolean attackers = (board.manuals.getAttackers(true, board.checkerBoard)).isEmpty();
+        assertFalse(attackers);
     }
 
-    */
+
 
 
 }
