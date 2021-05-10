@@ -2,6 +2,7 @@ package chess.cli;
 
 
 import chess.model.Board;
+import chess.model.Manuals;
 import chess.model.Move;
 
 import java.io.BufferedReader;
@@ -10,6 +11,7 @@ import java.io.InputStreamReader;
 
 public class Cli {
     protected static Board board = new Board();
+    Manuals manuals = new Manuals();
 
     public static void main(String[] args) {
         String validInput = "[a-h][1-8]-[a-h][1-8].*"; // Sind eingaben nach e2-e4 egal? Also als bsp: e2-e4uiei soll trotzdem den move e2-e4 ausführen?

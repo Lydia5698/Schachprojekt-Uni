@@ -2,6 +2,7 @@ package chess.model;
 
 import chess.model.Figures.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,12 +15,13 @@ import java.util.List;
  *
  */
 
-public class Board extends Manuals {
+public class Board {
     Cell[][] checkerBoard = new Cell[8][8]; //feldgröße
+    public Manuals manuals = new Manuals();
     private char[] officerline = "RNBQKBNR".toCharArray();
     private char[] frontline = "PPPPPPPP".toCharArray();
     static List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
-    //public List<String> beaten = new ArrayList<>();
+    public List<String> beaten = new ArrayList<>();
 
 
     public Board() {
@@ -110,11 +112,15 @@ public class Board extends Manuals {
         Cell startCell = checkerBoard[startIndex.getRow()][startIndex.getColumn()];
         Cell endCell = checkerBoard[endIndex.getRow()][endIndex.getColumn()];
         Minion minion = startCell.getMinion();
+        Minion isBeaten = endCell.getMinion();
+        if(!endCell.isEmpty() && minion.isBlack() == !isBeaten.isBlack()){
+            beaten.add(String.valueOf(isBeaten.print_minions()));
+        }
 
-        if(super.checkIfValidMove(startIndex, endIndex, checkerBoard)){
+        if(manuals.checkIfValidMove(startIndex, endIndex, checkerBoard)){
             startCell.setMinion(null);
             endCell.setMinion(minion);
-            if(!(super.getAttackers(!(minion.isBlack()), checkerBoard).isEmpty())){
+            if(!(manuals.getAttackers(!(minion.isBlack()), checkerBoard).isEmpty())){
                 System.out.println("!Check");
             }// check if bauer 2 felder, dann enable enpassant und erstelle epIndx1 & epIdx2, wenn da ein bauer steht
         }
@@ -135,6 +141,10 @@ public class Board extends Manuals {
         String startColumn =  stringIndex.substring(0, 1);
         String startRowString = stringIndex.substring(1, 2);
         return new CellIndex(8-Integer.parseInt(startRowString), columns.indexOf(startColumn));
+    }
+
+    public List<String> getBeaten() {
+        return beaten;
     }
 
 }

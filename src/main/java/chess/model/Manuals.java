@@ -10,8 +10,6 @@ import java.util.List;
 
 public class Manuals {
     //regelwerk; valide steuerung der minions
-    public List<String> beaten = new ArrayList<>();
-
 
     public Manuals() {
     }
@@ -30,10 +28,6 @@ public class Manuals {
             // Figur im Endfeld gleiche Farbe, darf keinen Zug ausfuehren
             if (colourStart == colourEnd) {
                 notOccupied = false;
-            } else { // Gegner im Endfeld
-                // schreibe den Buschstaben vom geschlagenem Minion in beaten
-                Minion minion = endCell.getMinion();
-                beaten.add(String.valueOf(minion.print_minions()));
             }
         }
         // check if minion = knigth ja- prüfe endfeld nein-prüfe zwischen felder
@@ -79,9 +73,6 @@ public class Manuals {
         return notOccupied;
     }
 
-    public List<String> getBeaten() {
-        return beaten;
-    }
 
     public List<Cell> getAttackers(Boolean isBlack, Cell[][] checker) {
         List<Cell> attackers = new ArrayList<>();
