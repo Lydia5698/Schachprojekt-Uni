@@ -42,7 +42,7 @@ public class King extends Minion { //König
             return true;
         }
         //diagonal
-        else return Math.abs(diffColumn) == 1 && 1 == Math.abs(diffRow);
+        else {return Math.abs(diffColumn) == 1 && 1 == Math.abs(diffRow);}
 
     }
 }

@@ -41,7 +41,7 @@ public class Queen extends Minion {
             return true;
         }
         // diagonal
-        else return Math.abs(diffColumn) == Math.abs(diffRow);
+        else {return Math.abs(diffColumn) == Math.abs(diffRow);}
 
 
     }

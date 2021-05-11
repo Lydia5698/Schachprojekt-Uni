@@ -120,9 +120,15 @@ public class Board {
         if(manuals.checkIfValidMove(startIndex, endIndex, checkerBoard)){
             startCell.setMinion(null);
             endCell.setMinion(minion);
-            if(!(manuals.getAttackers(!(minion.isBlack()), checkerBoard).isEmpty())){
+            //minion, ist die figur die bewegt wird, isCheck muss auf die gegnerische team farbe angewendet werden
+            if(manuals.isCheck(!(minion.isBlack()), checkerBoard, manuals)){
                 System.out.println("!Check");
-            }// check if bauer 2 felder, dann enable enpassant und erstelle epIndx1 & epIdx2, wenn da ein bauer steht
+
+            }
+            if(manuals.checkMate(!(minion.isBlack()), checkerBoard, manuals)){
+                System.out.println("!Check Mate");
+            }
+            // TODO check if bauer 2 felder, dann enable enpassant und erstelle epIndx1 & epIdx2, wenn da ein bauer steht
         }
         else {
             System.out.println("!Move not allowed");
