@@ -22,6 +22,7 @@ public class Board {
     private char[] frontline = "PPPPPPPP".toCharArray();
     static List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
     public List<String> beaten = new ArrayList<>();
+    private boolean blackIsTurn = true;
 
 
     public Board() {
@@ -120,6 +121,7 @@ public class Board {
         if(manuals.checkIfValidMove(startIndex, endIndex, checkerBoard)){
             startCell.setMinion(null);
             endCell.setMinion(minion);
+            blackIsTurn = !blackIsTurn;
             //minion, ist die figur die bewegt wird, isCheck muss auf die gegnerische team farbe angewendet werden
             if(manuals.isCheck(!(minion.isBlack()), checkerBoard, manuals)){
                 System.out.println("!Check");
@@ -143,7 +145,7 @@ public class Board {
      * @return a CellIndex with two int
      */
 
-    CellIndex cellIndexFor(String stringIndex) {
+    public CellIndex cellIndexFor(String stringIndex) {
         String startColumn =  stringIndex.substring(0, 1);
         String startRowString = stringIndex.substring(1, 2);
         return new CellIndex(8-Integer.parseInt(startRowString), columns.indexOf(startColumn));
@@ -153,4 +155,11 @@ public class Board {
         return beaten;
     }
 
+    public boolean isBlackIsTurn() {
+        return blackIsTurn;
+    }
+
+    public Cell[][] getCheckerBoard() {
+        return checkerBoard;
+    }
 }

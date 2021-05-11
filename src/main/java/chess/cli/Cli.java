@@ -2,6 +2,8 @@ package chess.cli;
 
 
 import chess.model.Board;
+import chess.model.CellIndex;
+import chess.model.Figures.Minion;
 import chess.model.Manuals;
 import chess.model.Move;
 
@@ -21,14 +23,25 @@ public class Cli {
         while (true) {
 
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            System.out.print("Enter Move\n");
+            System.out.print("Enter Move");
+            if(board.isBlackIsTurn()){
+                System.out.print(" for black\n");
+            }else {
+                System.out.print(" for white\n");
+            }
             try {
                 String input = br.readLine();
                 if(input.matches(validInput)){
                     Move move = new Move(input);
-                    board.applyMove(move);
-                    output = board.showBoard();
-                    System.out.println(output);
+                    CellIndex currentIndex = board.cellIndexFor(move.getStart());
+                    Minion currentSelected = board.getCheckerBoard()[currentIndex.getRow()][currentIndex.getColumn()].getMinion();
+                    if(board.isBlackIsTurn() == currentSelected.isBlack()) {
+                        board.applyMove(move);
+                        output = board.showBoard();
+                        System.out.println(output);
+                    }else{
+                        System.out.println("!Invalid move");
+                    }
                 }
                 else if(input.equals("beaten")){
                     String beatenString = "Beaten Figures";
