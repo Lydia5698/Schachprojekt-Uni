@@ -181,7 +181,7 @@ public class Manuals {
         Cell kingCell = checker[kingIndex.getRow()][kingIndex.getColumn()];
         Minion king = kingCell.getMinion();
         CellIndex endKingIndex = coordinatesKing(isBlack, checker);
-        Cell endKingCell = checker[kingIndex.getRow()][kingIndex.getColumn()];
+        Cell endKingCell; //= checker[kingIndex.getRow()][kingIndex.getColumn()];
         Minion endMinion;
 
         // check if king move is still check: no-> return false, no checkmate break
@@ -195,13 +195,14 @@ public class Manuals {
                 }
                  //check if way is not occupied
                 if(checkIfWayIsNotOccupied(kingIndex, endKingIndex, checker) && (kingIndex != endKingIndex)/*nicht sicher ob das aussreicht, oder row und collum gecheckt werden muessen*/){
-                    //save minion from endfield
+                    //save minion from endfield // endkingCell aktualisieren und richtigen minion setzen
+                    endKingCell = checker[kingIndex.getRow()-row][kingIndex.getColumn()-col];
                     endMinion = endKingCell.getMinion();
                     //apply move
                     kingCell.setMinion(null);
                     endKingCell.setMinion(king);
                     //check if king of kingcolour is still in check
-                    if(isCheck(king.isBlack(), checker, manuals)){
+                    if(isCheck(king.isBlack(), checker, manuals)){ // nimmt hier alles checker board, ohne koenigsbewegung
                         // apply move back
                         kingCell.setMinion(king);
                         endKingCell.setMinion(endMinion);
@@ -228,12 +229,15 @@ public class Manuals {
             for (int col = 0; col < 8; col++) {
                 //knight capture einfuegen
                 if(String.valueOf(attackers.get(0).getMinion().getMinion_type()).equals("N")){
-                    if((checker[row][col].getMinion().isBlack() == isBlack)) { //if valid move, no checkmate ->false
+                    // feld nicht leer(wichtig zu prüfen, sonst nullpointer) und figur eigene farbe
+                    if((!(checker[row][col].isEmpty()) && checker[row][col].getMinion().isBlack() == isBlack)) { //if valid move, no checkmate ->false
                         return !(checkIfValidMove(new CellIndex(row, col), attackerIndex, checker));
                     }
                 }
-                // feld nicht leer und figur eigene farbe
-                else if(!(checker[row][col].isEmpty()) && (checker[row][col].getMinion().isBlack() == isBlack)){
+                //TODO pruefe, dass der koenig sich nicht in den weg stellen kann
+
+                // feld nicht leer(wichtig zu prüfen, sonst nullpointer) und figur eigene farbe
+                else if(!(checker[row][col].isEmpty()) && !(String.valueOf(checker[row][col].getMinion().getMinion_type()).equals("K")) &&(checker[row][col].getMinion().isBlack() == isBlack)){
                     for(CellIndex index : attackerPath){
                         if(checkIfValidMove(new CellIndex(row, col), index, checker)){
                             checkMate=false;
@@ -247,19 +251,31 @@ public class Manuals {
     }
 
     //only works for diagonally and vertically and horizontally movements
-    protected List<CellIndex> attackerPath(CellIndex attacker, CellIndex victim){
+    protected List<CellIndex> attackerPath(CellIndex attacker, CellIndex victim){ //fuer angreifer auf 1,3 4-mal der gleiche eintrag 0,2
         List<CellIndex> attackerPath = new ArrayList<>();
         int diffRow = attacker.getRow() - victim.getRow(); //positiv dann gehen wir nach oben, negativ nach unten (weil wir von oben zählen)
         int diffColumn = attacker.getColumn() - victim.getColumn(); //negativ nach rechts, positiv nach links
-        CellIndex nextCellIndex = new CellIndex(attacker.getRow(), attacker.getColumn());
+        CellIndex nextCellIndex = new CellIndex(attacker.getRow(), attacker.getColumn());//TODO attakker figur zum path hinzufuegen
         for(int row=0; row<= Math.abs(diffRow); row++){
-            for(int col=0; col <= Math.abs(diffColumn); col++){
+            for(int col=0; col <= Math.abs(diffColumn); col++){ //TODO aendern, dass nicht nur die zelle aktualisiert wird, sondern eine neue zelle auf dem weg zum koenig erstellt wird
                 nextCellIndex.setRow(attacker.getRow()-row);
                 nextCellIndex.setColumn(attacker.getColumn()-col);
                 attackerPath.add(nextCellIndex);
             }
         }
         return attackerPath;
+    }
+
+    public boolean moveOfRightColour(Move move, Board board){
+        CellIndex currentIndex = board.cellIndexFor(move.getStart());
+        Cell currentCell = board.getCheckerBoard()[currentIndex.row][currentIndex.column];
+        if(currentCell.isEmpty()){
+            return false;
+        }
+        else if(currentCell.getMinion().isBlack() == board.isBlackIsTurn()){
+            return true;
+        }
+        else{return false;}
     }
 
 

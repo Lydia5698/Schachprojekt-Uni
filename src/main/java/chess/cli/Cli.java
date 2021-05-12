@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
 
 public class Cli {
     protected static Board board = new Board();
-    Manuals manuals = new Manuals();
+    protected static Manuals manuals = new Manuals();
 
     public static void main(String[] args) {
         String validInput = "[a-h][1-8]-[a-h][1-8].*"; // Sind eingaben nach e2-e4 egal? Also als bsp: e2-e4uiei soll trotzdem den move e2-e4 ausführen?
@@ -33,14 +33,14 @@ public class Cli {
                 String input = br.readLine();
                 if(input.matches(validInput)){
                     Move move = new Move(input);
-                    CellIndex currentIndex = board.cellIndexFor(move.getStart());
-                    Minion currentSelected = board.getCheckerBoard()[currentIndex.getRow()][currentIndex.getColumn()].getMinion();
-                    if(board.isBlackIsTurn() == currentSelected.isBlack()) {
+                    //CellIndex currentIndex = board.cellIndexFor(move.getStart());
+                    //Minion currentSelected = board.getCheckerBoard()[currentIndex.getRow()][currentIndex.getColumn()].getMinion();
+                    if( manuals.moveOfRightColour(move, board)) {
                         board.applyMove(move);
                         output = board.showBoard();
                         System.out.println(output);
                     }else{
-                        System.out.println("!Invalid move");
+                        System.out.println("!Move not allowed");
                     }
                 }
                 else if(input.equals("beaten")){
