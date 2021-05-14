@@ -1,110 +1,66 @@
 package chess.cli;
 
 
-import chess.Game;
-import chess.Settings;
-import chess.model.Minions;
-import chess.model.Position;
-import chess.model.Vector;
+import chess.model.Board;
+import chess.model.CellIndex;
+import chess.model.Figures.Minion;
+import chess.model.Manuals;
+import chess.model.Move;
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Cli {
-    protected static Game game = new Game(false); //weil mit weiß begonnen werden soll
-    private static Settings settings = new Settings();
+    protected static Board board = new Board();
+    protected static Manuals manuals = new Manuals();
 
     public static void main(String[] args) {
-        System.out.println("Qapla' Klingon Player 1\nPvP menu  1\nPvE menu  2");
-        Scanner scan = new Scanner(System.in);
-        int menu = scan.nextInt();
-        if (menu == 1) {    //optionsmenu settings
-            settings.options(0, true);
-        } else {
-            settings.options(0, false);
-        }
+        String validInput = "[a-h][1-8]-[a-h][1-8].*"; // Sind eingaben nach e2-e4 egal? Also als bsp: e2-e4uiei soll trotzdem den move e2-e4 ausführen?
+
+        String output = board.showBoard();
+        System.out.println(output);
         while (true) {
-            print_Board();
-            String userInput="";
-            while (scan.hasNextLine()) {
-                userInput=scan.nextLine();
-                if(!userInput.equals("")){
-                    break;
-                }
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            System.out.print("Enter Move");
+            if(board.isBlackIsTurn()){
+                System.out.print(" for black\n");
+            }else {
+                System.out.print(" for white\n");
             }
-            Vector currentMove=convertInput(userInput);
-            if(currentMove.getOrigin().getHorizont() >=0){
-                game.updateBoard(currentMove);
+            try {
+                String input = br.readLine();
+                if(input.matches(validInput)){
+                    Move move = new Move(input);
+                    //CellIndex currentIndex = board.cellIndexFor(move.getStart());
+                    //Minion currentSelected = board.getCheckerBoard()[currentIndex.getRow()][currentIndex.getColumn()].getMinion();
+                    if( manuals.moveOfRightColour(move, board)) {
+                        board.applyMove(move);
+                        output = board.showBoard();
+                        System.out.println(output);
+                    }else{
+                        System.out.println("!Move not allowed");
+                    }
+                }
+                else if(input.equals("beaten")){
+                    String beatenString = "Beaten Figures";
+                    for (String beatenMinion: board.getBeaten()) {
+                        beatenString = String.join(",",beatenString, beatenMinion);
+                    }
+                    System.out.println(beatenString);
+                }
+                else{
+                    System.out.println("!Invalid move");
+                }
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                break;
+
             }
         }
     }
 
-    private static Vector convertInput(String unserInput){
-        String[] inputPart=unserInput.split("-");
-        Position origin = new Position(-1,-1);
-        Position nextPos = new Position(-1,-1);
-        int posHorizont = 0, posVertical = 0;
-        if(inputPart[0].equals("beaten")) {
-            System.out.println("beaten minions-list:");
-        }
-        else if(inputPart.length ==2){
-                for(int i=0;i<2; i++){
-                    switch (inputPart[i].charAt(0)){
-                        case 'a': posHorizont=0; break;
-                        case 'b': posHorizont=1; break;
-                        case 'c': posHorizont=2; break;
-                        case 'd': posHorizont=3; break;
-                        case 'e': posHorizont=4; break;
-                        case 'f': posHorizont=5; break;
-                        case 'g': posHorizont=6; break;
-                        case 'h': posHorizont=7; break;
-                        default:
-                        System.out.println("!Invalid Move");
-                    }
-                    switch (inputPart[i].charAt(1)){
-                        case '8': posHorizont=0; break;
-                        case '7': posHorizont=1; break;
-                        case '6': posHorizont=2; break;
-                        case '5': posHorizont=3; break;
-                        case '4': posHorizont=4; break;
-                        case '3': posHorizont=5; break;
-                        case '2': posHorizont=6; break;
-                        case '1': posHorizont=7; break;
-                        default:
-                        System.out.println("!Invalid Move");
-                    }
-                    if(i==0){
-                        origin.setHorizont(posHorizont);
-                        origin.setVertical(posVertical);
-                    }
-                    else{
-                        nextPos.setHorizont(posHorizont);
-                        nextPos.setVertical(posVertical);
-                    }
-                }
-        }
-        else{
-            System.out.println("!Invalid Move");
-        }
-        return new Vector(origin, nextPos);
-    }
-
-
-
-
-    private static void print_Board() {
-        int horizontNum = 8;
-        for (Minions[] horizont : game.getBoard()) {
-            System.out.print(horizontNum + " ");
-            horizontNum--;
-            for (Minions minions : horizont) {
-                if (minions != null) {
-                    System.out.print(minions.print_minions() + " ");
-                } else {
-                    System.out.print("  ");
-                }
-            }
-            System.out.print("\n");
-        }
-        System.out.print("  a b c d e f g h \n");
-    }
 }
