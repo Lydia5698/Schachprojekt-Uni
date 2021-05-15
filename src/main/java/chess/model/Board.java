@@ -1,6 +1,6 @@
 package chess.model;
 
-import chess.model.Figures.*;
+import chess.model.figures.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,7 +23,7 @@ public class Board {
     static List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
     public List<String> beaten = new ArrayList<>();
     private boolean blackIsTurn = false;
-
+    private boolean gameEnd = false;
 
     public Board() {
         initHorizont(0, true);
@@ -114,9 +114,17 @@ public class Board {
         Cell endCell = checkerBoard[endIndex.getRow()][endIndex.getColumn()];
         Minion minion = startCell.getMinion();
         Minion isBeaten = endCell.getMinion();
+        String promoteTo = move.getEnd().substring(2,3);
+
         if(!endCell.isEmpty() && minion.isBlack() == !isBeaten.isBlack()){
             beaten.add(String.valueOf(isBeaten.print_minions()));
         }
+        /*if(manuals.isValidEnPassant(startIndex, endIndex, checkerBoard)){
+            startCell.setMinion(null);
+            endCell.setMinion(minion);
+            blackIsTurn = !blackIsTurn;
+            System.out.println("!" + move.getStart() + "-" + move.getEnd());
+        }*/
 
         if(manuals.checkIfValidMove(startIndex, endIndex, checkerBoard)){
             startCell.setMinion(null);
@@ -126,13 +134,21 @@ public class Board {
             //minion, ist die figur die bewegt wird, isCheck muss auf die gegnerische team farbe angewendet werden
             if(manuals.isCheck(!(minion.isBlack()), checkerBoard, manuals)){
                 System.out.println("!Check");
+                // Ausgabe für ende?
+                gameEnd = true;
 
             }
             if(manuals.checkMate(!(minion.isBlack()), checkerBoard, manuals)){
                 System.out.println("!Check Mate");
+
             }
-            // TODO check if bauer 2 felder, dann enable enpassant und erstelle epIndx1 & epIdx2, wenn da ein bauer steht
+            if(manuals.isValidPromotion(endIndex, checkerBoard)){
+                manuals.promote(endIndex, promoteTo, checkerBoard);
+            }
+
         }
+
+
         else {
             System.out.println("!Move not allowed");
         }
@@ -163,4 +179,10 @@ public class Board {
     public Cell[][] getCheckerBoard() {
         return checkerBoard;
     }
+
+
+    public boolean isGameEnd() {
+        return gameEnd;
+    }
+
 }

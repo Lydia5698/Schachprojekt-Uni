@@ -1,4 +1,4 @@
-package chess.model.Figures;
+package chess.model.figures;
 
 import chess.model.CellIndex;
 

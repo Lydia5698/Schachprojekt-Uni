@@ -1,6 +1,6 @@
 package chess.model;
 
-import chess.model.Figures.Minion;
+import chess.model.figures.Minion;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

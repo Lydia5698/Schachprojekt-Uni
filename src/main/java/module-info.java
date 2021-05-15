@@ -7,5 +7,5 @@ module chess {
     
     exports chess.gui;
     opens chess.model;
-    opens chess.model.Figures;
+    opens chess.model.figures;
 }

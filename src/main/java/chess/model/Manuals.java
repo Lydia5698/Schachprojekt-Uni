@@ -1,7 +1,7 @@
 package chess.model;
 
 
-import chess.model.Figures.Minion;
+import chess.model.figures.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -278,6 +278,99 @@ public class Manuals {
         else{return false;}
     }
 
+    // checks if Cell contains a Pawn and is at the end of the Board so the Pawn can be promoted
+    boolean isValidPromotion(CellIndex endIndex, Cell[][] checkerboard){
+        Cell endCell = checkerboard[endIndex.getRow()][endIndex.column];
+        if(endCell.isEmpty()){
+            return false;
+        }
+        if (String.valueOf(endCell.getMinion().getMinion_type()).equals("P")) {
+            int row = 0;
+            if (endCell.getMinion().isBlack()) {
+                row = 7;
+            }
+            return endIndex.equals(
+                    new CellIndex(row, endIndex.column));
+
+        }
+        return false;
+
+    }
+    // promotes Pawn to the Minion specified
+    public void promote(CellIndex endIndex, String promoteTo, Cell[][] checkerboard) {
+        Cell endCell = checkerboard[endIndex.getRow()][endIndex.column];
+        if (isValidPromotion(endIndex, checkerboard)) {
+            Minion minion;
+            switch (promoteTo) {
+                case "B":
+                    minion = new Bishop(endCell.getMinion().isBlack());
+                    break;
+                case "N":
+                    minion = new Knight(endCell.getMinion().isBlack());
+                    break;
+                case "R":
+                    minion = new Rook(endCell.getMinion().isBlack());
+                    break;
+                default:
+                    minion = new Queen(endCell.getMinion().isBlack());
+                    break;
+            }
+            /*moveList.add(new Move(square.getCoordinate(), square
+                    .getCoordinate(), piece, square));*/
+            endCell.setMinion(minion);
+        }
+    }
+
+    boolean isValidEnPassant(CellIndex startIndex, CellIndex endIndex, Cell[][] checkerboard) {
+        Cell startCell = checkerboard[startIndex.row][startIndex.column];
+        Cell endCell = checkerboard[endIndex.row][endIndex.column];
+        int diffRow = startIndex.getRow() - endIndex.getRow(); //positiv dann gehen wir nach oben, negativ nach unten (weil wir von oben zählen)
+        int diffColumn = startIndex.getColumn() - endIndex.getColumn();//negativ nach rechts, positiv nach links
+        // check if Final square is empty
+        if (!endCell.isEmpty()) {
+            return false;
+        }
+
+        // The Figure in the startCell should be a Pawn
+        if (!String.valueOf(startCell.getMinion().getMinion_type()).equals("P")) {
+            return false;
+        }
+        // Move type is different according to player color. Case white
+        if (!startCell.getMinion().isBlack()) {
+            if (startIndex.row < endIndex.row) {
+                // White can only move up
+                return false;
+            }
+            // Case Black
+        } else {
+            if (startIndex.row > endIndex.row) {
+                // Black can only move down
+                return false;
+            }
+        }
+        // check if the move is like an Bishop move.
+        /*if (Math.abs(diffRow) == Math.abs(diffColumn)) {
+            // Check move List if the last move was an Pawn move.
+            if (// move List is Empty) {
+                return false;
+            }
+            Move lastMove = moveList.get(moveList.size() - 1);
+            CellIndex lastMoveEnd = cellIndexFor(lastMove.getEnd());
+            CellIndex lastMoveStart = cellIndexFor(lastMove.getStart());
+            // Pawn speichern in moveList? Flag?
+
+            if (// lastMove Piece == Pawn) {
+                // The pawn should be moving two steps forward/backward.
+                // And our pawn should be moving to the same file as the last
+                // pawn
+                if (Math.abs(lastMoveEnd.row - lastMoveStart.row) == 2
+                        && lastMoveEnd.row == startIndex.row) {
+                    return true;
+                }
+            }
+        }*/
+        return false;
+    }
 
 }
 
