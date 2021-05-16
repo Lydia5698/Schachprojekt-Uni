@@ -1,6 +1,5 @@
-package chess.model.Figures;
+package chess.model.figures;
 
-import chess.model.Cell;
 import chess.model.CellIndex;
 import org.junit.jupiter.api.Test;
 

@@ -18,7 +18,7 @@ public class Cli {
 
         String output = board.showBoard();
         System.out.println(output);
-        while (true) {
+        while (!board.isGameEnd()) {
 
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             System.out.print("Enter Move");

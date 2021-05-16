@@ -1,6 +1,6 @@
 package chess.model;
 
-import chess.model.Figures.Minion;
+import chess.model.figures.Minion;
 
 /**
  * A Cell is an object that contains other objects.
