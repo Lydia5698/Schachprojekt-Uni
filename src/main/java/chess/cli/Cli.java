@@ -2,8 +2,6 @@ package chess.cli;
 
 
 import chess.model.Board;
-import chess.model.CellIndex;
-import chess.model.Figures.Minion;
 import chess.model.Manuals;
 import chess.model.Move;
 
@@ -33,8 +31,6 @@ public class Cli {
                 String input = br.readLine();
                 if(input.matches(validInput)){
                     Move move = new Move(input);
-                    //CellIndex currentIndex = board.cellIndexFor(move.getStart());
-                    //Minion currentSelected = board.getCheckerBoard()[currentIndex.getRow()][currentIndex.getColumn()].getMinion();
                     if( manuals.moveOfRightColour(move, board)) {
                         board.applyMove(move);
                         output = board.showBoard();

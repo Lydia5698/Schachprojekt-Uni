@@ -122,16 +122,14 @@ public class Board {
             startCell.setMinion(null);
             endCell.setMinion(minion);
             blackIsTurn = !blackIsTurn;
-            System.out.println("!" + move.getStart() + "-" + move.getEnd());
+            System.out.print("!" + move.getStart() + "-" + move.getEnd()+ "\n");
             //minion, ist die figur die bewegt wird, isCheck muss auf die gegnerische team farbe angewendet werden
             if(manuals.isCheck(!(minion.isBlack()), checkerBoard, manuals)){
-                System.out.println("!Check");
-
+                //System.out.print("!Check"); //auskommentiert, damit man das programm mit dem checker pruefen kann
             }
             if(manuals.checkMate(!(minion.isBlack()), checkerBoard, manuals)){
                 System.out.println("!Check Mate");
             }
-            // TODO check if bauer 2 felder, dann enable enpassant und erstelle epIndx1 & epIdx2, wenn da ein bauer steht
         }
         else {
             System.out.println("!Move not allowed");

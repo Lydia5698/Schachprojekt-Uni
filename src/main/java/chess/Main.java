@@ -20,6 +20,7 @@ public class Main {
             Cli.main(args);
         } else {
             Gui.main(args);
+            //Cli.main(args);
         }
     }
 }
