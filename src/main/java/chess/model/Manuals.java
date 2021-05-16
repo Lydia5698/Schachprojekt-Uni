@@ -28,21 +28,20 @@ public class Manuals {
             }
         }
         // pawn nur auf leere felder nach vorne ziehen
-        if(String.valueOf(startCell.getMinion().getMinion_type()).equals("P") && !(pawnBeats(start, end, checkerBoard))){
+        if (String.valueOf(startCell.getMinion().getMinion_type()).equals("P") && !(pawnBeats(start, end, checkerBoard))) {
             notOccupied = false;
             // geradeaus pruefen
             int diffRow = start.getRow() - end.getRow(); //positiv dann gehen wir nach oben, negativ nach unten (weil wir von oben zählen)
             int diffColumn = start.getColumn() - end.getColumn(); //negativ nach rechts, positiv nach links
-            Cell nextCell = checkerBoard[start.getRow()-1][start.getColumn()];//weiß bzw black=false
-            if(startCell.getMinion().isBlack()){
-                nextCell = checkerBoard[start.getRow()+1][start.getColumn()];
+            Cell nextCell = checkerBoard[start.getRow() - 1][start.getColumn()];//weiß bzw black=false
+            if (startCell.getMinion().isBlack()) {
+                nextCell = checkerBoard[start.getRow() + 1][start.getColumn()];
             }
 
             //zwischenzelle(bei zweifeldzug)/endzelle vertikal und leer //TODO fails, zwischenzelle nicht empty trotzdem true ausgabe
-            if(Math.abs(diffColumn) == 0 && Math.abs(diffRow)== 1 && endCell.isEmpty()){
+            if (Math.abs(diffColumn) == 0 && Math.abs(diffRow) == 1 && endCell.isEmpty()) {
                 notOccupied = true;
-            }
-            else if(Math.abs(diffColumn) == 0 && Math.abs(diffRow)== 2 && endCell.isEmpty() && nextCell.isEmpty()){
+            } else if (Math.abs(diffColumn) == 0 && Math.abs(diffRow) == 2 && endCell.isEmpty() && nextCell.isEmpty()) {
                 notOccupied = true;
             }
             return notOccupied;
@@ -106,6 +105,7 @@ public class Manuals {
         }
         return attackers;
     }
+
     public List<CellIndex> getAttackersAsIndexList(boolean isBlack, Cell[][] checker) {
         List<CellIndex> attackers = new ArrayList<>();
         CellIndex kingIndex = coordinatesKing(isBlack, checker);
@@ -148,32 +148,33 @@ public class Manuals {
     }
 
     // bauer schlagen
-    protected boolean pawnBeats(CellIndex startIndex, CellIndex endIndex, Cell[][] checkerBoard){
+    protected boolean pawnBeats(CellIndex startIndex, CellIndex endIndex, Cell[][] checkerBoard) {
         Cell startCell = checkerBoard[startIndex.getRow()][startIndex.getColumn()];
         Cell endCell = checkerBoard[endIndex.getRow()][endIndex.getColumn()];
         Minion minion = startCell.getMinion();
         Minion isBeaten = endCell.getMinion();
         boolean pawnBeats = false;
-        boolean fieldWithEnemy = String.valueOf(minion.getMinion_type()).equals("P") && isBeaten!=null && isBeaten.isBlack()!= minion.isBlack();
+        boolean fieldWithEnemy = String.valueOf(minion.getMinion_type()).equals("P") && isBeaten != null && isBeaten.isBlack() != minion.isBlack();
         // startcellfarbe und richtung
         int diffRow = startIndex.getRow() - endIndex.getRow(); //positiv dann gehen wir nach oben, negativ nach unten (weil wir von oben zählen)
         int diffColumn = startIndex.getColumn() - endIndex.getColumn();//negativ nach rechts, positiv nach links
 
-        if((Math.abs(diffColumn) == 1 && minion.isBlack() && diffRow== -1 || !minion.isBlack() && diffRow == 1 && Math.abs(diffColumn) == 1) && fieldWithEnemy){
-             pawnBeats = true;
+        if ((Math.abs(diffColumn) == 1 && minion.isBlack() && diffRow == -1 || !minion.isBlack() && diffRow == 1 && Math.abs(diffColumn) == 1) && fieldWithEnemy) {
+            pawnBeats = true;
         }
         return pawnBeats;
     }
-    protected boolean isCheck(boolean isBlack, Cell[][] checkerBoard, Manuals manuals){
+
+    protected boolean isCheck(boolean isBlack, Cell[][] checkerBoard, Manuals manuals) {
         return !(manuals.getAttackers((isBlack), checkerBoard).isEmpty());
     }
 
-    protected boolean checkMate(boolean isBlack, Cell[][] checker, Manuals manuals){
+    protected boolean checkMate(boolean isBlack, Cell[][] checker, Manuals manuals) {
         boolean checkMate = true;
         List<Cell> attackers = manuals.getAttackers(isBlack, checker);
         List<CellIndex> attackersIndex = manuals.getAttackersAsIndexList(isBlack, checker);
         // list empty, no attackers no checkmate
-        if(attackers.isEmpty()){
+        if (attackers.isEmpty()) {
             checkMate = false;
             return checkMate;
         }
@@ -186,28 +187,27 @@ public class Manuals {
 
         // check if king move is still check: no-> return false, no checkmate break
         // if king cant move, and more than one attacker -> checkmate
-        for(int row=-1; row<2; row++){
-            for(int col=-1; col<2; col++){
+        for (int row = -1; row < 2; row++) {
+            for (int col = -1; col < 2; col++) {
                 // endIndex
-                if(kingIndex.getRow()-row <8 && kingIndex.getRow()-row>=0 && kingIndex.getColumn()-col<8 && kingIndex.getColumn()-col>=0){
-                    endKingIndex.setRow(kingIndex.getRow()-row);
-                    endKingIndex.setColumn(kingIndex.getColumn()-col);
+                if (kingIndex.getRow() - row < 8 && kingIndex.getRow() - row >= 0 && kingIndex.getColumn() - col < 8 && kingIndex.getColumn() - col >= 0) {
+                    endKingIndex.setRow(kingIndex.getRow() - row);
+                    endKingIndex.setColumn(kingIndex.getColumn() - col);
                 }
-                 //check if way is not occupied
-                if(checkIfWayIsNotOccupied(kingIndex, endKingIndex, checker) && (kingIndex != endKingIndex) && kingIndex.getRow()-row <8 && kingIndex.getRow()-row>=0 && kingIndex.getColumn()-col<8 && kingIndex.getColumn()-col>=0/*nicht sicher ob das aussreicht, oder row und collum gecheckt werden muessen*/){
+                //check if way is not occupied
+                if (checkIfWayIsNotOccupied(kingIndex, endKingIndex, checker) && (kingIndex != endKingIndex) && kingIndex.getRow() - row < 8 && kingIndex.getRow() - row >= 0 && kingIndex.getColumn() - col < 8 && kingIndex.getColumn() - col >= 0/*nicht sicher ob das aussreicht, oder row und collum gecheckt werden muessen*/) {
                     //save minion from endfield // endkingCell aktualisieren und richtigen minion setzen
-                    endKingCell = checker[kingIndex.getRow()-row][kingIndex.getColumn()-col];
+                    endKingCell = checker[kingIndex.getRow() - row][kingIndex.getColumn() - col];
                     endMinion = endKingCell.getMinion();
                     //apply move
                     kingCell.setMinion(null);
                     endKingCell.setMinion(king);
                     //check if king of kingcolour is still in check
-                    if(isCheck(king.isBlack(), checker, manuals)){ // nimmt hier alles checker board, ohne koenigsbewegung
+                    if (isCheck(king.isBlack(), checker, manuals)) { // nimmt hier alles checker board, ohne koenigsbewegung
                         // apply move back
                         kingCell.setMinion(king);
                         endKingCell.setMinion(endMinion);
-                    }
-                    else{
+                    } else {
                         // apply move backwards
                         kingCell.setMinion(king);
                         endKingCell.setMinion(endMinion);
@@ -219,13 +219,13 @@ public class Manuals {
             }
         }
         // king can't move check if list of attacker bigger than one, if king cant move and if more than 1 attacker -> checkmate
-        if (attackers.size()>1){
+        if (attackers.size() > 1) {
             return checkMate;
         }
         // get attackers path as CellIndex
         CellIndex attackerIndex = attackersIndex.get(0);
         List<CellIndex> attackerPath = attackerPath(attackerIndex, kingIndex);
-        for(int row=0; row < 8; row++) {
+        for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
                 /*//knight capture einfuegen
                 if(String.valueOf(attackers.get(0).getMinion().getMinion_type()).equals("N")){
@@ -236,10 +236,10 @@ public class Manuals {
                     }
                 }*/
                 // feld nicht leer(wichtig zu prüfen, sonst nullpointer), figur kein koenig und figur eigene farbe /*else*/
-                if(!(checker[row][col].isEmpty()) && !(String.valueOf(checker[row][col].getMinion().getMinion_type()).equals("K")) &&(checker[row][col].getMinion().isBlack() == isBlack)){
-                    for(CellIndex index : attackerPath){
-                        if(checkIfValidMove(new CellIndex(row, col), index, checker)){
-                            checkMate=false;
+                if (!(checker[row][col].isEmpty()) && !(String.valueOf(checker[row][col].getMinion().getMinion_type()).equals("K")) && (checker[row][col].getMinion().isBlack() == isBlack)) {
+                    for (CellIndex index : attackerPath) {
+                        if (checkIfValidMove(new CellIndex(row, col), index, checker)) {
+                            checkMate = false;
                             return checkMate;
                         }
                     }
@@ -249,41 +249,41 @@ public class Manuals {
         return checkMate;
     }
 
-    protected List<CellIndex> attackerPath(CellIndex attacker, CellIndex victim){
+    protected List<CellIndex> attackerPath(CellIndex attacker, CellIndex victim) {
         List<CellIndex> attackerPath = new ArrayList<>();
         int diffRow = attacker.getRow() - victim.getRow(); //positiv dann gehen wir nach oben, negativ nach unten (weil wir von oben zählen)
         int diffColumn = attacker.getColumn() - victim.getColumn(); //negativ nach rechts, positiv nach links
         //check if knight move, for knight move only add attackers field
-        if(Math.abs(diffRow) == 1 && Math.abs(diffColumn)==2 || Math.abs(diffRow) == 2 && Math.abs(diffColumn)==1){
+        if (Math.abs(diffRow) == 1 && Math.abs(diffColumn) == 2 || Math.abs(diffRow) == 2 && Math.abs(diffColumn) == 1) {
             CellIndex nextCellIndex = new CellIndex(attacker.getRow(), attacker.getColumn());
             attackerPath.add(nextCellIndex);
             return attackerPath;
         }
-        for(int row=0; row<= Math.abs(diffRow); row++) {
+        for (int row = 0; row <= Math.abs(diffRow); row++) {
             for (int col = 0; col <= Math.abs(diffColumn); col++) {
                 //check if diagonal move and same distance in both directions
-                if(Math.abs(diffRow) == Math.abs(diffColumn) && row == col){
-                    int stepR = diffRow/Math.abs(diffRow);
-                    int stepC = diffColumn/Math.abs(diffColumn);
+                if (Math.abs(diffRow) == Math.abs(diffColumn) && row == col) {
+                    int stepR = diffRow / Math.abs(diffRow);
+                    int stepC = diffColumn / Math.abs(diffColumn);
                     CellIndex nextCellIndex = new CellIndex(attacker.getRow(), attacker.getColumn());
-                    nextCellIndex.setRow(attacker.getRow()-row*stepR);
-                    nextCellIndex.setColumn(attacker.getColumn()-col*stepC);
+                    nextCellIndex.setRow(attacker.getRow() - row * stepR);
+                    nextCellIndex.setColumn(attacker.getColumn() - col * stepC);
                     attackerPath.add(nextCellIndex);
                 }
                 //straight movements
                 //oben-unten
-                else if (diffColumn ==0 && diffRow !=0){
-                    int stepR = diffRow/Math.abs(diffRow);
+                else if (diffColumn == 0 && diffRow != 0) {
+                    int stepR = diffRow / Math.abs(diffRow);
                     CellIndex nextCellIndex = new CellIndex(attacker.getRow(), attacker.getColumn());
-                    nextCellIndex.setRow(attacker.getRow()-row*stepR);
-                    nextCellIndex.setColumn(attacker.getColumn()-col);
+                    nextCellIndex.setRow(attacker.getRow() - row * stepR);
+                    nextCellIndex.setColumn(attacker.getColumn() - col);
                     attackerPath.add(nextCellIndex);
                 }//links-rechts
-                else if (diffColumn !=0 && diffRow ==0){
-                    int stepC = diffColumn/Math.abs(diffColumn);
+                else if (diffColumn != 0 && diffRow == 0) {
+                    int stepC = diffColumn / Math.abs(diffColumn);
                     CellIndex nextCellIndex = new CellIndex(attacker.getRow(), attacker.getColumn());
-                    nextCellIndex.setRow(attacker.getRow()-row);
-                    nextCellIndex.setColumn(attacker.getColumn()-col*stepC);
+                    nextCellIndex.setRow(attacker.getRow() - row);
+                    nextCellIndex.setColumn(attacker.getColumn() - col * stepC);
                     attackerPath.add(nextCellIndex);
                 }
             }
@@ -291,36 +291,37 @@ public class Manuals {
         return attackerPath;
     }
 
-    public boolean moveOfRightColour(Move move, Board board){
+    public boolean moveOfRightColour(Move move, Board board) {
         CellIndex currentIndex = board.cellIndexFor(move.getStart());
         Cell currentCell = board.getCheckerBoard()[currentIndex.row][currentIndex.column];
-        if(currentCell.isEmpty()){
+        if (currentCell.isEmpty()) {
+            return false;
+        } else if (currentCell.getMinion().isBlack() == board.isBlackIsTurn()) {
+            return true;
+        } else {
             return false;
         }
-        else if(currentCell.getMinion().isBlack() == board.isBlackIsTurn()){
-            return true;
-        }
-        else{return false;}
     }
 
     // checks if Cell contains a Pawn and is at the end of the Board so the Pawn can be promoted
-    boolean isValidPromotion(CellIndex endIndex, Cell[][] checkerboard){
-        Cell endCell = checkerboard[endIndex.getRow()][endIndex.column];
-        if(endCell.isEmpty()){
+    boolean isValidPromotion(CellIndex endIndex, Cell[][] checkerboard) {
+        Cell endCell = checkerboard[endIndex.row][endIndex.column];
+        if (endCell.isEmpty()) {
             return false;
         }
+
         if (String.valueOf(endCell.getMinion().getMinion_type()).equals("P")) {
             int row = 0;
             if (endCell.getMinion().isBlack()) {
                 row = 7;
             }
-            return endIndex.equals(
-                    new CellIndex(row, endIndex.column));
-
+            CellIndex pawnIndex = new CellIndex(row, endIndex.column);
+            return endIndex.row == pawnIndex.row && endIndex.column == pawnIndex.column;
         }
         return false;
 
     }
+
     // promotes Pawn to the Minion specified
     public void promote(CellIndex endIndex, String promoteTo, Cell[][] checkerboard) {
         Cell endCell = checkerboard[endIndex.getRow()][endIndex.column];
@@ -340,8 +341,8 @@ public class Manuals {
                     minion = new Queen(endCell.getMinion().isBlack());
                     break;
             }
-            /*moveList.add(new Move(square.getCoordinate(), square
-                    .getCoordinate(), piece, square));*/
+            /*moveList.add(neuer Minion);*/
+            endCell.setMinion(null);
             endCell.setMinion(minion);
         }
     }

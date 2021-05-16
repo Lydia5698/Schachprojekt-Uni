@@ -12,7 +12,6 @@ import java.util.List;
  * @author Lydia Günther
  * @see Cell
  * @see Minion
- *
  */
 
 public class Board {
@@ -114,9 +113,13 @@ public class Board {
         Cell endCell = checkerBoard[endIndex.getRow()][endIndex.getColumn()];
         Minion minion = startCell.getMinion();
         Minion isBeaten = endCell.getMinion();
-        String promoteTo = move.getEnd().substring(2,3);
+        String promoteTo = "";
 
-        if(!endCell.isEmpty() && minion.isBlack() == !isBeaten.isBlack()){
+        if (move.getEnd().length() > 2) {
+            promoteTo = move.getEnd().substring(2, 3);
+        }
+
+        if (!endCell.isEmpty() && minion.isBlack() == !isBeaten.isBlack()) {
             beaten.add(String.valueOf(isBeaten.print_minions()));
         }
         /*if(manuals.isValidEnPassant(startIndex, endIndex, checkerBoard)){
@@ -126,26 +129,21 @@ public class Board {
             System.out.println("!" + move.getStart() + "-" + move.getEnd());
         }*/
 
-        if(manuals.checkIfValidMove(startIndex, endIndex, checkerBoard)){
+        if (manuals.checkIfValidMove(startIndex, endIndex, checkerBoard)) {
             startCell.setMinion(null);
             endCell.setMinion(minion);
             blackIsTurn = !blackIsTurn;
-            System.out.print("!" + move.getStart() + "-" + move.getEnd()+ "\n");
+            System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
+            manuals.promote(endIndex, promoteTo, checkerBoard);
             //minion, ist die figur die bewegt wird, isCheck muss auf die gegnerische team farbe angewendet werden
-            if(manuals.isCheck(!(minion.isBlack()), checkerBoard, manuals)){
+            if (manuals.isCheck(!(minion.isBlack()), checkerBoard, manuals)) {
                 //System.out.print("!Check"); //auskommentiert, damit man das programm mit dem checker pruefen kann
             }
-            if(manuals.checkMate(!(minion.isBlack()), checkerBoard, manuals)){
+            if (manuals.checkMate(!(minion.isBlack()), checkerBoard, manuals)) {
                 System.out.println("!Check Mate");
 
             }
-            if(manuals.isValidPromotion(endIndex, checkerBoard)){
-                manuals.promote(endIndex, promoteTo, checkerBoard);
-            }
-        }
-
-
-        else {
+        } else {
             System.out.println("!Move not allowed");
         }
     }
@@ -159,9 +157,9 @@ public class Board {
      */
 
     public CellIndex cellIndexFor(String stringIndex) {
-        String startColumn =  stringIndex.substring(0, 1);
+        String startColumn = stringIndex.substring(0, 1);
         String startRowString = stringIndex.substring(1, 2);
-        return new CellIndex(8-Integer.parseInt(startRowString), columns.indexOf(startColumn));
+        return new CellIndex(8 - Integer.parseInt(startRowString), columns.indexOf(startColumn));
     }
 
     public List<String> getBeaten() {
