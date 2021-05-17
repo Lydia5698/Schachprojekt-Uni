@@ -10,21 +10,18 @@ import chess.model.figures.Minion;
 
 public class Cell {
 
+    private Minion minion;
+
     /**
-     * Create a Cell with an Minion in it
+     * Creates a new Cell instance. The Cell can have an Minion in it.
      *
      * @param minion a chess minion
      * @see Minion
      */
-
-    private Minion minion;
-
-    public Minion getMinion() {
-        return minion;
-    }
-    public Cell(Minion minion){
+    public Cell(Minion minion) {
         this.minion = minion;
     }
+
     /**
      * Overrides the methode toString, so that a empty cell has an empty String and not null
      * a Cell with a Minion calls there Methode print_minions and returns there String print_minion_type
@@ -34,12 +31,13 @@ public class Cell {
      */
 
     @Override
-    public String toString(){
-        if (minion == null){
+    public String toString() {
+        if (minion == null) {
             return " ";
         }
         return minion.print_minions();
     }
+
     /**
      * Checks if Cell is empty and returns a boolean
      *
@@ -49,13 +47,13 @@ public class Cell {
         return minion == null;
     }
 
-    /**
-     * Sets the Minion in a Cell
-     *
-     * @param minion sets the Minion in the Cell
-     */
+
     public void setMinion(Minion minion) {
         this.minion = minion;
+    }
+
+    public Minion getMinion() {
+        return minion;
     }
 }
 

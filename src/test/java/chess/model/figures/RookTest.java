@@ -5,6 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * All Tests for the Class Rook
+ * @see Rook
+ */
 class RookTest {
 
     @Test
@@ -49,23 +53,23 @@ class RookTest {
 
     @Test
     void validMoveRookA8H8ReturnTrue() {
-        CellIndex startIndex = new CellIndex(8-8,0);
-        CellIndex endIndex = new CellIndex(8-8,7);
+        CellIndex startIndex = new CellIndex(0,0);
+        CellIndex endIndex = new CellIndex(0,7);
         Rook rook = new Rook(true);
         assertTrue(rook.validMove(startIndex,endIndex));
     }
 
     @Test
     void validMoveRookH8A8ReturnTrue() {
-        CellIndex startIndex = new CellIndex(8-8,7);
-        CellIndex endIndex = new CellIndex(8-8,0);
+        CellIndex startIndex = new CellIndex(0,7);
+        CellIndex endIndex = new CellIndex(0,0);
         Rook rook = new Rook(true);
         assertTrue(rook.validMove(startIndex,endIndex));
     }
 
     @Test
     void validMoveRookH8H5ReturnTrue() {
-        CellIndex startIndex = new CellIndex(8-8,7);
+        CellIndex startIndex = new CellIndex(0,7);
         CellIndex endIndex = new CellIndex(8-5,7);
         Rook rook = new Rook(true);
         assertTrue(rook.validMove(startIndex,endIndex));
@@ -73,7 +77,7 @@ class RookTest {
 
     @Test
     void validMoveRookA8C3ReturnFalse() {
-        CellIndex startIndex = new CellIndex(8-8,0);
+        CellIndex startIndex = new CellIndex(0,0);
         CellIndex endIndex = new CellIndex(8-3,2);
         Rook rook = new Rook(true);
         assertFalse(rook.validMove(startIndex,endIndex));

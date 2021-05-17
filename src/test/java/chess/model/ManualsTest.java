@@ -4,6 +4,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * All Tests for the Class Manuals
+ * @see Manuals
+ */
 class ManualsTest {
 
     // Get Way is Occupied
@@ -66,7 +70,7 @@ class ManualsTest {
         Move movePawn = new Move("e7-e5"); // Move Pawn E7-E5
         board.applyMove(movePawn);
 
-        CellIndex start = new CellIndex(8-8, 5); // Move Bishop F8-C5
+        CellIndex start = new CellIndex(0, 5); // Move Bishop F8-C5
         CellIndex end = new CellIndex(8-5, 2);
         assertTrue(board.manuals.checkIfWayIsNotOccupied(start, end, board.checkerBoard));
     }
@@ -80,7 +84,7 @@ class ManualsTest {
     }
 
     @Test
-    void BishopBeatsPawnDiagonal() {
+    void bishopBeatsPawnDiagonal() {
         Board board = new Board();
         Move movePawn = new Move("e7-e5"); // Move Pawn E7-E5
         board.applyMove(movePawn);
@@ -119,19 +123,19 @@ class ManualsTest {
 
     // Get Attackers
     @Test
-    void GetAttackersKingWhite() {
+    void getAttackersKingWhite() {
         Board board = new Board();
         assertTrue(board.manuals.getAttackers(false, board.checkerBoard).isEmpty());
     }
 
     @Test
-    void GetAttackersKingBlack() {
+    void getAttackersKingBlack() {
         Board board = new Board();
         assertTrue(board.manuals.getAttackers(true, board.checkerBoard).isEmpty());
     }
 
    @Test
-    void GetAttackersKingWhiteUnderAttack() {
+    void getAttackersKingWhiteUnderAttack() {
         Board board = new Board();
         Move movePawn = new Move("e7-e5"); // Move Pawn E7-E5
         board.applyMove(movePawn);
@@ -144,7 +148,7 @@ class ManualsTest {
     }
 
     @Test
-    void GetAttackersKingBlackUnderAttack() {
+    void getAttackersKingBlackUnderAttack() {
         Board board = new Board();
         Move movePawn = new Move("e2-e4"); // Move Pawn E2-E4
         board.applyMove(movePawn);
@@ -158,7 +162,7 @@ class ManualsTest {
 
     // Promote Test
     @Test
-    void PromoteWhitePawn(){
+    void promoteWhitePawn(){
         Board board = new Board();
         Move movePawn = new Move("h2-h4"); // Move Pawn H2-H4
         board.applyMove(movePawn);
@@ -177,7 +181,7 @@ class ManualsTest {
     }
 
     @Test
-    void PromoteWhitePawnToRook(){
+    void promoteWhitePawnToRook(){
         Board board = new Board();
         Move movePawn = new Move("h2-h4"); // Move Pawn H2-H4
         board.applyMove(movePawn);
@@ -197,7 +201,7 @@ class ManualsTest {
     }
 
     @Test
-    void PromoteWhitePawnToKnight(){
+    void promoteWhitePawnToKnight(){
         Board board = new Board();
         Move movePawn = new Move("h2-h4"); // Move Pawn H2-H4
         board.applyMove(movePawn);
@@ -217,7 +221,7 @@ class ManualsTest {
     }
 
     @Test
-    void PromoteWhitePawnToBishop(){
+    void promoteWhitePawnToBishop(){
         Board board = new Board();
         Move movePawn = new Move("h2-h4"); // Move Pawn H2-H4
         board.applyMove(movePawn);
@@ -238,7 +242,7 @@ class ManualsTest {
 
 
     @Test
-    void PromoteBlackPawn(){
+    void promoteBlackPawn(){
         Board board = new Board();
         Move movePawn = new Move("a7-a5"); // Move Pawn A7-A5
         board.applyMove(movePawn);
@@ -254,6 +258,95 @@ class ManualsTest {
         Cell endCellPawn = board.checkerBoard[endIndexPawn.row][endIndexPawn.column];
         boolean isQueen = String.valueOf(endCellPawn.getMinion().getMinion_type()).equals("Q");
         assertTrue(isQueen);
+    }
+
+/*    // Tests EnPassant
+    @Test
+    void isValidEnPassantWhite(){
+        Board board = new Board();
+        Move movePawn = new Move("d2-d4"); // Move Pawn D2-D4
+        board.applyMove(movePawn);
+        movePawn = new Move("d4-d5"); // Move Pawn D4-D5
+        board.applyMove(movePawn);
+        movePawn = new Move("e7-e5"); // Move Pawn E7-E5
+        board.applyMove(movePawn);
+        movePawn = new Move("d5-e6"); // Move Pawn D5-E6 EnPassant
+        CellIndex startIndex = board.cellIndexFor(movePawn.getEnd());
+        CellIndex endIndex = board.cellIndexFor(movePawn.getEnd());
+        boolean validEnPassant = board.manuals.isValidEnPassant(startIndex, endIndex, board.checkerBoard);
+        assertTrue(validEnPassant);
+    }
+
+    @Test
+    void isValidEnPassantBlack(){
+        Board board = new Board();
+        Move movePawn = new Move("g7-g5"); // Move Pawn G7-G5
+        board.applyMove(movePawn);
+        movePawn = new Move("g5-g4"); // Move Pawn G5-G4
+        board.applyMove(movePawn);
+        movePawn = new Move("f2-f4"); // Move Pawn F2-F4
+        board.applyMove(movePawn);
+        movePawn = new Move("g4-f3"); // Move Pawn G4-F3 EnPassant
+        CellIndex startIndex = board.cellIndexFor(movePawn.getEnd());
+        CellIndex endIndex = board.cellIndexFor(movePawn.getEnd());
+        boolean validEnPassant = board.manuals.isValidEnPassant(startIndex, endIndex, board.checkerBoard);
+        assertTrue(validEnPassant);
+    }
+
+    @Test
+    void isNotValidEnPassantWhite(){
+        Board board = new Board();
+        Move movePawn = new Move("g2-g4"); // Move Pawn G2-G4
+        board.applyMove(movePawn);
+        movePawn = new Move("g4-g5"); // Move Pawn G4-G5
+        board.applyMove(movePawn);
+        movePawn = new Move("h7-h5"); // Move Pawn H7-H5
+        board.applyMove(movePawn);
+        movePawn = new Move("h8-h6"); // Move Rook H8-H6
+        board.applyMove(movePawn);
+        movePawn = new Move("g5-h6"); // Move Pawn G5-H6 EnPassant
+        CellIndex startIndex = board.cellIndexFor(movePawn.getEnd());
+        CellIndex endIndex = board.cellIndexFor(movePawn.getEnd());
+        boolean validEnPassant = board.manuals.isValidEnPassant(startIndex, endIndex, board.checkerBoard);
+        assertFalse(validEnPassant);
+    }
+
+    @Test
+    void isNotValidEnPassantBlack(){
+        Board board = new Board();
+        Move movePawn = new Move("g2-g4"); // Move Pawn G2-G4
+        board.applyMove(movePawn);
+        movePawn = new Move("g4-g5"); // Move Pawn G4-G5
+        board.applyMove(movePawn);
+        movePawn = new Move("e7-e5"); // Move Pawn E7-E5
+        board.applyMove(movePawn);
+        movePawn = new Move("g5-f6"); // Move Pawn G5-F6 EnPassant
+        CellIndex startIndex = board.cellIndexFor(movePawn.getEnd());
+        CellIndex endIndex = board.cellIndexFor(movePawn.getEnd());
+        boolean validEnPassant = board.manuals.isValidEnPassant(startIndex, endIndex, board.checkerBoard);
+        assertFalse(validEnPassant);
+    }*/
+
+    //move of right colour
+    @Test
+    void moveOfRightColour(){
+        Board board = new Board();
+        Move movePawn = new Move("g2-g4"); // Move Pawn G2-G4
+        assertTrue(board.manuals.moveOfRightColour(movePawn, board));
+    }
+
+    @Test
+    void moveOfFalseColour(){
+        Board board = new Board();
+        Move movePawn = new Move("g7-g5"); // Move Pawn G7-G5
+        assertFalse(board.manuals.moveOfRightColour(movePawn, board));
+    }
+
+    @Test
+    void moveWithEmptyStartCell(){
+        Board board = new Board();
+        Move moveEmptyStartCell = new Move("e3-e4");
+        assertFalse(board.manuals.moveOfRightColour(moveEmptyStartCell, board));
     }
 
 

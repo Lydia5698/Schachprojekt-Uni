@@ -5,6 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * All Tests for the Class King
+ *  @see King
+ */
 class KingTest {
 
     @Test
@@ -17,7 +21,7 @@ class KingTest {
 
     @Test
     void validMoveKingE8E7VerticalReturnTrue() {
-        CellIndex startIndex = new CellIndex(8-8,4);
+        CellIndex startIndex = new CellIndex(0,4);
         CellIndex endIndex = new CellIndex(8-7,4);
         King king = new King(true);
         assertTrue(king.validMove(startIndex,endIndex));
@@ -41,7 +45,7 @@ class KingTest {
 
     @Test
     void validMoveKingE8F7DiagonalReturnTrue() {
-        CellIndex startIndex = new CellIndex(8-8,4);
+        CellIndex startIndex = new CellIndex(0,4);
         CellIndex endIndex = new CellIndex(8-7,5);
         King king = new King(true);
         assertTrue(king.validMove(startIndex,endIndex));
@@ -73,15 +77,15 @@ class KingTest {
 
     @Test
     void validMoveKingE8H8HorizontalReturnFalse() {
-        CellIndex startIndex = new CellIndex(8-8,4);
-        CellIndex endIndex = new CellIndex(8-8,7);
+        CellIndex startIndex = new CellIndex(0,4);
+        CellIndex endIndex = new CellIndex(0,7);
         King king = new King(true);
         assertFalse(king.validMove(startIndex,endIndex));
     }
 
     @Test
     void validMoveKingE8G6DiagonalReturnFalse() {
-        CellIndex startIndex = new CellIndex(8-8,4);
+        CellIndex startIndex = new CellIndex(0,4);
         CellIndex endIndex = new CellIndex(8-6,6);
         King king = new King(true);
         assertFalse(king.validMove(startIndex,endIndex));

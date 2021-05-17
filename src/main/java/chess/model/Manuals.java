@@ -359,12 +359,19 @@ public class Manuals {
         }
     }
 
+    /**
+     * is ValidEnPassant checks if the Pawn can move like en Passant
+     * @param startIndex startIndex of the move
+     * @param endIndex endIndex of the move
+     * @param checkerboard Chessboard
+     * @return a boolean if the en Passant is valid
+     */
     boolean isValidEnPassant(CellIndex startIndex, CellIndex endIndex, Cell[][] checkerboard) {
         Cell startCell = checkerboard[startIndex.row][startIndex.column];
         Cell endCell = checkerboard[endIndex.row][endIndex.column];
         int diffRow = startIndex.getRow() - endIndex.getRow(); //positiv dann gehen wir nach oben, negativ nach unten (weil wir von oben zählen)
         int diffColumn = startIndex.getColumn() - endIndex.getColumn();//negativ nach rechts, positiv nach links
-        // check if Final square is empty
+        // check if Final square is not empty
         if (!endCell.isEmpty()) {
             return false;
         }

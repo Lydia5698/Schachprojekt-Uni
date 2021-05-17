@@ -5,6 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * All Tests for the Class Knight
+ * @see Knight
+ */
 class KnightTest {
 
     @Test
@@ -17,7 +21,7 @@ class KnightTest {
 
     @Test
     void validMoveKnightG8F6ReturnTrue() {
-        CellIndex startIndex = new CellIndex(8-8,6);
+        CellIndex startIndex = new CellIndex(0,6);
         CellIndex endIndex = new CellIndex(8-6,5);
         Knight knight = new Knight(true);
         assertTrue(knight.validMove(startIndex,endIndex));
@@ -33,7 +37,7 @@ class KnightTest {
 
     @Test
     void validMoveKnightG8E7ReturnTrue() {
-        CellIndex startIndex = new CellIndex(8-8,6);
+        CellIndex startIndex = new CellIndex(0,6);
         CellIndex endIndex = new CellIndex(8-7,4);
         Knight knight = new Knight(true);
         assertTrue(knight.validMove(startIndex,endIndex));
@@ -65,7 +69,7 @@ class KnightTest {
 
     @Test
     void validMoveKingB8B5ReturnFalse() {
-        CellIndex startIndex = new CellIndex(8-8,1);
+        CellIndex startIndex = new CellIndex(0,1);
         CellIndex endIndex = new CellIndex(8-5,1);
         Knight knight = new Knight(true);
         assertFalse(knight.validMove(startIndex,endIndex));
