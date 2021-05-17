@@ -5,6 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * All Tests for the Class Bishop
+ * @see Bishop
+ */
 class BishopTest {
 
     @Test

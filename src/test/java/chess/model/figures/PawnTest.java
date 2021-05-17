@@ -5,6 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * All Tests for the Class Pawn
+ * @see Pawn
+ */
 class PawnTest {
 
     @Test
@@ -58,7 +62,7 @@ class PawnTest {
     @Test
     void validMovePawnG7G8ReturnFalse() {
         CellIndex startIndex = new CellIndex(8-7,6);
-        CellIndex endIndex = new CellIndex(8-8,6);
+        CellIndex endIndex = new CellIndex(0,6);
         Pawn pawn = new Pawn(true);
         assertFalse(pawn.validMove(startIndex,endIndex));
     }
