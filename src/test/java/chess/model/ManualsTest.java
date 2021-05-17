@@ -146,7 +146,7 @@ class ManualsTest {
     @Test
     void GetAttackersKingBlackUnderAttack() {
         Board board = new Board();
-        Move movePawn = new Move("e2-e4"); // Move Pawn F2-F4
+        Move movePawn = new Move("e2-e4"); // Move Pawn E2-E4
         board.applyMove(movePawn);
         Move moveBishop = new Move("f1-b5"); // Move Bishop F1-B5
         board.applyMove(moveBishop);
@@ -154,6 +154,106 @@ class ManualsTest {
         board.applyMove(moveBishopCheck);
         boolean attackers = (board.manuals.getAttackers(true, board.checkerBoard)).isEmpty();
         assertFalse(attackers);
+    }
+
+    // Promote Test
+    @Test
+    void PromoteWhitePawn(){
+        Board board = new Board();
+        Move movePawn = new Move("h2-h4"); // Move Pawn H2-H4
+        board.applyMove(movePawn);
+        movePawn = new Move("h4-h5"); // Move Pawn H4-H5
+        board.applyMove(movePawn);
+        movePawn = new Move("h5-h6"); // Move Pawn H5-H6
+        board.applyMove(movePawn);
+        movePawn = new Move("h6-g7"); // Move Pawn H6-G7
+        board.applyMove(movePawn);
+        movePawn = new Move("g7-f8"); // Move Pawn G7-F8
+        board.applyMove(movePawn);
+        CellIndex endIndexPawn = board.cellIndexFor(movePawn.getEnd());
+        Cell endCellPawn = board.checkerBoard[endIndexPawn.row][endIndexPawn.column];
+        boolean isQueen = String.valueOf(endCellPawn.getMinion().getMinion_type()).equals("Q");
+        assertTrue(isQueen);
+    }
+
+    @Test
+    void PromoteWhitePawnToRook(){
+        Board board = new Board();
+        Move movePawn = new Move("h2-h4"); // Move Pawn H2-H4
+        board.applyMove(movePawn);
+        movePawn = new Move("h4-h5"); // Move Pawn H4-H5
+        board.applyMove(movePawn);
+        movePawn = new Move("h5-h6"); // Move Pawn H5-H6
+        board.applyMove(movePawn);
+        movePawn = new Move("h6-g7"); // Move Pawn H6-G7
+        board.applyMove(movePawn);
+        movePawn = new Move("g7-f8R"); // Move Pawn G7-F8
+        board.applyMove(movePawn);
+        CellIndex endIndexPawn = board.cellIndexFor(movePawn.getEnd());
+        Cell endCellPawn = board.checkerBoard[endIndexPawn.row][endIndexPawn.column];
+        boolean isRook = String.valueOf(endCellPawn.getMinion().getMinion_type()).equals("R");
+        boolean isCheck = board.manuals.isCheck(!(endCellPawn.getMinion().isBlack()), board.checkerBoard, board.manuals);
+        assertTrue(isRook && isCheck);
+    }
+
+    @Test
+    void PromoteWhitePawnToKnight(){
+        Board board = new Board();
+        Move movePawn = new Move("h2-h4"); // Move Pawn H2-H4
+        board.applyMove(movePawn);
+        movePawn = new Move("h4-h5"); // Move Pawn H4-H5
+        board.applyMove(movePawn);
+        movePawn = new Move("h5-h6"); // Move Pawn H5-H6
+        board.applyMove(movePawn);
+        movePawn = new Move("h6-g7"); // Move Pawn H6-G7
+        board.applyMove(movePawn);
+        movePawn = new Move("g7-f8N"); // Move Pawn G7-F8
+        board.applyMove(movePawn);
+        CellIndex endIndexPawn = board.cellIndexFor(movePawn.getEnd());
+        Cell endCellPawn = board.checkerBoard[endIndexPawn.row][endIndexPawn.column];
+        boolean isKnight = String.valueOf(endCellPawn.getMinion().getMinion_type()).equals("N");
+        boolean isCheck = board.manuals.isCheck(!(endCellPawn.getMinion().isBlack()), board.checkerBoard, board.manuals);
+        assertTrue(isKnight && !isCheck);
+    }
+
+    @Test
+    void PromoteWhitePawnToBishop(){
+        Board board = new Board();
+        Move movePawn = new Move("h2-h4"); // Move Pawn H2-H4
+        board.applyMove(movePawn);
+        movePawn = new Move("h4-h5"); // Move Pawn H4-H5
+        board.applyMove(movePawn);
+        movePawn = new Move("h5-h6"); // Move Pawn H5-H6
+        board.applyMove(movePawn);
+        movePawn = new Move("h6-g7"); // Move Pawn H6-G7
+        board.applyMove(movePawn);
+        movePawn = new Move("g7-f8B"); // Move Pawn G7-F8
+        board.applyMove(movePawn);
+        CellIndex endIndexPawn = board.cellIndexFor(movePawn.getEnd());
+        Cell endCellPawn = board.checkerBoard[endIndexPawn.row][endIndexPawn.column];
+        boolean isBishop = String.valueOf(endCellPawn.getMinion().getMinion_type()).equals("B");
+        boolean isCheck = board.manuals.isCheck(!(endCellPawn.getMinion().isBlack()), board.checkerBoard, board.manuals);
+        assertTrue(isBishop && !isCheck);
+    }
+
+
+    @Test
+    void PromoteBlackPawn(){
+        Board board = new Board();
+        Move movePawn = new Move("a7-a5"); // Move Pawn A7-A5
+        board.applyMove(movePawn);
+        movePawn = new Move("a5-a4"); // Move Pawn A5-A4
+        board.applyMove(movePawn);
+        movePawn = new Move("a4-a3"); // Move Pawn A4-A3
+        board.applyMove(movePawn);
+        movePawn = new Move("a3-b2"); // Move Pawn A3-B2
+        board.applyMove(movePawn);
+        movePawn = new Move("b2-c1"); // Move Pawn B2-C1
+        board.applyMove(movePawn);
+        CellIndex endIndexPawn = board.cellIndexFor(movePawn.getEnd());
+        Cell endCellPawn = board.checkerBoard[endIndexPawn.row][endIndexPawn.column];
+        boolean isQueen = String.valueOf(endCellPawn.getMinion().getMinion_type()).equals("Q");
+        assertTrue(isQueen);
     }
 
 
