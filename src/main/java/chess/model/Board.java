@@ -136,10 +136,10 @@ public class Board {
             System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
             manuals.promote(endIndex, promoteTo, checkerBoard);
             //minion, ist die figur die bewegt wird, isCheck muss auf die gegnerische team farbe angewendet werden
-            if (manuals.isCheck(!(minion.isBlack()), checkerBoard, manuals)) {
+            if (manuals.isCheck(!(minion.isBlack()), checkerBoard, manuals)) { //TODO flag einfuegen fuer aufrufe mit --simple
                 //System.out.print("!Check"); //auskommentiert, damit man das programm mit dem checker pruefen kann
             }
-            if (manuals.checkMate(!(minion.isBlack()), checkerBoard, manuals)) {
+            if (manuals.checkMate(!(minion.isBlack()), checkerBoard, manuals)) { //TODO flag einfuegen fuer aufrufe mit --simple
                 System.out.println("!Check Mate");
 
             }
