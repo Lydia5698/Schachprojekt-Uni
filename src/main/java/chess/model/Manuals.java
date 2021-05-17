@@ -12,13 +12,13 @@ public class Manuals {
     public Manuals() {
     }
 
+
     protected boolean checkIfWayIsNotOccupied(CellIndex start, CellIndex end, Cell[][] checkerBoard) {
         Cell startCell = checkerBoard[start.getRow()][start.getColumn()];
         Cell endCell = checkerBoard[end.getRow()][end.getColumn()];
         boolean colourStart = startCell.getMinion().isBlack();
         boolean colourEnd;
         boolean notOccupied = true;
-
         // endfeld nicht leer
         if (!(endCell.isEmpty())) {
             colourEnd = endCell.getMinion().isBlack();
@@ -29,64 +29,75 @@ public class Manuals {
         }
         // pawn nur auf leere felder nach vorne ziehen
         if (String.valueOf(startCell.getMinion().getMinion_type()).equals("P") && !(pawnBeats(start, end, checkerBoard))) {
-            notOccupied = false;
-            // geradeaus pruefen
-            int diffRow = start.getRow() - end.getRow(); //positiv dann gehen wir nach oben, negativ nach unten (weil wir von oben zählen)
-            int diffColumn = start.getColumn() - end.getColumn(); //negativ nach rechts, positiv nach links
-            Cell nextCell = checkerBoard[start.getRow() - 1][start.getColumn()];//weiß bzw black=false
-            if (startCell.getMinion().isBlack()) {
-                nextCell = checkerBoard[start.getRow() + 1][start.getColumn()];
-            }
-
-            //zwischenzelle(bei zweifeldzug)/endzelle vertikal und leer
-            if (Math.abs(diffColumn) == 0 && Math.abs(diffRow) == 1 && endCell.isEmpty()) {
-                notOccupied = true;
-            } else if (Math.abs(diffColumn) == 0 && Math.abs(diffRow) == 2 && endCell.isEmpty() && nextCell.isEmpty()) {
-                notOccupied = true;
-            }
+            notOccupied = checkIfPawnMoveIsNotOccupied(start, end, checkerBoard);
             return notOccupied;
         }
-        // check if minion = knigth ja- prüfe endfeld nein-prüfe zwischen felder
+        // check if minion = knigth ja- prüfe endfeld(endfeld wurde schon geprueft) nein-prüfe zwischen felder
         if (String.valueOf(startCell.getMinion().getMinion_type()).equals("N")) {
             return notOccupied;
         } else {
-            int diffRow = start.getRow() - end.getRow(); //positiv dann gehen wir nach oben, negativ nach unten (weil wir von oben zählen)
-            int diffColumn = start.getColumn() - end.getColumn();//negativ nach rechts, positiv nach links
+            notOccupied = checkIfFieldsInBetweenNotOccupied(start, end, checkerBoard, notOccupied);
+        }
+        return notOccupied;
+    }
 
-            for (int i = 1; i < (Math.max(Math.abs(diffRow), Math.abs(diffColumn))); i++) {
-                //diagonal
-                if (Math.abs(diffRow) == Math.abs(diffColumn)) {
-                    // next celle checken
-                    int stepR = (diffRow / Math.abs(diffRow)) * i; // muss in jeder abfrage einzeln sein, da diffrow und diffcolumn null sein koennten bei bewegung in nur eine Richtung
-                    int stepC = (diffColumn / Math.abs(diffColumn)) * i;
-                    Cell nextCell = checkerBoard[start.getRow() - stepR][start.getColumn() - stepC];
+    private boolean checkIfFieldsInBetweenNotOccupied(CellIndex start, CellIndex end, Cell[][] checkerBoard, boolean notOccupied){
+        boolean fieldsInBetweenNotOccupied = notOccupied;
+        int diffRow = start.getRow() - end.getRow(); //positiv dann gehen wir nach oben, negativ nach unten (weil wir von oben zählen)
+        int diffColumn = start.getColumn() - end.getColumn();//negativ nach rechts, positiv nach links
+        for (int i = 1; i < (Math.max(Math.abs(diffRow), Math.abs(diffColumn))); i++) {
+            //diagonal
+            if (Math.abs(diffRow) == Math.abs(diffColumn)) {
+                // next celle checken
+                int stepR = (diffRow / Math.abs(diffRow)) * i; // muss in jeder abfrage einzeln sein, da diffrow und diffcolumn null sein koennten bei bewegung in nur eine Richtung
+                int stepC = (diffColumn / Math.abs(diffColumn)) * i;
+                Cell nextCell = checkerBoard[start.getRow() - stepR][start.getColumn() - stepC];
 
-                    if (!(nextCell.isEmpty())) {
-                        notOccupied = false;
-                        break;
-                    }
+                if (!(nextCell.isEmpty())) {
+                    fieldsInBetweenNotOccupied = false;
+                    return fieldsInBetweenNotOccupied;
                 }
-                // vertical
-                else if (Math.abs(diffRow) > Math.abs(diffColumn)) {
-                    int stepR = (diffRow / Math.abs(diffRow)) * i;
-                    Cell nextCell = checkerBoard[start.getRow() - stepR][start.getColumn()];
-                    if (!(nextCell.isEmpty())) {
-                        notOccupied = false;
-                        break;
-                    }
+            }
+            // vertical
+            else if (Math.abs(diffRow) > Math.abs(diffColumn)) {
+                int stepR = (diffRow / Math.abs(diffRow)) * i;
+                Cell nextCell = checkerBoard[start.getRow() - stepR][start.getColumn()];
+                if (!(nextCell.isEmpty())) {
+                    fieldsInBetweenNotOccupied = false;
+                    return fieldsInBetweenNotOccupied;
                 }
-                //horizontal
-                else if (Math.abs(diffRow) < Math.abs(diffColumn)) {
-                    int stepC = (diffColumn / Math.abs(diffColumn)) * i;
-                    Cell nextCell = checkerBoard[start.getRow()][start.getColumn() - stepC];
-                    if (!(nextCell.isEmpty())) {
-                        notOccupied = false;
-                        break;
-                    }
+            }
+            //horizontal
+            else if (Math.abs(diffRow) < Math.abs(diffColumn)) {
+                int stepC = (diffColumn / Math.abs(diffColumn)) * i;
+                Cell nextCell = checkerBoard[start.getRow()][start.getColumn() - stepC];
+                if (!(nextCell.isEmpty())) {
+                    fieldsInBetweenNotOccupied = false;
+                    return fieldsInBetweenNotOccupied;
                 }
             }
         }
-        return notOccupied;
+        return fieldsInBetweenNotOccupied;
+    }
+
+    private boolean checkIfPawnMoveIsNotOccupied(CellIndex start, CellIndex end, Cell[][] checkerBoard){
+        Cell startCell = checkerBoard[start.getRow()][start.getColumn()];
+        Cell endCell = checkerBoard[end.getRow()][end.getColumn()];
+        boolean pawnMoveNotOccupied = false;
+        // geradeaus pruefen
+        int diffRow = start.getRow() - end.getRow(); //positiv dann gehen wir nach oben, negativ nach unten (weil wir von oben zählen)
+        int diffColumn = start.getColumn() - end.getColumn(); //negativ nach rechts, positiv nach links
+        Cell nextCell = checkerBoard[start.getRow() - 1][start.getColumn()];//weiß bzw black=false
+        if (startCell.getMinion().isBlack()) {
+            nextCell = checkerBoard[start.getRow() + 1][start.getColumn()];
+        }
+        //zwischenzelle(bei zweifeldzug)/endzelle vertikal und leer
+        if (Math.abs(diffColumn) == 0 && Math.abs(diffRow) == 1 && endCell.isEmpty()) {
+            pawnMoveNotOccupied = true;
+        } else if (Math.abs(diffColumn) == 0 && Math.abs(diffRow) == 2 && endCell.isEmpty() && nextCell.isEmpty()) {
+            pawnMoveNotOccupied = true;
+        }
+        return pawnMoveNotOccupied;
     }
 
 
