@@ -302,6 +302,12 @@ public class Manuals {
         }
     }
 
+    /**
+     * isValidPromotion checks if a Pawn has reached the last row of the Board. Then it is possible to promote him
+     * @param endIndex The endIndex of the move
+     * @param checkerboard The Chessboard
+     * @return boolean if the Promotion is Valid
+     */
     // checks if Cell contains a Pawn and is at the end of the Board so the Pawn can be promoted
     boolean isValidPromotion(CellIndex endIndex, Cell[][] checkerboard) {
         Cell endCell = checkerboard[endIndex.row][endIndex.column];
@@ -321,6 +327,13 @@ public class Manuals {
 
     }
 
+    /**
+     * Promote promotes an Pawn to another Minion. It is possible to get promoted to a Knight, Bishop, Queen or Rook.
+     * Before the Pawn gets a Promotion the Methode isValidPromotion is checking if the promotion is valid.
+     * @param endIndex endIndex of the move
+     * @param promoteTo the Minion-Type for the Promotion. Only Bishop, Knight, Rook or Queen are allowed
+     * @param checkerboard the Chessboard
+     */
     // promotes Pawn to the Minion specified
     public void promote(CellIndex endIndex, String promoteTo, Cell[][] checkerboard) {
         Cell endCell = checkerboard[endIndex.getRow()][endIndex.column];
@@ -419,4 +432,3 @@ public class Manuals {
 
 
 }
-
