@@ -129,7 +129,7 @@ public class Board {
             System.out.println("!" + move.getStart() + "-" + move.getEnd());
         }*/
 
-        if (manuals.checkIfValidMove(startIndex, endIndex, checkerBoard)) {
+        if (manuals.checkIfValidMove(startIndex, endIndex, checkerBoard)&& manuals.checkMoveMakesNoSelfCheck(startIndex, endIndex, checkerBoard, manuals)) {
             startCell.setMinion(null);
             endCell.setMinion(minion);
             blackIsTurn = !blackIsTurn;

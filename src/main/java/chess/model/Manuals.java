@@ -165,6 +165,7 @@ public class Manuals {
         return pawnBeats;
     }
 
+
     protected boolean isCheck(boolean isBlack, Cell[][] checkerBoard, Manuals manuals) {
         return !(manuals.getAttackers((isBlack), checkerBoard).isEmpty());
     }
@@ -296,10 +297,8 @@ public class Manuals {
         Cell currentCell = board.getCheckerBoard()[currentIndex.row][currentIndex.column];
         if (currentCell.isEmpty()) {
             return false;
-        } else if (currentCell.getMinion().isBlack() == board.isBlackIsTurn()) {
-            return true;
         } else {
-            return false;
+            return currentCell.getMinion().isBlack() == board.isBlackIsTurn();
         }
     }
 
@@ -397,6 +396,27 @@ public class Manuals {
         }*/
         return false;
     }
+
+    protected boolean checkMoveMakesNoSelfCheck(CellIndex start, CellIndex end, Cell[][] checkerBoard, Manuals manuals){
+        //create cells to simulate move
+        Cell startCell = checkerBoard[start.getRow()][start.getColumn()];
+        Cell endCell = checkerBoard[end.getRow()][end.getColumn()];
+        Minion startMinion = startCell.getMinion();
+        Minion endMinion = endCell.getMinion();
+        startCell.setMinion(null);
+        endCell.setMinion(startMinion);
+        if (isCheck(startMinion.isBlack(), checkerBoard, manuals)){
+            startCell.setMinion(startMinion);
+            endCell.setMinion(endMinion);
+            return false;
+        }
+        else{
+            startCell.setMinion(startMinion);
+            endCell.setMinion(endMinion);
+            return true;
+        }
+    }
+
 
 }
 
