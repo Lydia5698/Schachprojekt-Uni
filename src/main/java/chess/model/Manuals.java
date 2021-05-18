@@ -50,7 +50,7 @@ public class Manuals {
         }
         return notOccupied;
     }
-
+//todo vernünftige doku wenn nicht sofort ersichtlich
     private boolean checkIfFieldsInBetweenNotOccupied(CellIndex start, CellIndex end, Cell[][] checkerBoard, boolean notOccupied) {
         boolean fieldsInBetweenNotOccupied = notOccupied;
         int diffRow = start.getRow() - end.getRow(); //positiv dann gehen wir nach oben, negativ nach unten (weil wir von oben zählen)
@@ -477,7 +477,7 @@ public class Manuals {
     }
 
     private boolean checkRochade(boolean black, ArrayList<Move> MoveList) {
-        boolean lRNM = true, rRNM = true, kNM = true; //RookNotMoved
+        boolean lRNM = true, rRNM = true, kNM = true; //RookNotMoved // l*eft; r*ight; k*ing
         for (Move move : MoveList) {
             if (!black) { //white people
                 switch (move.getStart()) {
@@ -509,20 +509,44 @@ public class Manuals {
         return kNM && (lRNM || rRNM);
     }
 
-    private CellIndex moveRochade(CellIndex start, boolean black, CellIndex end, Cell[][] checkerBoard, ArrayList<Move> moveList) {
-        CellIndex coordinatesKing = new CellIndex(-1, -1); //-1 als ungueltigen wert => filter um fehler abzufangen, damit könig nicht sonstwo steht
+    private void moveRochade(CellIndex start, boolean black, CellIndex end, Cell[][] checkerBoard, ArrayList<Move> moveList) {
         if (checkRochade(black, moveList) && checkIfWayIsNotOccupied(start, end, checkerBoard)) {
             if (black) {
-                coordinatesKing.setColumn(1);
-                coordinatesKing.setRow(3);
-                //todo türmchen setzen / korrds anpassen
+                Cell kingCell = checkerBoard[7][4];//E8 rechte rochade
+                Cell towrCell = checkerBoard[7][7];
+                Cell towlCell = checkerBoard[7][0];
+                if(checkIfFieldsInBetweenNotOccupied(start, end, checkerBoard,false) && end.getColumn() == 6) {
+                    checkerBoard[7][6] = kingCell;
+                    checkerBoard[7][4] = null;
+                    checkerBoard[7][5] = towrCell;
+                    checkerBoard[7][7] = null;
+                }
+                if(checkIfFieldsInBetweenNotOccupied(start, end, checkerBoard,false) && end.getColumn() == 2) {
+                    checkerBoard[7][2] = kingCell;
+                    checkerBoard[7][4] = null;
+                    checkerBoard[7][3] = towlCell;
+                    checkerBoard[7][0] = null;
+                }
 
             } else {
-                coordinatesKing.setColumn(1);
-                coordinatesKing.setRow(7);
+                    Cell kingCell = checkerBoard[0][4];//E8 rechte rochade
+                    Cell towrCell = checkerBoard[0][7];
+                    Cell towlCell = checkerBoard[0][0];
+                    if(checkIfFieldsInBetweenNotOccupied(start, end, checkerBoard,false) && end.getColumn() == 6) {
+                        checkerBoard[0][6] = kingCell;
+                        checkerBoard[0][4] = null;
+                        checkerBoard[0][5] = towrCell;
+                        checkerBoard[0][7] = null;
+                    }
+                    if(checkIfFieldsInBetweenNotOccupied(start, end, checkerBoard,false) && end.getColumn() == 2) {
+                        checkerBoard[0][2] = kingCell;
+                        checkerBoard[0][4] = null;
+                        checkerBoard[0][3] = towlCell;
+                        checkerBoard[0][0] = null;
+                    }
             }
         }
-        return coordinatesKing;
+
     }
 
 }
