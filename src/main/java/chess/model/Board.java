@@ -24,7 +24,6 @@ public class Board {
     public List<String> beaten = new ArrayList<>();
     private ArrayList<Move> moveList = new ArrayList<>();
     private boolean blackIsTurn = false;
-    private ArrayList<Move> moveList = new ArrayList<>();
 
     private boolean gameEnd = false;
     private boolean simple = false;
