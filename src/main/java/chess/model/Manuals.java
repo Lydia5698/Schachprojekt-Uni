@@ -4,7 +4,6 @@ package chess.model;
 import chess.model.figures.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Manuals {
@@ -477,11 +476,8 @@ public class Manuals {
         }
     }
 
-    private CellIndex moveRochade(CellIndex start, boolean black, CellIndex end, Cell[][] checkerBoard, ArrayList<Move> MoveList) {
-        CellIndex coordinatesKing = new CellIndex(-1, -1);
-
+    private boolean checkRochade(boolean black, ArrayList<Move> MoveList) {
         boolean lRNM = true, rRNM = true, kNM = true; //RookNotMoved
-        Minion testMinion;
         for (Move move : MoveList) {
             if (!black) { //white people
                 switch (move.getStart()) {
@@ -510,21 +506,23 @@ public class Manuals {
                 }
             }
         }
+        return kNM && (lRNM || rRNM);
+    }
 
-        if (kNM && lRNM && checkIfWayIsNotOccupied(start, end, checkerBoard)) {
+    private CellIndex moveRochade(CellIndex start, boolean black, CellIndex end, Cell[][] checkerBoard, ArrayList<Move> moveList) {
+        CellIndex coordinatesKing = new CellIndex(-1, -1); //-1 als ungueltigen wert => filter um fehler abzufangen, damit könig nicht sonstwo steht
+        if (checkRochade(black, moveList) && checkIfWayIsNotOccupied(start, end, checkerBoard)) {
             if (black) {
                 coordinatesKing.setColumn(1);
                 coordinatesKing.setRow(3);
+                //todo türmchen setzen / korrds anpassen
 
-        }else if(kNM && rRNM && checkIfWayIsNotOccupied(start, end, checkerBoard)){
-            if(black){
+            } else {
                 coordinatesKing.setColumn(1);
                 coordinatesKing.setRow(7);
-        }
-
-        return coordinatesKing;
             }
         }
         return coordinatesKing;
     }
+
 }
