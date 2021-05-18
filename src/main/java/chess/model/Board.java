@@ -17,14 +17,17 @@ import java.util.List;
 public class Board {
     Cell[][] checkerBoard = new Cell[8][8]; //feldgröße
     public Manuals manuals = new Manuals();
+    public SpecialManuals spManuals = new SpecialManuals();
     private char[] officerline = "RNBQKBNR".toCharArray();
     private char[] frontline = "PPPPPPPP".toCharArray();
     static List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
     public List<String> beaten = new ArrayList<>();
+    private ArrayList<Move> moveList = new ArrayList<>();
     private boolean blackIsTurn = false;
     private ArrayList<Move> moveList = new ArrayList<>();
 
     private boolean gameEnd = false;
+    private boolean simple = false;
 
     public Board() {
         initHorizont(0, true);
@@ -124,12 +127,6 @@ public class Board {
         if (!endCell.isEmpty() && minion.isBlack() == !isBeaten.isBlack()) {
             beaten.add(String.valueOf(isBeaten.print_minions()));
         }
-        /*if(manuals.isValidEnPassant(startIndex, endIndex, checkerBoard)){
-            startCell.setMinion(null);
-            endCell.setMinion(minion);
-            blackIsTurn = !blackIsTurn;
-            System.out.println("!" + move.getStart() + "-" + move.getEnd());
-        }*/
 
         if (manuals.checkIfValidMove(startIndex, endIndex, checkerBoard)&& manuals.checkMoveMakesNoSelfCheck(startIndex, endIndex, checkerBoard, manuals)) {
             moveList.add(move);
@@ -137,18 +134,30 @@ public class Board {
             endCell.setMinion(minion);
             blackIsTurn = !blackIsTurn;
             System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
-            manuals.promote(endIndex, promoteTo, checkerBoard);
+            spManuals.promote(endIndex, promoteTo, checkerBoard);
             //minion, ist die figur die bewegt wird, isCheck muss auf die gegnerische team farbe angewendet werden
-            if (manuals.isCheck(!(minion.isBlack()), checkerBoard, manuals)) { //TODO flag einfuegen fuer aufrufe mit --simple
-                //System.out.print("!Check"); //auskommentiert, damit man das programm mit dem checker pruefen kann
+            if (manuals.isCheck(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
+                System.out.println("!Check");
             }
-            if (manuals.checkMate(!(minion.isBlack()), checkerBoard, manuals)) { //TODO flag einfuegen fuer aufrufe mit --simple
+            if (manuals.checkMate(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
                 System.out.println("!Check Mate");
 
             }
+
         } else if(manuals.checkRochade(blackIsTurn, moveList, startIndex, endIndex)){
             manuals.moveRochade(startIndex, blackIsTurn, endIndex, checkerBoard, manuals);
             moveList.add(move);
+
+        }
+        else if(spManuals.isValidEnPassant(startIndex, endIndex, checkerBoard, moveList)){
+            Move lastMove = moveList.get(moveList.size() - 1);
+            CellIndex endIndexLastMove = cellIndexFor(lastMove.getEnd());
+            Cell endCellLastMove = checkerBoard[endIndexLastMove.getRow()][endIndexLastMove.getColumn()];
+            moveList.add(move);
+            startCell.setMinion(null);
+            endCell.setMinion(minion);
+            endCellLastMove.setMinion(null);
+
             blackIsTurn = !blackIsTurn;
             System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
         }
@@ -165,7 +174,7 @@ public class Board {
      * @return a CellIndex with two int
      */
 
-    public CellIndex cellIndexFor(String stringIndex) {
+    public static CellIndex cellIndexFor(String stringIndex) {
         String startColumn = stringIndex.substring(0, 1);
         String startRowString = stringIndex.substring(1, 2);
         return new CellIndex(8 - Integer.parseInt(startRowString), columns.indexOf(startColumn));
@@ -186,6 +195,18 @@ public class Board {
 
     public boolean isGameEnd() {
         return gameEnd;
+    }
+
+    public boolean isSimple() {
+        return simple;
+    }
+
+    public void setSimple(boolean simple) {
+        this.simple = simple;
+    }
+
+    public ArrayList<Move> getMoveList() {
+        return moveList;
     }
 
 }
