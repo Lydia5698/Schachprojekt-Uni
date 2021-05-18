@@ -23,6 +23,7 @@ public class Board {
     public List<String> beaten = new ArrayList<>();
     private boolean blackIsTurn = false;
     private boolean gameEnd = false;
+    private boolean simple = false;
 
     public Board() {
         initHorizont(0, true);
@@ -136,10 +137,10 @@ public class Board {
             System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
             manuals.promote(endIndex, promoteTo, checkerBoard);
             //minion, ist die figur die bewegt wird, isCheck muss auf die gegnerische team farbe angewendet werden
-            if (manuals.isCheck(!(minion.isBlack()), checkerBoard, manuals)) { //TODO flag einfuegen fuer aufrufe mit --simple
-                //System.out.print("!Check"); //auskommentiert, damit man das programm mit dem checker pruefen kann
+            if (manuals.isCheck(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
+                System.out.println("!Check");
             }
-            if (manuals.checkMate(!(minion.isBlack()), checkerBoard, manuals)) { //TODO flag einfuegen fuer aufrufe mit --simple
+            if (manuals.checkMate(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
                 System.out.println("!Check Mate");
 
             }
@@ -179,4 +180,11 @@ public class Board {
         return gameEnd;
     }
 
+    public boolean isSimple() {
+        return simple;
+    }
+
+    public void setSimple(boolean simple) {
+        this.simple = simple;
+    }
 }
