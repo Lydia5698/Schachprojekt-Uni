@@ -21,6 +21,7 @@ public class Board {
     private char[] frontline = "PPPPPPPP".toCharArray();
     static List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
     public List<String> beaten = new ArrayList<>();
+    private ArrayList<Move> moveList = new ArrayList<>();
     private boolean blackIsTurn = false;
     private boolean gameEnd = false;
     private boolean simple = false;
@@ -123,14 +124,9 @@ public class Board {
         if (!endCell.isEmpty() && minion.isBlack() == !isBeaten.isBlack()) {
             beaten.add(String.valueOf(isBeaten.print_minions()));
         }
-        /*if(manuals.isValidEnPassant(startIndex, endIndex, checkerBoard)){
-            startCell.setMinion(null);
-            endCell.setMinion(minion);
-            blackIsTurn = !blackIsTurn;
-            System.out.println("!" + move.getStart() + "-" + move.getEnd());
-        }*/
 
         if (manuals.checkIfValidMove(startIndex, endIndex, checkerBoard)&& manuals.checkMoveMakesNoSelfCheck(startIndex, endIndex, checkerBoard, manuals)) {
+            moveList.add(move);
             startCell.setMinion(null);
             endCell.setMinion(minion);
             blackIsTurn = !blackIsTurn;
@@ -144,7 +140,19 @@ public class Board {
                 System.out.println("!Check Mate");
 
             }
-        } else {
+        }
+        else if(manuals.isValidEnPassant(startIndex, endIndex, checkerBoard, moveList)){
+            Move lastMove = moveList.get(moveList.size() - 1);
+            CellIndex endIndexLastMove = cellIndexFor(lastMove.getEnd());
+            Cell endCellLastMove = checkerBoard[endIndexLastMove.getRow()][endIndexLastMove.getColumn()];
+            moveList.add(move);
+            startCell.setMinion(null);
+            endCell.setMinion(minion);
+            endCellLastMove.setMinion(null);
+            blackIsTurn = !blackIsTurn;
+            System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
+        }
+        else {
             System.out.println("!Move not allowed");
         }
     }
@@ -157,7 +165,7 @@ public class Board {
      * @return a CellIndex with two int
      */
 
-    public CellIndex cellIndexFor(String stringIndex) {
+    public static CellIndex cellIndexFor(String stringIndex) {
         String startColumn = stringIndex.substring(0, 1);
         String startRowString = stringIndex.substring(1, 2);
         return new CellIndex(8 - Integer.parseInt(startRowString), columns.indexOf(startColumn));

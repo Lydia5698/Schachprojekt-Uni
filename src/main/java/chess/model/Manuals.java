@@ -6,6 +6,8 @@ import chess.model.figures.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static chess.model.Board.cellIndexFor;
+
 public class Manuals {
     //regelwerk; valide steuerung der minions
 
@@ -329,7 +331,7 @@ public class Manuals {
     }
 
     public boolean moveOfRightColour(Move move, Board board) {
-        CellIndex currentIndex = board.cellIndexFor(move.getStart());
+        CellIndex currentIndex = cellIndexFor(move.getStart());
         Cell currentCell = board.getCheckerBoard()[currentIndex.row][currentIndex.column];
         if (currentCell.isEmpty()) {
             return false;
@@ -402,7 +404,7 @@ public class Manuals {
      * @param checkerboard Chessboard
      * @return a boolean if the en Passant is valid
      */
-    boolean isValidEnPassant(CellIndex startIndex, CellIndex endIndex, Cell[][] checkerboard) {
+    boolean isValidEnPassant(CellIndex startIndex, CellIndex endIndex, Cell[][] checkerboard, ArrayList<Move> moveList) {
         Cell startCell = checkerboard[startIndex.row][startIndex.column];
         Cell endCell = checkerboard[endIndex.row][endIndex.column];
         int diffRow = startIndex.getRow() - endIndex.getRow(); //positiv dann gehen wir nach oben, negativ nach unten (weil wir von oben zählen)
@@ -430,28 +432,28 @@ public class Manuals {
             }
         }
         // check if the move is like an Bishop move.
-        /*if (Math.abs(diffRow) == Math.abs(diffColumn)) {
+        if (Math.abs(diffRow) == Math.abs(diffColumn)) {
             // Check move List if the last move was an Pawn move.
-            if (// move List is Empty) {
+            if (moveList.isEmpty()) {
                 return false;
             }
             Move lastMove = moveList.get(moveList.size() - 1);
             CellIndex lastMoveEnd = cellIndexFor(lastMove.getEnd());
             CellIndex lastMoveStart = cellIndexFor(lastMove.getStart());
+            Cell endLastMoveCell = checkerboard[lastMoveEnd.row][lastMoveEnd.column];
             // Pawn speichern in moveList? Flag?
 
-            if (// lastMove Piece == Pawn) {
+            if (String.valueOf(endLastMoveCell.getMinion().getMinion_type()).equals("P")) {
                 // The pawn should be moving two steps forward/backward.
                 // And our pawn should be moving to the same file as the last
                 // pawn
-                if (Math.abs(lastMoveEnd.row - lastMoveStart.row) == 2
-                        && lastMoveEnd.row == startIndex.row) {
-                    return true;
-                }
+                return Math.abs(lastMoveEnd.row - lastMoveStart.row) == 2
+                        && lastMoveEnd.row == startIndex.row;
             }
-        }*/
+        }
         return false;
     }
+
 
     protected boolean checkMoveMakesNoSelfCheck(CellIndex start, CellIndex end, Cell[][] checkerBoard, Manuals manuals){
         //create cells to simulate move
