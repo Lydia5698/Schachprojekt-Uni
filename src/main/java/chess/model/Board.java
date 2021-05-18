@@ -146,7 +146,13 @@ public class Board {
                 System.out.println("!Check Mate");
 
             }
-        } else {
+        } else if(manuals.checkRochade(blackIsTurn, moveList, startIndex, endIndex)){
+            manuals.moveRochade(startIndex, blackIsTurn, endIndex, checkerBoard, manuals);
+            moveList.add(move);
+            blackIsTurn = !blackIsTurn;
+            System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
+        }
+        else {
             System.out.println("!Move not allowed");
         }
     }
