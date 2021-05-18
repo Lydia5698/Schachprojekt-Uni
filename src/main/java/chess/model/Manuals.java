@@ -12,7 +12,16 @@ public class Manuals {
     public Manuals() {
     }
 
-
+    /**
+     * The method checkIfWayIsNotOccupied checks if the chess fields between the start Cell of the move
+     * and the end Cell of the move are empty. If the way is empty the move should be allowed (return true).
+     * The method also checks if the end Cell has a piece of the same colour, then no move should be allowed (return false).
+     * For knight moves it only checks if the last Cell has a piece of the same colour.
+     * @param start CellIndex of the start of the move.
+     * @param end CellIndex of the end of the move.
+     * @param checkerBoard The chessboard at the moment of the method call.
+     * @return boolean true if the way is not occupied and the end Cell does not have a piece of the same colour.
+     */
     protected boolean checkIfWayIsNotOccupied(CellIndex start, CellIndex end, Cell[][] checkerBoard) {
         Cell startCell = checkerBoard[start.getRow()][start.getColumn()];
         Cell endCell = checkerBoard[end.getRow()][end.getColumn()];
