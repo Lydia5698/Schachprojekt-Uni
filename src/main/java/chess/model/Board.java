@@ -22,6 +22,8 @@ public class Board {
     static List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
     public List<String> beaten = new ArrayList<>();
     private boolean blackIsTurn = false;
+    private ArrayList<Move> moveList = new ArrayList<>();
+
     private boolean gameEnd = false;
 
     public Board() {
@@ -130,6 +132,7 @@ public class Board {
         }*/
 
         if (manuals.checkIfValidMove(startIndex, endIndex, checkerBoard)&& manuals.checkMoveMakesNoSelfCheck(startIndex, endIndex, checkerBoard, manuals)) {
+            moveList.add(move);
             startCell.setMinion(null);
             endCell.setMinion(minion);
             blackIsTurn = !blackIsTurn;

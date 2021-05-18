@@ -4,6 +4,7 @@ package chess.model;
 import chess.model.figures.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Manuals {
@@ -17,8 +18,9 @@ public class Manuals {
      * and the end Cell of the move are empty. If the way is empty the move should be allowed (return true).
      * The method also checks if the end Cell has a piece of the same colour, then no move should be allowed (return false).
      * For knight moves it only checks if the last Cell has a piece of the same colour.
-     * @param start CellIndex of the start of the move.
-     * @param end CellIndex of the end of the move.
+     *
+     * @param start        CellIndex of the start of the move.
+     * @param end          CellIndex of the end of the move.
      * @param checkerBoard The chessboard at the moment of the method call.
      * @return boolean true if the way is not occupied and the end Cell does not have a piece of the same colour.
      */
@@ -50,7 +52,7 @@ public class Manuals {
         return notOccupied;
     }
 
-    private boolean checkIfFieldsInBetweenNotOccupied(CellIndex start, CellIndex end, Cell[][] checkerBoard, boolean notOccupied){
+    private boolean checkIfFieldsInBetweenNotOccupied(CellIndex start, CellIndex end, Cell[][] checkerBoard, boolean notOccupied) {
         boolean fieldsInBetweenNotOccupied = notOccupied;
         int diffRow = start.getRow() - end.getRow(); //positiv dann gehen wir nach oben, negativ nach unten (weil wir von oben zählen)
         int diffColumn = start.getColumn() - end.getColumn();//negativ nach rechts, positiv nach links
@@ -89,7 +91,7 @@ public class Manuals {
         return fieldsInBetweenNotOccupied;
     }
 
-    private boolean checkIfPawnMoveIsNotOccupied(CellIndex start, CellIndex end, Cell[][] checkerBoard){
+    private boolean checkIfPawnMoveIsNotOccupied(CellIndex start, CellIndex end, Cell[][] checkerBoard) {
         Cell startCell = checkerBoard[start.getRow()][start.getColumn()];
         Cell endCell = checkerBoard[end.getRow()][end.getColumn()];
         boolean pawnMoveNotOccupied = false;
@@ -199,7 +201,7 @@ public class Manuals {
             return checkMate;
         }
         CellIndex kingIndex = coordinatesKing(isBlack, checker);
-        if(manuals.checkIfKingIsAbleToMove(kingIndex, checker, manuals)){
+        if (manuals.checkIfKingIsAbleToMove(kingIndex, checker, manuals)) {
             checkMate = false;
             return checkMate;
         }
@@ -209,17 +211,17 @@ public class Manuals {
         // get attackers path as CellIndex
         CellIndex attackerIndex = attackersIndex.get(0);
         List<CellIndex> attackerPath = attackerPath(attackerIndex, kingIndex);
-        if(checkIfPieceCanProtectTheOwnKing(checker, attackerPath, isBlack)){
+        if (checkIfPieceCanProtectTheOwnKing(checker, attackerPath, isBlack)) {
             checkMate = false;
             return checkMate;
         }
         return checkMate;
     }
 
-    private boolean checkIfPieceCanProtectTheOwnKing(Cell[][] checker, List<CellIndex> attackerPath, boolean isBlack){
+    private boolean checkIfPieceCanProtectTheOwnKing(Cell[][] checker, List<CellIndex> attackerPath, boolean isBlack) {
         boolean pieceCanProtectOwnKing = false;
-        for(int row=0; row<8;row++){
-            for(int col=0; col<8; col++){
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
                 if (!checker[row][col].isEmpty() && !String.valueOf(checker[row][col].getMinion().getMinion_type()).equals("K") && checker[row][col].getMinion().isBlack() == isBlack) {
                     for (CellIndex index : attackerPath) {
                         if (checkIfValidMove(new CellIndex(row, col), index, checker)) {
@@ -234,7 +236,7 @@ public class Manuals {
         return pieceCanProtectOwnKing;
     }
 
-    private boolean checkIfKingIsAbleToMove(CellIndex kingIndex, Cell[][] checker, Manuals manuals ){
+    private boolean checkIfKingIsAbleToMove(CellIndex kingIndex, Cell[][] checker, Manuals manuals) {
         boolean ableToMove = false;
         Cell kingCell = checker[kingIndex.getRow()][kingIndex.getColumn()];
         Minion king = kingCell.getMinion();
@@ -292,7 +294,7 @@ public class Manuals {
         return attackerPath;
     }
 
-    private List<CellIndex> attackerPathNoKnight(CellIndex attacker, CellIndex victim){
+    private List<CellIndex> attackerPathNoKnight(CellIndex attacker, CellIndex victim) {
         List<CellIndex> attackerPathNoKnight = new ArrayList<>();
         int diffRow = attacker.getRow() - victim.getRow(); //positiv dann gehen wir nach oben, negativ nach unten (weil wir von oben zählen)
         int diffColumn = attacker.getColumn() - victim.getColumn(); //negativ nach rechts, positiv nach links
@@ -340,7 +342,8 @@ public class Manuals {
 
     /**
      * isValidPromotion checks if a Pawn has reached the last row of the Board. Then it is possible to promote him
-     * @param endIndex The endIndex of the move
+     *
+     * @param endIndex     The endIndex of the move
      * @param checkerboard The Chessboard
      * @return boolean if the Promotion is Valid
      */
@@ -366,8 +369,9 @@ public class Manuals {
     /**
      * Promote promotes an Pawn to another Minion. It is possible to get promoted to a Knight, Bishop, Queen or Rook.
      * Before the Pawn gets a Promotion the Methode isValidPromotion is checking if the promotion is valid.
-     * @param endIndex endIndex of the move
-     * @param promoteTo the Minion-Type for the Promotion. Only Bishop, Knight, Rook or Queen are allowed
+     *
+     * @param endIndex     endIndex of the move
+     * @param promoteTo    the Minion-Type for the Promotion. Only Bishop, Knight, Rook or Queen are allowed
      * @param checkerboard the Chessboard
      */
     // promotes Pawn to the Minion specified
@@ -397,8 +401,9 @@ public class Manuals {
 
     /**
      * is ValidEnPassant checks if the Pawn can move like en Passant
-     * @param startIndex startIndex of the move
-     * @param endIndex endIndex of the move
+     *
+     * @param startIndex   startIndex of the move
+     * @param endIndex     endIndex of the move
      * @param checkerboard Chessboard
      * @return a boolean if the en Passant is valid
      */
@@ -453,7 +458,7 @@ public class Manuals {
         return false;
     }
 
-    protected boolean checkMoveMakesNoSelfCheck(CellIndex start, CellIndex end, Cell[][] checkerBoard, Manuals manuals){
+    protected boolean checkMoveMakesNoSelfCheck(CellIndex start, CellIndex end, Cell[][] checkerBoard, Manuals manuals) {
         //create cells to simulate move
         Cell startCell = checkerBoard[start.getRow()][start.getColumn()];
         Cell endCell = checkerBoard[end.getRow()][end.getColumn()];
@@ -461,16 +466,65 @@ public class Manuals {
         Minion endMinion = endCell.getMinion();
         startCell.setMinion(null);
         endCell.setMinion(startMinion);
-        if (isCheck(startMinion.isBlack(), checkerBoard, manuals)){
+        if (isCheck(startMinion.isBlack(), checkerBoard, manuals)) {
             startCell.setMinion(startMinion);
             endCell.setMinion(endMinion);
             return false;
-        }
-        else{
+        } else {
             startCell.setMinion(startMinion);
             endCell.setMinion(endMinion);
             return true;
         }
     }
 
+    private CellIndex moveRochade(CellIndex start, boolean black, CellIndex end, Cell[][] checkerBoard, ArrayList<Move> MoveList) {
+        CellIndex coordinatesKing = new CellIndex(-1, -1);
+
+        boolean lRNM = true, rRNM = true, kNM = true; //RookNotMoved
+        Minion testMinion;
+        for (Move move : MoveList) {
+            if (!black) { //white people
+                switch (move.getStart()) {
+                    case "e1":
+                        kNM = false;
+                        break;
+                    case "a1":
+                        lRNM = false;
+                        break;
+                    case "h1":
+                        rRNM = false;
+                        break;
+                }
+            } else //heinrichs army of darkness
+            { //white people
+                switch (move.getStart()) {
+                    case "e8":
+                        kNM = false;
+                        break;
+                    case "a8":
+                        lRNM = false;
+                        break;
+                    case "h8":
+                        rRNM = false;
+                        break;
+                }
+            }
+        }
+
+        if (kNM && lRNM && checkIfWayIsNotOccupied(start, end, checkerBoard)) {
+            if (black) {
+                coordinatesKing.setColumn(1);
+                coordinatesKing.setRow(3);
+
+        }else if(kNM && rRNM && checkIfWayIsNotOccupied(start, end, checkerBoard)){
+            if(black){
+                coordinatesKing.setColumn(1);
+                coordinatesKing.setRow(7);
+        }
+
+        return coordinatesKing;
+            }
+        }
+        return coordinatesKing;
+    }
 }
