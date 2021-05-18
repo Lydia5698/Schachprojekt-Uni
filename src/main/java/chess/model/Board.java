@@ -17,6 +17,7 @@ import java.util.List;
 public class Board {
     Cell[][] checkerBoard = new Cell[8][8]; //feldgröße
     public Manuals manuals = new Manuals();
+    public SpecialManuals spManuals = new SpecialManuals();
     private char[] officerline = "RNBQKBNR".toCharArray();
     private char[] frontline = "PPPPPPPP".toCharArray();
     static List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
@@ -131,7 +132,7 @@ public class Board {
             endCell.setMinion(minion);
             blackIsTurn = !blackIsTurn;
             System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
-            manuals.promote(endIndex, promoteTo, checkerBoard);
+            spManuals.promote(endIndex, promoteTo, checkerBoard);
             //minion, ist die figur die bewegt wird, isCheck muss auf die gegnerische team farbe angewendet werden
             if (manuals.isCheck(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
                 System.out.println("!Check");
@@ -141,7 +142,7 @@ public class Board {
 
             }
         }
-        else if(manuals.isValidEnPassant(startIndex, endIndex, checkerBoard, moveList)){
+        else if(spManuals.isValidEnPassant(startIndex, endIndex, checkerBoard, moveList)){
             Move lastMove = moveList.get(moveList.size() - 1);
             CellIndex endIndexLastMove = cellIndexFor(lastMove.getEnd());
             Cell endCellLastMove = checkerBoard[endIndexLastMove.getRow()][endIndexLastMove.getColumn()];
