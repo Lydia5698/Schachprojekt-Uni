@@ -195,4 +195,9 @@ public class Board {
     public void setSimple(boolean simple) {
         this.simple = simple;
     }
+
+    public ArrayList<Move> getMoveList() {
+        return moveList;
+    }
+
 }

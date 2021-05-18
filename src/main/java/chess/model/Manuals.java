@@ -432,7 +432,7 @@ public class Manuals {
             }
         }
         // check if the move is like an Bishop move.
-        if (Math.abs(diffRow) == Math.abs(diffColumn)) {
+        if ((Math.abs(diffRow) == Math.abs(diffColumn)) && (Math.abs(diffColumn) == 1 && Math.abs(diffRow) == 1)) {
             // Check move List if the last move was an Pawn move.
             if (moveList.isEmpty()) {
                 return false;
@@ -441,14 +441,16 @@ public class Manuals {
             CellIndex lastMoveEnd = cellIndexFor(lastMove.getEnd());
             CellIndex lastMoveStart = cellIndexFor(lastMove.getStart());
             Cell endLastMoveCell = checkerboard[lastMoveEnd.row][lastMoveEnd.column];
-            // Pawn speichern in moveList? Flag?
-
-            if (String.valueOf(endLastMoveCell.getMinion().getMinion_type()).equals("P")) {
+            int diffColumnNewMoveLastMove = endIndex.column - lastMoveEnd.column;
+            // check if the Pawn moves in the right direction
+            // check if both Pawns are in the same row at the begining of the move
+            // check if last move was Pawn move
+            if(Math.abs(diffColumnNewMoveLastMove) == 0 && lastMoveEnd.row == startIndex.row && String.valueOf(endLastMoveCell.getMinion().getMinion_type()).equals("P")){
                 // The pawn should be moving two steps forward/backward.
-                // And our pawn should be moving to the same file as the last
+                // And our pawn should be moving to the same column as the last
                 // pawn
                 return Math.abs(lastMoveEnd.row - lastMoveStart.row) == 2
-                        && lastMoveEnd.row == startIndex.row;
+                            && endIndex.column == lastMoveEnd.column;
             }
         }
         return false;
