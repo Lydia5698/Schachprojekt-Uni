@@ -511,17 +511,21 @@ public class Manuals {
 
     private void moveRochade(CellIndex start, boolean black, CellIndex end, Cell[][] checkerBoard, ArrayList<Move> moveList) {
         if (checkRochade(black, moveList) && checkIfWayIsNotOccupied(start, end, checkerBoard)) {
+            boolean mirEgal = checkIfFieldsInBetweenNotOccupied(start, end, checkerBoard,false) &&
+                    end.getColumn() == 6;
+            boolean mehrEgal = checkIfFieldsInBetweenNotOccupied(start, end, checkerBoard,false) &&
+                    end.getColumn() == 2;
             if (black) {
                 Cell kingCell = checkerBoard[7][4];//E8 rechte rochade
                 Cell towrCell = checkerBoard[7][7];
                 Cell towlCell = checkerBoard[7][0];
-                if(checkIfFieldsInBetweenNotOccupied(start, end, checkerBoard,false) && end.getColumn() == 6) {
+                if(mirEgal) {
                     checkerBoard[7][6] = kingCell;
                     checkerBoard[7][4] = null;
                     checkerBoard[7][5] = towrCell;
                     checkerBoard[7][7] = null;
                 }
-                if(checkIfFieldsInBetweenNotOccupied(start, end, checkerBoard,false) && end.getColumn() == 2) {
+                if(mehrEgal) {
                     checkerBoard[7][2] = kingCell;
                     checkerBoard[7][4] = null;
                     checkerBoard[7][3] = towlCell;
@@ -532,13 +536,13 @@ public class Manuals {
                     Cell kingCell = checkerBoard[0][4];//E8 rechte rochade
                     Cell towrCell = checkerBoard[0][7];
                     Cell towlCell = checkerBoard[0][0];
-                    if(checkIfFieldsInBetweenNotOccupied(start, end, checkerBoard,false) && end.getColumn() == 6) {
+                    if(mirEgal) {
                         checkerBoard[0][6] = kingCell;
                         checkerBoard[0][4] = null;
                         checkerBoard[0][5] = towrCell;
                         checkerBoard[0][7] = null;
                     }
-                    if(checkIfFieldsInBetweenNotOccupied(start, end, checkerBoard,false) && end.getColumn() == 2) {
+                    if(mehrEgal) {
                         checkerBoard[0][2] = kingCell;
                         checkerBoard[0][4] = null;
                         checkerBoard[0][3] = towlCell;
