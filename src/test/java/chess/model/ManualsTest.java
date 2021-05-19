@@ -1,8 +1,10 @@
 package chess.model;
 
+import chess.model.figures.Minion;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static chess.model.Board.cellIndexFor;
 import static org.junit.jupiter.api.Assertions.*;
@@ -184,6 +186,87 @@ class ManualsTest {
         Board board = new Board();
         Move moveEmptyStartCell = new Move("e3-e4");
         assertFalse(board.manuals.moveOfRightColour(moveEmptyStartCell, board));
+    }
+
+    //checkIfPieceCanProtectTheOwnKing
+    @Test
+    void checkIfPieceCanNotProtectTheOwnKingWhite(){
+        Board board = new Board();
+        Move move = new Move("e2-e4");
+        board.applyMove(move);
+        move = new Move("e7-e5");
+        board.applyMove(move);
+        move = new Move("f1-c4");
+        board.applyMove(move);
+        move = new Move("d8-c6");
+        board.applyMove(move);
+        move = new Move("d1-h5");
+        board.applyMove(move);
+        move = new Move("g8-f6");
+        board.applyMove(move);
+        move = new Move("h5-f7");
+        CellIndex startIndex = cellIndexFor(move.getStart());
+        CellIndex endIndex = cellIndexFor(move.getEnd());
+        Cell startCell = board.checkerBoard[startIndex.getRow()][startIndex.getColumn()];
+        Cell endCell = board.checkerBoard[endIndex.getRow()][endIndex.getColumn()];
+        Minion minion = startCell.getMinion();
+        startCell.setMinion(null);
+        endCell.setMinion(minion);
+        CellIndex kingIndex = board.manuals.coordinatesKing(true, board.checkerBoard);
+        List<CellIndex> attackersIndex = board.manuals.getAttackersAsIndexList(true, board.checkerBoard);
+        CellIndex attackerIndex = attackersIndex.get(0);
+        List<CellIndex> attackerPath = board.spManuals.attackerPath(attackerIndex, kingIndex);
+        boolean canProtect = board.manuals.checkIfPieceCanProtectTheOwnKing(board.checkerBoard, attackerPath, true);
+        assertFalse(canProtect);
+    }
+    @Test
+    void checkIfPieceCanNotProtectTheOwnKingBlack(){
+        Board board = new Board();
+        Move move = new Move("g2-g4"); // Move Pawn G2-G4
+        board.applyMove(move);
+        move = new Move("e7-e5"); // Move Pawn E7-E5
+        board.applyMove(move);
+        move = new Move("f2-f3"); // Move Pawn F2-F3
+        board.applyMove(move);
+        move = new Move("d8-h4"); // Move Queen D8-H4
+        CellIndex startIndex = cellIndexFor(move.getStart());
+        CellIndex endIndex = cellIndexFor(move.getEnd());
+        Cell startCell = board.checkerBoard[startIndex.getRow()][startIndex.getColumn()];
+        Cell endCell = board.checkerBoard[endIndex.getRow()][endIndex.getColumn()];
+        Minion minion = startCell.getMinion();
+        startCell.setMinion(null);
+        endCell.setMinion(minion);
+        CellIndex kingIndex = board.manuals.coordinatesKing(false, board.checkerBoard);
+        List<CellIndex> attackersIndex = board.manuals.getAttackersAsIndexList(false, board.checkerBoard);
+        CellIndex attackerIndex = attackersIndex.get(0);
+        List<CellIndex> attackerPath = board.spManuals.attackerPath(attackerIndex, kingIndex);
+        boolean canProtect = board.manuals.checkIfPieceCanProtectTheOwnKing(board.checkerBoard, attackerPath, false);
+        assertFalse(canProtect);
+    }
+
+    @Test
+    void checkIfPieceCanProtectTheOwnKingBlack(){
+        Board board = new Board();
+        Move move = new Move("a2-a4"); // Move Pawn G2-G4
+        board.applyMove(move);
+        move = new Move("e7-e5"); // Move Pawn E7-E5
+        board.applyMove(move);
+        move = new Move("f2-f3"); // Move Pawn F2-F3
+        board.applyMove(move);
+        move = new Move("d8-h4"); // Move Queen D8-H4
+        CellIndex startIndex = cellIndexFor(move.getStart());
+        CellIndex endIndex = cellIndexFor(move.getEnd());
+        Cell startCell = board.checkerBoard[startIndex.getRow()][startIndex.getColumn()];
+        Cell endCell = board.checkerBoard[endIndex.getRow()][endIndex.getColumn()];
+        Minion minion = startCell.getMinion();
+        startCell.setMinion(null);
+        endCell.setMinion(minion);
+        CellIndex kingIndex = board.manuals.coordinatesKing(false, board.checkerBoard);
+        List<CellIndex> attackersIndex = board.manuals.getAttackersAsIndexList(false, board.checkerBoard);
+        CellIndex attackerIndex = attackersIndex.get(0);
+        List<CellIndex> attackerPath = board.spManuals.attackerPath(attackerIndex, kingIndex);
+        boolean canProtect = board.manuals.checkIfPieceCanProtectTheOwnKing(board.checkerBoard, attackerPath, false);
+        assertTrue(canProtect);
     }
 
 

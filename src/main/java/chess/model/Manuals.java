@@ -273,7 +273,7 @@ boolean checkIfFieldsInBetweenNotOccupied(CellIndex start, CellIndex end, Cell[]
      * @param isBlack Players Colour
      * @return Boolean if a Figure can move between attacker and King
      */
-    private boolean checkIfPieceCanProtectTheOwnKing(Cell[][] checker, List<CellIndex> attackerPath, boolean isBlack) {
+    boolean checkIfPieceCanProtectTheOwnKing(Cell[][] checker, List<CellIndex> attackerPath, boolean isBlack) {
         boolean pieceCanProtectOwnKing = false;
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {

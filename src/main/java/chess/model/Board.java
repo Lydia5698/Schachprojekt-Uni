@@ -25,8 +25,6 @@ public class Board {
     public List<String> beaten = new ArrayList<>();
     private ArrayList<Move> moveList = new ArrayList<>();
     private boolean blackIsTurn = false;
-
-
     private boolean gameEnd = false;
     private boolean simple = false;
 
@@ -265,6 +263,10 @@ public class Board {
 
     public ArrayList<Move> getMoveList() {
         return moveList;
+    }
+
+    public void setBlackIsTurn(boolean blackIsTurn) {
+        this.blackIsTurn = blackIsTurn;
     }
 
 }
