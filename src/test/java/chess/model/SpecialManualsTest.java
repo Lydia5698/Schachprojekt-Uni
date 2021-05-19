@@ -3,6 +3,7 @@ package chess.model;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static chess.model.Board.cellIndexFor;
 import static org.junit.jupiter.api.Assertions.*;
@@ -333,6 +334,35 @@ class SpecialManualsTest {
         CellIndex endIndex = cellIndexFor(move.getEnd());
         assertFalse(board.spManuals.checkRochade(board.getMoveList(), startIndex, endIndex, board.checkerBoard, board.manuals));
     }
+
+    @Test
+    void attackersPathWhiteBishopTest() {
+        Board board = new Board();
+        Move movePawn = new Move("e2-e4"); // Move Pawn E2-E4
+        board.applyMove(movePawn);
+        Move moveBlackPawn = new Move("d7-d5"); //Move D7-D5
+        board.applyMove(moveBlackPawn);
+        Move moveBishop = new Move("f1-b5"); // Move Bishop F1-B5
+        board.applyMove(moveBishop);
+        CellIndex bishopAttacker = cellIndexFor(moveBishop.getEnd()); //(3,1)
+        CellIndex kingVictim = new CellIndex(0,4);
+        //get attackers path
+        List<CellIndex> attackerPathBishopKingFromMethod = board.spManuals.attackerPath(bishopAttacker, kingVictim);
+        List<CellIndex> attackersPathBishopKing = new ArrayList<>();
+        attackersPathBishopKing.add(bishopAttacker);
+        attackersPathBishopKing.add(new CellIndex(2,2));
+        attackersPathBishopKing.add(new CellIndex(1,3));
+        attackersPathBishopKing.add(kingVictim);
+        boolean areEqual = true;
+        for(int elements=0; elements< attackersPathBishopKing.size(); elements++){
+            boolean sameCellIndexRow = attackersPathBishopKing.get(elements).getRow()==attackerPathBishopKingFromMethod.get(elements).getRow();
+            boolean sameCellIndexCol = attackersPathBishopKing.get(elements).getColumn()==attackerPathBishopKingFromMethod.get(elements).getColumn();
+            areEqual = areEqual && sameCellIndexRow && sameCellIndexCol;
+
+        }
+        assertTrue(areEqual);
+    }
+
 
 
 }

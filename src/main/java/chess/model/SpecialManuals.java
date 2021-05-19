@@ -39,10 +39,10 @@ public class SpecialManuals {
     }
 
     /**
-     * All Attackers without the Knight
+     * All attacker paths without the Knight path
      * @param attacker CellIndex of the attacker
      * @param victim CellIndex of the victim
-     * @return List<CellIndex> with all the Attackers without the Kight
+     * @return List<CellIndex> with all the attacker paths without the Knight path
      */
     private List<CellIndex> attackerPathNoKnight(CellIndex attacker, CellIndex victim){
         List<CellIndex> attackerPathNoKnight = new ArrayList<>();
