@@ -293,43 +293,64 @@ public class Manuals {
             return true;
         }
     }
-
-    boolean checkRochade(boolean black, ArrayList<Move> MoveList, CellIndex start, CellIndex end) {
-        int diffColumn = end.column - start.column;
-        boolean lRNM = true, rRNM = true, kNM = true; //RookNotMoved // l*eft; r*ight; k*ing
+    private boolean hasFigureMoved(CellIndex cell, ArrayList<Move> MoveList) {
         for (Move move : MoveList) {
-            if (!black) { //white people
-                switch (move.getStart()) { //TODO Fälle abfangen falls könig nicht richtig zieht e8-b8
-                    case "e1":
-                        kNM = false;
-                        break;
-                    case "a1":
-                        lRNM = false;
-                        break;
-                    case "h1":
-                        rRNM = false;
-                        break;
-                }
-            } else //heinrichs army of darkness
-            { //white people
-                switch (move.getStart()) {
-                    case "e8":
-                        kNM = false;
-                        break;
-                    case "a8":
-                        lRNM = false;
-                        break;
-                    case "h8":
-                        rRNM = false;
-                        break;
-                }
+            if ((cellIndexFor(move.getStart())).equals(cell)
+                    || (cellIndexFor(move.getEnd())).equals(cell)) {
+                return true;
             }
         }
-        if(!(Math.abs(diffColumn) == 2)){
-            return false;
-        } else {
-            return kNM && (lRNM || rRNM);
+        return false;
+    }
+
+    boolean checkRochade(ArrayList<Move> MoveList, CellIndex start, CellIndex end, Cell[][] checkerboard) {
+        int diffColumn = end.column - start.column;
+        int diffRow = end.row - start.row;
+        Cell startCell = checkerboard[start.row][start.column];
+        CellIndex rookWhiteL = cellIndexFor("a1");
+        CellIndex rookWhiteR = cellIndexFor("h1");
+        CellIndex rookBlackL = cellIndexFor("a8");
+        CellIndex rookBlackR = cellIndexFor("h8");
+        CellIndex kingBlack = cellIndexFor("e8");
+        CellIndex kingWhite = cellIndexFor("e1");
+        boolean validRochade = !startCell.isEmpty();
+
+       if(startCell.getMinion().isBlack()){
+            if(hasFigureMoved(rookBlackL, MoveList) || hasFigureMoved(rookBlackR, MoveList) || hasFigureMoved(kingBlack, MoveList)){
+                validRochade = false;
+            }
+       } else {
+            if (hasFigureMoved(rookWhiteL, MoveList) || hasFigureMoved(rookWhiteR, MoveList)|| hasFigureMoved(kingWhite, MoveList)) {
+                validRochade = false;
+            }
         }
+        if(startCell.getMinion().isBlack()){
+            if(!(checkIfFieldsInBetweenNotOccupied(start, rookBlackL, checkerboard, true)) && end.column == 2){ //&& checkMoveMakesNoSelfCheck(start, rookBlackL, checkerboard, manuals)){
+                validRochade = false;
+            }
+            if(!(checkIfFieldsInBetweenNotOccupied(start, rookBlackR, checkerboard, true))&& end.column == 6){ //&& checkMoveMakesNoSelfCheck(start, rookBlackL, checkerboard, manuals)){
+                validRochade = false;
+            }
+        }
+        else {
+            if(!(checkIfFieldsInBetweenNotOccupied(start, rookWhiteL, checkerboard, true)) && end.column == 2){ //&& checkMoveMakesNoSelfCheck(start, rookBlackL, checkerboard, manuals)){
+                validRochade = false;
+            }
+            if(!(checkIfFieldsInBetweenNotOccupied(start, rookWhiteR, checkerboard, true)) && end.column == 6){ //&& checkMoveMakesNoSelfCheck(start, rookBlackL, checkerboard, manuals)){
+                validRochade = false;
+            }
+        }
+
+        if(!(Math.abs(diffColumn) == 2 && String.valueOf(startCell.getMinion().getMinion_type()).equals("K"))){
+            validRochade = false;
+        }
+        if(!((start.row == 0 && end.row == 0) || (start.row == 7 && end.row == 7))){
+            validRochade = false;
+        }
+        if(!(Math.abs(diffRow) == 0)){
+            validRochade = false;
+        }
+        return validRochade;
     }
 
     void moveRochade(CellIndex start, boolean black, CellIndex end, Cell[][] checkerBoard, Manuals manuals) {
@@ -337,16 +358,19 @@ public class Manuals {
                 Cell kingCell = checkerBoard[0][4];//E8 rechte rochade
                 Cell towrCell = checkerBoard[0][7];
                 Cell towlCell = checkerBoard[0][0];
+                CellIndex kingCellIndex = new CellIndex(0,4);
+                CellIndex towrCellIndex = new CellIndex(0,7);
+                CellIndex towlCellIndex = new CellIndex(0,0);
                 Minion king = kingCell.getMinion();
                 Minion rookL = towlCell.getMinion();
                 Minion rookR = towrCell.getMinion();
-                if(checkIfFieldsInBetweenNotOccupied(start, end, checkerBoard, true) && end.getColumn() == 6 && checkMoveMakesNoSelfCheck(start, end, checkerBoard, manuals)) {
+                if(end.getColumn() == 6 && checkMoveMakesNoSelfCheck(kingCellIndex, towrCellIndex, checkerBoard, manuals)) {
                     checkerBoard[0][6].setMinion(king);
                     checkerBoard[0][4].setMinion(null);
                     checkerBoard[0][5].setMinion(rookR);
                     checkerBoard[0][7].setMinion(null);
                 }
-                if(checkIfFieldsInBetweenNotOccupied(start, end, checkerBoard, true) && end.getColumn() == 2 && checkMoveMakesNoSelfCheck(start, end, checkerBoard, manuals)) {
+                if(end.getColumn() == 2 && checkMoveMakesNoSelfCheck(kingCellIndex, towlCellIndex, checkerBoard, manuals)) {
                     checkerBoard[0][2].setMinion(king);
                     checkerBoard[0][4].setMinion(null);
                     checkerBoard[0][3].setMinion(rookL);
@@ -357,16 +381,19 @@ public class Manuals {
                     Cell kingCell = checkerBoard[7][4];//E8 rechte rochade
                     Cell towrCell = checkerBoard[7][7];
                     Cell towlCell = checkerBoard[7][0];
+                    CellIndex kingCellIndex = new CellIndex(7,4);
+                    CellIndex towrCellIndex = new CellIndex(7,7);
+                    CellIndex towlCellIndex = new CellIndex(7,0);
                     Minion king = kingCell.getMinion();
                     Minion rookL = towlCell.getMinion();
                     Minion rookR = towrCell.getMinion();
-                    if(checkIfFieldsInBetweenNotOccupied(start, end, checkerBoard, true) && end.getColumn() == 6 && checkMoveMakesNoSelfCheck(start, end, checkerBoard, manuals)) {
+                    if(end.getColumn() == 6 && checkMoveMakesNoSelfCheck(kingCellIndex, towlCellIndex, checkerBoard, manuals)) {
                         checkerBoard[7][6].setMinion(king);
                         checkerBoard[7][4].setMinion(null);
                         checkerBoard[7][5].setMinion(rookL);
                         checkerBoard[7][7].setMinion(null);
                     }
-                    if(checkIfFieldsInBetweenNotOccupied(start, end, checkerBoard, true) && end.getColumn() == 2 && checkMoveMakesNoSelfCheck(start, end, checkerBoard, manuals)) {
+                    if(end.getColumn() == 2 && checkMoveMakesNoSelfCheck(kingCellIndex, towrCellIndex, checkerBoard, manuals)) {
                         checkerBoard[7][2].setMinion(king);
                         checkerBoard[7][4].setMinion(null);
                         checkerBoard[7][3].setMinion(rookR);

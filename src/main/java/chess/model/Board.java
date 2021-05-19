@@ -24,7 +24,7 @@ public class Board {
     public List<String> beaten = new ArrayList<>();
     private ArrayList<Move> moveList = new ArrayList<>();
     private boolean blackIsTurn = false;
-    private ArrayList<Move> moveList = new ArrayList<>();
+
 
     private boolean gameEnd = false;
     private boolean simple = false;
@@ -127,8 +127,37 @@ public class Board {
         if (!endCell.isEmpty() && minion.isBlack() == !isBeaten.isBlack()) {
             beaten.add(String.valueOf(isBeaten.print_minions()));
         }
+        if(manuals.checkIfValidMove(startIndex, endIndex, checkerBoard) && manuals.checkMoveMakesNoSelfCheck(startIndex, endIndex, checkerBoard, manuals)){
+            startCell.setMinion(null);
+            endCell.setMinion(minion);
+            blackIsTurn = !blackIsTurn;
+            System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
+            moveList.add(move);
+            spManuals.promote(endIndex, promoteTo, checkerBoard);
+            //minion, ist die figur die bewegt wird, isCheck muss auf die gegnerische team farbe angewendet werden
+            if (manuals.isCheck(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
+                System.out.println("!Check");
+            }
+            if (manuals.checkMate(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
+                System.out.println("!Check Mate");
 
-        if (manuals.checkIfValidMove(startIndex, endIndex, checkerBoard)&& manuals.checkMoveMakesNoSelfCheck(startIndex, endIndex, checkerBoard, manuals)) {
+            }
+        }
+        else if(specialMove(move, startIndex, endIndex)){
+            //minion, ist die figur die bewegt wird, isCheck muss auf die gegnerische team farbe angewendet werden
+            if (manuals.isCheck(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
+                System.out.println("!Check");
+            }
+            if (manuals.checkMate(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
+                System.out.println("!Check Mate");
+
+            }
+        }
+        else {
+            System.out.println("!Move not allowed");
+        }
+
+        /*if (manuals.checkIfValidMove(startIndex, endIndex, checkerBoard) && manuals.checkMoveMakesNoSelfCheck(startIndex, endIndex, checkerBoard, manuals)) {
             moveList.add(move);
             startCell.setMinion(null);
             endCell.setMinion(minion);
@@ -144,12 +173,14 @@ public class Board {
 
             }
 
-        } else if(manuals.checkRochade(blackIsTurn, moveList, startIndex, endIndex)){
+        } /*else if(manuals.checkRochade(moveList, startIndex, endIndex, checkerBoard)){
             manuals.moveRochade(startIndex, blackIsTurn, endIndex, checkerBoard, manuals);
             moveList.add(move);
+            blackIsTurn = !blackIsTurn;
+            System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
 
-        }
-        else if(spManuals.isValidEnPassant(startIndex, endIndex, checkerBoard, moveList)){
+        }*/
+        /*else if(spManuals.isValidEnPassant(startIndex, endIndex, checkerBoard, moveList)){
             Move lastMove = moveList.get(moveList.size() - 1);
             CellIndex endIndexLastMove = cellIndexFor(lastMove.getEnd());
             Cell endCellLastMove = checkerBoard[endIndexLastMove.getRow()][endIndexLastMove.getColumn()];
@@ -163,6 +194,38 @@ public class Board {
         }
         else {
             System.out.println("!Move not allowed");
+        }
+        */
+
+    }
+
+    public boolean specialMove(Move move, CellIndex startIndex, CellIndex endIndex){
+        Cell startCell = checkerBoard[startIndex.getRow()][startIndex.getColumn()];
+        Cell endCell = checkerBoard[endIndex.getRow()][endIndex.getColumn()];
+        Minion minion = startCell.getMinion();
+        if(spManuals.isValidEnPassant(startIndex, endIndex, checkerBoard, moveList)){
+            Move lastMove = moveList.get(moveList.size() - 1);
+            CellIndex endIndexLastMove = cellIndexFor(lastMove.getEnd());
+            Cell endCellLastMove = checkerBoard[endIndexLastMove.getRow()][endIndexLastMove.getColumn()];
+            startCell.setMinion(null);
+            endCell.setMinion(minion);
+            endCellLastMove.setMinion(null);
+            blackIsTurn = !blackIsTurn;
+            System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
+            moveList.add(move);
+            return true;
+        }
+        else if(manuals.checkRochade(moveList, startIndex, endIndex, checkerBoard)){
+            manuals.moveRochade(startIndex, blackIsTurn, endIndex, checkerBoard, manuals);
+            blackIsTurn = !blackIsTurn;
+            System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
+            System.out.println("Rochade");
+            moveList.add(move);
+            return true;
+        }
+
+        else {
+            return false;
         }
     }
 

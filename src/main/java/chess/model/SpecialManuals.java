@@ -147,7 +147,7 @@ public class SpecialManuals {
         Cell endCell = checkerboard[endIndex.row][endIndex.column];
         int diffRow = startIndex.getRow() - endIndex.getRow(); //positiv dann gehen wir nach oben, negativ nach unten (weil wir von oben zählen)
         int diffColumn = startIndex.getColumn() - endIndex.getColumn();//negativ nach rechts, positiv nach links
-        // check if Final square is not empty
+        // check if Final Cell is not empty
         if (!endCell.isEmpty()) {
             return false;
         }
