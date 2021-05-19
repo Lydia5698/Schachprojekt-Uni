@@ -44,6 +44,7 @@ public class Board {
 
     /**
      * gives the chessboard as an Sting back
+     *
      * @return String chessboard
      */
     public String showBoard() {
@@ -63,8 +64,9 @@ public class Board {
 
     /**
      * fills the Board with Cells and the Minions in the Cells
+     *
      * @param horizont the row of the chessboard
-     * @param black players colour
+     * @param black    players colour
      */
     private void initHorizont(int horizont, boolean black) {
         char[] tmp = frontline;
@@ -140,7 +142,7 @@ public class Board {
             beaten.add(String.valueOf(isBeaten.print_minions()));
         }
         // check if normal move
-        if(manuals.checkIfValidMove(startIndex, endIndex, checkerBoard) && manuals.checkMoveMakesNoSelfCheck(startIndex, endIndex, checkerBoard, manuals)){
+        if (manuals.checkIfValidMove(startIndex, endIndex, checkerBoard) && manuals.checkMoveMakesNoSelfCheck(startIndex, endIndex, checkerBoard, manuals)) {
             startCell.setMinion(null);
             endCell.setMinion(minion);
             blackIsTurn = !blackIsTurn;
@@ -156,12 +158,12 @@ public class Board {
                 System.out.println("!Check Mate");
 
             }
-            if (staleMate.isStaleMate(!minion.isBlack(), checkerBoard) && !simple){
+            if (staleMate.isStaleMate(!minion.isBlack(), checkerBoard) && !simple) {
                 System.out.println("Stalemate");
             }
         }
         // check if special move
-        else if(specialMove(move, startIndex, endIndex)){
+        else if (specialMove(move, startIndex, endIndex)) {
             //check if in Check
             if (manuals.isCheck(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
                 System.out.println("!Check");
@@ -178,21 +180,21 @@ public class Board {
         }
 
 
-
     }
 
     /**
      * makes the special moves Rochade and En Passant
-     * @param move current move
+     *
+     * @param move       current move
      * @param startIndex startIndex of the move
-     * @param endIndex endIndex of the move
+     * @param endIndex   endIndex of the move
      * @return boolean if move is special move
      */
-    public boolean specialMove(Move move, CellIndex startIndex, CellIndex endIndex){
+    public boolean specialMove(Move move, CellIndex startIndex, CellIndex endIndex) {
         Cell startCell = checkerBoard[startIndex.getRow()][startIndex.getColumn()];
         Cell endCell = checkerBoard[endIndex.getRow()][endIndex.getColumn()];
         Minion minion = startCell.getMinion();
-        if(spManuals.isValidEnPassant(startIndex, endIndex, checkerBoard, moveList)){
+        if (spManuals.isValidEnPassant(startIndex, endIndex, checkerBoard, moveList)) {
             Move lastMove = moveList.get(moveList.size() - 1);
             CellIndex endIndexLastMove = cellIndexFor(lastMove.getEnd());
             Cell endCellLastMove = checkerBoard[endIndexLastMove.getRow()][endIndexLastMove.getColumn()];
@@ -203,17 +205,14 @@ public class Board {
             System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
             moveList.add(move);
             return true;
-        }
-        else if(spManuals.checkRochade(moveList, startIndex, endIndex, checkerBoard, manuals)){
+        } else if (spManuals.checkRochade(moveList, startIndex, endIndex, checkerBoard, manuals)) {
             spManuals.moveRochade(blackIsTurn, endIndex, checkerBoard, manuals);
             blackIsTurn = !blackIsTurn;
             System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
             System.out.println("Rochade");
             moveList.add(move);
             return true;
-        }
-
-        else {
+        } else {
             return false;
         }
     }
@@ -238,6 +237,7 @@ public class Board {
 
     /**
      * gives the Players Turn back
+     *
      * @return boolean players turn
      */
     public boolean isBlackIsTurn() {
@@ -251,6 +251,7 @@ public class Board {
 
     /**
      * gives the boolean gameEnd back
+     *
      * @return boolean if game is ended
      */
     public boolean isGameEnd() {

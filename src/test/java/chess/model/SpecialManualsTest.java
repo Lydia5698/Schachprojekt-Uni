@@ -46,16 +46,16 @@ class SpecialManualsTest {
     void isValidEnPassantBlack(){
         Board board = new Board();
         ArrayList<Move> moveList = board.getMoveList();
-        Move movePawn = new Move("g7-g5"); // Move Pawn G7-G5
+        Move movePawn = new Move("d7-d5"); // Move Pawn G7-G5
         board.applyMove(movePawn);
         moveList.add(movePawn);
-        movePawn = new Move("g5-g4"); // Move Pawn G5-G4
+        movePawn = new Move("d5-d4"); // Move Pawn G5-G4
         board.applyMove(movePawn);
         moveList.add(movePawn);
-        movePawn = new Move("f2-f4"); // Move Pawn F2-F4
+        movePawn = new Move("c2-c4"); // Move Pawn F2-F4
         board.applyMove(movePawn);
         moveList.add(movePawn);
-        movePawn = new Move("g4-f3"); // Move Pawn G4-F3 EnPassant
+        movePawn = new Move("d4-c3"); // Move Pawn G4-F3 EnPassant
         CellIndex startIndex = cellIndexFor(movePawn.getStart());
         CellIndex endIndex = cellIndexFor(movePawn.getEnd());
         boolean validEnPassant = board.spManuals.isValidEnPassant(startIndex, endIndex, board.checkerBoard, board.getMoveList());
@@ -63,7 +63,7 @@ class SpecialManualsTest {
         // En Passant moves correct
         board.specialMove(movePawn, startIndex, endIndex);
         Cell pawn = board.checkerBoard[endIndex.row][endIndex.column];
-        Cell beatenPawn = board.checkerBoard[6][5]; // G3
+        Cell beatenPawn = board.checkerBoard[5][3]; // D3
         boolean moveEnPassant = String.valueOf(pawn.getMinion().getMinion_type()).equals("P") && beatenPawn.isEmpty();
         assertTrue(moveEnPassant);
     }
