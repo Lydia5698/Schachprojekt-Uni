@@ -293,10 +293,10 @@ public class Manuals {
             return true;
         }
     }
-    private boolean hasFigureMoved(CellIndex cell, ArrayList<Move> MoveList) {
+    private boolean hasFigureMoved(String cell, ArrayList<Move> MoveList) {
         for (Move move : MoveList) {
-            if ((cellIndexFor(move.getStart())).equals(cell)
-                    || (cellIndexFor(move.getEnd())).equals(cell)) {
+            if ((move.getStart().equals(cell))
+                    || (move.getEnd().equals(cell))) {
                 return true;
             }
         }
@@ -311,44 +311,57 @@ public class Manuals {
         CellIndex rookWhiteR = cellIndexFor("h1");
         CellIndex rookBlackL = cellIndexFor("a8");
         CellIndex rookBlackR = cellIndexFor("h8");
-        CellIndex kingBlack = cellIndexFor("e8");
-        CellIndex kingWhite = cellIndexFor("e1");
+        String posRookWLeft = "a1";
+        String posRookWRight = "h1";
+        String posRookBLeft = "a8";
+        String posRookBRight = "h8";
+        String posKingBlack = "e8";
+        String posKingWhite = "e1";
         boolean validRochade = !startCell.isEmpty();
 
        if(startCell.getMinion().isBlack()){
-            if(hasFigureMoved(rookBlackL, MoveList) || hasFigureMoved(rookBlackR, MoveList) || hasFigureMoved(kingBlack, MoveList)){
+            if((hasFigureMoved(posRookBLeft, MoveList) && end.column == 2) || (hasFigureMoved(posRookBRight, MoveList) && end.column == 6) || hasFigureMoved(posKingBlack, MoveList)){
                 validRochade = false;
+                System.out.println("1");
             }
        } else {
-            if (hasFigureMoved(rookWhiteL, MoveList) || hasFigureMoved(rookWhiteR, MoveList)|| hasFigureMoved(kingWhite, MoveList)) {
+            if ((hasFigureMoved(posRookWLeft, MoveList) && end.column == 2) || (hasFigureMoved(posRookWRight, MoveList) && end.column == 6)|| hasFigureMoved(posKingWhite, MoveList)) {
                 validRochade = false;
+                System.out.println("2");
             }
         }
         if(startCell.getMinion().isBlack()){
             if(!(checkIfFieldsInBetweenNotOccupied(start, rookBlackL, checkerboard, true)) && end.column == 2){ //&& checkMoveMakesNoSelfCheck(start, rookBlackL, checkerboard, manuals)){
                 validRochade = false;
+                System.out.println("3");
             }
             if(!(checkIfFieldsInBetweenNotOccupied(start, rookBlackR, checkerboard, true))&& end.column == 6){ //&& checkMoveMakesNoSelfCheck(start, rookBlackL, checkerboard, manuals)){
                 validRochade = false;
+                System.out.println("4");
             }
         }
         else {
             if(!(checkIfFieldsInBetweenNotOccupied(start, rookWhiteL, checkerboard, true)) && end.column == 2){ //&& checkMoveMakesNoSelfCheck(start, rookBlackL, checkerboard, manuals)){
                 validRochade = false;
+                System.out.println("5");
             }
             if(!(checkIfFieldsInBetweenNotOccupied(start, rookWhiteR, checkerboard, true)) && end.column == 6){ //&& checkMoveMakesNoSelfCheck(start, rookBlackL, checkerboard, manuals)){
                 validRochade = false;
+                System.out.println("6");
             }
         }
 
         if(!(Math.abs(diffColumn) == 2 && String.valueOf(startCell.getMinion().getMinion_type()).equals("K"))){
             validRochade = false;
+            System.out.println("7");
         }
         if(!((start.row == 0 && end.row == 0) || (start.row == 7 && end.row == 7))){
             validRochade = false;
+            System.out.println("8");
         }
         if(!(Math.abs(diffRow) == 0)){
             validRochade = false;
+            System.out.println("9");
         }
         return validRochade;
     }
