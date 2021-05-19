@@ -245,7 +245,7 @@ public class SpecialManuals {
         return false;
     }
 
-    private boolean figureRochadeHasMoved(ArrayList<Move> MoveList, CellIndex start, CellIndex end, Cell[][] checkerboard) {
+    private boolean figureRochadeHasMoved(List<Move> MoveList, CellIndex start, CellIndex end, Cell[][] checkerboard) {
         Cell startCell = checkerboard[start.row][start.column];
         String posRookWLeft = "a1";
         String posRookWRight = "h1";
@@ -274,7 +274,7 @@ public class SpecialManuals {
      * @param manuals      the manuals
      * @return boolean if Rochade is valid
      */
-    boolean checkRochade(ArrayList<Move> MoveList, Move move, Cell[][] checkerboard, Manuals manuals) {
+    boolean checkRochade(List<Move> MoveList, Move move, Cell[][] checkerboard, Manuals manuals) {
         CellIndex start = cellIndexFor(move.getStart());
         CellIndex end = cellIndexFor(move.getEnd());
         int diffColumn = end.column - start.column;

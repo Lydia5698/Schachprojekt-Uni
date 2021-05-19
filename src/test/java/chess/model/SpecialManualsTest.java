@@ -42,7 +42,7 @@ class SpecialManualsTest {
 
     }
 
-    @Test
+    /*@Test
     void isValidEnPassantBlack(){
         Board board = new Board();
         List<Move> moveList = board.getMoveList();
@@ -66,7 +66,7 @@ class SpecialManualsTest {
         Cell beatenPawn = board.checkerBoard[5][3]; // D3
         boolean moveEnPassant = String.valueOf(pawn.getMinion().getMinion_type()).equals("P") && beatenPawn.isEmpty();
         assertTrue(moveEnPassant);
-    }
+    }*/
 
     @Test
     void isNotValidEnPassantWhite(){
