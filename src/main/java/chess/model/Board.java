@@ -17,10 +17,7 @@ import java.util.List;
 public class Board {
     Cell[][] checkerBoard = new Cell[8][8]; //feldgröße
     public Manuals manuals = new Manuals();
-    //public SpecialManuals spManuals = new SpecialManuals();
     public StaleMate staleMate = new StaleMate();
-    private char[] officerline = "RNBQKBNR".toCharArray();
-    private char[] frontline = "PPPPPPPP".toCharArray();
     static List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
     public List<String> beaten = new ArrayList<>();
     private List<Move> moveList = new ArrayList<>();
@@ -69,6 +66,9 @@ public class Board {
      * @param black    players colour
      */
     private void initHorizont(int horizont, boolean black) {
+        char[] officerline = "RNBQKBNR".toCharArray();
+        char[] frontline = "PPPPPPPP".toCharArray();
+
         char[] tmp = frontline;
         if (horizont == 0 || horizont == 7) {
             tmp = officerline;

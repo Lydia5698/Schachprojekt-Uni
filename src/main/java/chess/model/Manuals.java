@@ -16,6 +16,7 @@ import static chess.model.Board.cellIndexFor;
 public class Manuals {
     //regelwerk; valide steuerung der minions
     SpecialManuals spManuals = new SpecialManuals();
+    //public StaleMate staleMate = new StaleMate();
 
     /**
      * Creates a new Manuals instance.

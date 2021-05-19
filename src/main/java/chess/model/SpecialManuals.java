@@ -185,7 +185,6 @@ public class SpecialManuals {
         if (!endCell.isEmpty()) {
             return false;
         }
-
         // The Figure in the startCell should be a Pawn
         if (!String.valueOf(startCell.getMinion().getMinion_type()).equals("P")) {
             return false;
@@ -204,29 +203,37 @@ public class SpecialManuals {
             }
         }
         // check if the move is like an Bishop move.
-        if (Math.abs(diffRow) == Math.abs(diffColumn) && Math.abs(diffColumn) == 1 && Math.abs(diffRow) == 1) {
+        if (Math.abs(diffColumn) == 1 && Math.abs(diffRow) == 1) {
             // Check move List if the last move was an Pawn move.
             if (moveList.isEmpty()) {
                 return false;
             }
-            Move lastMove = moveList.get(moveList.size() - 1);
-            CellIndex lastMoveEnd = cellIndexFor(lastMove.getEnd());
-            CellIndex lastMoveStart = cellIndexFor(lastMove.getStart());
-            Cell endLastMoveCell = checkerboard[lastMoveEnd.row][lastMoveEnd.column];
-            int diffColumnNewMoveLastMove = endIndex.column - lastMoveEnd.column;
-            // check if the Pawn moves in the right direction
-            // check if both Pawns are in the same row at the begining of the move
-            // check if last move was Pawn move
-            if (Math.abs(diffColumnNewMoveLastMove) == 0 && lastMoveEnd.row == startIndex.row && String.valueOf(endLastMoveCell.getMinion().getMinion_type()).equals("P")) {
-                // The pawn should be moving two steps forward/backward.
-                // And our pawn should be moving to the same column as the last
-                // pawn
-                return Math.abs(lastMoveEnd.row - lastMoveStart.row) == 2
-                        && endIndex.column == lastMoveEnd.column;
-            }
+            return lastMovePawnMove(startIndex, endIndex, checkerboard, moveList);
         }
         return false;
     }
+
+    // check if the Pawn moves in the right direction
+    // check if both Pawns are in the same row at the begining of the move
+    // check if last move was Pawn move
+    private boolean lastMovePawnMove(CellIndex startIndex, CellIndex endIndex, Cell[][] checkerboard, List<Move> moveList){
+        boolean validEnPassant;
+        Move lastMove = moveList.get(moveList.size() - 1);
+        CellIndex lastMoveEnd = cellIndexFor(lastMove.getEnd());
+        CellIndex lastMoveStart = cellIndexFor(lastMove.getStart());
+        Cell endLastMoveCell = checkerboard[lastMoveEnd.row][lastMoveEnd.column];
+        int diffColumnNewMoveLastMove = endIndex.column - lastMoveEnd.column;
+        if(Math.abs(diffColumnNewMoveLastMove) == 0 && lastMoveEnd.row == startIndex.row && String.valueOf(endLastMoveCell.getMinion().getMinion_type()).equals("P")){
+            // The pawn should be moving two steps forward/backward.
+            // And our pawn should be moving to the same column as the last
+            // pawn
+            validEnPassant = Math.abs(lastMoveEnd.row - lastMoveStart.row) == 2 && endIndex.column == lastMoveEnd.column;
+            return validEnPassant;
+        }
+        return false;
+    }
+
+
 
     /**
      * checks if the figure in the Cell has moved or got beaten
