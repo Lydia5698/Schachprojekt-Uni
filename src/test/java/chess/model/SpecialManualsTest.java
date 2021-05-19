@@ -187,7 +187,9 @@ class SpecialManualsTest {
     @Test
     void promoteBlackPawn(){
         Board board = new Board();
-        Move movePawn = new Move("a7-a5"); // Move Pawn A7-A5
+        Move movePawn = new Move("a7-a6"); // Move Pawn A7-A6
+        board.applyMove(movePawn);
+        movePawn = new Move("a6-a5"); // Move Pawn A6-A5
         board.applyMove(movePawn);
         movePawn = new Move("a5-a4"); // Move Pawn A5-A4
         board.applyMove(movePawn);
@@ -209,7 +211,7 @@ class SpecialManualsTest {
         Board board = new Board();
         Move move = new Move("f2-f4"); // Move Pawn F2-F4
         board.applyMove(move);
-        move = new Move("g2-g4"); // Move Pawn G2-G4
+        move = new Move("g2-g3"); // Move Pawn G2-G3
         board.applyMove(move);
         move = new Move("h2-h4"); // Move Pawn H2-H4
         board.applyMove(move);
@@ -359,7 +361,7 @@ class SpecialManualsTest {
         Board board = new Board();
         Move move = new Move("f2-f4"); // Move Pawn F2-F4
         board.applyMove(move);
-        move = new Move("g2-g4"); // Move Pawn G2-G4
+        move = new Move("g2-g3"); // Move Pawn G2-G3
         board.applyMove(move);
         move = new Move("h2-h4"); // Move Pawn H2-H4
         board.applyMove(move);

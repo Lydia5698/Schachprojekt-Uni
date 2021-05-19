@@ -22,12 +22,9 @@ class StaleMateTest {
         StaleMate staleMate = new StaleMate();
         Move move = new Move("e2-e3");
         board.applyMove(move);
-        move = new Move("a7-a5");
-        board.applyMove(move);
-        move = new Move("d1-h5");
-        board.applyMove(move);
-        move = new Move("a8-a6");
-        board.applyMove(move);
+        board.applyMove(new Move("a7-a5"));
+        board.applyMove(new Move("d1-h5"));
+        board.applyMove(new Move("a8-a6"));
         move = new Move("h5-a5");
         board.applyMove(move);
         move = new Move("h7-h5");

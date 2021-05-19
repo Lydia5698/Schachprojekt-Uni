@@ -267,7 +267,7 @@ public class SpecialManuals {
             // case white
         } else {
             // check if Rook or King has moved and the move goes in the direction of the Rook
-            return (!((hasFigureMoved(posRookWLeft, MoveList) && end.column != 2) || (hasFigureMoved(posRookWRight, MoveList) && end.column != 6) || hasFigureMoved(posKingWhite, MoveList)));
+            return (!(hasFigureMoved(posRookWLeft, MoveList) && end.column != 2 || hasFigureMoved(posRookWRight, MoveList) && end.column != 6 || hasFigureMoved(posKingWhite, MoveList)));
         }
     }
 

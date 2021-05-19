@@ -29,7 +29,7 @@ class ManualsTest {
    @Test
     void getAttackersKingWhiteUnderAttack() {
         Board board = new Board();
-        Move movePawn = new Move("e7-e5"); // Move Pawn E7-E5
+        Move movePawn = new Move("e7-e6"); // Move Pawn E7-E6
         board.applyMove(movePawn);
         Move moveBishop = new Move("f8-b4"); // Move Bishop F8-B4
         board.applyMove(moveBishop);

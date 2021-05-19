@@ -4,7 +4,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CheckIfWayIsOccupied {
+/**
+ * The CheckIfWayIsOccupiedTest class tests the method checkIfWayIsNotOccupied.
+ * @author Jasmin Wojtkiewicz
+ */
+class CheckIfWayIsOccupiedTest {
 
     // Get Way is Occupied
     @Test
