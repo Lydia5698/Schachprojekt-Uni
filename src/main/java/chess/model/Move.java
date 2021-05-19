@@ -9,6 +9,7 @@ import java.util.List;
  */
 
 public class Move {
+    static List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
 
     private String start;
     private String end;
@@ -26,7 +27,7 @@ public class Move {
 
     }
 
-    static List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
+
 
     public String getEnd() {
         return end;

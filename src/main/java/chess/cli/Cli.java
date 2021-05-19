@@ -11,10 +11,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 
+/**
+ * Starting point of the console game
+ * @author Jasmin Wojtkiewicz
+ */
 public class Cli {
     protected static Board board = new Board();
     protected static Manuals manuals = new Manuals();
 
+    /**
+     * The entry point of the console input application.
+     * @param args The command line arguments passed to the application
+     */
     public static void main(String[] args) {
         boolean simple = Arrays.asList(args).contains("--simple");
         board.setSimple(simple);

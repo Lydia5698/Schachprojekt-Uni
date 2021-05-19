@@ -18,6 +18,11 @@ public class Minion {
     public Minion(boolean black){ //constructor
        this.black = black;
     }
+
+    /**
+     * Returns the character of the minion type
+     * @return miniontype
+     */
     public String print_minions(){return this.print_minion_type;}
 
     public boolean isBlack() {
