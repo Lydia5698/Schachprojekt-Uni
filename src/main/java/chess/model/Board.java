@@ -23,7 +23,7 @@ public class Board {
     private char[] frontline = "PPPPPPPP".toCharArray();
     static List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
     public List<String> beaten = new ArrayList<>();
-    private ArrayList<Move> moveList = new ArrayList<>();
+    private List<Move> moveList = new ArrayList<>();
     private boolean blackIsTurn = false;
     private boolean gameEnd = false;
     private boolean simple = false;
@@ -149,37 +149,21 @@ public class Board {
             System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
             moveList.add(move);
             spManuals.promote(endIndex, promoteTo, checkerBoard);
-            //check if in Check
-            if (manuals.isCheck(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
-                System.out.println("!Check");
-            }
-            //check if in Check Mate
-            if (manuals.checkMate(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
-                System.out.println("!Check Mate");
-
-            }
-            if (staleMate.isStaleMate(!minion.isBlack(), checkerBoard) && !simple) {
-                System.out.println("Stalemate");
-            }
+            //check if in Check or in CheckMate
+            checkAndPrintCheckCheckMate(minion);
+            /*if (staleMate.isStaleMate(!minion.isBlack(), checkerBoard) && !simple){
+                System.out.println("!Stalemate");
+            }*/
         }
         // check if special move
         else if (specialMove(move, startIndex, endIndex)) {
             //check if in Check
-            if (manuals.isCheck(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
-                System.out.println("!Check");
-            }
-            //check if in Check Mate
-            if (manuals.checkMate(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
-                System.out.println("!Check Mate");
-
-            }
+            checkAndPrintCheckCheckMate(minion);
         }
         // move is not allowed
         else {
             System.out.println("!Move not allowed");
         }
-
-
     }
 
     /**
@@ -212,7 +196,8 @@ public class Board {
             System.out.println("Rochade");
             moveList.add(move);
             return true;
-        } else {
+        }
+        else {
             return false;
         }
     }
@@ -245,9 +230,9 @@ public class Board {
     }
 
     public Cell[][] getCheckerBoard() {
-        return checkerBoard;
+        Cell[][] checkerBoardCopy = checkerBoard;
+        return checkerBoardCopy;
     }
-
 
     /**
      * gives the boolean gameEnd back
@@ -262,12 +247,35 @@ public class Board {
         this.simple = simple;
     }
 
-    public ArrayList<Move> getMoveList() {
+    public List<Move> getMoveList() {
         return moveList;
     }
 
     public void setBlackIsTurn(boolean blackIsTurn) {
         this.blackIsTurn = blackIsTurn;
+    }
+
+    /**
+     * Method checkAndPrintCheckCheckMate checks while a move is made if the move results in a check or checkmate for the opponent colour.
+     * If so !Check or !CheckMate are printed.
+     * @param minion the Minion, that is moving in applyMove
+     */
+    protected void checkAndPrintCheckCheckMate(Minion minion){
+        if (manuals.isCheck(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
+            System.out.println("!Check");
+        }
+        //check if in Check Mate
+        if (manuals.checkMate(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
+            System.out.println("!Check Mate");
+            gameEnd = true;
+            System.out.println("The Game has ended");
+        }
+        else if (staleMate.isStaleMate(!minion.isBlack(), checkerBoard) && !simple){
+            System.out.println("!Stalemate");
+            gameEnd = true;
+            System.out.println("The Game has ended");
+        }
+
     }
 
 }
