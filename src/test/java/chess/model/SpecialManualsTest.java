@@ -220,7 +220,7 @@ class SpecialManualsTest {
         move = new Move("e1-g1");
         CellIndex startIndex = cellIndexFor(move.getStart());
         CellIndex endIndex = cellIndexFor(move.getEnd());
-        assertTrue(board.spManuals.checkRochade(board.getMoveList(), startIndex, endIndex, board.checkerBoard, board.manuals));
+        assertTrue(board.spManuals.checkRochade(board.getMoveList(), move, board.checkerBoard, board.manuals));
         // check move Rochade
         board.setBlackIsTurn(false);
         board.specialMove(move, startIndex, endIndex);
@@ -246,7 +246,7 @@ class SpecialManualsTest {
         move = new Move("e8-g8");
         CellIndex startIndex = cellIndexFor(move.getStart());
         CellIndex endIndex = cellIndexFor(move.getEnd());
-        assertTrue(board.spManuals.checkRochade(board.getMoveList(), startIndex, endIndex, board.checkerBoard, board.manuals));
+        assertTrue(board.spManuals.checkRochade(board.getMoveList(), move, board.checkerBoard, board.manuals));
         // check move Rochade
         board.setBlackIsTurn(true);
         board.specialMove(move, startIndex, endIndex);
@@ -276,7 +276,7 @@ class SpecialManualsTest {
         move = new Move("e1-c1");
         CellIndex startIndex = cellIndexFor(move.getStart());
         CellIndex endIndex = cellIndexFor(move.getEnd());
-        assertTrue(board.spManuals.checkRochade(board.getMoveList(), startIndex, endIndex, board.checkerBoard, board.manuals));
+        assertTrue(board.spManuals.checkRochade(board.getMoveList(), move, board.checkerBoard, board.manuals));
         // check move Rochade
         board.setBlackIsTurn(false);
         board.specialMove(move, startIndex, endIndex);
@@ -306,7 +306,7 @@ class SpecialManualsTest {
         move = new Move("e8-c8");
         CellIndex startIndex = cellIndexFor(move.getStart());
         CellIndex endIndex = cellIndexFor(move.getEnd());
-        assertTrue(board.spManuals.checkRochade(board.getMoveList(), startIndex, endIndex, board.checkerBoard, board.manuals));
+        assertTrue(board.spManuals.checkRochade(board.getMoveList(), move, board.checkerBoard, board.manuals));
         // check move Rochade
         board.setBlackIsTurn(true);
         board.specialMove(move, startIndex, endIndex);
@@ -327,9 +327,7 @@ class SpecialManualsTest {
         move = new Move("b7-b5"); // Move Pawn B7-B5
         board.applyMove(move);
         move = new Move("e8-c8");
-        CellIndex startIndex = cellIndexFor(move.getStart());
-        CellIndex endIndex = cellIndexFor(move.getEnd());
-        assertFalse(board.spManuals.checkRochade(board.getMoveList(), startIndex, endIndex, board.checkerBoard, board.manuals));
+        assertFalse(board.spManuals.checkRochade(board.getMoveList(), move, board.checkerBoard, board.manuals));
     }
 
     @Test
@@ -351,10 +349,10 @@ class SpecialManualsTest {
         board.applyMove(move);
         move = new Move("a8-a7"); // Move Rook A8-A7
         board.applyMove(move);
+        move = new Move("a7-a8"); // Move Rook A8-A7
+        board.applyMove(move);
         move = new Move("e8-c8");
-        CellIndex startIndex = cellIndexFor(move.getStart());
-        CellIndex endIndex = cellIndexFor(move.getEnd());
-        assertFalse(board.spManuals.checkRochade(board.getMoveList(), startIndex, endIndex, board.checkerBoard, board.manuals));
+        assertFalse(board.spManuals.checkRochade(board.getMoveList(), move, board.checkerBoard, board.manuals));
     }
     @Test
     void rochadeKingMoved(){
@@ -376,9 +374,7 @@ class SpecialManualsTest {
         move = new Move("e2-e1"); // Move King E2-E1
         board.applyMove(move);
         move = new Move("e1-g1");
-        CellIndex startIndex = cellIndexFor(move.getStart());
-        CellIndex endIndex = cellIndexFor(move.getEnd());
-        assertFalse(board.spManuals.checkRochade(board.getMoveList(), startIndex, endIndex, board.checkerBoard, board.manuals));
+        assertFalse(board.spManuals.checkRochade(board.getMoveList(), move, board.checkerBoard, board.manuals));
     }
 
     @Test

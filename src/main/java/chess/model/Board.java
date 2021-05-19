@@ -205,8 +205,8 @@ public class Board {
             System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
             moveList.add(move);
             return true;
-        } else if (spManuals.checkRochade(moveList, startIndex, endIndex, checkerBoard, manuals)) {
-            spManuals.moveRochade(blackIsTurn, endIndex, checkerBoard, manuals);
+        } else if (spManuals.checkRochade(moveList, move, checkerBoard, manuals)) {
+            spManuals.moveRochade(move, checkerBoard, manuals);
             blackIsTurn = !blackIsTurn;
             System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
             System.out.println("Rochade");

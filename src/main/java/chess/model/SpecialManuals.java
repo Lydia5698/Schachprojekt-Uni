@@ -16,12 +16,14 @@ public class SpecialManuals {
     /**
      * Creates a new SpecialMove instance.
      */
-    public SpecialManuals(){}
+    public SpecialManuals() {
+    }
 
     /**
      * All Atackers
+     *
      * @param attacker CellIndex of the attacker
-     * @param victim CellIndex of the victim
+     * @param victim   CellIndex of the victim
      * @return List<CellIndex> with all the Attackers
      */
     protected List<CellIndex> attackerPath(CellIndex attacker, CellIndex victim) {
@@ -40,11 +42,12 @@ public class SpecialManuals {
 
     /**
      * All attacker paths without the Knight path
+     *
      * @param attacker CellIndex of the attacker
-     * @param victim CellIndex of the victim
+     * @param victim   CellIndex of the victim
      * @return List<CellIndex> with all the attacker paths without the Knight path
      */
-    private List<CellIndex> attackerPathNoKnight(CellIndex attacker, CellIndex victim){
+    private List<CellIndex> attackerPathNoKnight(CellIndex attacker, CellIndex victim) {
         List<CellIndex> attackerPathNoKnight = new ArrayList<>();
         int diffRow = attacker.getRow() - victim.getRow(); //positiv dann gehen wir nach oben, negativ nach unten (weil wir von oben zählen)
         int diffColumn = attacker.getColumn() - victim.getColumn(); //negativ nach rechts, positiv nach links
@@ -82,8 +85,9 @@ public class SpecialManuals {
 
     /**
      * Checks if the Pawn can beats(diagonally)
-     * @param startIndex startIndex of the move
-     * @param endIndex endIndex of the move
+     *
+     * @param startIndex   startIndex of the move
+     * @param endIndex     endIndex of the move
      * @param checkerBoard chessboard with Cells
      * @return boolean if Pawn can beat
      */
@@ -107,7 +111,8 @@ public class SpecialManuals {
 
     /**
      * isValidPromotion checks if a Pawn has reached the last row of the Board. Then it is possible to promote him
-     * @param endIndex The endIndex of the move
+     *
+     * @param endIndex     The endIndex of the move
      * @param checkerboard The Chessboard
      * @return boolean if the Promotion is Valid
      */
@@ -133,8 +138,9 @@ public class SpecialManuals {
     /**
      * Promote promotes an Pawn to another Minion. It is possible to get promoted to a Knight, Bishop, Queen or Rook.
      * Before the Pawn gets a Promotion the Methode isValidPromotion is checking if the promotion is valid.
-     * @param endIndex endIndex of the move
-     * @param promoteTo the Minion-Type for the Promotion. Only Bishop, Knight, Rook or Queen are allowed
+     *
+     * @param endIndex     endIndex of the move
+     * @param promoteTo    the Minion-Type for the Promotion. Only Bishop, Knight, Rook or Queen are allowed
      * @param checkerboard the Chessboard
      */
     // promotes Pawn to the Minion specified
@@ -164,8 +170,9 @@ public class SpecialManuals {
 
     /**
      * is ValidEnPassant checks if the Pawn can move like en Passant
-     * @param startIndex startIndex of the move
-     * @param endIndex endIndex of the move
+     *
+     * @param startIndex   startIndex of the move
+     * @param endIndex     endIndex of the move
      * @param checkerboard Chessboard
      * @return a boolean if the en Passant is valid
      */
@@ -210,7 +217,7 @@ public class SpecialManuals {
             // check if the Pawn moves in the right direction
             // check if both Pawns are in the same row at the begining of the move
             // check if last move was Pawn move
-            if(Math.abs(diffColumnNewMoveLastMove) == 0 && lastMoveEnd.row == startIndex.row && String.valueOf(endLastMoveCell.getMinion().getMinion_type()).equals("P")){
+            if (Math.abs(diffColumnNewMoveLastMove) == 0 && lastMoveEnd.row == startIndex.row && String.valueOf(endLastMoveCell.getMinion().getMinion_type()).equals("P")) {
                 // The pawn should be moving two steps forward/backward.
                 // And our pawn should be moving to the same column as the last
                 // pawn
@@ -223,7 +230,8 @@ public class SpecialManuals {
 
     /**
      * checks if the figure in the Cell has moved or got beaten
-     * @param cell String CellIndex
+     *
+     * @param cell     String CellIndex
      * @param MoveList List with all moves
      * @return true if figure has moved or got beaten
      */
@@ -237,16 +245,38 @@ public class SpecialManuals {
         return false;
     }
 
+    private boolean figureRochadeHasMoved(ArrayList<Move> MoveList, CellIndex start, CellIndex end, Cell[][] checkerboard) {
+        Cell startCell = checkerboard[start.row][start.column];
+        String posRookWLeft = "a1";
+        String posRookWRight = "h1";
+        String posRookBLeft = "a8";
+        String posRookBRight = "h8";
+        String posKingBlack = "e8";
+        String posKingWhite = "e1";
+        // case black
+        if (startCell.getMinion().isBlack()) {
+            // check if Rook or King has moved and the move goes in the direction of the Rook
+            return (!(hasFigureMoved(posRookBLeft, MoveList) && end.column == 2 || hasFigureMoved(posRookBRight, MoveList) && end.column == 6  || hasFigureMoved(posKingBlack, MoveList)));
+            // case white
+        } else {
+            // check if Rook or King has moved and the move goes in the direction of the Rook
+            return (!((hasFigureMoved(posRookWLeft, MoveList) && end.column != 2) || (hasFigureMoved(posRookWRight, MoveList) && end.column != 6) || hasFigureMoved(posKingWhite, MoveList)));
+        }
+    }
+
+
     /**
      * Checks if the move is an valid Rochade
-     * @param MoveList List with all Moves
-     * @param start CellIndex start of the move
-     * @param end CellIndex end of the move
+     *
+     * @param MoveList     List with all Moves
+     * @param move         the current move
      * @param checkerboard Chessboard with Cells in it
-     * @param manuals the manuals
+     * @param manuals      the manuals
      * @return boolean if Rochade is valid
      */
-    boolean checkRochade(ArrayList<Move> MoveList, CellIndex start, CellIndex end, Cell[][] checkerboard, Manuals manuals) {
+    boolean checkRochade(ArrayList<Move> MoveList, Move move, Cell[][] checkerboard, Manuals manuals) {
+        CellIndex start = cellIndexFor(move.getStart());
+        CellIndex end = cellIndexFor(move.getEnd());
         int diffColumn = end.column - start.column;
         int diffRow = end.row - start.row;
         Cell startCell = checkerboard[start.row][start.column];
@@ -254,128 +284,94 @@ public class SpecialManuals {
         CellIndex rookWhiteR = cellIndexFor("h1");
         CellIndex rookBlackL = cellIndexFor("a8");
         CellIndex rookBlackR = cellIndexFor("h8");
-        String posRookWLeft = "a1";
-        String posRookWRight = "h1";
-        String posRookBLeft = "a8";
-        String posRookBRight = "h8";
-        String posKingBlack = "e8";
-        String posKingWhite = "e1";
         // check if startCell is Empty
-        boolean validRochade = !startCell.isEmpty();
+        boolean validRochade = figureRochadeHasMoved(MoveList, start, end, checkerboard);
 
-        // case black
-        if(startCell.getMinion().isBlack()){
-            // check if Rook or King has moved and the move goes in the direction of the Rook
-            if(hasFigureMoved(posRookBLeft, MoveList) && end.column == 2 || hasFigureMoved(posRookBRight, MoveList) && end.column == 6 || hasFigureMoved(posKingBlack, MoveList)){
-                validRochade = false;
-            }
-            // case white
-        } else {
-            // check if Rook or King has moved and the move goes in the direction of the Rook
-            if (hasFigureMoved(posRookWLeft, MoveList) && end.column == 2 || hasFigureMoved(posRookWRight, MoveList) && end.column == 6|| hasFigureMoved(posKingWhite, MoveList)) {
-                validRochade = false;
-            }
+        if (startCell.isEmpty()) {
+            validRochade = false;
         }
         // case black
-        if(startCell.getMinion().isBlack()){
+        if (startCell.getMinion().isBlack()) {
             // check if the fields between Left Rook and King are Occupied
-            if(!(manuals.checkIfFieldsInBetweenNotOccupied(start, rookBlackL, checkerboard, true)) && end.column == 2){
+            if (!(manuals.checkIfFieldsInBetweenNotOccupied(start, rookBlackL, checkerboard, true)) && end.column == 2) {
                 validRochade = false;
             }
             // check if the fields between Right Rook and King are Occupied
-            if(!(manuals.checkIfFieldsInBetweenNotOccupied(start, rookBlackR, checkerboard, true))&& end.column == 6){
+            if (!(manuals.checkIfFieldsInBetweenNotOccupied(start, rookBlackR, checkerboard, true)) && end.column == 6) {
                 validRochade = false;
             }
         }
         // Case white
         else {
             // check if the fields between Left Rook and King are Occupied
-            if(!(manuals.checkIfFieldsInBetweenNotOccupied(start, rookWhiteL, checkerboard, true)) && end.column == 2){
+            if (!(manuals.checkIfFieldsInBetweenNotOccupied(start, rookWhiteL, checkerboard, true)) && end.column == 2) {
                 validRochade = false;
             }
             // check if the fields between Right Rook and King are Occupied
-            if(!(manuals.checkIfFieldsInBetweenNotOccupied(start, rookWhiteR, checkerboard, true)) && end.column == 6){
+            if (!(manuals.checkIfFieldsInBetweenNotOccupied(start, rookWhiteR, checkerboard, true)) && end.column == 6) {
                 validRochade = false;
             }
         }
         // check if a King is in the startCell and checks if the King makes two steps
-        if(!(Math.abs(diffColumn) == 2 && String.valueOf(startCell.getMinion().getMinion_type()).equals("K"))){
+        if (!(Math.abs(diffColumn) == 2 && String.valueOf(startCell.getMinion().getMinion_type()).equals("K"))) {
             validRochade = false;
         }
         // checks if the King is in the end Row
-        if(!(start.row == 0 && end.row == 0 || start.row == 7 && end.row == 7)){
+        if (!(start.row == 0 && end.row == 0 || start.row == 7 && end.row == 7)) {
             validRochade = false;
         }
         // checks if the King moves horizontal
-        if(!(Math.abs(diffRow) == 0)){
+        if (!(Math.abs(diffRow) == 0)) {
             validRochade = false;
         }
+
         return validRochade;
     }
 
     /**
      * makes the Rochade move
-     * @param black colour of the player
-     * @param end endIndex of the move
+     *
+     * @param move         current move
      * @param checkerBoard chessboard with Cells
-     * @param manuals manuals
+     * @param manuals      manuals
      */
-    void moveRochade(boolean black, CellIndex end, Cell[][] checkerBoard, Manuals manuals) {
-        // case black
-        if (black) {
-            Cell kingCell = checkerBoard[0][4];//E8 rechte rochade
-            Cell towrCell = checkerBoard[0][7];
-            Cell towlCell = checkerBoard[0][0];
-            CellIndex kingCellIndex = new CellIndex(0,4);
-            CellIndex towrCellIndex = new CellIndex(0,7);
-            CellIndex towlCellIndex = new CellIndex(0,0);
-            Minion king = kingCell.getMinion();
-            Minion rookL = towlCell.getMinion();
-            Minion rookR = towrCell.getMinion();
-            // checks if the fields between the King and Rook are attacked
-            // case right short Rochade
-            if(end.getColumn() == 6 && manuals.checkMoveMakesNoSelfCheck(kingCellIndex, towrCellIndex, checkerBoard, manuals)) {
-                checkerBoard[0][6].setMinion(king);
-                checkerBoard[0][4].setMinion(null);
-                checkerBoard[0][5].setMinion(rookR);
-                checkerBoard[0][7].setMinion(null);
-            }
-            // checks if the fields between the King and Rook are attacked
-            // case left long Rochade
-            if(end.getColumn() == 2 && manuals.checkMoveMakesNoSelfCheck(kingCellIndex, towlCellIndex, checkerBoard, manuals)) {
-                checkerBoard[0][2].setMinion(king);
-                checkerBoard[0][4].setMinion(null);
-                checkerBoard[0][3].setMinion(rookL);
-                checkerBoard[0][0].setMinion(null);
-            }
-            // case white
-        } else {
-            Cell kingCell = checkerBoard[7][4];//E8 rechte rochade
-            Cell towrCell = checkerBoard[7][7];
-            Cell towlCell = checkerBoard[7][0];
-            CellIndex kingCellIndex = new CellIndex(7,4);
-            CellIndex towrCellIndex = new CellIndex(7,7);
-            CellIndex towlCellIndex = new CellIndex(7,0);
-            Minion king = kingCell.getMinion();
-            Minion rookL = towlCell.getMinion();
-            Minion rookR = towrCell.getMinion();
-            // checks if the fields between the King and Rook are attacked
-            // case right short Rochade
-            if(end.getColumn() == 6 && manuals.checkMoveMakesNoSelfCheck(kingCellIndex, towlCellIndex, checkerBoard, manuals)) {
-                checkerBoard[7][6].setMinion(king);
-                checkerBoard[7][4].setMinion(null);
-                checkerBoard[7][5].setMinion(rookL);
-                checkerBoard[7][7].setMinion(null);
-            }
-            // checks if the fields between the King and Rook are attacked
-            // case left long Rochade
-            if(end.getColumn() == 2 && manuals.checkMoveMakesNoSelfCheck(kingCellIndex, towrCellIndex, checkerBoard, manuals)) {
-                checkerBoard[7][2].setMinion(king);
-                checkerBoard[7][4].setMinion(null);
-                checkerBoard[7][3].setMinion(rookR);
-                checkerBoard[7][0].setMinion(null);
-            }
+    void moveRochade(Move move, Cell[][] checkerBoard, Manuals manuals) {
+        CellIndex start = cellIndexFor(move.getStart());
+        CellIndex end = cellIndexFor(move.getEnd());
+        Cell startCell = checkerBoard[start.row][start.column];
+        Cell endCell = checkerBoard[end.row][end.column];
+        int row = 7;
+        // Case black
+        if (startCell.getMinion().isBlack()) {
+            row = 0;
         }
+        Cell newRookIndexShort = checkerBoard[row][5];
+        Cell newRookIndexLong = checkerBoard[row][3];
+        CellIndex RookRCellIndex = new CellIndex(row, 7);
+        CellIndex RookLCellIndex = new CellIndex(row, 0);
+        Cell RookLCell = checkerBoard[RookLCellIndex.row][RookLCellIndex.column];
+        Cell RookRCell = checkerBoard[RookRCellIndex.row][RookRCellIndex.column];
+        Minion king = startCell.getMinion();
+        Minion rookL = RookLCell.getMinion();
+        Minion rookR = RookRCell.getMinion();
+
+        // checks if the fields between the King and Rook are attacked
+        // case right short Rochade
+        if (end.getColumn() == 6 && manuals.checkMoveMakesNoSelfCheck(start, RookRCellIndex, checkerBoard, manuals)) {
+            startCell.setMinion(null);
+            RookRCell.setMinion(null);
+            newRookIndexShort.setMinion(rookR);
+            endCell.setMinion(king);
+        }
+        // checks if the fields between the King and Rook are attacked
+        // case left long Rochade
+        if (end.getColumn() == 2 && manuals.checkMoveMakesNoSelfCheck(start, RookLCellIndex, checkerBoard, manuals)) {
+            startCell.setMinion(null);
+            RookLCell.setMinion(null);
+            newRookIndexLong.setMinion(rookL);
+            endCell.setMinion(king);
+        }
+
 
 
     }
