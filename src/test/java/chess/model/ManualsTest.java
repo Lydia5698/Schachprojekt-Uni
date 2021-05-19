@@ -213,7 +213,7 @@ class ManualsTest {
         CellIndex kingIndex = board.manuals.coordinatesKing(true, board.checkerBoard);
         List<CellIndex> attackersIndex = board.manuals.getAttackersAsIndexList(true, board.checkerBoard);
         CellIndex attackerIndex = attackersIndex.get(0);
-        List<CellIndex> attackerPath = board.spManuals.attackerPath(attackerIndex, kingIndex);
+        List<CellIndex> attackerPath = board.manuals.spManuals.attackerPath(attackerIndex, kingIndex);
         boolean canProtect = board.manuals.checkIfPieceCanProtectTheOwnKing(board.checkerBoard, attackerPath, true);
         assertFalse(canProtect);
     }
@@ -237,7 +237,7 @@ class ManualsTest {
         CellIndex kingIndex = board.manuals.coordinatesKing(false, board.checkerBoard);
         List<CellIndex> attackersIndex = board.manuals.getAttackersAsIndexList(false, board.checkerBoard);
         CellIndex attackerIndex = attackersIndex.get(0);
-        List<CellIndex> attackerPath = board.spManuals.attackerPath(attackerIndex, kingIndex);
+        List<CellIndex> attackerPath = board.manuals.spManuals.attackerPath(attackerIndex, kingIndex);
         boolean canProtect = board.manuals.checkIfPieceCanProtectTheOwnKing(board.checkerBoard, attackerPath, false);
         assertFalse(canProtect);
     }
@@ -262,7 +262,7 @@ class ManualsTest {
         CellIndex kingIndex = board.manuals.coordinatesKing(false, board.checkerBoard);
         List<CellIndex> attackersIndex = board.manuals.getAttackersAsIndexList(false, board.checkerBoard);
         CellIndex attackerIndex = attackersIndex.get(0);
-        List<CellIndex> attackerPath = board.spManuals.attackerPath(attackerIndex, kingIndex);
+        List<CellIndex> attackerPath = board.manuals.spManuals.attackerPath(attackerIndex, kingIndex);
         boolean canProtect = board.manuals.checkIfPieceCanProtectTheOwnKing(board.checkerBoard, attackerPath, false);
         assertTrue(canProtect);
     }

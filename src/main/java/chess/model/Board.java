@@ -17,10 +17,7 @@ import java.util.List;
 public class Board {
     Cell[][] checkerBoard = new Cell[8][8]; //feldgröße
     public Manuals manuals = new Manuals();
-    public SpecialManuals spManuals = new SpecialManuals();
     public StaleMate staleMate = new StaleMate();
-    private char[] officerline = "RNBQKBNR".toCharArray();
-    private char[] frontline = "PPPPPPPP".toCharArray();
     static List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
     public List<String> beaten = new ArrayList<>();
     private List<Move> moveList = new ArrayList<>();
@@ -67,6 +64,9 @@ public class Board {
      * @param black players colour
      */
     private void initHorizont(int horizont, boolean black) {
+        char[] officerline = "RNBQKBNR".toCharArray();
+        char[] frontline = "PPPPPPPP".toCharArray();
+
         char[] tmp = frontline;
         if (horizont == 0 || horizont == 7) {
             tmp = officerline;
@@ -146,7 +146,7 @@ public class Board {
             blackIsTurn = !blackIsTurn;
             System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
             moveList.add(move);
-            spManuals.promote(endIndex, promoteTo, checkerBoard);
+            manuals.spManuals.promote(endIndex, promoteTo, checkerBoard);
             //check if in Check or in CheckMate
             checkAndPrintCheckCheckMate(minion);
             /*if (staleMate.isStaleMate(!minion.isBlack(), checkerBoard) && !simple){
@@ -175,7 +175,7 @@ public class Board {
         Cell startCell = checkerBoard[startIndex.getRow()][startIndex.getColumn()];
         Cell endCell = checkerBoard[endIndex.getRow()][endIndex.getColumn()];
         Minion minion = startCell.getMinion();
-        if(spManuals.isValidEnPassant(startIndex, endIndex, checkerBoard, moveList)){
+        if(manuals.spManuals.isValidEnPassant(startIndex, endIndex, checkerBoard, moveList)){
             Move lastMove = moveList.get(moveList.size() - 1);
             CellIndex endIndexLastMove = cellIndexFor(lastMove.getEnd());
             Cell endCellLastMove = checkerBoard[endIndexLastMove.getRow()][endIndexLastMove.getColumn()];
@@ -187,8 +187,8 @@ public class Board {
             moveList.add(move);
             return true;
         }
-        else if(spManuals.checkRochade(moveList, startIndex, endIndex, checkerBoard, manuals)){
-            spManuals.moveRochade(blackIsTurn, endIndex, checkerBoard, manuals);
+        else if(manuals.spManuals.checkRochade(moveList, startIndex, endIndex, checkerBoard, manuals)){
+            manuals.spManuals.moveRochade(blackIsTurn, endIndex, checkerBoard, manuals);
             blackIsTurn = !blackIsTurn;
             System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
             System.out.println("Rochade");
