@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Board is a Checkerboard with Cells where Minions can be in it
  *
- * @author Lydia Günther
+ * @author Lydia Günther, Jasmin Wojtkiewicz
  * @see Cell
  * @see Minion
  */
@@ -25,9 +25,14 @@ public class Board {
     public List<String> beaten = new ArrayList<>();
     private ArrayList<Move> moveList = new ArrayList<>();
     private boolean blackIsTurn = false;
+
+
     private boolean gameEnd = false;
     private boolean simple = false;
 
+    /**
+     * Creates a new Board instance. The Board uses initHorizont to fill the Board with Cells and Minions
+     */
     public Board() {
         initHorizont(0, true);
         initHorizont(1, true);
@@ -39,6 +44,10 @@ public class Board {
         initHorizont(7, false);
     }
 
+    /**
+     * gives the chessboard as an Sting back
+     * @return String chessboard
+     */
     public String showBoard() {
         StringBuilder output = new StringBuilder();
         int horizontNum = 8;
@@ -54,6 +63,11 @@ public class Board {
         return output.toString();
     }
 
+    /**
+     * fills the Board with Cells and the Minions in the Cells
+     * @param horizont the row of the chessboard
+     * @param black players colour
+     */
     private void initHorizont(int horizont, boolean black) {
         char[] tmp = frontline;
         if (horizont == 0 || horizont == 7) {
@@ -119,25 +133,27 @@ public class Board {
         Minion isBeaten = endCell.getMinion();
         String promoteTo = "";
 
+        // makes promotion
         if (move.getEnd().length() > 2) {
             promoteTo = move.getEnd().substring(2, 3);
         }
-
+        // adds the beaten minion to the List beaten
         if (!endCell.isEmpty() && minion.isBlack() == !isBeaten.isBlack()) {
             beaten.add(String.valueOf(isBeaten.print_minions()));
         }
-
-        if (manuals.checkIfValidMove(startIndex, endIndex, checkerBoard)&& manuals.checkMoveMakesNoSelfCheck(startIndex, endIndex, checkerBoard, manuals)) {
-            moveList.add(move);
+        // check if normal move
+        if(manuals.checkIfValidMove(startIndex, endIndex, checkerBoard) && manuals.checkMoveMakesNoSelfCheck(startIndex, endIndex, checkerBoard, manuals)){
             startCell.setMinion(null);
             endCell.setMinion(minion);
             blackIsTurn = !blackIsTurn;
             System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
+            moveList.add(move);
             spManuals.promote(endIndex, promoteTo, checkerBoard);
-            //minion, ist die figur die bewegt wird, isCheck muss auf die gegnerische team farbe angewendet werden
+            //check if in Check
             if (manuals.isCheck(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
                 System.out.println("!Check");
             }
+            //check if in Check Mate
             if (manuals.checkMate(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
                 System.out.println("!Check Mate");
 
@@ -146,19 +162,61 @@ public class Board {
                 System.out.println("Stalemate");
             }
         }
-        else if(spManuals.isValidEnPassant(startIndex, endIndex, checkerBoard, moveList)){
+        // check if special move
+        else if(specialMove(move, startIndex, endIndex)){
+            //check if in Check
+            if (manuals.isCheck(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
+                System.out.println("!Check");
+            }
+            //check if in Check Mate
+            if (manuals.checkMate(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
+                System.out.println("!Check Mate");
+
+            }
+        }
+        // move is not allowed
+        else {
+            System.out.println("!Move not allowed");
+        }
+
+
+
+    }
+
+    /**
+     * makes the special moves Rochade and En Passant
+     * @param move current move
+     * @param startIndex startIndex of the move
+     * @param endIndex endIndex of the move
+     * @return boolean if move is special move
+     */
+    public boolean specialMove(Move move, CellIndex startIndex, CellIndex endIndex){
+        Cell startCell = checkerBoard[startIndex.getRow()][startIndex.getColumn()];
+        Cell endCell = checkerBoard[endIndex.getRow()][endIndex.getColumn()];
+        Minion minion = startCell.getMinion();
+        if(spManuals.isValidEnPassant(startIndex, endIndex, checkerBoard, moveList)){
             Move lastMove = moveList.get(moveList.size() - 1);
             CellIndex endIndexLastMove = cellIndexFor(lastMove.getEnd());
             Cell endCellLastMove = checkerBoard[endIndexLastMove.getRow()][endIndexLastMove.getColumn()];
-            moveList.add(move);
             startCell.setMinion(null);
             endCell.setMinion(minion);
             endCellLastMove.setMinion(null);
             blackIsTurn = !blackIsTurn;
             System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
+            moveList.add(move);
+            return true;
         }
+        else if(spManuals.checkRochade(moveList, startIndex, endIndex, checkerBoard, manuals)){
+            spManuals.moveRochade(blackIsTurn, endIndex, checkerBoard, manuals);
+            blackIsTurn = !blackIsTurn;
+            System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
+            System.out.println("Rochade");
+            moveList.add(move);
+            return true;
+        }
+
         else {
-            System.out.println("!Move not allowed");
+            return false;
         }
     }
 
@@ -180,6 +238,10 @@ public class Board {
         return beaten;
     }
 
+    /**
+     * gives the Players Turn back
+     * @return boolean players turn
+     */
     public boolean isBlackIsTurn() {
         return blackIsTurn;
     }
@@ -189,12 +251,12 @@ public class Board {
     }
 
 
+    /**
+     * gives the boolean gameEnd back
+     * @return boolean if game is ended
+     */
     public boolean isGameEnd() {
         return gameEnd;
-    }
-
-    public boolean isSimple() {
-        return simple;
     }
 
     public void setSimple(boolean simple) {
