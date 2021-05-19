@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Move is a move form a Minion from a Cell to another Cell. Every move has an Start and End point
  *
- * @author Lydia Günther
+ * @author Lydia Günther, Jasmin Wojtkiewicz
  */
 
 public class Move {

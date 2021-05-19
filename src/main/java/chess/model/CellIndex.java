@@ -2,7 +2,7 @@ package chess.model;
 /**
  * CellIndex the Index of a Cell on the Board. With a row and a column coordinate
  *
- * @author Lydia Günther
+ * @author Lydia Günther, Jasmin Wojtkiewicz
  */
 public class CellIndex {
 

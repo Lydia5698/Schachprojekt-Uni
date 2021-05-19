@@ -8,10 +8,18 @@ import java.util.List;
 
 import static chess.model.Board.cellIndexFor;
 
+/**
+ * Manuals with all "normal" moves and if in check or check Mate
+ *
+ * @author Lydia Günther, Jasmin Wojtkiewicz
+ */
 public class Manuals {
     //regelwerk; valide steuerung der minions
     SpecialManuals spManuals = new SpecialManuals();
 
+    /**
+     * Creates a new Manuals instance.
+     */
     public Manuals() {
     }
 
@@ -54,6 +62,15 @@ public class Manuals {
         }
         return notOccupied;
     }
+
+    /**
+     * checks if the fields in between two Indices is Occupied
+     * @param start startIndex of the move
+     * @param end endIndex of the move
+     * @param checkerBoard chessboard
+     * @param notOccupied from the Methode not occupied default value = true
+     * @return boolean if way in between is occupied
+     */
 //todo vernünftige doku wenn nicht sofort ersichtlich
 boolean checkIfFieldsInBetweenNotOccupied(CellIndex start, CellIndex end, Cell[][] checkerBoard, boolean notOccupied) {
         boolean fieldsInBetweenNotOccupied = notOccupied;
@@ -94,6 +111,13 @@ boolean checkIfFieldsInBetweenNotOccupied(CellIndex start, CellIndex end, Cell[]
         return fieldsInBetweenNotOccupied;
     }
 
+    /**
+     * checks if the way of the Pawn-move is occupied
+     * @param start startIndex of the move
+     * @param end endIndex of the move
+     * @param checkerBoard chessboard
+     * @return boolean if way is occupied
+     */
     private boolean checkIfPawnMoveIsNotOccupied(CellIndex start, CellIndex end, Cell[][] checkerBoard) {
         Cell startCell = checkerBoard[start.getRow()][start.getColumn()];
         Cell endCell = checkerBoard[end.getRow()][end.getColumn()];
@@ -115,6 +139,12 @@ boolean checkIfFieldsInBetweenNotOccupied(CellIndex start, CellIndex end, Cell[]
     }
 
 
+    /**
+     * gets all the Attackers of the King as List with Cells
+     * @param isBlack Players Colour
+     * @param checker chessboard
+     * @return List with Cells with all attackers
+     */
     public List<Cell> getAttackers(boolean isBlack, Cell[][] checker) {
         List<Cell> attackers = new ArrayList<>();
         CellIndex kingIndex = coordinatesKing(isBlack, checker);
@@ -131,6 +161,12 @@ boolean checkIfFieldsInBetweenNotOccupied(CellIndex start, CellIndex end, Cell[]
         return attackers;
     }
 
+    /**
+     * gets all the Attackers of the King as CellIndex List
+     * @param isBlack Players Colour
+     * @param checker chessboard
+     * @return CellIndex List with all attackers
+     */
     public List<CellIndex> getAttackersAsIndexList(boolean isBlack, Cell[][] checker) {
         List<CellIndex> attackers = new ArrayList<>();
         CellIndex kingIndex = coordinatesKing(isBlack, checker);
@@ -149,6 +185,12 @@ boolean checkIfFieldsInBetweenNotOccupied(CellIndex start, CellIndex end, Cell[]
         return attackers;
     }
 
+    /**
+     * gives back the CellIndex of the Players King
+     * @param isBlack Players Colour
+     * @param checkerBoard chessboard
+     * @return CellIndex of King
+     */
     CellIndex coordinatesKing(boolean isBlack, Cell[][] checkerBoard) {
         CellIndex kingCell = new CellIndex(9, 9);
         for (int row = 0; row < 8; row++) {
@@ -162,6 +204,13 @@ boolean checkIfFieldsInBetweenNotOccupied(CellIndex start, CellIndex end, Cell[]
         return kingCell;
     }
 
+    /**
+     * checks if the move is an Valid move.(Without specialMoves like EnPassant and Rochade)
+     * @param start startIndex of the move
+     * @param end endIndex of the move
+     * @param checkerboard chessboard
+     * @return boolean if valid move
+     */
     protected boolean checkIfValidMove(CellIndex start, CellIndex end, Cell[][] checkerboard) {
         Cell startCell = checkerboard[start.getRow()][start.getColumn()];
         Minion minion = startCell.getMinion();
@@ -172,10 +221,24 @@ boolean checkIfFieldsInBetweenNotOccupied(CellIndex start, CellIndex end, Cell[]
         return false;
     }
 
+    /**
+     * checks if Player is in check
+     * @param isBlack Players Colour
+     * @param checkerBoard chessboard
+     * @param manuals manuals
+     * @return boolean if check
+     */
     protected boolean isCheck(boolean isBlack, Cell[][] checkerBoard, Manuals manuals) {
         return !manuals.getAttackers(isBlack, checkerBoard).isEmpty();
     }
 
+    /**
+     * checks if the Player is in CheckMate
+     * @param isBlack Players Colour
+     * @param checker chessboard
+     * @param manuals manuals
+     * @return boolean if checkmate
+     */
     protected boolean checkMate(boolean isBlack, Cell[][] checker, Manuals manuals) {
         boolean checkMate = true;
         List<Cell> attackers = manuals.getAttackers(isBlack, checker);
@@ -203,6 +266,13 @@ boolean checkIfFieldsInBetweenNotOccupied(CellIndex start, CellIndex end, Cell[]
         return checkMate;
     }
 
+    /**
+     * checks if a Figure can move between attacker and King
+     * @param checker chessboard
+     * @param attackerPath CellIndex List with all the attackers
+     * @param isBlack Players Colour
+     * @return Boolean if a Figure can move between attacker and King
+     */
     private boolean checkIfPieceCanProtectTheOwnKing(Cell[][] checker, List<CellIndex> attackerPath, boolean isBlack) {
         boolean pieceCanProtectOwnKing = false;
         for (int row = 0; row < 8; row++) {
@@ -221,6 +291,13 @@ boolean checkIfFieldsInBetweenNotOccupied(CellIndex start, CellIndex end, Cell[]
         return pieceCanProtectOwnKing;
     }
 
+    /**
+     * checks if the King can move or if he puts himself in check and if he is in check
+     * @param kingIndex Index of the Players King
+     * @param checker chessboard
+     * @param manuals manuals
+     * @return boolean if King is able to move
+     */
     private boolean checkIfKingIsAbleToMove(CellIndex kingIndex, Cell[][] checker, Manuals manuals) {
         boolean ableToMove = false;
         Cell kingCell = checker[kingIndex.getRow()][kingIndex.getColumn()];
@@ -265,6 +342,12 @@ boolean checkIfFieldsInBetweenNotOccupied(CellIndex start, CellIndex end, Cell[]
         return ableToMove;
     }
 
+    /**
+     * checks if the right Player is moving
+     * @param move Current move
+     * @param board ChessBoard
+     * @return boolean if the right Player is moving
+     */
     public boolean moveOfRightColour(Move move, Board board) {
         CellIndex currentIndex = cellIndexFor(move.getStart());
         Cell currentCell = board.getCheckerBoard()[currentIndex.row][currentIndex.column];
@@ -275,6 +358,14 @@ boolean checkIfFieldsInBetweenNotOccupied(CellIndex start, CellIndex end, Cell[]
         }
     }
 
+    /**
+     * Checks if move makes you stand in check
+     * @param start startIndex of the move
+     * @param end endIndex of the move
+     * @param checkerBoard chessboard with Cells
+     * @param manuals manuals
+     * @return boolean if move makes check
+     */
     protected boolean checkMoveMakesNoSelfCheck(CellIndex start, CellIndex end, Cell[][] checkerBoard, Manuals manuals){
         //create cells to simulate move
         Cell startCell = checkerBoard[start.getRow()][start.getColumn()];
@@ -293,130 +384,6 @@ boolean checkIfFieldsInBetweenNotOccupied(CellIndex start, CellIndex end, Cell[]
             return true;
         }
     }
-    /*private boolean hasFigureMoved(String cell, ArrayList<Move> MoveList) {
-        for (Move move : MoveList) {
-            if ((move.getStart().equals(cell))
-                    || (move.getEnd().equals(cell))) {
-                return true;
-            }
-        }
-        return false;
-    }
 
-    boolean checkRochade(ArrayList<Move> MoveList, CellIndex start, CellIndex end, Cell[][] checkerboard) {
-        int diffColumn = end.column - start.column;
-        int diffRow = end.row - start.row;
-        Cell startCell = checkerboard[start.row][start.column];
-        CellIndex rookWhiteL = cellIndexFor("a1");
-        CellIndex rookWhiteR = cellIndexFor("h1");
-        CellIndex rookBlackL = cellIndexFor("a8");
-        CellIndex rookBlackR = cellIndexFor("h8");
-        String posRookWLeft = "a1";
-        String posRookWRight = "h1";
-        String posRookBLeft = "a8";
-        String posRookBRight = "h8";
-        String posKingBlack = "e8";
-        String posKingWhite = "e1";
-        boolean validRochade = !startCell.isEmpty();
-
-       if(startCell.getMinion().isBlack()){
-            if((hasFigureMoved(posRookBLeft, MoveList) && end.column == 2) || (hasFigureMoved(posRookBRight, MoveList) && end.column == 6) || hasFigureMoved(posKingBlack, MoveList)){
-                validRochade = false;
-                System.out.println("1");
-            }
-       } else {
-            if ((hasFigureMoved(posRookWLeft, MoveList) && end.column == 2) || (hasFigureMoved(posRookWRight, MoveList) && end.column == 6)|| hasFigureMoved(posKingWhite, MoveList)) {
-                validRochade = false;
-                System.out.println("2");
-            }
-        }
-        if(startCell.getMinion().isBlack()){
-            if(!(checkIfFieldsInBetweenNotOccupied(start, rookBlackL, checkerboard, true)) && end.column == 2){ //&& checkMoveMakesNoSelfCheck(start, rookBlackL, checkerboard, manuals)){
-                validRochade = false;
-                System.out.println("3");
-            }
-            if(!(checkIfFieldsInBetweenNotOccupied(start, rookBlackR, checkerboard, true))&& end.column == 6){ //&& checkMoveMakesNoSelfCheck(start, rookBlackL, checkerboard, manuals)){
-                validRochade = false;
-                System.out.println("4");
-            }
-        }
-        else {
-            if(!(checkIfFieldsInBetweenNotOccupied(start, rookWhiteL, checkerboard, true)) && end.column == 2){ //&& checkMoveMakesNoSelfCheck(start, rookBlackL, checkerboard, manuals)){
-                validRochade = false;
-                System.out.println("5");
-            }
-            if(!(checkIfFieldsInBetweenNotOccupied(start, rookWhiteR, checkerboard, true)) && end.column == 6){ //&& checkMoveMakesNoSelfCheck(start, rookBlackL, checkerboard, manuals)){
-                validRochade = false;
-                System.out.println("6");
-            }
-        }
-
-        if(!(Math.abs(diffColumn) == 2 && String.valueOf(startCell.getMinion().getMinion_type()).equals("K"))){
-            validRochade = false;
-            System.out.println("7");
-        }
-        if(!((start.row == 0 && end.row == 0) || (start.row == 7 && end.row == 7))){
-            validRochade = false;
-            System.out.println("8");
-        }
-        if(!(Math.abs(diffRow) == 0)){
-            validRochade = false;
-            System.out.println("9");
-        }
-        return validRochade;
-    }
-
-    void moveRochade(CellIndex start, boolean black, CellIndex end, Cell[][] checkerBoard, Manuals manuals) {
-        if (black) {
-                Cell kingCell = checkerBoard[0][4];//E8 rechte rochade
-                Cell towrCell = checkerBoard[0][7];
-                Cell towlCell = checkerBoard[0][0];
-                CellIndex kingCellIndex = new CellIndex(0,4);
-                CellIndex towrCellIndex = new CellIndex(0,7);
-                CellIndex towlCellIndex = new CellIndex(0,0);
-                Minion king = kingCell.getMinion();
-                Minion rookL = towlCell.getMinion();
-                Minion rookR = towrCell.getMinion();
-                if(end.getColumn() == 6 && checkMoveMakesNoSelfCheck(kingCellIndex, towrCellIndex, checkerBoard, manuals)) {
-                    checkerBoard[0][6].setMinion(king);
-                    checkerBoard[0][4].setMinion(null);
-                    checkerBoard[0][5].setMinion(rookR);
-                    checkerBoard[0][7].setMinion(null);
-                }
-                if(end.getColumn() == 2 && checkMoveMakesNoSelfCheck(kingCellIndex, towlCellIndex, checkerBoard, manuals)) {
-                    checkerBoard[0][2].setMinion(king);
-                    checkerBoard[0][4].setMinion(null);
-                    checkerBoard[0][3].setMinion(rookL);
-                    checkerBoard[0][0].setMinion(null);
-                }
-
-            } else {
-                    Cell kingCell = checkerBoard[7][4];//E8 rechte rochade
-                    Cell towrCell = checkerBoard[7][7];
-                    Cell towlCell = checkerBoard[7][0];
-                    CellIndex kingCellIndex = new CellIndex(7,4);
-                    CellIndex towrCellIndex = new CellIndex(7,7);
-                    CellIndex towlCellIndex = new CellIndex(7,0);
-                    Minion king = kingCell.getMinion();
-                    Minion rookL = towlCell.getMinion();
-                    Minion rookR = towrCell.getMinion();
-                    if(end.getColumn() == 6 && checkMoveMakesNoSelfCheck(kingCellIndex, towlCellIndex, checkerBoard, manuals)) {
-                        checkerBoard[7][6].setMinion(king);
-                        checkerBoard[7][4].setMinion(null);
-                        checkerBoard[7][5].setMinion(rookL);
-                        checkerBoard[7][7].setMinion(null);
-                    }
-                    if(end.getColumn() == 2 && checkMoveMakesNoSelfCheck(kingCellIndex, towrCellIndex, checkerBoard, manuals)) {
-                        checkerBoard[7][2].setMinion(king);
-                        checkerBoard[7][4].setMinion(null);
-                        checkerBoard[7][3].setMinion(rookR);
-                        checkerBoard[7][0].setMinion(null);
-                    }
-            }
-
-
-    }
-
-     */
 
 }

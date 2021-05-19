@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import static chess.model.Board.cellIndexFor;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * All Tests for the Class SpecialManuals
+ * @see SpecialManuals
+ */
 class SpecialManualsTest {
 
     // EnPassant Tests
@@ -183,5 +187,152 @@ class SpecialManualsTest {
         boolean isQueen = String.valueOf(endCellPawn.getMinion().getMinion_type()).equals("Q");
         assertTrue(isQueen);
     }
+
+    // Rochade Tests
+    @Test
+    void rochadeShortWhite(){
+        Board board = new Board();
+        Move move = new Move("f2-f4"); // Move Pawn F2-F4
+        board.applyMove(move);
+        move = new Move("g2-g4"); // Move Pawn G2-G4
+        board.applyMove(move);
+        move = new Move("h2-h4"); // Move Pawn H2-H4
+        board.applyMove(move);
+        move = new Move("g1-f3"); // Move Knight G1-F3
+        board.applyMove(move);
+        move = new Move("f1-g2"); // Move Bishop F1-G2
+        board.applyMove(move);
+        move = new Move("e1-g1");
+        CellIndex startIndex = cellIndexFor(move.getStart());
+        CellIndex endIndex = cellIndexFor(move.getEnd());
+        assertTrue(board.spManuals.checkRochade(board.getMoveList(), startIndex, endIndex, board.checkerBoard, board.manuals));
+    }
+    @Test
+    void rochadeShortBlack(){
+        Board board = new Board();
+        Move move = new Move("f7-f5"); // Move Pawn F7-F5
+        board.applyMove(move);
+        move = new Move("g7-g5"); // Move Pawn G7-G5
+        board.applyMove(move);
+        move = new Move("h7-h5"); // Move Pawn H7-H5
+        board.applyMove(move);
+        move = new Move("g8-f6"); // Move Knight G8-F6
+        board.applyMove(move);
+        move = new Move("f8-g7"); // Move Bishop F8-G7
+        board.applyMove(move);
+        move = new Move("e8-g8");
+        CellIndex startIndex = cellIndexFor(move.getStart());
+        CellIndex endIndex = cellIndexFor(move.getEnd());
+        assertTrue(board.spManuals.checkRochade(board.getMoveList(), startIndex, endIndex, board.checkerBoard, board.manuals));
+    }
+    @Test
+    void rochadeLongWhite(){
+        Board board = new Board();
+        Move move = new Move("a2-a4"); // Move Pawn A2-A4
+        board.applyMove(move);
+        move = new Move("c2-c4"); // Move Pawn C2-C4
+        board.applyMove(move);
+        move = new Move("b2-b4"); // Move Pawn B2-B4
+        board.applyMove(move);
+        move = new Move("d2-d4"); // Move Pawn D2-D4
+        board.applyMove(move);
+        move = new Move("b1-a3"); // Move Knight B1-A3
+        board.applyMove(move);
+        move = new Move("c1-b2"); // Move Bishop C1-B2
+        board.applyMove(move);
+        move = new Move("d1-c2"); // Move Queen D1-C1
+        board.applyMove(move);
+        move = new Move("e1-c1");
+        CellIndex startIndex = cellIndexFor(move.getStart());
+        CellIndex endIndex = cellIndexFor(move.getEnd());
+        assertTrue(board.spManuals.checkRochade(board.getMoveList(), startIndex, endIndex, board.checkerBoard, board.manuals));
+    }
+    @Test
+    void rochadeLongBlack(){
+        Board board = new Board();
+        Move move = new Move("a7-a5"); // Move Pawn A7-A5
+        board.applyMove(move);
+        move = new Move("c7-c5"); // Move Pawn C7-C5
+        board.applyMove(move);
+        move = new Move("b7-b5"); // Move Pawn B7-B5
+        board.applyMove(move);
+        move = new Move("d7-d5"); // Move Pawn D7-D5
+        board.applyMove(move);
+        move = new Move("b8-a6"); // Move Knight B8-A6
+        board.applyMove(move);
+        move = new Move("c8-b7"); // Move Bishop C8-B7
+        board.applyMove(move);
+        move = new Move("d8-c7"); // Move Queen D8-C7
+        board.applyMove(move);
+        move = new Move("e8-c8");
+        CellIndex startIndex = cellIndexFor(move.getStart());
+        CellIndex endIndex = cellIndexFor(move.getEnd());
+        assertTrue(board.spManuals.checkRochade(board.getMoveList(), startIndex, endIndex, board.checkerBoard, board.manuals));
+    }
+
+    @Test
+    void rochadeWayOccupied(){
+        Board board = new Board();
+        Move move = new Move("a7-a5"); // Move Pawn A7-A5
+        board.applyMove(move);
+        move = new Move("c7-c5"); // Move Pawn C7-C5
+        board.applyMove(move);
+        move = new Move("b7-b5"); // Move Pawn B7-B5
+        board.applyMove(move);
+        move = new Move("e8-c8");
+        CellIndex startIndex = cellIndexFor(move.getStart());
+        CellIndex endIndex = cellIndexFor(move.getEnd());
+        assertFalse(board.spManuals.checkRochade(board.getMoveList(), startIndex, endIndex, board.checkerBoard, board.manuals));
+    }
+
+    @Test
+    void rochadeRookMoved(){
+        Board board = new Board();
+        Move move = new Move("a7-a5"); // Move Pawn A7-A5
+        board.applyMove(move);
+        move = new Move("c7-c5"); // Move Pawn C7-C5
+        board.applyMove(move);
+        move = new Move("b7-b5"); // Move Pawn B7-B5
+        board.applyMove(move);
+        move = new Move("d7-d5"); // Move Pawn D7-D5
+        board.applyMove(move);
+        move = new Move("b8-a6"); // Move Knight B8-A6
+        board.applyMove(move);
+        move = new Move("c8-b7"); // Move Bishop C8-B7
+        board.applyMove(move);
+        move = new Move("d8-c7"); // Move Queen D8-C7
+        board.applyMove(move);
+        move = new Move("a8-a7"); // Move Rook A8-A7
+        board.applyMove(move);
+        move = new Move("e8-c8");
+        CellIndex startIndex = cellIndexFor(move.getStart());
+        CellIndex endIndex = cellIndexFor(move.getEnd());
+        assertFalse(board.spManuals.checkRochade(board.getMoveList(), startIndex, endIndex, board.checkerBoard, board.manuals));
+    }
+    @Test
+    void rochadeKingMoved(){
+        Board board = new Board();
+        Move move = new Move("f2-f4"); // Move Pawn F2-F4
+        board.applyMove(move);
+        move = new Move("g2-g4"); // Move Pawn G2-G4
+        board.applyMove(move);
+        move = new Move("h2-h4"); // Move Pawn H2-H4
+        board.applyMove(move);
+        move = new Move("g1-f3"); // Move Knight G1-F3
+        board.applyMove(move);
+        move = new Move("f1-g2"); // Move Bishop F1-G2
+        board.applyMove(move);
+        move = new Move("e2-e4"); // Move Pawn E2-E4
+        board.applyMove(move);
+        move = new Move("e1-e2"); // Move King E1-E2
+        board.applyMove(move);
+        move = new Move("e2-e1"); // Move King E2-E1
+        board.applyMove(move);
+        move = new Move("e1-g1");
+        CellIndex startIndex = cellIndexFor(move.getStart());
+        CellIndex endIndex = cellIndexFor(move.getEnd());
+        assertFalse(board.spManuals.checkRochade(board.getMoveList(), startIndex, endIndex, board.checkerBoard, board.manuals));
+    }
+
 
 }
