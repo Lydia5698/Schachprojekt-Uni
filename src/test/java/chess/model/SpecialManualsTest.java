@@ -18,7 +18,7 @@ class SpecialManualsTest {
     @Test
     void isValidEnPassantWhite(){
         Board board = new Board();
-        ArrayList<Move> moveList = board.getMoveList();
+        List<Move> moveList = board.getMoveList();
         Move movePawn = new Move("d2-d4"); // Move Pawn D2-D4
         board.applyMove(movePawn);
         moveList.add(movePawn);
@@ -45,7 +45,7 @@ class SpecialManualsTest {
     @Test
     void isValidEnPassantBlack(){
         Board board = new Board();
-        ArrayList<Move> moveList = board.getMoveList();
+        List<Move> moveList = board.getMoveList();
         Move movePawn = new Move("g7-g5"); // Move Pawn G7-G5
         board.applyMove(movePawn);
         moveList.add(movePawn);

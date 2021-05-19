@@ -23,7 +23,7 @@ public class Board {
     private char[] frontline = "PPPPPPPP".toCharArray();
     static List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
     public List<String> beaten = new ArrayList<>();
-    private ArrayList<Move> moveList = new ArrayList<>();
+    private List<Move> moveList = new ArrayList<>();
     private boolean blackIsTurn = false;
     private boolean gameEnd = false;
     private boolean simple = false;
@@ -245,7 +245,8 @@ public class Board {
     }
 
     public Cell[][] getCheckerBoard() {
-        return checkerBoard;
+        Cell[][] checkerBoardCopy = checkerBoard;
+        return checkerBoardCopy;
     }
 
 
@@ -261,7 +262,7 @@ public class Board {
         this.simple = simple;
     }
 
-    public ArrayList<Move> getMoveList() {
+    public List<Move> getMoveList() {
         return moveList;
     }
 

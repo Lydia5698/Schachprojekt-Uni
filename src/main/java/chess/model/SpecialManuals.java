@@ -169,7 +169,7 @@ public class SpecialManuals {
      * @param checkerboard Chessboard
      * @return a boolean if the en Passant is valid
      */
-    boolean isValidEnPassant(CellIndex startIndex, CellIndex endIndex, Cell[][] checkerboard, ArrayList<Move> moveList) {
+    boolean isValidEnPassant(CellIndex startIndex, CellIndex endIndex, Cell[][] checkerboard, List<Move> moveList) {
         Cell startCell = checkerboard[startIndex.row][startIndex.column];
         Cell endCell = checkerboard[endIndex.row][endIndex.column];
         int diffRow = startIndex.getRow() - endIndex.getRow(); //positiv dann gehen wir nach oben, negativ nach unten (weil wir von oben zählen)
@@ -227,7 +227,7 @@ public class SpecialManuals {
      * @param MoveList List with all moves
      * @return true if figure has moved or got beaten
      */
-    private boolean hasFigureMoved(String cell, ArrayList<Move> MoveList) {
+    private boolean hasFigureMoved(String cell, List<Move> MoveList) {
         for (Move move : MoveList) {
             if (move.getStart().equals(cell)
                     || move.getEnd().equals(cell)) {
@@ -246,7 +246,7 @@ public class SpecialManuals {
      * @param manuals the manuals
      * @return boolean if Rochade is valid
      */
-    boolean checkRochade(ArrayList<Move> MoveList, CellIndex start, CellIndex end, Cell[][] checkerboard, Manuals manuals) {
+    boolean checkRochade(List<Move> MoveList, CellIndex start, CellIndex end, Cell[][] checkerboard, Manuals manuals) {
         int diffColumn = end.column - start.column;
         int diffRow = end.row - start.row;
         Cell startCell = checkerboard[start.row][start.column];
