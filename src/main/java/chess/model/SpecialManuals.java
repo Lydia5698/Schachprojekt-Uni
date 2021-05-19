@@ -216,14 +216,14 @@ public class SpecialManuals {
     // check if the Pawn moves in the right direction
     // check if both Pawns are in the same row at the begining of the move
     // check if last move was Pawn move
-    private boolean lastMovePawnMove(CellIndex startIndex, CellIndex endIndex, Cell[][] checkerboard, List<Move> moveList){
+    private boolean lastMovePawnMove(CellIndex startIndex, CellIndex endIndex, Cell[][] checkerboard, List<Move> moveList) {
         boolean validEnPassant;
         Move lastMove = moveList.get(moveList.size() - 1);
         CellIndex lastMoveEnd = cellIndexFor(lastMove.getEnd());
         CellIndex lastMoveStart = cellIndexFor(lastMove.getStart());
         Cell endLastMoveCell = checkerboard[lastMoveEnd.row][lastMoveEnd.column];
         int diffColumnNewMoveLastMove = endIndex.column - lastMoveEnd.column;
-        if(Math.abs(diffColumnNewMoveLastMove) == 0 && lastMoveEnd.row == startIndex.row && String.valueOf(endLastMoveCell.getMinion().getMinion_type()).equals("P")){
+        if (Math.abs(diffColumnNewMoveLastMove) == 0 && lastMoveEnd.row == startIndex.row && String.valueOf(endLastMoveCell.getMinion().getMinion_type()).equals("P")) {
             // The pawn should be moving two steps forward/backward.
             // And our pawn should be moving to the same column as the last
             // pawn
@@ -232,7 +232,6 @@ public class SpecialManuals {
         }
         return false;
     }
-
 
 
     /**
@@ -263,15 +262,15 @@ public class SpecialManuals {
         // case black
         if (startCell.getMinion().isBlack()) {
             // check if Rook or King has moved and the move goes in the direction of the Rook
-            return (!(hasFigureMoved(posRookBLeft, MoveList) && end.column == 2 || hasFigureMoved(posRookBRight, MoveList) && end.column == 6  || hasFigureMoved(posKingBlack, MoveList)));
+            return !(hasFigureMoved(posRookBLeft, MoveList) && end.column == 2 || hasFigureMoved(posRookBRight, MoveList) && end.column == 6 || hasFigureMoved(posKingBlack, MoveList));
             // case white
         } else {
             // check if Rook or King has moved and the move goes in the direction of the Rook
-            return (!(hasFigureMoved(posRookWLeft, MoveList) && end.column != 2 || hasFigureMoved(posRookWRight, MoveList) && end.column != 6 || hasFigureMoved(posKingWhite, MoveList)));
+            return !(hasFigureMoved(posRookWLeft, MoveList) && end.column != 2 || hasFigureMoved(posRookWRight, MoveList) && end.column != 6 || hasFigureMoved(posKingWhite, MoveList));
         }
     }
 
-    boolean checkWayInBetweenRochade(Move move, Manuals manuals, Cell[][] checkerboard){
+    boolean checkWayInBetweenRochade(Move move, Manuals manuals, Cell[][] checkerboard) {
         CellIndex start = cellIndexFor(move.getStart());
         CellIndex end = cellIndexFor(move.getEnd());
         Cell startCell = checkerboard[start.row][start.column];
@@ -279,28 +278,24 @@ public class SpecialManuals {
         CellIndex rookWhiteR = cellIndexFor("h1");
         CellIndex rookBlackL = cellIndexFor("a8");
         CellIndex rookBlackR = cellIndexFor("h8");
-        boolean isEmpty = true;
         // case black
         if (startCell.getMinion().isBlack()) {
             // check if the fields between Left Rook and King are Occupied
             if (!(manuals.checkIfFieldsInBetweenNotOccupied(start, rookBlackL, checkerboard, true)) && end.column == 2) {
-                isEmpty = false;
+                return false;
             }
             // check if the fields between Right Rook and King are Occupied
-            if(!(manuals.checkIfFieldsInBetweenNotOccupied(start, rookBlackR, checkerboard, true)) && end.column == 6)
-                isEmpty = false;
+            return manuals.checkIfFieldsInBetweenNotOccupied(start, rookBlackR, checkerboard, true) || end.column != 6;
         }
         // Case white
         else {
             // check if the fields between Left Rook and King are Occupied
             if (!(manuals.checkIfFieldsInBetweenNotOccupied(start, rookWhiteL, checkerboard, true)) && end.column == 2) {
-                isEmpty = false;
+                return false;
             }
             // check if the fields between Right Rook and King are Occupied
-            if(!(manuals.checkIfFieldsInBetweenNotOccupied(start, rookWhiteR, checkerboard, true)) && end.column == 6)
-                isEmpty = false;
+            return manuals.checkIfFieldsInBetweenNotOccupied(start, rookWhiteR, checkerboard, true) || end.column != 6;
         }
-        return isEmpty;
     }
 
 
@@ -319,17 +314,13 @@ public class SpecialManuals {
         int diffColumn = end.column - start.column;
         int diffRow = end.row - start.row;
         Cell startCell = checkerboard[start.row][start.column];
-        CellIndex rookWhiteL = cellIndexFor("a1");
-        CellIndex rookWhiteR = cellIndexFor("h1");
-        CellIndex rookBlackL = cellIndexFor("a8");
-        CellIndex rookBlackR = cellIndexFor("h8");
         // check if startCell is Empty
         boolean validRochade = figureRochadeHasMoved(MoveList, start, end, checkerboard);
 
         if (startCell.isEmpty()) {
             validRochade = false;
         }
-        if(!(checkWayInBetweenRochade(move, manuals, checkerboard))){
+        if (!(checkWayInBetweenRochade(move, manuals, checkerboard))) {
             return false;
         }
         // check if a King is in the startCell and checks if the King makes two steps
@@ -391,7 +382,6 @@ public class SpecialManuals {
             newRookIndexLong.setMinion(rookL);
             endCell.setMinion(king);
         }
-
 
 
     }

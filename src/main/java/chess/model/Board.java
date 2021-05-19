@@ -67,9 +67,8 @@ public class Board {
      */
     private void initHorizont(int horizont, boolean black) {
         char[] officerline = "RNBQKBNR".toCharArray();
-        char[] frontline = "PPPPPPPP".toCharArray();
 
-        char[] tmp = frontline;
+        char[] tmp = "PPPPPPPP".toCharArray();
         if (horizont == 0 || horizont == 7) {
             tmp = officerline;
         }
@@ -196,8 +195,7 @@ public class Board {
             System.out.println("Rochade");
             moveList.add(move);
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -258,9 +256,10 @@ public class Board {
     /**
      * Method checkAndPrintCheckCheckMate checks while a move is made if the move results in a check or checkmate for the opponent colour.
      * If so !Check or !CheckMate are printed.
+     *
      * @param minion the Minion, that is moving in applyMove
      */
-    protected void checkAndPrintCheckCheckMate(Minion minion){
+    protected void checkAndPrintCheckCheckMate(Minion minion) {
         if (manuals.isCheck(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
             System.out.println("!Check");
         }
@@ -269,8 +268,7 @@ public class Board {
             System.out.println("!Check Mate");
             gameEnd = true;
             System.out.println("The Game has ended");
-        }
-        else if (staleMate.isStaleMate(!minion.isBlack(), checkerBoard) && !simple){
+        } else if (staleMate.isStaleMate(!minion.isBlack(), checkerBoard) && !simple) {
             System.out.println("!Stalemate");
             gameEnd = true;
             System.out.println("The Game has ended");

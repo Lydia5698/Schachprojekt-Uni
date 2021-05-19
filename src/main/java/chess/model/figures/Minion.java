@@ -43,7 +43,7 @@ public class Minion {
      * Is overridden in the subclasses for the specific move pattern of the Minion.
      *
      * @param startIndex startIndex of the move
-     * @param endIndex endIndex of the move
+     * @param endIndex   endIndex of the move
      * @return boolean if move is valid
      */
 
