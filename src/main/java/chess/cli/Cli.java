@@ -1,5 +1,7 @@
 package chess.cli;
 
+
+//import chess.gui.Gui;
 import chess.model.Board;
 import chess.model.Manuals;
 import chess.model.Move;
@@ -11,7 +13,6 @@ import java.util.Arrays;
 
 /**
  * Starting point of the console game
- *
  * @author Jasmin Wojtkiewicz
  */
 public class Cli {
@@ -20,7 +21,6 @@ public class Cli {
 
     /**
      * The entry point of the console input application.
-     *
      * @param args The command line arguments passed to the application
      */
     public static void main(String[] args) {

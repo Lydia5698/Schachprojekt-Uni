@@ -2,8 +2,6 @@ package chess.model;
 
 import chess.model.figures.Minion;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import static chess.model.Board.cellIndexFor;
@@ -37,7 +35,7 @@ class ManualsTest {
         board.applyMove(moveBishop);
         Move moveBishopCheck = new Move("b4-d2"); //Move B4-D2
         board.applyMove(moveBishopCheck);// white king under attack, list not empty -> false
-        boolean attackers = (board.manuals.getAttackers(false, board.checkerBoard)).isEmpty();
+        boolean attackers = board.manuals.getAttackers(false, board.checkerBoard).isEmpty();
         assertFalse(attackers);
     }
 
@@ -50,7 +48,7 @@ class ManualsTest {
         board.applyMove(moveBishop);
         Move moveBishopCheck = new Move("b5-d7"); //Move B5-D7
         board.applyMove(moveBishopCheck);
-        boolean attackers = (board.manuals.getAttackers(true, board.checkerBoard)).isEmpty();
+        boolean attackers = board.manuals.getAttackers(true, board.checkerBoard).isEmpty();
         assertFalse(attackers);
     }
 
