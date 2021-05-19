@@ -35,8 +35,8 @@ class BoardTest {
     void validMoveA1A5CheckIfValidMoveTest() {
         Move move = new Move("a1-a5");
         Board board = new Board();
-        CellIndex startIndex = board.cellIndexFor(move.getStart());
-        CellIndex endIndex = board.cellIndexFor(move.getEnd());
+        CellIndex startIndex = Board.cellIndexFor(move.getStart());
+        CellIndex endIndex = Board.cellIndexFor(move.getEnd());
         Cell startCell = board.checkerBoard[7][0];
         Minion minion = startCell.getMinion();
         assertTrue(minion.validMove(startIndex, endIndex));
@@ -47,7 +47,7 @@ class BoardTest {
     void cellIndexForB2GetsCellIndexInNumbersTest(){
         String input = "b2";
         Board board =new Board();
-        CellIndex index = board.cellIndexFor(input);
+        CellIndex index = Board.cellIndexFor(input);
         assertEquals(index.getRow(),8-2);
         assertEquals(index.getColumn(),1);
 

@@ -33,6 +33,13 @@ class SpecialManualsTest {
         CellIndex endIndex = cellIndexFor(movePawn.getEnd());
         boolean validEnPassant = board.spManuals.isValidEnPassant(startIndex, endIndex, board.checkerBoard, board.getMoveList());
         assertTrue(validEnPassant);
+        // En Passant moves correct
+        board.specialMove(movePawn, startIndex, endIndex);
+        Cell pawn = board.checkerBoard[endIndex.row][endIndex.column];
+        Cell beatenPawn = board.checkerBoard[3][4]; // E5
+        boolean moveEnPassant = String.valueOf(pawn.getMinion().getMinion_type()).equals("P") && beatenPawn.isEmpty();
+        assertTrue(moveEnPassant);
+
     }
 
     @Test
@@ -53,6 +60,12 @@ class SpecialManualsTest {
         CellIndex endIndex = cellIndexFor(movePawn.getEnd());
         boolean validEnPassant = board.spManuals.isValidEnPassant(startIndex, endIndex, board.checkerBoard, board.getMoveList());
         assertTrue(validEnPassant);
+        // En Passant moves correct
+        board.specialMove(movePawn, startIndex, endIndex);
+        Cell pawn = board.checkerBoard[endIndex.row][endIndex.column];
+        Cell beatenPawn = board.checkerBoard[6][5]; // G3
+        boolean moveEnPassant = String.valueOf(pawn.getMinion().getMinion_type()).equals("P") && beatenPawn.isEmpty();
+        assertTrue(moveEnPassant);
     }
 
     @Test
@@ -71,6 +84,7 @@ class SpecialManualsTest {
         CellIndex endIndex = cellIndexFor(movePawn.getEnd());
         boolean validEnPassant = board.spManuals.isValidEnPassant(startIndex, endIndex, board.checkerBoard, board.getMoveList());
         assertFalse(validEnPassant);
+
     }
 
     @Test
@@ -207,6 +221,14 @@ class SpecialManualsTest {
         CellIndex startIndex = cellIndexFor(move.getStart());
         CellIndex endIndex = cellIndexFor(move.getEnd());
         assertTrue(board.spManuals.checkRochade(board.getMoveList(), startIndex, endIndex, board.checkerBoard, board.manuals));
+        // check move Rochade
+        board.setBlackIsTurn(false);
+        board.specialMove(move, startIndex, endIndex);
+        CellIndex rookIndex = cellIndexFor("f1");
+        Cell rook = board.checkerBoard[rookIndex.row][rookIndex.column];
+        Cell king = board.checkerBoard[endIndex.row][endIndex.column];
+        boolean isCastled = String.valueOf(rook.getMinion().getMinion_type()).equals("R") && String.valueOf(king.getMinion().getMinion_type()).equals("K");
+        assertTrue(isCastled);
     }
     @Test
     void rochadeShortBlack(){
@@ -225,6 +247,14 @@ class SpecialManualsTest {
         CellIndex startIndex = cellIndexFor(move.getStart());
         CellIndex endIndex = cellIndexFor(move.getEnd());
         assertTrue(board.spManuals.checkRochade(board.getMoveList(), startIndex, endIndex, board.checkerBoard, board.manuals));
+        // check move Rochade
+        board.setBlackIsTurn(true);
+        board.specialMove(move, startIndex, endIndex);
+        CellIndex rookIndex = cellIndexFor("f8");
+        Cell rook = board.checkerBoard[rookIndex.row][rookIndex.column];
+        Cell king = board.checkerBoard[endIndex.row][endIndex.column];
+        boolean isCastled = String.valueOf(rook.getMinion().getMinion_type()).equals("R") && String.valueOf(king.getMinion().getMinion_type()).equals("K");
+        assertTrue(isCastled);
     }
     @Test
     void rochadeLongWhite(){
@@ -247,6 +277,14 @@ class SpecialManualsTest {
         CellIndex startIndex = cellIndexFor(move.getStart());
         CellIndex endIndex = cellIndexFor(move.getEnd());
         assertTrue(board.spManuals.checkRochade(board.getMoveList(), startIndex, endIndex, board.checkerBoard, board.manuals));
+        // check move Rochade
+        board.setBlackIsTurn(false);
+        board.specialMove(move, startIndex, endIndex);
+        CellIndex rookIndex = cellIndexFor("d1");
+        Cell rook = board.checkerBoard[rookIndex.row][rookIndex.column];
+        Cell king = board.checkerBoard[endIndex.row][endIndex.column];
+        boolean isCastled = String.valueOf(rook.getMinion().getMinion_type()).equals("R") && String.valueOf(king.getMinion().getMinion_type()).equals("K");
+        assertTrue(isCastled);
     }
     @Test
     void rochadeLongBlack(){
@@ -269,6 +307,14 @@ class SpecialManualsTest {
         CellIndex startIndex = cellIndexFor(move.getStart());
         CellIndex endIndex = cellIndexFor(move.getEnd());
         assertTrue(board.spManuals.checkRochade(board.getMoveList(), startIndex, endIndex, board.checkerBoard, board.manuals));
+        // check move Rochade
+        board.setBlackIsTurn(true);
+        board.specialMove(move, startIndex, endIndex);
+        CellIndex rookIndex = cellIndexFor("d8");
+        Cell rook = board.checkerBoard[rookIndex.row][rookIndex.column];
+        Cell king = board.checkerBoard[endIndex.row][endIndex.column];
+        boolean isCastled = String.valueOf(rook.getMinion().getMinion_type()).equals("R") && String.valueOf(king.getMinion().getMinion_type()).equals("K");
+        assertTrue(isCastled);
     }
 
     @Test
