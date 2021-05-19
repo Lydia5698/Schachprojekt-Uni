@@ -1,2 +1,5 @@
-package chess.model;public class SpecialManuals {
+package chess.model;
+
+public class SpecialManualsTest {
+
 }

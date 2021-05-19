@@ -18,6 +18,7 @@ public class Board {
     Cell[][] checkerBoard = new Cell[8][8]; //feldgröße
     public Manuals manuals = new Manuals();
     public SpecialManuals spManuals = new SpecialManuals();
+    public StaleMate staleMate = new StaleMate();
     private char[] officerline = "RNBQKBNR".toCharArray();
     private char[] frontline = "PPPPPPPP".toCharArray();
     static List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
@@ -140,6 +141,9 @@ public class Board {
             if (manuals.checkMate(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
                 System.out.println("!Check Mate");
 
+            }
+            if (staleMate.isStaleMate(!minion.isBlack(), checkerBoard) && !simple){
+                System.out.println("Stalemate");
             }
         }
         else if(spManuals.isValidEnPassant(startIndex, endIndex, checkerBoard, moveList)){

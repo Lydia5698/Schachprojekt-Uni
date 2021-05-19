@@ -8,6 +8,7 @@ import java.util.List;
 import static chess.model.Board.cellIndexFor;
 
 public class SpecialManuals {
+    //Manuals manuals = new Manuals();
     public SpecialManuals(){}
 
     protected List<CellIndex> attackerPath(CellIndex attacker, CellIndex victim) {
@@ -193,5 +194,7 @@ public class SpecialManuals {
         }
         return false;
     }
+
+
 
 }
