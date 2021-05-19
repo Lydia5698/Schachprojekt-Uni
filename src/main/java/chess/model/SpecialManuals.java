@@ -194,4 +194,128 @@ public class SpecialManuals {
         return false;
     }
 
+    private boolean hasFigureMoved(String cell, ArrayList<Move> MoveList) {
+        for (Move move : MoveList) {
+            if ((move.getStart().equals(cell))
+                    || (move.getEnd().equals(cell))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    boolean checkRochade(ArrayList<Move> MoveList, CellIndex start, CellIndex end, Cell[][] checkerboard, Manuals manuals) {
+        int diffColumn = end.column - start.column;
+        int diffRow = end.row - start.row;
+        Cell startCell = checkerboard[start.row][start.column];
+        CellIndex rookWhiteL = cellIndexFor("a1");
+        CellIndex rookWhiteR = cellIndexFor("h1");
+        CellIndex rookBlackL = cellIndexFor("a8");
+        CellIndex rookBlackR = cellIndexFor("h8");
+        String posRookWLeft = "a1";
+        String posRookWRight = "h1";
+        String posRookBLeft = "a8";
+        String posRookBRight = "h8";
+        String posKingBlack = "e8";
+        String posKingWhite = "e1";
+        boolean validRochade = !startCell.isEmpty();
+
+        if(startCell.getMinion().isBlack()){
+            if((hasFigureMoved(posRookBLeft, MoveList) && end.column == 2) || (hasFigureMoved(posRookBRight, MoveList) && end.column == 6) || hasFigureMoved(posKingBlack, MoveList)){
+                validRochade = false;
+                System.out.println("1");
+            }
+        } else {
+            if ((hasFigureMoved(posRookWLeft, MoveList) && end.column == 2) || (hasFigureMoved(posRookWRight, MoveList) && end.column == 6)|| hasFigureMoved(posKingWhite, MoveList)) {
+                validRochade = false;
+                System.out.println("2");
+            }
+        }
+        if(startCell.getMinion().isBlack()){
+            if(!(manuals.checkIfFieldsInBetweenNotOccupied(start, rookBlackL, checkerboard, true)) && end.column == 2){
+                validRochade = false;
+                System.out.println("3");
+            }
+            if(!(manuals.checkIfFieldsInBetweenNotOccupied(start, rookBlackR, checkerboard, true))&& end.column == 6){
+                validRochade = false;
+                System.out.println("4");
+            }
+        }
+        else {
+            if(!(manuals.checkIfFieldsInBetweenNotOccupied(start, rookWhiteL, checkerboard, true)) && end.column == 2){
+                validRochade = false;
+                System.out.println("5");
+            }
+            if(!(manuals.checkIfFieldsInBetweenNotOccupied(start, rookWhiteR, checkerboard, true)) && end.column == 6){
+                validRochade = false;
+                System.out.println("6");
+            }
+        }
+
+        if(!(Math.abs(diffColumn) == 2 && String.valueOf(startCell.getMinion().getMinion_type()).equals("K"))){
+            validRochade = false;
+            System.out.println("7");
+        }
+        if(!((start.row == 0 && end.row == 0) || (start.row == 7 && end.row == 7))){
+            validRochade = false;
+            System.out.println("8");
+        }
+        if(!(Math.abs(diffRow) == 0)){
+            validRochade = false;
+            System.out.println("9");
+        }
+        return validRochade;
+    }
+
+    void moveRochade(CellIndex start, boolean black, CellIndex end, Cell[][] checkerBoard, Manuals manuals) {
+        if (black) {
+            Cell kingCell = checkerBoard[0][4];//E8 rechte rochade
+            Cell towrCell = checkerBoard[0][7];
+            Cell towlCell = checkerBoard[0][0];
+            CellIndex kingCellIndex = new CellIndex(0,4);
+            CellIndex towrCellIndex = new CellIndex(0,7);
+            CellIndex towlCellIndex = new CellIndex(0,0);
+            Minion king = kingCell.getMinion();
+            Minion rookL = towlCell.getMinion();
+            Minion rookR = towrCell.getMinion();
+            if(end.getColumn() == 6 && manuals.checkMoveMakesNoSelfCheck(kingCellIndex, towrCellIndex, checkerBoard, manuals)) {
+                checkerBoard[0][6].setMinion(king);
+                checkerBoard[0][4].setMinion(null);
+                checkerBoard[0][5].setMinion(rookR);
+                checkerBoard[0][7].setMinion(null);
+            }
+            if(end.getColumn() == 2 && manuals.checkMoveMakesNoSelfCheck(kingCellIndex, towlCellIndex, checkerBoard, manuals)) {
+                checkerBoard[0][2].setMinion(king);
+                checkerBoard[0][4].setMinion(null);
+                checkerBoard[0][3].setMinion(rookL);
+                checkerBoard[0][0].setMinion(null);
+            }
+
+        } else {
+            Cell kingCell = checkerBoard[7][4];//E8 rechte rochade
+            Cell towrCell = checkerBoard[7][7];
+            Cell towlCell = checkerBoard[7][0];
+            CellIndex kingCellIndex = new CellIndex(7,4);
+            CellIndex towrCellIndex = new CellIndex(7,7);
+            CellIndex towlCellIndex = new CellIndex(7,0);
+            Minion king = kingCell.getMinion();
+            Minion rookL = towlCell.getMinion();
+            Minion rookR = towrCell.getMinion();
+            if(end.getColumn() == 6 && manuals.checkMoveMakesNoSelfCheck(kingCellIndex, towlCellIndex, checkerBoard, manuals)) {
+                checkerBoard[7][6].setMinion(king);
+                checkerBoard[7][4].setMinion(null);
+                checkerBoard[7][5].setMinion(rookL);
+                checkerBoard[7][7].setMinion(null);
+            }
+            if(end.getColumn() == 2 && manuals.checkMoveMakesNoSelfCheck(kingCellIndex, towrCellIndex, checkerBoard, manuals)) {
+                checkerBoard[7][2].setMinion(king);
+                checkerBoard[7][4].setMinion(null);
+                checkerBoard[7][3].setMinion(rookR);
+                checkerBoard[7][0].setMinion(null);
+            }
+        }
+
+
+    }
+
 }

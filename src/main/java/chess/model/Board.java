@@ -215,8 +215,8 @@ public class Board {
             moveList.add(move);
             return true;
         }
-        else if(manuals.checkRochade(moveList, startIndex, endIndex, checkerBoard)){
-            manuals.moveRochade(startIndex, blackIsTurn, endIndex, checkerBoard, manuals);
+        else if(spManuals.checkRochade(moveList, startIndex, endIndex, checkerBoard, manuals)){
+            spManuals.moveRochade(startIndex, blackIsTurn, endIndex, checkerBoard, manuals);
             blackIsTurn = !blackIsTurn;
             System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
             System.out.println("Rochade");
@@ -258,10 +258,6 @@ public class Board {
 
     public boolean isGameEnd() {
         return gameEnd;
-    }
-
-    public boolean isSimple() {
-        return simple;
     }
 
     public void setSimple(boolean simple) {

@@ -55,7 +55,7 @@ public class Manuals {
         return notOccupied;
     }
 //todo vernünftige doku wenn nicht sofort ersichtlich
-    private boolean checkIfFieldsInBetweenNotOccupied(CellIndex start, CellIndex end, Cell[][] checkerBoard, boolean notOccupied) {
+boolean checkIfFieldsInBetweenNotOccupied(CellIndex start, CellIndex end, Cell[][] checkerBoard, boolean notOccupied) {
         boolean fieldsInBetweenNotOccupied = notOccupied;
         int diffRow = start.getRow() - end.getRow(); //positiv dann gehen wir nach oben, negativ nach unten (weil wir von oben zählen)
         int diffColumn = start.getColumn() - end.getColumn();//negativ nach rechts, positiv nach links
@@ -293,7 +293,7 @@ public class Manuals {
             return true;
         }
     }
-    private boolean hasFigureMoved(String cell, ArrayList<Move> MoveList) {
+    /*private boolean hasFigureMoved(String cell, ArrayList<Move> MoveList) {
         for (Move move : MoveList) {
             if ((move.getStart().equals(cell))
                     || (move.getEnd().equals(cell))) {
@@ -416,5 +416,7 @@ public class Manuals {
 
 
     }
+
+     */
 
 }
