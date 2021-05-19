@@ -66,14 +66,15 @@ public class Manuals {
 
     /**
      * checks if the fields in between two Indices is Occupied
-     * @param start startIndex of the move
-     * @param end endIndex of the move
+     *
+     * @param start        startIndex of the move
+     * @param end          endIndex of the move
      * @param checkerBoard chessboard
-     * @param notOccupied from the Methode not occupied default value = true
+     * @param notOccupied  from the Methode not occupied default value = true
      * @return boolean if way in between is occupied
      */
 //todo vernünftige doku wenn nicht sofort ersichtlich
-boolean checkIfFieldsInBetweenNotOccupied(CellIndex start, CellIndex end, Cell[][] checkerBoard, boolean notOccupied) {
+    boolean checkIfFieldsInBetweenNotOccupied(CellIndex start, CellIndex end, Cell[][] checkerBoard, boolean notOccupied) {
         boolean fieldsInBetweenNotOccupied = notOccupied;
         int diffRow = start.getRow() - end.getRow(); //positiv dann gehen wir nach oben, negativ nach unten (weil wir von oben zählen)
         int diffColumn = start.getColumn() - end.getColumn();//negativ nach rechts, positiv nach links
@@ -114,8 +115,9 @@ boolean checkIfFieldsInBetweenNotOccupied(CellIndex start, CellIndex end, Cell[]
 
     /**
      * checks if the way of the Pawn-move is occupied
-     * @param start startIndex of the move
-     * @param end endIndex of the move
+     *
+     * @param start        startIndex of the move
+     * @param end          endIndex of the move
      * @param checkerBoard chessboard
      * @return boolean if way is occupied
      */
@@ -142,6 +144,7 @@ boolean checkIfFieldsInBetweenNotOccupied(CellIndex start, CellIndex end, Cell[]
 
     /**
      * gets all the Attackers of the King as List with Cells
+     *
      * @param isBlack Players Colour
      * @param checker chessboard
      * @return List with Cells with all attackers
@@ -164,6 +167,7 @@ boolean checkIfFieldsInBetweenNotOccupied(CellIndex start, CellIndex end, Cell[]
 
     /**
      * gets all the Attackers of the King as CellIndex List
+     *
      * @param isBlack Players Colour
      * @param checker chessboard
      * @return CellIndex List with all attackers
@@ -188,7 +192,8 @@ boolean checkIfFieldsInBetweenNotOccupied(CellIndex start, CellIndex end, Cell[]
 
     /**
      * gives back the CellIndex of the Players King
-     * @param isBlack Players Colour
+     *
+     * @param isBlack      Players Colour
      * @param checkerBoard chessboard
      * @return CellIndex of King
      */
@@ -207,8 +212,9 @@ boolean checkIfFieldsInBetweenNotOccupied(CellIndex start, CellIndex end, Cell[]
 
     /**
      * checks if the move is an Valid move.(Without specialMoves like EnPassant and Rochade)
-     * @param start startIndex of the move
-     * @param end endIndex of the move
+     *
+     * @param start        startIndex of the move
+     * @param end          endIndex of the move
      * @param checkerboard chessboard
      * @return boolean if valid move
      */
@@ -224,9 +230,10 @@ boolean checkIfFieldsInBetweenNotOccupied(CellIndex start, CellIndex end, Cell[]
 
     /**
      * checks if Player is in check
-     * @param isBlack Players Colour
+     *
+     * @param isBlack      Players Colour
      * @param checkerBoard chessboard
-     * @param manuals manuals
+     * @param manuals      manuals
      * @return boolean if check
      */
     protected boolean isCheck(boolean isBlack, Cell[][] checkerBoard, Manuals manuals) {
@@ -235,6 +242,7 @@ boolean checkIfFieldsInBetweenNotOccupied(CellIndex start, CellIndex end, Cell[]
 
     /**
      * checks if the Player is in CheckMate
+     *
      * @param isBlack Players Colour
      * @param checker chessboard
      * @param manuals manuals
@@ -260,7 +268,7 @@ boolean checkIfFieldsInBetweenNotOccupied(CellIndex start, CellIndex end, Cell[]
         // get attackers path as CellIndex
         CellIndex attackerIndex = attackersIndex.get(0);
         List<CellIndex> attackerPath = spManuals.attackerPath(attackerIndex, kingIndex);
-        if(checkIfPieceCanProtectTheOwnKing(checker, attackerPath, isBlack)){
+        if (checkIfPieceCanProtectTheOwnKing(checker, attackerPath, isBlack)) {
             checkMate = false;
             return checkMate;
         }
@@ -269,9 +277,10 @@ boolean checkIfFieldsInBetweenNotOccupied(CellIndex start, CellIndex end, Cell[]
 
     /**
      * checks if a Figure can move between attacker and King
-     * @param checker chessboard
+     *
+     * @param checker      chessboard
      * @param attackerPath CellIndex List with all the attackers
-     * @param isBlack Players Colour
+     * @param isBlack      Players Colour
      * @return Boolean if a Figure can move between attacker and King
      */
     boolean checkIfPieceCanProtectTheOwnKing(Cell[][] checker, List<CellIndex> attackerPath, boolean isBlack) {
@@ -294,9 +303,10 @@ boolean checkIfFieldsInBetweenNotOccupied(CellIndex start, CellIndex end, Cell[]
 
     /**
      * checks if the King can move or if he puts himself in check and if he is in check
+     *
      * @param kingIndex Index of the Players King
-     * @param checker chessboard
-     * @param manuals manuals
+     * @param checker   chessboard
+     * @param manuals   manuals
      * @return boolean if King is able to move
      */
     private boolean checkIfKingIsAbleToMove(CellIndex kingIndex, Cell[][] checker, Manuals manuals) {
@@ -345,7 +355,8 @@ boolean checkIfFieldsInBetweenNotOccupied(CellIndex start, CellIndex end, Cell[]
 
     /**
      * checks if the right Player is moving
-     * @param move Current move
+     *
+     * @param move  Current move
      * @param board ChessBoard
      * @return boolean if the right Player is moving
      */
@@ -361,13 +372,14 @@ boolean checkIfFieldsInBetweenNotOccupied(CellIndex start, CellIndex end, Cell[]
 
     /**
      * Checks if move makes you stand in check
-     * @param start startIndex of the move
-     * @param end endIndex of the move
+     *
+     * @param start        startIndex of the move
+     * @param end          endIndex of the move
      * @param checkerBoard chessboard with Cells
-     * @param manuals manuals
+     * @param manuals      manuals
      * @return boolean if move makes check
      */
-    protected boolean checkMoveMakesNoSelfCheck(CellIndex start, CellIndex end, Cell[][] checkerBoard, Manuals manuals){
+    protected boolean checkMoveMakesNoSelfCheck(CellIndex start, CellIndex end, Cell[][] checkerBoard, Manuals manuals) {
         //create cells to simulate move
         Cell startCell = checkerBoard[start.getRow()][start.getColumn()];
         Cell endCell = checkerBoard[end.getRow()][end.getColumn()];

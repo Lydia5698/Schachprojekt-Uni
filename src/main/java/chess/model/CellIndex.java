@@ -1,4 +1,5 @@
 package chess.model;
+
 /**
  * CellIndex the Index of a Cell on the Board. With a row and a column coordinate
  *
@@ -8,6 +9,7 @@ public class CellIndex {
 
     int row;
     int column;
+
     /**
      * Creates an CellIndex for a coordinate(row, column)
      *
@@ -15,7 +17,7 @@ public class CellIndex {
      * @param column a coordinate for the Cell is the column of the Board(A,B,D,C,D,E,F,G)
      */
 
-    public CellIndex(int row, int column){
+    public CellIndex(int row, int column) {
         this.row = row;
         this.column = column;
     }
