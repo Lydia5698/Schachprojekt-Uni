@@ -229,8 +229,8 @@ public class SpecialManuals {
      */
     private boolean hasFigureMoved(String cell, ArrayList<Move> MoveList) {
         for (Move move : MoveList) {
-            if ((move.getStart().equals(cell))
-                    || (move.getEnd().equals(cell))) {
+            if (move.getStart().equals(cell)
+                    || move.getEnd().equals(cell)) {
                 return true;
             }
         }
@@ -266,13 +266,13 @@ public class SpecialManuals {
         // case black
         if(startCell.getMinion().isBlack()){
             // check if Rook or King has moved and the move goes in the direction of the Rook
-            if((hasFigureMoved(posRookBLeft, MoveList) && end.column == 2) || (hasFigureMoved(posRookBRight, MoveList) && end.column == 6) || hasFigureMoved(posKingBlack, MoveList)){
+            if(hasFigureMoved(posRookBLeft, MoveList) && end.column == 2 || hasFigureMoved(posRookBRight, MoveList) && end.column == 6 || hasFigureMoved(posKingBlack, MoveList)){
                 validRochade = false;
             }
             // case white
         } else {
             // check if Rook or King has moved and the move goes in the direction of the Rook
-            if ((hasFigureMoved(posRookWLeft, MoveList) && end.column == 2) || (hasFigureMoved(posRookWRight, MoveList) && end.column == 6)|| hasFigureMoved(posKingWhite, MoveList)) {
+            if (hasFigureMoved(posRookWLeft, MoveList) && end.column == 2 || hasFigureMoved(posRookWRight, MoveList) && end.column == 6|| hasFigureMoved(posKingWhite, MoveList)) {
                 validRochade = false;
             }
         }
@@ -303,7 +303,7 @@ public class SpecialManuals {
             validRochade = false;
         }
         // checks if the King is in the end Row
-        if(!((start.row == 0 && end.row == 0) || (start.row == 7 && end.row == 7))){
+        if(!(start.row == 0 && end.row == 0 || start.row == 7 && end.row == 7)){
             validRochade = false;
         }
         // checks if the King moves horizontal

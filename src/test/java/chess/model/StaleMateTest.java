@@ -1,10 +1,10 @@
 package chess.model;
 
-import javafx.util.Pair;
+//import javafx.util.Pair;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+//import java.util.ArrayList;
+//import java.util.List;
 
 import static chess.model.Board.cellIndexFor;
 

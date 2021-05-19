@@ -1,7 +1,7 @@
 package chess.cli;
 
 
-import chess.gui.Gui;
+//import chess.gui.Gui;
 import chess.model.Board;
 import chess.model.Manuals;
 import chess.model.Move;
