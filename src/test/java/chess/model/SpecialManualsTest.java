@@ -31,7 +31,7 @@ class SpecialManualsTest {
         movePawn = new Move("d5-e6"); // Move Pawn D5-E6 EnPassant
         CellIndex startIndex = cellIndexFor(movePawn.getStart());
         CellIndex endIndex = cellIndexFor(movePawn.getEnd());
-        boolean validEnPassant = board.spManuals.isValidEnPassant(startIndex, endIndex, board.checkerBoard, board.getMoveList());
+        boolean validEnPassant = board.manuals.spManuals.isValidEnPassant(startIndex, endIndex, board.checkerBoard, board.getMoveList());
         assertTrue(validEnPassant);
         // En Passant moves correct
         board.specialMove(movePawn, startIndex, endIndex);
@@ -58,7 +58,7 @@ class SpecialManualsTest {
         movePawn = new Move("d4-c3"); // Move Pawn G4-F3 EnPassant
         CellIndex startIndex = cellIndexFor(movePawn.getStart());
         CellIndex endIndex = cellIndexFor(movePawn.getEnd());
-        boolean validEnPassant = board.spManuals.isValidEnPassant(startIndex, endIndex, board.checkerBoard, board.getMoveList());
+        boolean validEnPassant = board.manuals.spManuals.isValidEnPassant(startIndex, endIndex, board.checkerBoard, board.getMoveList());
         assertTrue(validEnPassant);
         // En Passant moves correct
         board.specialMove(movePawn, startIndex, endIndex);
@@ -82,7 +82,7 @@ class SpecialManualsTest {
         movePawn = new Move("g5-h6"); // Move Pawn G5-H6 EnPassant
         CellIndex startIndex = cellIndexFor(movePawn.getStart());
         CellIndex endIndex = cellIndexFor(movePawn.getEnd());
-        boolean validEnPassant = board.spManuals.isValidEnPassant(startIndex, endIndex, board.checkerBoard, board.getMoveList());
+        boolean validEnPassant = board.manuals.spManuals.isValidEnPassant(startIndex, endIndex, board.checkerBoard, board.getMoveList());
         assertFalse(validEnPassant);
 
     }
@@ -99,7 +99,7 @@ class SpecialManualsTest {
         movePawn = new Move("g5-f6"); // Move Pawn G5-F6 EnPassant
         CellIndex startIndex = cellIndexFor(movePawn.getStart());
         CellIndex endIndex = cellIndexFor(movePawn.getEnd());
-        boolean validEnPassant = board.spManuals.isValidEnPassant(startIndex, endIndex, board.checkerBoard, board.getMoveList());
+        boolean validEnPassant = board.manuals.spManuals.isValidEnPassant(startIndex, endIndex, board.checkerBoard, board.getMoveList());
         assertFalse(validEnPassant);
     }
 
@@ -220,7 +220,7 @@ class SpecialManualsTest {
         move = new Move("e1-g1");
         CellIndex startIndex = cellIndexFor(move.getStart());
         CellIndex endIndex = cellIndexFor(move.getEnd());
-        assertTrue(board.spManuals.checkRochade(board.getMoveList(), move, board.checkerBoard, board.manuals));
+        assertTrue(board.manuals.spManuals.checkRochade(board.getMoveList(), move, board.checkerBoard, board.manuals));
         // check move Rochade
         board.setBlackIsTurn(false);
         board.specialMove(move, startIndex, endIndex);
@@ -246,7 +246,7 @@ class SpecialManualsTest {
         move = new Move("e8-g8");
         CellIndex startIndex = cellIndexFor(move.getStart());
         CellIndex endIndex = cellIndexFor(move.getEnd());
-        assertTrue(board.spManuals.checkRochade(board.getMoveList(), move, board.checkerBoard, board.manuals));
+        assertTrue(board.manuals.spManuals.checkRochade(board.getMoveList(), move, board.checkerBoard, board.manuals));
         // check move Rochade
         board.setBlackIsTurn(true);
         board.specialMove(move, startIndex, endIndex);
@@ -276,7 +276,7 @@ class SpecialManualsTest {
         move = new Move("e1-c1");
         CellIndex startIndex = cellIndexFor(move.getStart());
         CellIndex endIndex = cellIndexFor(move.getEnd());
-        assertTrue(board.spManuals.checkRochade(board.getMoveList(), move, board.checkerBoard, board.manuals));
+        assertTrue(board.manuals.spManuals.checkRochade(board.getMoveList(), move, board.checkerBoard, board.manuals));
         // check move Rochade
         board.setBlackIsTurn(false);
         board.specialMove(move, startIndex, endIndex);
@@ -306,7 +306,7 @@ class SpecialManualsTest {
         move = new Move("e8-c8");
         CellIndex startIndex = cellIndexFor(move.getStart());
         CellIndex endIndex = cellIndexFor(move.getEnd());
-        assertTrue(board.spManuals.checkRochade(board.getMoveList(), move, board.checkerBoard, board.manuals));
+        assertTrue(board.manuals.spManuals.checkRochade(board.getMoveList(), move, board.checkerBoard, board.manuals));
         // check move Rochade
         board.setBlackIsTurn(true);
         board.specialMove(move, startIndex, endIndex);
@@ -327,7 +327,7 @@ class SpecialManualsTest {
         move = new Move("b7-b5"); // Move Pawn B7-B5
         board.applyMove(move);
         move = new Move("e8-c8");
-        assertFalse(board.spManuals.checkRochade(board.getMoveList(), move, board.checkerBoard, board.manuals));
+        assertFalse(board.manuals.spManuals.checkWayInBetweenRochade(move, board.manuals, board.checkerBoard));
     }
 
     @Test
@@ -352,7 +352,7 @@ class SpecialManualsTest {
         move = new Move("a7-a8"); // Move Rook A8-A7
         board.applyMove(move);
         move = new Move("e8-c8");
-        assertFalse(board.spManuals.checkRochade(board.getMoveList(), move, board.checkerBoard, board.manuals));
+        assertFalse(board.manuals.spManuals.checkRochade(board.getMoveList(), move, board.checkerBoard, board.manuals));
     }
     @Test
     void rochadeKingMoved(){
@@ -374,7 +374,7 @@ class SpecialManualsTest {
         move = new Move("e2-e1"); // Move King E2-E1
         board.applyMove(move);
         move = new Move("e1-g1");
-        assertFalse(board.spManuals.checkRochade(board.getMoveList(), move, board.checkerBoard, board.manuals));
+        assertFalse(board.manuals.spManuals.checkRochade(board.getMoveList(), move, board.checkerBoard, board.manuals));
     }
 
     @Test
@@ -389,7 +389,7 @@ class SpecialManualsTest {
         CellIndex bishopAttacker = cellIndexFor(moveBishop.getEnd()); //(3,1)
         CellIndex kingVictim = new CellIndex(0,4);
         //get attackers path
-        List<CellIndex> attackerPathBishopKingFromMethod = board.spManuals.attackerPath(bishopAttacker, kingVictim);
+        List<CellIndex> attackerPathBishopKingFromMethod = board.manuals.spManuals.attackerPath(bishopAttacker, kingVictim);
         List<CellIndex> attackersPathBishopKing = new ArrayList<>();
         attackersPathBishopKing.add(bishopAttacker);
         attackersPathBishopKing.add(new CellIndex(2,2));

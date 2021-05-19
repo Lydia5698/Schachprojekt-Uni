@@ -264,6 +264,38 @@ public class SpecialManuals {
         }
     }
 
+    boolean checkWayInBetweenRochade(Move move, Manuals manuals, Cell[][] checkerboard){
+        CellIndex start = cellIndexFor(move.getStart());
+        CellIndex end = cellIndexFor(move.getEnd());
+        Cell startCell = checkerboard[start.row][start.column];
+        CellIndex rookWhiteL = cellIndexFor("a1");
+        CellIndex rookWhiteR = cellIndexFor("h1");
+        CellIndex rookBlackL = cellIndexFor("a8");
+        CellIndex rookBlackR = cellIndexFor("h8");
+        boolean isEmpty = true;
+        // case black
+        if (startCell.getMinion().isBlack()) {
+            // check if the fields between Left Rook and King are Occupied
+            if (!(manuals.checkIfFieldsInBetweenNotOccupied(start, rookBlackL, checkerboard, true)) && end.column == 2) {
+                isEmpty = false;
+            }
+            // check if the fields between Right Rook and King are Occupied
+            if(!(manuals.checkIfFieldsInBetweenNotOccupied(start, rookBlackR, checkerboard, true)) && end.column == 6)
+                isEmpty = false;
+        }
+        // Case white
+        else {
+            // check if the fields between Left Rook and King are Occupied
+            if (!(manuals.checkIfFieldsInBetweenNotOccupied(start, rookWhiteL, checkerboard, true)) && end.column == 2) {
+                isEmpty = false;
+            }
+            // check if the fields between Right Rook and King are Occupied
+            if(!(manuals.checkIfFieldsInBetweenNotOccupied(start, rookWhiteR, checkerboard, true)) && end.column == 6)
+                isEmpty = false;
+        }
+        return isEmpty;
+    }
+
 
     /**
      * Checks if the move is an valid Rochade
@@ -290,27 +322,8 @@ public class SpecialManuals {
         if (startCell.isEmpty()) {
             validRochade = false;
         }
-        // case black
-        if (startCell.getMinion().isBlack()) {
-            // check if the fields between Left Rook and King are Occupied
-            if (!(manuals.checkIfFieldsInBetweenNotOccupied(start, rookBlackL, checkerboard, true)) && end.column == 2) {
-                validRochade = false;
-            }
-            // check if the fields between Right Rook and King are Occupied
-            if (!(manuals.checkIfFieldsInBetweenNotOccupied(start, rookBlackR, checkerboard, true)) && end.column == 6) {
-                validRochade = false;
-            }
-        }
-        // Case white
-        else {
-            // check if the fields between Left Rook and King are Occupied
-            if (!(manuals.checkIfFieldsInBetweenNotOccupied(start, rookWhiteL, checkerboard, true)) && end.column == 2) {
-                validRochade = false;
-            }
-            // check if the fields between Right Rook and King are Occupied
-            if (!(manuals.checkIfFieldsInBetweenNotOccupied(start, rookWhiteR, checkerboard, true)) && end.column == 6) {
-                validRochade = false;
-            }
+        if(!(checkWayInBetweenRochade(move, manuals, checkerboard))){
+            return false;
         }
         // check if a King is in the startCell and checks if the King makes two steps
         if (!(Math.abs(diffColumn) == 2 && String.valueOf(startCell.getMinion().getMinion_type()).equals("K"))) {

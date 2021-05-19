@@ -17,7 +17,7 @@ import java.util.List;
 public class Board {
     Cell[][] checkerBoard = new Cell[8][8]; //feldgröße
     public Manuals manuals = new Manuals();
-    public SpecialManuals spManuals = new SpecialManuals();
+    //public SpecialManuals spManuals = new SpecialManuals();
     public StaleMate staleMate = new StaleMate();
     private char[] officerline = "RNBQKBNR".toCharArray();
     private char[] frontline = "PPPPPPPP".toCharArray();
@@ -148,7 +148,7 @@ public class Board {
             blackIsTurn = !blackIsTurn;
             System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
             moveList.add(move);
-            spManuals.promote(endIndex, promoteTo, checkerBoard);
+            manuals.spManuals.promote(endIndex, promoteTo, checkerBoard);
             //check if in Check or in CheckMate
             checkAndPrintCheckCheckMate(minion);
             /*if (staleMate.isStaleMate(!minion.isBlack(), checkerBoard) && !simple){
@@ -178,7 +178,7 @@ public class Board {
         Cell startCell = checkerBoard[startIndex.getRow()][startIndex.getColumn()];
         Cell endCell = checkerBoard[endIndex.getRow()][endIndex.getColumn()];
         Minion minion = startCell.getMinion();
-        if (spManuals.isValidEnPassant(startIndex, endIndex, checkerBoard, moveList)) {
+        if (manuals.spManuals.isValidEnPassant(startIndex, endIndex, checkerBoard, moveList)) {
             Move lastMove = moveList.get(moveList.size() - 1);
             CellIndex endIndexLastMove = cellIndexFor(lastMove.getEnd());
             Cell endCellLastMove = checkerBoard[endIndexLastMove.getRow()][endIndexLastMove.getColumn()];
@@ -189,8 +189,8 @@ public class Board {
             System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
             moveList.add(move);
             return true;
-        } else if (spManuals.checkRochade(moveList, move, checkerBoard, manuals)) {
-            spManuals.moveRochade(move, checkerBoard, manuals);
+        } else if (manuals.spManuals.checkRochade(moveList, move, checkerBoard, manuals)) {
+            manuals.spManuals.moveRochade(move, checkerBoard, manuals);
             blackIsTurn = !blackIsTurn;
             System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
             System.out.println("Rochade");
