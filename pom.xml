@@ -38,6 +38,12 @@
             <artifactId>javafx-controls</artifactId>
             <version>16</version>
         </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>16</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -109,6 +115,7 @@
                     <!-- The main class, fully qualified name -->
                     <mainClass>chess/chess.Main</mainClass>
                     <!-- Make command line arguments setable with -Dargs="" -->
+                    <!--suppress UnresolvedMavenProperty -->
                     <commandlineArgs>${args}</commandlineArgs>
                 </configuration>
             </plugin>
@@ -144,11 +151,19 @@
                 <!-- The Javadoc plugin uses the Javadoc tool to generate javadocs for the project -->
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.2.0</version>
+                <configuration>
+                    <!-- Ignore module definition to avoid module related issues -->
+                    <sourceFileExcludes>module-info.java</sourceFileExcludes>
+                    <additionalOptions>
+                        <option>--show-module-contents all</option>
+                        <option>--show-packages all</option>
+                    </additionalOptions>
+                </configuration>
                 <reportSets>
                     <reportSet>
                         <reports>
-                            <!-- We only want to generate javadocs for the implementation and not for the tests, so we manually exclude the test-javadoc report -->
                             <report>javadoc</report>
+                            <report>test-javadoc</report>
                         </reports>
                     </reportSet>
                 </reportSets>

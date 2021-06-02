@@ -1,10 +1,19 @@
 package chess.gui;
 
+
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.util.Objects;
+
+
+
 
 /**
  * Starting point of the JavaFX GUI
@@ -15,8 +24,25 @@ public class Gui extends Application {
      *
      * @param primaryStage The initial root stage of the application.
      */
+
+
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws Exception {
+
+        /*try{
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("gui.fxml"));
+            Parent root = (Parent)fxmlLoader.load();
+            Scene scene = new Scene(root, 500, 500);
+            primaryStage.setScene(scene);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+
+        primaryStage.show();
+
+        /*
         primaryStage.setTitle("Hello World!");
         Button btn = new Button();
         btn.setText("Say 'Hello World'");
@@ -26,7 +52,21 @@ public class Gui extends Application {
         root.getChildren().add(btn);
         primaryStage.setScene(new Scene(root, 300, 250));
         primaryStage.show();
+
+         */
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("gui.fxml"));
+        Parent root = (Parent)fxmlLoader.load();
+
+        Scene scene = new Scene(root, 500, 500);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+
+
+
     }
+
 
     /**
      * The entry point of the GUI application.
