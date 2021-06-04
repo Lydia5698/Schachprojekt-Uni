@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * All Tests for the Class Pawn
  * @see Pawn
  */
-class PawnTest {
+public class PawnTest {
 
     @Test
     void validMovePawnE2E4ReturnTrue() {

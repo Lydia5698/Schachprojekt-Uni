@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * All Tests for the Class Bishop
  * @see Bishop
  */
-class BishopTest {
+public class BishopTest {
 
     @Test
     void validMoveBishopC1E3ReturnTrue() {

@@ -11,7 +11,10 @@ import static org.junit.jupiter.api.Assertions.*;
  * All Tests for the Class Manuals
  * @see Manuals
  */
-class ManualsTest {
+
+
+//TODO: test komplexere Testmethoden kommentieren
+public class ManualsTest {
 
     // Get Attackers
     @Test
@@ -111,9 +114,9 @@ class ManualsTest {
         Board board = new Board();
         Move move = new Move("g2-g4"); // Move Pawn G2-G4
         board.applyMove(move);
-        move = new Move("e7-e5"); // Move Pawn E7-E5
-        board.applyMove(move);
         move = new Move("f2-f3"); // Move Pawn F2-F3
+        board.applyMove(move);
+        move = new Move("e7-e5"); // Move Pawn E7-E5
         board.applyMove(move);
         move = new Move("d8-h4"); // Move Queen D8-H4
         CellIndex startIndex = cellIndexFor(move.getStart());
@@ -155,8 +158,5 @@ class ManualsTest {
         boolean canProtect = board.manuals.checkIfPieceCanProtectTheOwnKing(board.checkerBoard, attackerPath, false);
         assertTrue(canProtect);
     }
-
-
-
 
 }

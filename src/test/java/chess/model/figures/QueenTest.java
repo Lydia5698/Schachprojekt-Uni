@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * All Tests for the Class Queen
  * @see Queen
  */
-class QueenTest {
+public class QueenTest {
 
     @Test
     void validMoveQueenD1D4VerticalReturnTrue() {

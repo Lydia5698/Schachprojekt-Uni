@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * All Tests for the Class Knight
  * @see Knight
  */
-class KnightTest {
+public class KnightTest {
 
     @Test
     void validMoveKnightG1F3ReturnTrue() {

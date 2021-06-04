@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * All Tests for the Class SpecialManuals
  * @see SpecialManuals
  */
-class SpecialManualsTest {
+public class SpecialManualsTest {
 
     // EnPassant Tests
     @Test
@@ -293,9 +293,9 @@ class SpecialManualsTest {
         Board board = new Board();
         Move move = new Move("a7-a5"); // Move Pawn A7-A5
         board.applyMove(move);
-        move = new Move("c7-c5"); // Move Pawn C7-C5
-        board.applyMove(move);
         move = new Move("b7-b5"); // Move Pawn B7-B5
+        board.applyMove(move);
+        move = new Move("c7-c5"); // Move Pawn C7-C5
         board.applyMove(move);
         move = new Move("d7-d5"); // Move Pawn D7-D5
         board.applyMove(move);

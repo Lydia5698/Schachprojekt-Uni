@@ -24,7 +24,7 @@ public class SpecialManuals {
      *
      * @param attacker CellIndex of the attacker
      * @param victim   CellIndex of the victim
-     * @return List<CellIndex> with all the Attackers
+     * @return List of CellIndicies with all the Attackers
      */
     protected List<CellIndex> attackerPath(CellIndex attacker, CellIndex victim) {
         List<CellIndex> attackerPath = new ArrayList<>();
@@ -45,7 +45,7 @@ public class SpecialManuals {
      *
      * @param attacker CellIndex of the attacker
      * @param victim   CellIndex of the victim
-     * @return List<CellIndex> with all the attacker paths without the Knight path
+     * @return List of CellIndicies with all the attacker paths without the Knight path
      */
     private List<CellIndex> attackerPathNoKnight(CellIndex attacker, CellIndex victim) {
         List<CellIndex> attackerPathNoKnight = new ArrayList<>();
@@ -308,7 +308,7 @@ public class SpecialManuals {
      * @param manuals      the manuals
      * @return boolean if Rochade is valid
      */
-    boolean checkRochade(List<Move> MoveList, Move move, Cell[][] checkerboard, Manuals manuals) {
+    boolean checkRochade(List<Move> MoveList, Move move, Cell[][] checkerboard, Manuals manuals) { //evtl supress pmd macht keinen Sinn eine if in eigenen methode auszulagern, um einen punkt zu verringern
         CellIndex start = cellIndexFor(move.getStart());
         CellIndex end = cellIndexFor(move.getEnd());
         int diffColumn = end.column - start.column;

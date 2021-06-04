@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * All Tests for the Class Rook
  * @see Rook
  */
-class RookTest {
+public class RookTest {
 
     @Test
     void validMoveRookA1A5ReturnTrue() {

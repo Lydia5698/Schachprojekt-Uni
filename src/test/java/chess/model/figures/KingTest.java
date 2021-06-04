@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * All Tests for the Class King
  *  @see King
  */
-class KingTest {
+public class KingTest {
 
     @Test
     void validMoveKingE1E2VerticalReturnTrue() {

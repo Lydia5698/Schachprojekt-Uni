@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Test class to test the methods in the StaleMate class.
  * @author Jasmin Wojtkiewicz
  */
-class StaleMateTest {
+public class StaleMateTest {
 
     @Test
     void isStaleMateTrueStaleMate() {

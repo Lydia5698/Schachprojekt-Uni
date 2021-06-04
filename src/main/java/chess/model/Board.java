@@ -73,29 +73,33 @@ public class Board {
             tmp = officerline;
         }
         for (int i = 0; i < 8; i++) {
-            switch (tmp[i]) {
-                case 'R':
-                    checkerBoard[horizont][i] = new Cell(new Rook(black));
-                    break;
-                case 'N':
-                    checkerBoard[horizont][i] = new Cell(new Knight(black));
-                    break;
-                case 'B':
-                    checkerBoard[horizont][i] = new Cell(new Bishop(black));
-                    break;
-                case 'Q':
-                    checkerBoard[horizont][i] = new Cell(new Queen(black));
-                    break;
-                case 'K':
-                    checkerBoard[horizont][i] = new Cell(new King(black));
-                    break;
-                default:
-                    checkerBoard[horizont][i] = new Cell(new Pawn(black));
-                    break;
-            }
+            initialiseCellsWithFigures(horizont, black, tmp, i);
         }
         if (horizont >= 2 && horizont <= 5) {
             checkerBoard[horizont] = emptyCells();
+        }
+    }
+
+    private void initialiseCellsWithFigures(int horizont, boolean black, char[] tmp, int i) {
+        switch (tmp[i]) {
+            case 'R':
+                checkerBoard[horizont][i] = new Cell(new Rook(black));
+                break;
+            case 'N':
+                checkerBoard[horizont][i] = new Cell(new Knight(black));
+                break;
+            case 'B':
+                checkerBoard[horizont][i] = new Cell(new Bishop(black));
+                break;
+            case 'Q':
+                checkerBoard[horizont][i] = new Cell(new Queen(black));
+                break;
+            case 'K':
+                checkerBoard[horizont][i] = new Cell(new King(black));
+                break;
+            default:
+                checkerBoard[horizont][i] = new Cell(new Pawn(black));
+                break;
         }
     }
 
