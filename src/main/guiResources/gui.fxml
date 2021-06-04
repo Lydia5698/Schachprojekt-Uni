@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane xmlns="http://javafx.com/javafx/16">
+   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bfbfbf" height="840.0" stroke="BLACK" strokeType="INSIDE"
+              width="950.0"/>
+   <BorderPane layoutY="90.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+               prefHeight="749.0" prefWidth="950.0">
+      <left>
+         <GridPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="720.0" prefWidth="30.0"
+                   BorderPane.alignment="CENTER">
+            <columnConstraints>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            </columnConstraints>
+            <rowConstraints>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="8" textAlignment="CENTER"
+                  textOrigin="CENTER" wrappingWidth="30.794921875">
+               <font>
+                  <Font name="Arial" size="22.0"/>
+               </font>
+            </Text>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="7" textAlignment="CENTER"
+                  wrappingWidth="30.794921875" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Arial" size="22.0"/>
+               </font>
+            </Text>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="6" textAlignment="CENTER"
+                  wrappingWidth="30.794921875" GridPane.rowIndex="2">
+               <font>
+                  <Font size="22.0"/>
+               </font>
+            </Text>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="5" textAlignment="CENTER"
+                  wrappingWidth="30.794921875" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Arial" size="22.0"/>
+               </font>
+            </Text>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="4" textAlignment="CENTER"
+                  wrappingWidth="30.794921875" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Arial" size="22.0"/>
+               </font>
+            </Text>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="3" textAlignment="CENTER"
+                  wrappingWidth="30.794921875" GridPane.rowIndex="5">
+               <font>
+                  <Font size="22.0"/>
+               </font>
+            </Text>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="2" textAlignment="CENTER"
+                  wrappingWidth="30.794921875" GridPane.rowIndex="6">
+               <font>
+                  <Font size="22.0"/>
+               </font>
+            </Text>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="1" textAlignment="CENTER"
+                  wrappingWidth="30.794921875" GridPane.rowIndex="7">
+               <font>
+                  <Font size="22.0"/>
+               </font>
+            </Text>
+         </GridPane>
+      </left>
+      <bottom>
+         <GridPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="750.0"
+                   BorderPane.alignment="BOTTOM_LEFT">
+            <columnConstraints>
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="79.0" minWidth="10.0" prefWidth="29.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" prefWidth="90.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="96.0" minWidth="10.0" prefWidth="91.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="104.0" minWidth="10.0" prefWidth="90.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="91.0" minWidth="10.0" prefWidth="91.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.0" minWidth="10.0" prefWidth="88.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="104.0" minWidth="10.0" prefWidth="93.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="97.0" minWidth="10.0" prefWidth="88.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="88.0"/>
+            </columnConstraints>
+            <rowConstraints>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <Text fill="#fffefe" strokeType="OUTSIDE" strokeWidth="0.0" text="A" textAlignment="CENTER"
+                  wrappingWidth="91.794921875" GridPane.columnIndex="1">
+               <font>
+                  <Font size="22.0"/>
+               </font>
+            </Text>
+            <Text fill="#fffefe" strokeType="OUTSIDE" strokeWidth="0.0" text="B" textAlignment="CENTER"
+                  wrappingWidth="91.794921875" GridPane.columnIndex="2">
+               <font>
+                  <Font size="22.0"/>
+               </font>
+            </Text>
+            <Text fill="#fffefe" strokeType="OUTSIDE" strokeWidth="0.0" text="C" textAlignment="CENTER"
+                  wrappingWidth="91.794921875" GridPane.columnIndex="3">
+               <font>
+                  <Font size="22.0"/>
+               </font>
+            </Text>
+            <Text fill="#fffefe" strokeType="OUTSIDE" strokeWidth="0.0" text="D" textAlignment="CENTER"
+                  wrappingWidth="91.794921875" GridPane.columnIndex="4">
+               <font>
+                  <Font size="22.0"/>
+               </font>
+            </Text>
+            <Text fill="#fffefe" strokeType="OUTSIDE" strokeWidth="0.0" text="E" textAlignment="CENTER"
+                  wrappingWidth="91.794921875" GridPane.columnIndex="5">
+               <font>
+                  <Font size="22.0"/>
+               </font>
+            </Text>
+            <Text fill="#fffefe" strokeType="OUTSIDE" strokeWidth="0.0" text="F" textAlignment="CENTER"
+                  wrappingWidth="91.794921875" GridPane.columnIndex="6">
+               <font>
+                  <Font size="22.0"/>
+               </font>
+            </Text>
+            <Text fill="#fffefe" strokeType="OUTSIDE" strokeWidth="0.0" text="G" textAlignment="CENTER"
+                  wrappingWidth="91.794921875" GridPane.columnIndex="7">
+               <font>
+                  <Font size="22.0"/>
+               </font>
+            </Text>
+            <Text fill="#fffefe" strokeType="OUTSIDE" strokeWidth="0.0" text="H" textAlignment="CENTER"
+                  wrappingWidth="91.794921875" GridPane.columnIndex="8">
+               <font>
+                  <Font size="22.0"/>
+               </font>
+            </Text>
+         </GridPane>
+      </bottom>
+      <right>
+         <GridPane BorderPane.alignment="CENTER">
+            <columnConstraints>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            </columnConstraints>
+            <rowConstraints>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+         </GridPane>
+      </right>
+      <center>
+         <GridPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="720.0" prefWidth="720.0"
+                   BorderPane.alignment="CENTER">
+            <columnConstraints>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+            </columnConstraints>
+            <rowConstraints>
+               <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+               <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <Group>
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@ChessFigures/RookBlack.png"/>
+               </ImageView>
+            </Group>
+            <Group GridPane.columnIndex="1">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@ChessFigures/KnightBlack.png"/>
+               </ImageView>
+            </Group>
+            <Group GridPane.columnIndex="2">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@ChessFigures/BishopBlack.png"/>
+               </ImageView>
+            </Group>
+            <Group GridPane.columnIndex="3">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@ChessFigures/QueenBlack.png"/>
+               </ImageView>
+            </Group>
+            <Group GridPane.columnIndex="4">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@ChessFigures/KingBlack.png"/>
+               </ImageView>
+            </Group>
+            <Group GridPane.columnIndex="5">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@ChessFigures/BishopBlack.png"/>
+               </ImageView>
+            </Group>
+            <Group GridPane.columnIndex="6">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@ChessFigures/KnightBlack.png"/>
+               </ImageView>
+            </Group>
+            <Group GridPane.columnIndex="7">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@ChessFigures/RookBlack.png"/>
+               </ImageView>
+            </Group>
+            <Group GridPane.rowIndex="1">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@ChessFigures/PawnBlack.png"/>
+               </ImageView>
+            </Group>
+            <Group GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@ChessFigures/PawnBlack.png"/>
+               </ImageView>
+            </Group>
+            <Group GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@ChessFigures/PawnBlack.png"/>
+               </ImageView>
+            </Group>
+            <Group GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@ChessFigures/PawnBlack.png"/>
+               </ImageView>
+            </Group>
+            <Group GridPane.columnIndex="4" GridPane.rowIndex="1">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@ChessFigures/PawnBlack.png"/>
+               </ImageView>
+            </Group>
+            <Group GridPane.columnIndex="5" GridPane.rowIndex="1">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@ChessFigures/PawnBlack.png"/>
+               </ImageView>
+            </Group>
+            <Group GridPane.columnIndex="6" GridPane.rowIndex="1">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@ChessFigures/PawnBlack.png"/>
+               </ImageView>
+            </Group>
+            <Group GridPane.columnIndex="7" GridPane.rowIndex="1">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@ChessFigures/PawnBlack.png"/>
+               </ImageView>
+            </Group>
+            <Group GridPane.rowIndex="2">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true"/>
+            </Group>
+            <Group GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true"/>
+            </Group>
+            <Group GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true"/>
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+            </Group>
+            <Group GridPane.columnIndex="3" GridPane.rowIndex="2">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true"/>
+            </Group>
+            <Group GridPane.columnIndex="4" GridPane.rowIndex="2">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true"/>
+            </Group>
+            <Group GridPane.columnIndex="5" GridPane.rowIndex="2">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true"/>
+            </Group>
+            <Group GridPane.columnIndex="6" GridPane.rowIndex="2">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true"/>
+            </Group>
+            <Group GridPane.columnIndex="7" GridPane.rowIndex="2">
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true"/>
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+            </Group>
+            <Group GridPane.rowIndex="3">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" stroke="#00000002"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true"/>
+            </Group>
+            <Group GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true"/>
+            </Group>
+            <Group GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" stroke="#00000002"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true"/>
+            </Group>
+            <Group GridPane.columnIndex="3" GridPane.rowIndex="3">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true"/>
+            </Group>
+            <Group GridPane.columnIndex="4" GridPane.rowIndex="3">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" stroke="#00000002"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true"/>
+            </Group>
+            <Group GridPane.columnIndex="5" GridPane.rowIndex="3">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true"/>
+            </Group>
+            <Group GridPane.columnIndex="6" GridPane.rowIndex="3">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" stroke="#00000002"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true"/>
+            </Group>
+            <Group GridPane.columnIndex="7" GridPane.rowIndex="3">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true"/>
+            </Group>
+            <Group GridPane.rowIndex="4">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true"/>
+            </Group>
+            <Group GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" stroke="#00000002"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true"/>
+            </Group>
+            <Group GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true"/>
+            </Group>
+            <Group GridPane.columnIndex="3" GridPane.rowIndex="4">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" stroke="#00000002"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true"/>
+            </Group>
+            <Group GridPane.columnIndex="4" GridPane.rowIndex="4">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true"/>
+            </Group>
+            <Group GridPane.columnIndex="5" GridPane.rowIndex="4">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" stroke="#00000002"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true"/>
+            </Group>
+            <Group GridPane.columnIndex="6" GridPane.rowIndex="4">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true"/>
+            </Group>
+            <Group GridPane.columnIndex="7" GridPane.rowIndex="4">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" stroke="#00000002"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true"/>
+            </Group>
+            <Group GridPane.rowIndex="5">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" stroke="#00000002"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true"/>
+            </Group>
+            <Group GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true"/>
+            </Group>
+            <Group GridPane.columnIndex="2" GridPane.rowIndex="5">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" stroke="#00000002"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true"/>
+            </Group>
+            <Group GridPane.columnIndex="3" GridPane.rowIndex="5">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true"/>
+            </Group>
+            <Group GridPane.columnIndex="4" GridPane.rowIndex="5">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" stroke="#00000002"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true"/>
+            </Group>
+            <Group GridPane.columnIndex="5" GridPane.rowIndex="5">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true"/>
+            </Group>
+            <Group GridPane.columnIndex="6" GridPane.rowIndex="5">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" stroke="#00000002"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true"/>
+            </Group>
+            <Group GridPane.columnIndex="7" GridPane.rowIndex="5">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true"/>
+            </Group>
+            <Group GridPane.rowIndex="6">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@ChessFigures/PawnWhite.png"/>
+               </ImageView>
+            </Group>
+            <Group GridPane.columnIndex="1" GridPane.rowIndex="6">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" stroke="#00000002"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@ChessFigures/PawnWhite.png"/>
+               </ImageView>
+            </Group>
+            <Group GridPane.columnIndex="2" GridPane.rowIndex="6">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@ChessFigures/PawnWhite.png"/>
+               </ImageView>
+            </Group>
+            <Group GridPane.columnIndex="3" GridPane.rowIndex="6">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" stroke="#00000002"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@ChessFigures/PawnWhite.png"/>
+               </ImageView>
+            </Group>
+            <Group GridPane.columnIndex="4" GridPane.rowIndex="6">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@ChessFigures/PawnWhite.png"/>
+               </ImageView>
+            </Group>
+            <Group GridPane.columnIndex="5" GridPane.rowIndex="6">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" stroke="#00000002"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@ChessFigures/PawnWhite.png"/>
+               </ImageView>
+            </Group>
+            <Group GridPane.columnIndex="6" GridPane.rowIndex="6">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@ChessFigures/PawnWhite.png"/>
+               </ImageView>
+            </Group>
+            <Group GridPane.columnIndex="7" GridPane.rowIndex="6">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" stroke="#00000002"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@ChessFigures/PawnWhite.png"/>
+               </ImageView>
+            </Group>
+            <Group GridPane.rowIndex="7">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" stroke="#00000002"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" layoutX="4.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@ChessFigures/RookWhite.png"/>
+               </ImageView>
+            </Group>
+            <Group GridPane.columnIndex="1" GridPane.rowIndex="7">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@ChessFigures/KnightWhite.png"/>
+               </ImageView>
+            </Group>
+            <Group GridPane.columnIndex="2" GridPane.rowIndex="7">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" stroke="#00000002"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@ChessFigures/BishopWhite.png"/>
+               </ImageView>
+            </Group>
+            <Group GridPane.columnIndex="3" GridPane.rowIndex="7">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@ChessFigures/QueenWhite.png"/>
+               </ImageView>
+            </Group>
+            <Group GridPane.columnIndex="4" GridPane.rowIndex="7">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" stroke="#00000002"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@ChessFigures/KingWhite.png"/>
+               </ImageView>
+            </Group>
+            <Group GridPane.columnIndex="5" GridPane.rowIndex="7">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@ChessFigures/BishopWhite.png"/>
+               </ImageView>
+            </Group>
+            <Group GridPane.columnIndex="6" GridPane.rowIndex="7">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" stroke="#00000002"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@ChessFigures/KnightWhite.png"/>
+               </ImageView>
+            </Group>
+            <Group GridPane.columnIndex="7" GridPane.rowIndex="7">
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" stroke="TRANSPARENT"
+                          strokeType="INSIDE" width="90.0"/>
+               <ImageView fitHeight="90.0" fitWidth="90.0" layoutX="7.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@ChessFigures/RookWhite.png"/>
+               </ImageView>
+            </Group>
+         </GridPane>
+      </center>
+   </BorderPane>
+</AnchorPane>
