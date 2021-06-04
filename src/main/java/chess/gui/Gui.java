@@ -1,6 +1,7 @@
 package chess.gui;
 
 
+import chess.Main;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -29,42 +31,19 @@ public class Gui extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        /*try{
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("gui.fxml"));
-            Parent root = (Parent)fxmlLoader.load();
-            Scene scene = new Scene(root, 500, 500);
-            primaryStage.setScene(scene);
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
 
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/gui.fxml"));
+            Parent root = (Parent) loader.load();
+            Scene gameScene = new Scene(root, 1000, 1000);
+            primaryStage.setScene(gameScene);
+            primaryStage.show();
 
-        primaryStage.show();
+        }  catch (IOException e) {
 
-        /*
-        primaryStage.setTitle("Hello World!");
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(event -> System.out.println("Hello World!"));
-
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
-        primaryStage.setScene(new Scene(root, 300, 250));
-        primaryStage.show();
-
-         */
-
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("gui.fxml"));
-        Parent root = (Parent)fxmlLoader.load();
-
-        Scene scene = new Scene(root, 500, 500);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
-
-
-
+        e.printStackTrace();
+    }
     }
 
 
