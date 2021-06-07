@@ -34,7 +34,7 @@ public class Gui extends Application {
 
         try{
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/gui.fxml"));
+            loader.setLocation(getClass().getResource("/anleitung.fxml"));
             Parent root = (Parent) loader.load();
             Scene gameScene = new Scene(root, 1000, 1000);
             primaryStage.setScene(gameScene);

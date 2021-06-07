@@ -5,17 +5,16 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
             prefWidth="600.0" xmlns="http://javafx.com/javafx/16">
-   <Button layoutX="243.0" layoutY="167.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="115.0"
-           text="Spiel start"/>
-   <Button layoutX="243.0" layoutY="337.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="115.0" text="Exit"/>
-   <Button layoutX="243.0" layoutY="216.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="115.0" text="Optionen"/>
-   <Label layoutX="216.0" layoutY="40.0" prefHeight="69.0" prefWidth="172.0" text="Chess" textAlignment="CENTER">
+   <Button layoutX="243.0" layoutY="149.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="115.0" text="Spiel start" />
+   <Button layoutX="243.0" layoutY="347.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="115.0" text="Exit" />
+   <Button layoutX="243.0" layoutY="194.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="115.0" text="Optionen" />
+   <Label layoutX="224.0" layoutY="40.0" prefHeight="69.0" prefWidth="172.0" text="Chess" textAlignment="CENTER">
       <font>
-         <Font name="Arial" size="48.0"/>
+         <Font name="Arial" size="48.0" />
       </font>
    </Label>
-   <Button layoutX="243.0" layoutY="296.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="115.0" text="Credits"/>
+   <Button layoutX="243.0" layoutY="306.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="115.0" text="Credits" />
+   <Button layoutX="243.0" layoutY="240.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="115.0" text="Anleitung" />
 </AnchorPane>
