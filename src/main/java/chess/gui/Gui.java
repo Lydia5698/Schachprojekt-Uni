@@ -34,7 +34,7 @@ public class Gui extends Application {
 
         try{
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/anleitung.fxml"));
+            loader.setLocation(getClass().getResource("/spielauswahl.fxml"));
             Parent root = (Parent) loader.load();
             Scene gameScene = new Scene(root, 1000, 1000);
             primaryStage.setScene(gameScene);
@@ -45,6 +45,15 @@ public class Gui extends Application {
         e.printStackTrace();
     }
     }
+    /*
+    Für die Combobox on Spielauswahl
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+    comboBox.getItems().removeAll(comboBox.getItems());
+    comboBox.getItems().addAll("Schwarz", "Weiß", "Zufall");
+    comboBox.getSelectionModel().select("Option B");
+    }
+     */
 
 
     /**

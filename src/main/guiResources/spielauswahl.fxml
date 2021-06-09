@@ -1,43 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
             prefWidth="600.0" xmlns="http://javafx.com/javafx/16">
    <Button layoutX="266.0" layoutY="352.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="Exit">
       <font>
-         <Font name="Arial" size="13.0"/>
+         <Font name="Arial" size="13.0" />
       </font>
    </Button>
    <Button layoutX="274.0" layoutY="311.0" mnemonicParsing="false" text="Optionen">
       <font>
-         <Font name="Arial" size="13.0"/>
+         <Font name="Arial" size="13.0" />
       </font>
    </Button>
-   <Button layoutX="246.0" layoutY="225.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="125.0"
-           text="Netzwerkspiel">
+   <Button layoutX="246.0" layoutY="225.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="125.0" text="Netzwerkspiel">
       <font>
-         <Font name="Arial" size="13.0"/>
+         <Font name="Arial" size="13.0" />
       </font>
    </Button>
-   <Button layoutX="246.0" layoutY="166.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="125.0" text="Gegen Ki">
+   <Button layoutX="246.0" layoutY="165.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="125.0" text="Gegen Ki">
       <font>
-         <Font name="Arial" size="13.0"/>
+         <Font name="Arial" size="13.0" />
       </font>
    </Button>
-   <Button layoutX="247.0" layoutY="107.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="125.0"
-           text="Normales Spiel">
+   <Button layoutX="247.0" layoutY="107.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="125.0" text="Normales Spiel">
       <font>
-         <Font name="Arial" size="13.0"/>
+         <Font name="Arial" size="13.0" />
       </font>
    </Button>
    <Label layoutX="207.0" layoutY="29.0" text="Spiel wählen">
       <font>
-         <Font name="Arial" size="36.0"/>
+         <Font name="Arial" size="36.0" />
       </font>
    </Label>
+   <ComboBox layoutX="37.0" layoutY="165.0" prefHeight="35.0" prefWidth="150.0" promptText="Farbwahl" visibleRowCount="2" />
 </AnchorPane>
