@@ -6,8 +6,7 @@ module chess {
     requires transitive javafx.graphics;
     requires javafx.fxml;
     
-    exports chess.gui;
+    opens chess.gui;
     opens chess.model;
     opens chess.model.figures;
-    opens main;
 }
