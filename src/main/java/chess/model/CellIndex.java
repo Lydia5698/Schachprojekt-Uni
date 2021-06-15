@@ -37,4 +37,20 @@ public class CellIndex {
     public void setColumn(int column) {
         this.column = column;
     }
+
+    public String makeIndexIntoString(CellIndex index, CellIndex end){
+        char[] boardLetters = "abcdefgh".toCharArray();
+        String idx = "";
+        String idx1 = "";
+        String idx2 = "";
+        String number = Integer.toString(index.getRow()+1);
+        Character letter = boardLetters[index.getRow()];
+        idx1 = String.valueOf(letter) + number;
+        String number2 = Integer.toString(end.getRow()+1);
+        Character letter2 = boardLetters[end.getRow()];
+        idx2 = String.valueOf((letter2)) + number2;
+
+        idx = idx1 + "-" + idx2;
+        return idx;
+    }
 }

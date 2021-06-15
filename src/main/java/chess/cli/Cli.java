@@ -20,6 +20,8 @@ import java.util.Arrays;
 public class Cli {
     protected static Board board = new Board();
     protected static Manuals manuals = new Manuals();
+    // protected AI ai = new AI(); //TODO later integrate this bit
+    //TODO: integrate integer that counts the moves the ai made
 
     /**
      * The entry point of the console input application.
@@ -29,6 +31,7 @@ public class Cli {
     public static void main(String[] args) {
         boolean simple = Arrays.asList(args).contains("--simple");
         board.setSimple(simple);
+        //TODO: with AI or without AI ? What colour do you wanna play? open settings with settings button
         String validInput = "[a-h][1-8]-[a-h][1-8]\\D?"; // Sind eingaben nach e2-e4 egal? Also als bsp: e2-e4uiei soll trotzdem den move e2-e4 ausführen?
 
         String output = board.showBoard();
@@ -43,11 +46,16 @@ public class Cli {
                 System.out.print(" for white\n");
             }
             try {
+                //TODO: see if ai is active, look if ai's move, else check input
+                // next move ai(current checkerBoard)
+                // possibleNextMoves(board)
+                // apply nextMove
                 String input = br.readLine();
                 if (input.matches(validInput)) {
                     Move move = new Move(input);
                     if (manuals.moveOfRightColour(move, board)) {
                         board.applyMove(move);
+                        //TODO: count ai count integer 1 up, if ai-move
                         output = board.showBoard();
                         System.out.println(output);
                     } else {

@@ -99,4 +99,56 @@ public class StaleMate {
         return isLegal;
     }
 
+
+
+    /**
+     * The method possibleMovesForOneFigureMoveList adds all possible Moves for one figuere to a moves List.
+     *
+     * @param cellIndex    starting field of the piece that is checked for legal moves
+     * @param checkerBoard the checkerboard at this time
+     * @return list of moves with all legal moves for this piece
+     */
+    //method, welche moves ok sind fuer ein piece
+    protected List<Move> possibleMovesForOneFigureMoveList(CellIndex cellIndex, Cell[][] checkerBoard) {
+        List<Move> possibleMoves = new ArrayList<>();
+        Cell cell = checkerBoard[cellIndex.getRow()][cellIndex.getColumn()];
+        Minion minion = cell.getMinion();
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                CellIndex end = new CellIndex(row, col);
+                //check if move is legal
+                if (minion.validMove(cellIndex, end) && checkLegalMove(cellIndex, end, manuals, checkerBoard)) {
+                    //check ifLegalMove
+                    // make index into string
+                    String input = cellIndex.makeIndexIntoString(cellIndex, end);
+                    Move move = new Move(input);
+                    possibleMoves.add(move);
+                }
+
+            }
+        }
+        return possibleMoves;
+    }
+
+    /**
+     * Method that gives back a possible List of moves for one colour.
+     * @param isBlack the colour of the moves that should be generated.
+     * @param checkerBoard the current checkerBoard.
+     * @return List of pairs of the moves possible for one colour.
+     */
+    public List<Move> possibleMoveList(boolean isBlack, Cell[][] checkerBoard) {
+        boolean staleMate = false;
+        List<Move> moveList = new ArrayList<>();
+        // check every field for figure of certain colour if colour, possibleMoves
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                Cell cell = checkerBoard[row][col];
+                if (!cell.isEmpty() && cell.getMinion().isBlack() == isBlack) {
+                    moveList.addAll(possibleMovesForOneFigureMoveList(new CellIndex(row, col), checkerBoard));
+                }
+            }
+        }
+        return moveList;
+    }
+
 }
