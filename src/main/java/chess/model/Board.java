@@ -24,6 +24,7 @@ public class Board {
     private boolean blackIsTurn = false;
     private boolean gameEnd = false;
     private boolean simple = false;
+    private boolean allowedMove = true;
 
     /**
      * Creates a new Board instance. The Board uses initHorizont to fill the Board with Cells and Minions
@@ -154,18 +155,22 @@ public class Board {
             manuals.spManuals.promote(endIndex, promoteTo, checkerBoard);
             //check if in Check or in CheckMate
             checkAndPrintCheckCheckMate(minion);
+            allowedMove = true;
             /*if (staleMate.isStaleMate(!minion.isBlack(), checkerBoard) && !simple){
                 System.out.println("!Stalemate");
             }*/
+
         }
         // check if special move
         else if (specialMove(move, startIndex, endIndex)) {
             //check if in Check
             checkAndPrintCheckCheckMate(minion);
+            allowedMove = true;
         }
         // move is not allowed
         else {
             System.out.println("!Move not allowed");
+            allowedMove = false;
         }
     }
 
@@ -255,6 +260,14 @@ public class Board {
 
     public void setBlackIsTurn(boolean blackIsTurn) {
         this.blackIsTurn = blackIsTurn;
+    }
+
+    public void setAllowedMove(boolean allowedMove) {
+        this.allowedMove = allowedMove;
+    }
+
+    public boolean isAllowedMove() {
+        return allowedMove;
     }
 
     /**

@@ -61,7 +61,7 @@ public class StaleMate {
      * @return list of pairs of cell indices with all legal moves for this piece
      */
     //method, welche moves ok sind fuer ein piece
-    protected List<Pair> possibleMovesForOneFigure(CellIndex cellIndex, Cell[][] checkerBoard) {
+    public List<Pair> possibleMovesForOneFigure(CellIndex cellIndex, Cell[][] checkerBoard) {
         List<Pair> possibleMoves = new ArrayList<>();
         Cell cell = checkerBoard[cellIndex.getRow()][cellIndex.getColumn()];
         Minion minion = cell.getMinion();
