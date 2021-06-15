@@ -11,7 +11,7 @@
          <Font name="Arial" size="36.0" />
       </font>
    </Label>
-   <Button layoutX="14.0" layoutY="16.0" mnemonicParsing="false" onAction="#showStartScreen" text="Back">
+   <Button fx:id="btnStartScreen" layoutX="14.0" layoutY="16.0" mnemonicParsing="false" onMouseClicked="#showStartScreen" text="Back">
       <font>
          <Font name="Arial" size="13.0" />
       </font>

@@ -32,6 +32,10 @@ public class Gui extends Application {
      */
 
     protected Stage stage;
+
+
+
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
@@ -43,7 +47,7 @@ public class Gui extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Gui.class.getResource(filename));
             Parent root = (Parent) loader.load();
-            Scene gameScene = new Scene(root, 1000, 1000);
+            Scene gameScene = new Scene(root);
             primaryStage.setScene(gameScene);
             primaryStage.show();
 

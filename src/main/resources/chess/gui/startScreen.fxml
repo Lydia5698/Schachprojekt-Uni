@@ -6,14 +6,14 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chess.gui.FXMLController">
-   <Button layoutX="243.0" layoutY="149.0" mnemonicParsing="false" onAction="#showSpielauswahl" prefHeight="33.0" prefWidth="115.0" text="Spiel start" />
+   <Button fx:id="btnSpielstart" layoutX="243.0" layoutY="149.0" mnemonicParsing="false" onMouseClicked="#showSpielauswahl" prefHeight="33.0" prefWidth="115.0" text="Spiel start" />
    <Button layoutX="243.0" layoutY="347.0" mnemonicParsing="false" onAction="#exit" prefHeight="26.0" prefWidth="115.0" text="Exit" />
-   <Button layoutX="243.0" layoutY="194.0" mnemonicParsing="false" onAction="#showOptions" prefHeight="33.0" prefWidth="115.0" text="Optionen" />
+   <Button fx:id="btnOptions" layoutX="243.0" layoutY="194.0" mnemonicParsing="false" onMouseClicked="#showOptions" prefHeight="33.0" prefWidth="115.0" text="Optionen" />
    <Label layoutX="224.0" layoutY="40.0" prefHeight="69.0" prefWidth="172.0" text="Chess" textAlignment="CENTER">
       <font>
          <Font name="Arial" size="48.0" />
       </font>
    </Label>
-   <Button layoutX="243.0" layoutY="306.0" mnemonicParsing="false" onAction="#showCredits" prefHeight="26.0" prefWidth="115.0" text="Credits" />
-   <Button layoutX="243.0" layoutY="240.0" mnemonicParsing="false" onAction="#showAnleitung" prefHeight="33.0" prefWidth="115.0" text="Anleitung" />
+   <Button fx:id="btnCredits" layoutX="243.0" layoutY="306.0" mnemonicParsing="false" onMouseClicked="#showCredits" prefHeight="26.0" prefWidth="115.0" text="Credits" />
+   <Button fx:id="btnAnleitung" layoutX="243.0" layoutY="240.0" mnemonicParsing="false" onMouseClicked="#showAnleitung" prefHeight="33.0" prefWidth="115.0" text="Anleitung" />
 </AnchorPane>

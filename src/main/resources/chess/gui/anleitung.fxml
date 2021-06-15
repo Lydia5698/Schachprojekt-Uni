@@ -9,7 +9,7 @@
 <?import javafx.scene.text.TextFlow?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chess.gui.FXMLController">
-    <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#showStartScreen" text="Back">
+    <Button fx:id="btnStartScreen" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#showStartScreen" text="Back">
         <font>
           <Font name="Arial" size="13.0" />
         </font>
@@ -26,13 +26,13 @@
     </Label>
        <Hyperlink layoutX="60.0" layoutY="335.0" text="https://www.schachbund.de/files/dsb/srk/2019/FIDE-Regeln-2018-Final-DEU.pdf" />
    <Label layoutX="9.0" layoutY="318.0" text="Dieses Schachspiel folgt den Allgemeinen Regeln des deutschen Schachbundes. Für weitere Informationen " />
-   <TextFlow layoutX="48.0" layoutY="100.0" prefHeight="198.0" prefWidth="478.0">
-      <children>
-         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Um eine Spielfigur zu ziehen muss zu erst auf die Spielfigur und dann auf das Feld auf das sie ziehen soll geklickt werden. In den Optionen kann eingestellt werden, ob die möglichen Zuge der Figur angezeigt werden, ob angezeigt wird wenn der König im Schach steht, ob sich das Feld automatisch mit dem Spieler dreht und ob man die Figur, die zuerst geklickt wurde auch ziehen muss. Außerdem werden rechts am Rand die geschlagenen Figuren angezeigt sowie die Historie der Züge. Es ist jederzeit möglich das Spiel zu verlassen. Am Anfang jedes Spiels kann der Spieler eintscheiden, welche Farbe er spielen möchte und gegen wen er spielen möchte." wrappingWidth="133.0">
-            <font>
-               <Font name="Arial" size="13.0" />
-            </font>
-         </Text>
-      </children>
-   </TextFlow>
+    <TextFlow layoutX="48.0" layoutY="100.0" prefHeight="198.0" prefWidth="478.0">
+        <Text strokeType="OUTSIDE" strokeWidth="0.0"
+              text="Um eine Spielfigur zu ziehen muss zu erst auf die Spielfigur und dann auf das Feld auf das sie ziehen soll geklickt werden. In den Optionen kann eingestellt werden, ob die möglichen Zuge der Figur angezeigt werden, ob angezeigt wird wenn der König im Schach steht, ob sich das Feld automatisch mit dem Spieler dreht und ob man die Figur, die zuerst geklickt wurde auch ziehen muss. Außerdem werden rechts am Rand die geschlagenen Figuren angezeigt sowie die Historie der Züge. Es ist jederzeit möglich das Spiel zu verlassen. Am Anfang jedes Spiels kann der Spieler eintscheiden, welche Farbe er spielen möchte und gegen wen er spielen möchte."
+              wrappingWidth="133.0">
+           <font>
+               <Font name="Arial" size="13.0"/>
+           </font>
+        </Text>
+    </TextFlow>
 </AnchorPane>
