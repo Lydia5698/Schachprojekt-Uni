@@ -2,6 +2,7 @@ package chess.gui;
 
 import chess.gui.Gui;
 import chess.model.*;
+import chess.model.figures.Minion;
 import javafx.beans.binding.Bindings;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -11,12 +12,14 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class FXMLController {
     protected static Board board = new Board();
@@ -27,6 +30,8 @@ public class FXMLController {
     private final List<String> halfMoves = new ArrayList<>();
     private final List<Event> position = new ArrayList<>();
     private int counter = 0;
+    private int counterBeatenMinionsWhite = 0;
+    private int counterBeatenMinionsBlack = 0;
 
     @FXML
     private void b_neuesSpiel(){
@@ -57,6 +62,9 @@ public class FXMLController {
 
     @FXML
     private GridPane beatenMinion;
+
+    @FXML
+    private Text beatenText;
 
     public void showStartScreen(){
         Stage stage = (Stage) btnStartScreen.getScene().getWindow();
@@ -110,6 +118,7 @@ public class FXMLController {
         else{
             rowIndex = 8 - GridPane.getRowIndex(source);
         }
+        showPossibleMoves(colIndex, rowIndex);
 
         List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
         String input = columns.get(colIndex) + rowIndex;
@@ -149,12 +158,50 @@ public class FXMLController {
 
                 sourceEnd.toBack();
                 sourceStart.toFront();
+
+                beatenMinions(sourceEnd);
+
             }
             counter = 0;
             halfMoves.clear();
             position.clear();
         }
 
+    }
+
+    private void beatenMinions(Node sourceEnd) {
+        if(board.getBeaten().size() == 1){
+            String minion = board.getBeaten().get(0);
+            char minionType = minion.charAt(0);
+            if(Character.isUpperCase(minionType)){
+                //sourceEnd.set
+                beatenMinion.add(sourceEnd,0,counterBeatenMinionsWhite);
+                counterBeatenMinionsWhite++;
+
+            }
+            else {
+                beatenMinion.add(sourceEnd,1,counterBeatenMinionsBlack);
+                counterBeatenMinionsBlack++;
+            }
+            board.getBeaten().clear();
+        }
+    }
+
+    public void showPossibleMoves(int startCol, int startRow){
+        CellIndex startIndex = new CellIndex(startRow, startCol);
+        List<Pair> possibleMoves = new ArrayList<>(staleMate.possibleMovesForOneFigure(startIndex, board.getCheckerBoard()));
+        CellIndex endIndex = (CellIndex) possibleMoves.get(1).getValue();
+        Node endNode = getNodeByCoordinate(endIndex.getRow(), endIndex.getColumn());
+        endNode.toFront();
+    }
+
+    Node getNodeByCoordinate(Integer row, Integer column) {
+        for (Node node : chessBoard.getChildren()) {
+            if(GridPane.getColumnIndex(node) == row && GridPane.getColumnIndex(node) == column){
+                return node;
+            }
+        }
+        return null;
     }
 
 
