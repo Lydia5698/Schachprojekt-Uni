@@ -299,5 +299,8 @@ public class Board {
         }
 
     }
+    public void setCheck(boolean check) {
+        this.check = check;
+    }
 
 }

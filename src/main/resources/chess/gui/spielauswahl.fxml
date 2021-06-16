@@ -22,7 +22,7 @@
          <Font name="Arial" size="13.0" />
       </font>
    </Button>
-   <Button layoutX="246.0" layoutY="165.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="125.0" text="Gegen KI">
+   <Button fx:id="btnChessKI" layoutX="246.0" layoutY="165.0" mnemonicParsing="false" onMouseClicked="#showKIGui" prefHeight="35.0" prefWidth="125.0" text="Gegen KI">
       <font>
          <Font name="Arial" size="13.0" />
       </font>

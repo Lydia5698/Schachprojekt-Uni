@@ -13,28 +13,28 @@
          <Font name="Arial" size="21.0" />
       </font>
    </Label>
-   <Button layoutX="14.0" layoutY="121.0" mnemonicParsing="false" prefHeight="118.0" prefWidth="96.0">
+   <Button layoutX="14.0" layoutY="121.0" mnemonicParsing="false" onMouseClicked="#promoteMinionBishop" prefHeight="118.0" prefWidth="96.0">
       <graphic>
          <ImageView fx:id="btnBishop" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#promoteMinionBishop" pickOnBounds="true" preserveRatio="true">
             <Image url="@ChessFigures/BishopBlack.png" />
          </ImageView>
       </graphic>
    </Button>
-   <Button layoutX="201.0" layoutY="121.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="54.0">
+   <Button layoutX="201.0" layoutY="121.0" mnemonicParsing="false" onMouseClicked="#promoteMinionKnight" prefHeight="53.0" prefWidth="54.0">
       <graphic>
          <ImageView fx:id="btnKnight" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#promoteMinionKnight" pickOnBounds="true" preserveRatio="true">
             <Image url="@ChessFigures/KnightBlack.png" />
          </ImageView>
       </graphic>
    </Button>
-   <Button layoutX="389.0" layoutY="121.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="54.0">
+   <Button layoutX="389.0" layoutY="121.0" mnemonicParsing="false" onMouseClicked="#promoteMinionRook" prefHeight="53.0" prefWidth="54.0">
       <graphic>
          <ImageView fx:id="btnRook" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#promoteMinionRook" pickOnBounds="true" preserveRatio="true">
             <Image url="@ChessFigures/RookBlack.png" />
          </ImageView>
       </graphic>
    </Button>
-   <Button layoutX="581.0" layoutY="121.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="54.0">
+   <Button layoutX="581.0" layoutY="121.0" mnemonicParsing="false" onMouseClicked="#promoteMinionQueen" prefHeight="53.0" prefWidth="54.0">
       <graphic>
          <ImageView fx:id="btnQueen" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#promoteMinionQueen" pickOnBounds="true" preserveRatio="true">
             <Image url="@ChessFigures/QueenBlack.png" />

@@ -3,12 +3,8 @@ package chess.gui;
 import chess.model.*;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import chess.model.figures.Minion;
-import chess.model.figures.Rook;
-import javafx.beans.binding.Bindings;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -16,12 +12,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.control.Label;
+import javafx.scene.control.CheckBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -43,6 +39,7 @@ public class FXMLController {
     private int counterBeatenMinionsBlack = 0;
     private String promoteTo = "Q";
     private boolean promotion = false;
+    private boolean checkIsVisible = false;
 
     @FXML
     private void b_neuesSpiel(){
@@ -63,6 +60,9 @@ public class FXMLController {
     private Button btnAnleitung;
 
     @FXML
+    private Button btnChessKI;
+
+    @FXML
     private Button btnStartScreen;
 
     @FXML
@@ -75,6 +75,9 @@ public class FXMLController {
     private GridPane beatenMinion;
 
     @FXML
+    private Text moveList;
+
+    @FXML
     private ImageView btnBishop;
 
     @FXML
@@ -85,6 +88,16 @@ public class FXMLController {
 
     @FXML
     private ImageView btnQueen;
+
+    @FXML
+    private CheckBox lightPossibleMoves;
+
+    @FXML
+    private CheckBox checkVisible;
+
+    @FXML
+    private CheckBox rotateBoard;
+
 
 
     public void showStartScreen(){
@@ -107,10 +120,18 @@ public class FXMLController {
     public void showOptions(){
         Stage stage = (Stage) btnOptions.getScene().getWindow();
         gui.show_FXML("options.fxml", stage);
+        /*if(checkVisible.isSelected()){
+            checkIsVisible = false;
+        }*/
     }
     public void showSpielauswahl(){
         Stage stage = (Stage) btnSpielstart.getScene().getWindow();
         gui.show_FXML("spielauswahl.fxml", stage);
+    }
+    @FXML
+    public void showKIGui() {
+        Stage stage = (Stage) btnChessKI.getScene().getWindow();
+        gui.show_FXML("gui.fxml", stage);
     }
 
     public void exit(){
@@ -123,7 +144,7 @@ public class FXMLController {
 
     @FXML
     void mouseClicked(MouseEvent event) throws IOException {
-        Node source = (Node)event.getSource() ;
+        Node source = (Node)event.getSource();
 
         int colIndex;
         int rowIndex;
@@ -176,7 +197,7 @@ public class FXMLController {
                         iv.setFitWidth(90);
                         iv.setFitHeight(90);
                         //chessBoard.getChildren().remove(8- j, 8-i);
-                        chessBoard.add(iv, 7 - j, 7 - i);
+                        chessBoard.add(iv, j, 7 - i);
                     }
 
                 }
@@ -263,20 +284,29 @@ public class FXMLController {
             String secondField = halfMoves.get(1);
             String input = fistField + "-" + secondField + promoteTo;
             Move move = new Move(input);
-            System.out.println(input);
+
             CellIndex endIndex = Board.cellIndexFor(move.getEnd());
             CellIndex startIndex = Board.cellIndexFor(move.getStart());
-            Cell startCell = board.getCheckerBoard()[endIndex.getRow()][endIndex.getColumn()];
+            Cell startCell = board.getCheckerBoard()[startIndex.getRow()][startIndex.getColumn()];
+            Cell endCell = board.getCheckerBoard()[endIndex.getRow()][endIndex.getColumn()];
             if(!startCell.isEmpty() && String.valueOf(startCell.getMinion().getMinion_type()).equals("P") && endIndex.getRow() == 0 || endIndex.getRow() == 7){
                 popupPromote();
-                createsPromotetMinion();
-
+                promoteTo = "B";
                 promotion = true;
             }
+            String inputNew = fistField + "-" + secondField + promoteTo;
+            Move moveNew = new Move(inputNew);
+            System.out.println(inputNew);
 
-            if (manuals.moveOfRightColour(move, board)) {
-                board.applyMove(move);
-                //boardRotation();
+            if (manuals.moveOfRightColour(moveNew, board)) {
+                board.applyMove(moveNew);
+                String beatenString = "Moves";
+                for (Move beatenMinion : board.getMoveList()) {
+                    String moveString = beatenMinion.getStart() + "-" + beatenMinion.getEnd();
+                    beatenString = String.join(",", beatenString, moveString);
+                }
+                moveList.setText(beatenString);
+                boardRotation();
             }
 
             else {
@@ -292,10 +322,12 @@ public class FXMLController {
                 int endCol = getColIndex(sourceEnd);
                 int endRow = getRowIndex(sourceEnd);
                 if(promotion){
-                    //TODO minion löschen verschiedene Farben
+                    //TODO minion löschen Promoteto richtig setzten
 
-                    removeNodeByRowColumnIndex(endRow, endCol, chessBoard);
-                    chessBoard.add(createsPromotetMinion(), endCol, endRow);
+                    removeNodeByRowColumnIndex(endRow,endCol,chessBoard);
+
+                    chessBoard.add(createsPromotetMinion(endCell.getMinion().isBlack()), endCol, endRow);
+
                     promotion = false;
 
 
@@ -309,6 +341,7 @@ public class FXMLController {
                 ActionEvent event = new ActionEvent();
                 if(board.isCheck()){
                     popupCheck(event);
+                    board.setCheck(false);
                 }
 
                 beatenMinions(sourceEnd);
@@ -321,22 +354,47 @@ public class FXMLController {
 
     }
 
-    private ImageView createsPromotetMinion() {
+    private ImageView createsPromotetMinion(boolean black) {
         ImageView promotedMinion = new ImageView();
-        String name = "/QueenBlack.png";
+        String name = "/QueenWhite.png";
         switch (promoteTo) {
             case "B": {
-                name = "/BishopBlack.png";
+                if(black){
+                    name = "/BishopBlack.png";
+                }
+                else {
+                    name = "/BishopWhite.png";
+                }
                 break;
             }
             case "K": {
-                name = "/KnightBlack.png";
+                if (black){
+                    name = "/KnightBlack.png";
+                }
+                else {
+                    name = "/KnightWhite.png";
+                }
                 break;
             }
             case "R": {
-                name = "/RookBlack.png";
+                if (black){
+                    name = "/RookBlack.png";
+                }
+                else {
+                    name = "/RookWhite.png";
+                }
                 break;
             }
+            case "Q":{
+                if (black){
+                    name = "/QueenBlack.png";
+                }
+                else {
+                    name = "/QueenWhite.png";
+                }
+                break;
+            }
+
         }
         Image img = new Image(getClass().getResource("ChessFigures" + name).toExternalForm());
         promotedMinion.setImage(img);
@@ -344,23 +402,10 @@ public class FXMLController {
         promotedMinion.setFitHeight(90);
         return promotedMinion;
     }
-    public void removeNodeByRowColumnIndex(int row,int column,GridPane gridPane) {
-
-        ObservableList<Node> children = gridPane.getChildren();
-        for(Node node : children) {
-            if(node instanceof ImageView && getRowIndex(node) == row && getColIndex(node) == column) {
-                //ImageView imageView = ImageView(node);
-                gridPane.getChildren().remove(node);
-                System.out.println("flag");
-                break;
-
-            }
-
-        }
-    }
 
 
     private void beatenMinions(Node sourceEnd) {
+
         if(board.getBeaten().size() == 1){
             String minion = board.getBeaten().get(0);
             char minionType = minion.charAt(0);
@@ -376,6 +421,18 @@ public class FXMLController {
             }
             board.getBeaten().clear();
         }
+    }
+    public void removeNodeByRowColumnIndex(final int row,final int column,GridPane gridPane) {
+
+        ObservableList<Node> children = gridPane.getChildren();
+        for(Node node : children) {
+            if(node instanceof ImageView && getRowIndex(node) == row && getColIndex(node) == column) {
+                //ImageView imageView = ImageView(node); // use what you want to remove
+                gridPane.getChildren().remove(node);
+                break;
+            }
+        }
+
     }
 
     public void showPossibleMoves(int startCol, int startRow){
@@ -414,31 +471,45 @@ public class FXMLController {
         newWindow.setScene(secondScene);
         newWindow.initModality(Modality.WINDOW_MODAL);
         newWindow.initOwner(gui.stage);
-        newWindow.show();
+        newWindow.showAndWait();
 
     }
     @FXML
     void promoteMinionBishop(MouseEvent event) {
         promoteTo = "B";
-
+        Stage stage = (Stage) btnBishop.getScene().getWindow();
+        stage.close();
     }
+
     @FXML
     void promoteMinionKnight(MouseEvent event) {
-        promoteTo = "K";
+        setPromoteTo("K");
+        Stage stage = (Stage) btnKnight.getScene().getWindow();
+        stage.close();
+
 
     }
 
     @FXML
     void promoteMinionQueen(MouseEvent event) {
-        promoteTo = "Q";
+        setPromoteTo("Q");
+        Stage stage = (Stage) btnQueen.getScene().getWindow();
+        stage.close();
+
 
     }
 
     @FXML
     void promoteMinionRook(MouseEvent event) {
-        promoteTo = "R";
+        Stage stage = (Stage) btnRook.getScene().getWindow();
+        stage.close();
+
 
     }
+    public void setPromoteTo(String promoteTo) {
+        this.promoteTo = promoteTo;
+    }
+
 
 
 
