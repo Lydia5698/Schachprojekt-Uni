@@ -28,6 +28,7 @@ public class Board {
     private boolean check = false;
 
 
+
     /**
      * Creates a new Board instance. The Board uses initHorizont to fill the Board with Cells and Minions
      */
@@ -138,6 +139,7 @@ public class Board {
         Minion minion = startCell.getMinion();
         Minion isBeaten = endCell.getMinion();
         String promoteTo = "";
+
 
         // makes promotion
         if (move.getEnd().length() > 2) {
@@ -302,5 +304,6 @@ public class Board {
     public void setCheck(boolean check) {
         this.check = check;
     }
+
 
 }

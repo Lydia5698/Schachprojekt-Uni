@@ -4,7 +4,6 @@ import chess.model.*;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -40,6 +39,7 @@ public class FXMLController {
     private String promoteTo = "Q";
     private boolean promotion = false;
     private boolean checkIsVisible = false;
+    private int beatenCounter = 0;
 
     @FXML
     private void b_neuesSpiel(){
@@ -78,16 +78,16 @@ public class FXMLController {
     private Text moveList;
 
     @FXML
-    private ImageView btnBishop;
+    private Button btnBishop;
 
     @FXML
-    private ImageView btnKnight;
+    private Button btnKnight;
 
     @FXML
-    private ImageView btnRook;
+    private Button btnRook;
 
     @FXML
-    private ImageView btnQueen;
+    private Button btnQueen;
 
     @FXML
     private CheckBox lightPossibleMoves;
@@ -97,6 +97,14 @@ public class FXMLController {
 
     @FXML
     private CheckBox rotateBoard;
+
+    @FXML
+    private Button btnBlack;
+
+    @FXML
+    private Button btnWhite;
+
+
 
 
 
@@ -129,8 +137,9 @@ public class FXMLController {
         gui.show_FXML("spielauswahl.fxml", stage);
     }
     @FXML
-    public void showKIGui() {
+    public void showKIGui() throws IOException {
         Stage stage = (Stage) btnChessKI.getScene().getWindow();
+        popupColour();
         gui.show_FXML("gui.fxml", stage);
     }
 
@@ -289,7 +298,8 @@ public class FXMLController {
             CellIndex startIndex = Board.cellIndexFor(move.getStart());
             Cell startCell = board.getCheckerBoard()[startIndex.getRow()][startIndex.getColumn()];
             Cell endCell = board.getCheckerBoard()[endIndex.getRow()][endIndex.getColumn()];
-            if(!startCell.isEmpty() && String.valueOf(startCell.getMinion().getMinion_type()).equals("P") && endIndex.getRow() == 0 || endIndex.getRow() == 7){
+            int diffrow = Math.abs(startIndex.getRow() - endIndex.getRow());
+            if(!startCell.isEmpty() && diffrow == 1 && String.valueOf(startCell.getMinion().getMinion_type()).equals("P") && (endIndex.getRow() == 0 || endIndex.getRow() == 7)){
                 popupPromote();
                 promoteTo = "B";
                 promotion = true;
@@ -306,7 +316,7 @@ public class FXMLController {
                     beatenString = String.join(",", beatenString, moveString);
                 }
                 moveList.setText(beatenString);
-                boardRotation();
+                //boardRotation();
             }
 
             else {
@@ -322,12 +332,12 @@ public class FXMLController {
                 int endCol = getColIndex(sourceEnd);
                 int endRow = getRowIndex(sourceEnd);
                 if(promotion){
-                    //TODO minion löschen Promoteto richtig setzten
+                    //TODO PromoteTo richtig setzten
 
-                    removeNodeByRowColumnIndex(endRow,endCol,chessBoard);
-
+                    if(sourceStart.getId().equals("image")){
+                        chessBoard.getChildren().remove(sourceStart);
+                    }
                     chessBoard.add(createsPromotetMinion(endCell.getMinion().isBlack()), endCol, endRow);
-
                     promotion = false;
 
 
@@ -336,7 +346,7 @@ public class FXMLController {
                 GridPane.setRowIndex(sourceStart, endRow);
 
 
-                sourceEnd.toBack();
+
                 sourceStart.toFront();
                 ActionEvent event = new ActionEvent();
                 if(board.isCheck()){
@@ -345,6 +355,8 @@ public class FXMLController {
                 }
 
                 beatenMinions(sourceEnd);
+
+
 
             }
             counter = 0;
@@ -400,40 +412,37 @@ public class FXMLController {
         promotedMinion.setImage(img);
         promotedMinion.setFitWidth(90);
         promotedMinion.setFitHeight(90);
+        promotedMinion.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+            try {
+                mouseClicked(mouseEvent);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
         return promotedMinion;
     }
 
 
     private void beatenMinions(Node sourceEnd) {
-
-        if(board.getBeaten().size() == 1){
+        if (board.getBeaten().size() == 1) {
             String minion = board.getBeaten().get(0);
             char minionType = minion.charAt(0);
-            if(Character.isUpperCase(minionType)){
-
-                beatenMinion.add(sourceEnd,0,counterBeatenMinionsWhite);
+            if(sourceEnd.getId().equals("image")){
+                chessBoard.getChildren().remove(sourceEnd);
+                if (Character.isUpperCase(minionType)) {
+                //sourceEnd.set
+                beatenMinion.add(sourceEnd, 0, counterBeatenMinionsWhite);
                 counterBeatenMinionsWhite++;
-
-            }
-            else {
-                beatenMinion.add(sourceEnd,1,counterBeatenMinionsBlack);
-                counterBeatenMinionsBlack++;
+                } else {
+                    beatenMinion.add(sourceEnd, 1, counterBeatenMinionsBlack);
+                    counterBeatenMinionsBlack++;
+                }
             }
             board.getBeaten().clear();
         }
     }
-    public void removeNodeByRowColumnIndex(final int row,final int column,GridPane gridPane) {
 
-        ObservableList<Node> children = gridPane.getChildren();
-        for(Node node : children) {
-            if(node instanceof ImageView && getRowIndex(node) == row && getColIndex(node) == column) {
-                //ImageView imageView = ImageView(node); // use what you want to remove
-                gridPane.getChildren().remove(node);
-                break;
-            }
-        }
 
-    }
 
     public void showPossibleMoves(int startCol, int startRow){
         CellIndex startIndex = new CellIndex(startRow, startCol);
@@ -475,15 +484,29 @@ public class FXMLController {
 
     }
     @FXML
+    void popupColour() throws IOException {
+        Stage newWindow = new Stage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Gui.class.getResource("colourSelect.fxml"));
+        Parent root = (Parent) loader.load();
+        Scene secondScene = new Scene(root);
+        newWindow.setScene(secondScene);
+        newWindow.initModality(Modality.WINDOW_MODAL);
+        newWindow.initOwner(gui.stage);
+        newWindow.showAndWait();
+
+    }
+    @FXML
     void promoteMinionBishop(MouseEvent event) {
-        promoteTo = "B";
+
+        promoteTo = btnBishop.getText();
         Stage stage = (Stage) btnBishop.getScene().getWindow();
         stage.close();
     }
 
     @FXML
     void promoteMinionKnight(MouseEvent event) {
-        setPromoteTo("K");
+        promoteTo = btnKnight.getText();
         Stage stage = (Stage) btnKnight.getScene().getWindow();
         stage.close();
 
@@ -508,6 +531,18 @@ public class FXMLController {
     }
     public void setPromoteTo(String promoteTo) {
         this.promoteTo = promoteTo;
+    }
+
+    @FXML
+    void colourBlack(MouseEvent event) {
+        Stage stage = (Stage) btnBlack.getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    void colourWhite(MouseEvent event) {
+        Stage stage = (Stage) btnWhite.getScene().getWindow();
+        stage.close();
     }
 
 
