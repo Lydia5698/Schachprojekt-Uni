@@ -240,14 +240,6 @@ public class Manuals {
         return !manuals.getAttackers(isBlack, checkerBoard).isEmpty();
     }
 
-    /**
-     * checks if the Player is in CheckMate
-     *
-     * @param isBlack Players Colour
-     * @param checker chessboard
-     * @param manuals manuals
-     * @return boolean if checkmate
-     */
     protected boolean checkMate(boolean isBlack, Cell[][] checker, Manuals manuals) {
         boolean checkMate = true;
         List<Cell> attackers = manuals.getAttackers(isBlack, checker);

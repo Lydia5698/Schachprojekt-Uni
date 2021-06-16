@@ -42,46 +42,38 @@ public class Board {
         initHorizont(7, false);
     }
 
-    /**
-     * gives the chessboard as an Sting back
-     *
-     * @return String chessboard
-     */
+
+
     public String showBoard() {
-        StringBuilder output = new StringBuilder();
-        int horizontNum = 8;
-        for (Cell[] horizont : checkerBoard) {
-            output.append(horizontNum).append(" ");
-            horizontNum--;
-            for (Cell cell : horizont) {
-                output.append(cell.toString()).append(" ");
+        StringBuilder output = new StringBuilder();                       // stringbuilder erzeugen eines neuen objektes
+        int horizontNum = 8;                                              // varibale deklarieren (max value)
+        for (Cell[] horizont : checkerBoard) {                            //for each, jede zeile des checkerboards
+            output.append(horizontNum).append(" ");                       //nehme nummer und hänge an output Nummer " "
+            horizontNum--;                                                //weil nummern ausgabe vorn
+            for (Cell cell : horizont) {                                  // for für "cell" auslesen
+                output.append(cell.toString()).append(" ");               //figure ausgeben oder leer " "
             }
-            output.append("\n");
+            output.append("\n");                                          //zeilenumbruch im stringbuiler
         }
-        output.append("  ").append(String.join(" ", columns)).append("\n");
-        return output.toString();
+        output.append("  ").append(String.join(" ", columns)).append("\n"); //untere buchstaben bauen
+        return output.toString();                                         //rückgabe des string output
     }
 
-    /**
-     * fills the Board with Cells and the Minions in the Cells
-     *
-     * @param horizont the row of the chessboard
-     * @param black    players colour
-     */
-    private void initHorizont(int horizont, boolean black) {
-        char[] officerline = "RNBQKBNR".toCharArray();
+    private void initHorizont(int horizont, boolean black) {              //aufbauen der truppen
+        char[] officerline = "RNBQKBNR".toCharArray();                    //offiziere in string schreiben
 
-        char[] tmp = "PPPPPPPP".toCharArray();
-        if (horizont == 0 || horizont == 7) {
-            tmp = officerline;
+        char[] tmp = "PPPPPPPP".toCharArray();                            //bauern in string schreiben
+        if (horizont == 0 || horizont == 7) {                             //ausser auf line 0 und 7
+            tmp = officerline;                                            //setze offz
         }
-        for (int i = 0; i < 8; i++) {
-            initialiseCellsWithFigures(horizont, black, tmp, i);
+        for (int i = 0; i < 8; i++) {                                   //zeile f zeile truppen setzen
+            initialiseCellsWithFigures(horizont, black, tmp, i);        //setzen
         }
-        if (horizont >= 2 && horizont <= 5) {
-            checkerBoard[horizont] = emptyCells();
+        if (horizont >= 2 && horizont <= 5) {                           //zw 2 und 5keine figuren auf dem board
+            checkerBoard[horizont] = emptyCells();                      //marke zellen als leer
         }
     }
+
 
     private void initialiseCellsWithFigures(int horizont, boolean black, char[] tmp, int i) {
         switch (tmp[i]) {
@@ -158,9 +150,6 @@ public class Board {
             //check if in Check or in CheckMate
             checkAndPrintCheckCheckMate(minion);
             allowedMove = true;
-            /*if (staleMate.isStaleMate(!minion.isBlack(), checkerBoard) && !simple){
-                System.out.println("!Stalemate");
-            }*/
 
         }
         // check if special move
