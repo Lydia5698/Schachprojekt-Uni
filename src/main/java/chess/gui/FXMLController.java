@@ -40,6 +40,7 @@ public class FXMLController {
     private boolean promotion = false;
     private boolean checkIsVisible = false;
     private int beatenCounter = 0;
+    private boolean rotation = true;
 
     @FXML
     private void b_neuesSpiel() {
@@ -164,7 +165,7 @@ public class FXMLController {
 
         List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
         String input;
-        if(board.isBlackIsTurn()){
+        if(board.isBlackIsTurn() && rotation){ // abfragen ob rotation an
             input = columns.get(colIndex) + (rowIndex+1);
 
         }
