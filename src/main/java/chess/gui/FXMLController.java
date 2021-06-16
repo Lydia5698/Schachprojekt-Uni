@@ -163,7 +163,14 @@ public class FXMLController {
         //showPossibleMoves(colIndex, rowIndex);
 
         List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
-        String input = columns.get(colIndex) + (8 - rowIndex);
+        String input;
+        if(board.isBlackIsTurn()){
+            input = columns.get(colIndex) + (rowIndex+1);
+
+        }
+        else {
+            input = columns.get(colIndex) + (8 - rowIndex);
+        }
         halfMoves.add(input);
         position.add(event);
         System.out.println(input);
@@ -283,6 +290,7 @@ public class FXMLController {
                     e.printStackTrace();
                 }
             });
+            iv.setId("image");
         }
         return iv;
     }
@@ -311,7 +319,8 @@ public class FXMLController {
 
             if (manuals.moveOfRightColour(moveNew, board)) {
                 board.applyMove(moveNew);
-                //boardRotation();
+
+                //TODO rotaion fix coordinates different
                 String beatenString = "Moves";
                 for (Move beatenMinion : board.getMoveList()) {
                     String moveString = beatenMinion.getStart() + "-" + beatenMinion.getEnd();
@@ -364,6 +373,7 @@ public class FXMLController {
             counter = 0;
             halfMoves.clear();
             position.clear();
+            boardRotation();
         }
 
     }
@@ -414,6 +424,7 @@ public class FXMLController {
         promotedMinion.setImage(img);
         promotedMinion.setFitWidth(90);
         promotedMinion.setFitHeight(90);
+        promotedMinion.setId("image");
         promotedMinion.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
             try {
                 mouseClicked(mouseEvent);
