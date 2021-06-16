@@ -304,6 +304,7 @@ public class FXMLController {
                 promoteTo = "B";
                 promotion = true;
             }
+
             String inputNew = fistField + "-" + secondField + promoteTo;
             Move moveNew = new Move(inputNew);
             System.out.println(inputNew);
