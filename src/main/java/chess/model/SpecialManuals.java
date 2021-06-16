@@ -117,7 +117,7 @@ public class SpecialManuals {
      * @return boolean if the Promotion is Valid
      */
     // checks if Cell contains a Pawn and is at the end of the Board so the Pawn can be promoted
-    boolean isValidPromotion(CellIndex endIndex, Cell[][] checkerboard) {
+    public boolean isValidPromotion(CellIndex endIndex, Cell[][] checkerboard) {
         Cell endCell = checkerboard[endIndex.row][endIndex.column];
         if (endCell.isEmpty()) {
             return false;
