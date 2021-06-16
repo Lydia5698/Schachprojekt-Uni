@@ -42,7 +42,7 @@ public class FXMLController {
     private int beatenCounter = 0;
 
     @FXML
-    private void b_neuesSpiel(){
+    private void b_neuesSpiel() {
 
     }
 
@@ -108,11 +108,12 @@ public class FXMLController {
 
 
 
-    public void showStartScreen(){
+    public void showStartScreen() {
         Stage stage = (Stage) btnStartScreen.getScene().getWindow();
         gui.show_FXML("startScreen.fxml", stage);
     }
-    public void showAnleitung(){
+
+    public void showAnleitung() {
         Stage stage = (Stage) btnAnleitung.getScene().getWindow();
         gui.show_FXML("anleitung.fxml", stage);
     }
@@ -153,7 +154,7 @@ public class FXMLController {
 
     @FXML
     void mouseClicked(MouseEvent event) throws IOException {
-        Node source = (Node)event.getSource();
+        Node source = (Node) event.getSource();
 
         int colIndex;
         int rowIndex;
@@ -198,27 +199,26 @@ public class FXMLController {
         ImageView iv = null;
         chessBoard.getChildren().removeIf(node -> node instanceof ImageView);
 
-        if(board.isBlackIsTurn()) {
-            for(int i=0;i<8;i++) {
-                for(int j=0;j<8;j++) {
+        if (board.isBlackIsTurn()) {
+            for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) {
                     iv = getImage(i, j);
-                    if(iv != null){
+                    if (iv != null) {
                         iv.setFitWidth(90);
                         iv.setFitHeight(90);
-                        //chessBoard.getChildren().remove(8- j, 8-i);
-                        chessBoard.add(iv, j, 7 - i);
+                        chessBoard.add(iv, 7 - j, 7 - i);
                     }
 
                 }
             }
         }
 
-            //black turn
-        else if(!board.isBlackIsTurn()){
-            for(int i=0;i<8;i++) {
-                for(int j=0;j<8;j++) {
+        //black turn
+        else if (!board.isBlackIsTurn()) {
+            for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) {
                     iv = getImage(i, j);
-                    if(iv != null) {
+                    if (iv != null) {
                         iv.setFitWidth(90);
                         iv.setFitHeight(90);
                         chessBoard.add(iv, j, i);
@@ -228,50 +228,50 @@ public class FXMLController {
             }
         }
     }
-
+    
     private ImageView getImage(int i, int j){
         ImageView iv = null;
-        if(!board.getCheckerBoard()[i][j].isEmpty()) {
+        if (!board.getCheckerBoard()[i][j].isEmpty()) {
             switch (board.getCheckerBoard()[i][j].getMinion().getMinion_type()) {
                 case 'K':
-                    if(board.getCheckerBoard()[i][j].getMinion().isBlack()){
+                    if (board.getCheckerBoard()[i][j].getMinion().isBlack()) {
                         iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/KingBlack.png")).toExternalForm()));
-                    }else {
+                    } else {
                         iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/KingWhite.png")).toExternalForm()));
                     }
                     break;
                 case 'Q':
-                    if(board.getCheckerBoard()[i][j].getMinion().isBlack()){
+                    if (board.getCheckerBoard()[i][j].getMinion().isBlack()) {
                         iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/QueenBlack.png")).toExternalForm()));
-                    }else {
+                    } else {
                         iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/QueenWhite.png")).toExternalForm()));
                     }
                     break;
                 case 'N':
-                    if(board.getCheckerBoard()[i][j].getMinion().isBlack()){
+                    if (board.getCheckerBoard()[i][j].getMinion().isBlack()) {
                         iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/KnightBlack.png")).toExternalForm()));
-                    }else {
+                    } else {
                         iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/KnightWhite.png")).toExternalForm()));
                     }
                     break;
                 case 'B':
-                    if(board.getCheckerBoard()[i][j].getMinion().isBlack()){
+                    if (board.getCheckerBoard()[i][j].getMinion().isBlack()) {
                         iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/BishopBlack.png")).toExternalForm()));
-                    }else {
+                    } else {
                         iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/BishopWhite.png")).toExternalForm()));
                     }
                     break;
                 case 'R':
-                    if(board.getCheckerBoard()[i][j].getMinion().isBlack()){
+                    if (board.getCheckerBoard()[i][j].getMinion().isBlack()) {
                         iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/RookBlack.png")).toExternalForm()));
-                    }else {
+                    } else {
                         iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/RookWhite.png")).toExternalForm()));
                     }
                     break;
                 case 'P':
-                    if(board.getCheckerBoard()[i][j].getMinion().isBlack()){
+                    if (board.getCheckerBoard()[i][j].getMinion().isBlack()) {
                         iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/PawnBlack.png")).toExternalForm()));
-                    }else {
+                    } else {
                         iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/PawnWhite.png")).toExternalForm()));
                     }
                     break;
@@ -288,7 +288,7 @@ public class FXMLController {
     }
 
     public void move() throws IOException {
-        if(counter == 2){
+        if (counter == 2) {
             String fistField = halfMoves.get(0);
             String secondField = halfMoves.get(1);
             String input = fistField + "-" + secondField + promoteTo;
@@ -310,6 +310,7 @@ public class FXMLController {
 
             if (manuals.moveOfRightColour(moveNew, board)) {
                 board.applyMove(moveNew);
+                boardRotation();
                 String beatenString = "Moves";
                 for (Move beatenMinion : board.getMoveList()) {
                     String moveString = beatenMinion.getStart() + "-" + beatenMinion.getEnd();
@@ -324,7 +325,7 @@ public class FXMLController {
                 board.setAllowedMove(false);
             }
 
-            if(board.isAllowedMove()){
+            if (board.isAllowedMove()) {
                 Event start = position.get(0);
                 Event end = position.get(1);
                 Node sourceEnd = (Node)end.getSource();
@@ -347,9 +348,11 @@ public class FXMLController {
 
 
 
+
+                sourceEnd.toBack();
                 sourceStart.toFront();
                 ActionEvent event = new ActionEvent();
-                if(board.isCheck()){
+                if (board.isCheck()) {
                     popupCheck(event);
                     board.setCheck(false);
                 }
@@ -424,14 +427,14 @@ public class FXMLController {
 
 
     private void beatenMinions(Node sourceEnd) {
-        if (board.getBeaten().size() == 1) {
+        if(board.getBeaten().size() == 1){
             String minion = board.getBeaten().get(0);
             char minionType = minion.charAt(0);
             if(sourceEnd.getId().equals("image")){
                 chessBoard.getChildren().remove(sourceEnd);
                 if (Character.isUpperCase(minionType)) {
                 //sourceEnd.set
-                beatenMinion.add(sourceEnd, 0, counterBeatenMinionsWhite);
+                beatenMinion.add(sourceEnd,0,counterBeatenMinionsWhite);
                 counterBeatenMinionsWhite++;
                 } else {
                     beatenMinion.add(sourceEnd, 1, counterBeatenMinionsBlack);
@@ -454,7 +457,7 @@ public class FXMLController {
 
     Node getNodeByCoordinate(Integer row, Integer column) {
         for (Node node : chessBoard.getChildren()) {
-            if(GridPane.getColumnIndex(node) == row && GridPane.getColumnIndex(node) == column){
+            if (GridPane.getColumnIndex(node) == row && GridPane.getColumnIndex(node) == column) {
                 return node;
             }
         }
@@ -462,7 +465,7 @@ public class FXMLController {
     }
 
     @FXML
-    void popupCheck(ActionEvent event){
+    void popupCheck(ActionEvent event) {
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("check!");
@@ -470,6 +473,7 @@ public class FXMLController {
         alert.show();
 
     }
+
     @FXML
     void popupPromote() throws IOException {
         Stage newWindow = new Stage();
@@ -496,6 +500,7 @@ public class FXMLController {
         newWindow.showAndWait();
 
     }
+
     @FXML
     void promoteMinionBishop(MouseEvent event) {
 
