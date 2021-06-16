@@ -9,7 +9,7 @@ import java.util.List;
  */
 
 public class AI {
-    public int openingNumber = 3;   //randomOpeningNumber(); //TODO: uncomment after tests
+    public int openingNumber = randomOpeningNumber(); //TODO: uncomment after tests
     public boolean colourIsBlack = false;
     public int turnNumber=0;
     List<Move> moveList = new ArrayList<>();
@@ -53,7 +53,7 @@ public class AI {
         //get move if it is possible to take
         else{
             List<Move> moveList = possibleNextMoves(board);
-            int number = randomOpeningNumber();
+            int number = generateRandomInteger(0, moveList.size());
             if(number< moveList.size()) {
                 move = moveList.get(number);
             }
