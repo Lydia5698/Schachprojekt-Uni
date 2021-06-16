@@ -32,4 +32,6 @@ public class Settings {
     public void setAi_colour(boolean ai_colour) {
         this.ai_colour = ai_colour;
     }
+
+
 }
