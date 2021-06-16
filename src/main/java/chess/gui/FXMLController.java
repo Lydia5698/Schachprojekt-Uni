@@ -206,7 +206,7 @@ public class FXMLController {
                     if (iv != null) {
                         iv.setFitWidth(90);
                         iv.setFitHeight(90);
-                        chessBoard.add(iv, 7 - j, 7 - i);
+                        chessBoard.add(iv, j, 7 - i);
                     }
 
                 }
@@ -311,7 +311,7 @@ public class FXMLController {
 
             if (manuals.moveOfRightColour(moveNew, board)) {
                 board.applyMove(moveNew);
-                boardRotation();
+                //boardRotation();
                 String beatenString = "Moves";
                 for (Move beatenMinion : board.getMoveList()) {
                     String moveString = beatenMinion.getStart() + "-" + beatenMinion.getEnd();
@@ -344,13 +344,11 @@ public class FXMLController {
 
 
                 }
-                GridPane.setColumnIndex(sourceStart, endCol);
-                GridPane.setRowIndex(sourceStart, endRow);
+                if(sourceStart.getId().equals("image")){
+                    GridPane.setColumnIndex(sourceStart, endCol);
+                    GridPane.setRowIndex(sourceStart, endRow);
+                }
 
-
-
-
-                sourceEnd.toBack();
                 sourceStart.toFront();
                 ActionEvent event = new ActionEvent();
                 if (board.isCheck()) {
