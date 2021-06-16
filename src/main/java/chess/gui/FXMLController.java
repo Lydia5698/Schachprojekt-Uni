@@ -1,5 +1,6 @@
 package chess.gui;
 
+import chess.Settings;
 import chess.model.*;
 import javafx.event.ActionEvent;
 import chess.model.figures.Minion;
@@ -10,11 +11,13 @@ import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -23,6 +26,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import java.net.URL;
 
 
 import java.io.IOException;
@@ -72,10 +76,16 @@ public class FXMLController {
     private Button btnChessBoard;
 
     @FXML
+    private Button aI;
+
+    @FXML
     private GridPane chessBoard;
 
     @FXML
     private GridPane beatenMinion;
+
+    @FXML
+    private ComboBox<String> colourComboBox;
 
     @FXML
     private ImageView btnBishop;
@@ -88,6 +98,26 @@ public class FXMLController {
 
     @FXML
     private ImageView btnQueen;
+
+    /*
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        //colourComboBox.getItems().removeAll(colourComboBox.getItems());
+        colourComboBox.getItems().addAll("Schwarz", "Weiß");
+        //colourComboBox.getSelectionModel().select("Option B");
+
+        colourComboBox.setOnAction(actionEvent -> {
+            Settings settings = new Settings();
+
+            if (colourComboBox.getValue().equals("Weiß")){
+                settings.setAi_colour(true);
+            }
+            else {
+                settings.setAi_colour(false);
+            }
+        });
+    }*/
+
 
 
     public void showStartScreen(){
@@ -277,8 +307,12 @@ public class FXMLController {
                 board.applyMove(move);
                 //boardRotation();
 
-                //TODO switch for aiIsTurn
-                aiIsTurn = true;
+                //aiIsTurn = true;
+
+                //TODO make ai move if ai exists
+                /*if(aiExists){
+                    aiMove();
+                }*/
             }
 
             else {
@@ -302,8 +336,6 @@ public class FXMLController {
 
 
                 }
-
-
                 sourceEnd.toBack();
                 sourceStart.toFront();
                 ActionEvent event = new ActionEvent();
@@ -403,6 +435,17 @@ public class FXMLController {
         newWindow.show();
 
     }
+
+    /* colourComboBox.setOnAction(actionEvent -> {
+            Settings settings = new Settings();
+
+            if (colourComboBox.getValue().equals("Weiß")){
+                settings.setAi_colour(true);
+            }
+            else {
+                settings.setAi_colour(false);
+            }
+        });*/
     @FXML
     void promoteMinionBishop(MouseEvent event) {
         promoteTo = "B";

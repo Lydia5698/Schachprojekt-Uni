@@ -73,7 +73,7 @@ public class Gui extends Application {
 
 
     /**
-     * The entry point of the GUI application.
+     * The entry point ogit f the GUI application.
      *
      * @param args The command line arguments passed to the application
      */
