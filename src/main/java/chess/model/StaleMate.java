@@ -20,7 +20,6 @@ public class StaleMate {
     public StaleMate() {
     }
 
-
     // farbe vom gegner reingeben weiß am zug, fuer black ueberpruefen
     // feld durchgehen, schaue nach schwarzer figur
     // schwarze figur kann sie sich bewegen, alle die sich bewegen können werden zur movelist hinzugefuegt
@@ -74,7 +73,6 @@ public class StaleMate {
                     Pair pair = new Pair<>(cellIndex, end);
                     possibleMoves.add(pair);
                 }
-
             }
         }
         return possibleMoves;
@@ -117,14 +115,13 @@ public class StaleMate {
             for (int col = 0; col < 8; col++) {
                 CellIndex end = new CellIndex(row, col);
                 //check if move is legal
-                if (minion.validMove(cellIndex, end) && checkLegalMove(cellIndex, end, manuals, checkerBoard)) {
+                if (minion.validMove(cellIndex, end) && checkLegalMove(cellIndex, end, manuals, checkerBoard)&& !(cellIndex.getRow()==end.getRow() &&  cellIndex.getColumn() == end.getColumn())) {
                     //check ifLegalMove
                     // make index into string
                     String input = cellIndex.makeIndexIntoString(cellIndex, end);
                     Move move = new Move(input);
                     possibleMoves.add(move);
                 }
-
             }
         }
         return possibleMoves;
