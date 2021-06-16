@@ -109,7 +109,7 @@ public class Cli {
 
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             if (settings.isAi_active() && board.isBlackIsTurn() == settings.isAi_colour()){// wenn ai aktiviert, dann schauen, ob ai an der reihe
-                System.out.print("AI moves");
+                System.out.print("AI moves: ");
                 if (board.isBlackIsTurn()) { // ai is black and its turn it is
                     //look in movelist // get move at point
                     Move move = ai.getNextMove(board);

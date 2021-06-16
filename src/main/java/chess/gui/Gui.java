@@ -61,11 +61,6 @@ public class Gui extends Application {
 
 
 
-
-
-
-
-
     /*
     Für die Combobox on Spielauswahl
     @Override

@@ -42,6 +42,10 @@ public class FXMLController {
     private int counterBeatenMinionsBlack = 0;
     private String promoteTo = "Q";
     private boolean promotion = false;
+    private boolean aiExists = false;
+    private boolean aiColourIsBlack = true;
+    private boolean aiIsTurn = false;
+    private AI ai;
 
     @FXML
     private void b_neuesSpiel(){
@@ -271,7 +275,10 @@ public class FXMLController {
 
             if (manuals.moveOfRightColour(move, board)) {
                 board.applyMove(move);
-                boardRotation();
+                //boardRotation();
+
+                //TODO switch for aiIsTurn
+                aiIsTurn = true;
             }
 
             else {
@@ -312,6 +319,21 @@ public class FXMLController {
             position.clear();
         }
 
+    }
+
+    public void aiMove (){
+        if (aiIsTurn){
+            //generate moves for next move
+            Move move = ai.getNextMove(board);
+            //apply ai move
+            board.applyMove(move);
+            ai.increaseTurnNumber();
+            // String output = board.showBoard(); // so war es in der cli
+            // System.out.println(output);
+
+            //change aiIsTurn = false
+            aiIsTurn= false;
+        }
     }
 
     private ImageView createsPromotetMinion() {
@@ -403,6 +425,8 @@ public class FXMLController {
         promoteTo = "R";
 
     }
+
+
 
 
 
