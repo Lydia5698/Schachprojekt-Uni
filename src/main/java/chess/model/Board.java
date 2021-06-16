@@ -25,6 +25,8 @@ public class Board {
     private boolean gameEnd = false;
     private boolean simple = false;
     private boolean allowedMove = true;
+    private boolean check = false;
+
 
     /**
      * Creates a new Board instance. The Board uses initHorizont to fill the Board with Cells and Minions
@@ -266,6 +268,9 @@ public class Board {
         this.allowedMove = allowedMove;
     }
 
+    public boolean isCheck() {
+        return check;
+    }
     public boolean isAllowedMove() {
         return allowedMove;
     }
@@ -279,6 +284,8 @@ public class Board {
     protected void checkAndPrintCheckCheckMate(Minion minion) {
         if (manuals.isCheck(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
             System.out.println("!Check");
+            check = true;
+
         }
         //check if in Check Mate
         if (manuals.checkMate(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
