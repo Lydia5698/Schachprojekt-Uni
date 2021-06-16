@@ -6,6 +6,8 @@ import chess.model.figures.Minion;
 import chess.model.figures.Rook;
 import javafx.beans.binding.Bindings;
 import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -128,13 +130,21 @@ public class FXMLController {
             colIndex = 0;
         }
         else{
-            colIndex = GridPane.getColumnIndex(source);
+            if(board.isBlackIsTurn()){
+                colIndex = 7 - GridPane.getColumnIndex(source);
+            } else {
+                colIndex = GridPane.getColumnIndex(source);
+            }
         }
         if(GridPane.getRowIndex(source) == null){
             rowIndex = 8;
         }
         else{
-            rowIndex = 8 - GridPane.getRowIndex(source);
+            if(board.isBlackIsTurn()) {
+                rowIndex = GridPane.getRowIndex(source) + 1;
+            } else {
+                rowIndex = 8 - GridPane.getRowIndex(source);
+            }
         }
         //showPossibleMoves(colIndex, rowIndex);
 
@@ -152,114 +162,95 @@ public class FXMLController {
         //boardRota
         //white turn
         ImageView iv = null;
+        chessBoard.getChildren().removeIf(node -> node instanceof ImageView);
 
-        if(board.isBlackIsTurn() == false) {
+        if(board.isBlackIsTurn()) {
             for(int i=0;i<8;i++) {
                 for(int j=0;j<8;j++) {
-                    if(!board.getCheckerBoard()[j][i].isEmpty()) {
-                        switch (board.getCheckerBoard()[j][i].getMinion().getMinion_type()) {
-                            case 'K':
-                                iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/KingWhite.png")).toExternalForm()));
-                                break;
-                            case 'Q':
-                                iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/QueenWhite.png")).toExternalForm()));
-                                break;
-                            case 'N':
-                                iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/KnightWhite.png")).toExternalForm()));
-                                break;
-                            case 'B':
-                                iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/BishopWhite.png")).toExternalForm()));
-                                break;
-                            case 'R':
-                                iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/RookWhite.png")).toExternalForm()));
-                                break;
-                            case 'P':
-                                iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/PawnWhite.png")).toExternalForm()));
-                                break;
-                            case 'k':
-                                iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/KingBlack.png")).toExternalForm()));
-                                break;
-                            case 'q':
-                                iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/QueenBlack.png")).toExternalForm()));
-                                break;
-                            case 'n':
-                                iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/KnightBlack.png")).toExternalForm()));
-                                break;
-                            case 'b':
-                                iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/BishopBlack.png")).toExternalForm()));
-                                break;
-                            case 'r':
-                                iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/RookBlack.png")).toExternalForm()));
-                                break;
-                            case 'p':
-                                iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/PawnBlack.png")).toExternalForm()));
-                                break;
-                            default:
-                                iv = new ImageView(new Image(""));
-                        }
+                    iv = getImage(i, j);
+                    if(iv != null){
+                        iv.setFitWidth(90);
+                        iv.setFitHeight(90);
+                        //chessBoard.getChildren().remove(8- j, 8-i);
+                        chessBoard.add(iv, 7 - j, 7 - i);
                     }
-                    iv.setFitWidth(90);
-                    iv.setFitHeight(90);
-                    //chessBoard.getChildren().remove(8- j, 8-i);
-                    chessBoard.add(iv, 8- j, 8- i);
+
                 }
             }
         }
 
             //black turn
-        else if(board.isBlackIsTurn() == true){
+        else if(!board.isBlackIsTurn()){
             for(int i=0;i<8;i++) {
                 for(int j=0;j<8;j++) {
-                    if(!board.getCheckerBoard()[j][i].isEmpty()) {
-                        switch (board.getCheckerBoard()[i][j].getMinion().getMinion_type()) {
-                            case 'K':
-                                iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/KingWhite.png")).toExternalForm()));
-                                break;
-                            case 'Q':
-                                iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/QueenWhite.png")).toExternalForm()));
-                                break;
-                            case 'N':
-                                iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/KnightWhite.png")).toExternalForm()));
-                                break;
-                            case 'B':
-                                iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/BishopWhite.png")).toExternalForm()));
-                                break;
-                            case 'R':
-                                iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/RookWhite.png")).toExternalForm()));
-                                break;
-                            case 'P':
-                                iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/PawnWhite.png")).toExternalForm()));
-                                break;
-                            case 'k':
-                                iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/KingBlack.png")).toExternalForm()));
-                                break;
-                            case 'q':
-                                iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/QueenBlack.png")).toExternalForm()));
-                                break;
-                            case 'n':
-                                iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/KnightBlack.png")).toExternalForm()));
-                                break;
-                            case 'b':
-                                iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/BishopBlack.png")).toExternalForm()));
-                                break;
-                            case 'r':
-                                iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/RookBlack.png")).toExternalForm()));
-                                break;
-                            case 'p':
-                                iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/PawnBlack.png")).toExternalForm()));
-                                break;
-                            default:
-                                iv = new ImageView(new Image(""));
-
-                        }
+                    iv = getImage(i, j);
+                    if(iv != null) {
+                        iv.setFitWidth(90);
+                        iv.setFitHeight(90);
+                        chessBoard.add(iv, j, i);
                     }
-                    iv.setFitWidth(90);
-                    iv.setFitHeight(90);
-                    //chessBoard.getChildren().remove(j, i);
-                    chessBoard.add(iv, j, i);
+
                 }
             }
         }
+    }
+    
+    private ImageView getImage(int i, int j){
+        ImageView iv = null;
+        if(!board.getCheckerBoard()[i][j].isEmpty()) {
+            switch (board.getCheckerBoard()[i][j].getMinion().getMinion_type()) {
+                case 'K':
+                    if(board.getCheckerBoard()[i][j].getMinion().isBlack()){
+                        iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/KingBlack.png")).toExternalForm()));
+                    }else {
+                        iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/KingWhite.png")).toExternalForm()));
+                    }
+                    break;
+                case 'Q':
+                    if(board.getCheckerBoard()[i][j].getMinion().isBlack()){
+                        iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/QueenBlack.png")).toExternalForm()));
+                    }else {
+                        iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/QueenWhite.png")).toExternalForm()));
+                    }
+                    break;
+                case 'N':
+                    if(board.getCheckerBoard()[i][j].getMinion().isBlack()){
+                        iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/KnightBlack.png")).toExternalForm()));
+                    }else {
+                        iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/KnightWhite.png")).toExternalForm()));
+                    }
+                    break;
+                case 'B':
+                    if(board.getCheckerBoard()[i][j].getMinion().isBlack()){
+                        iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/BishopBlack.png")).toExternalForm()));
+                    }else {
+                        iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/BishopWhite.png")).toExternalForm()));
+                    }
+                    break;
+                case 'R':
+                    if(board.getCheckerBoard()[i][j].getMinion().isBlack()){
+                        iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/RookBlack.png")).toExternalForm()));
+                    }else {
+                        iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/RookWhite.png")).toExternalForm()));
+                    }
+                    break;
+                case 'P':
+                    if(board.getCheckerBoard()[i][j].getMinion().isBlack()){
+                        iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/PawnBlack.png")).toExternalForm()));
+                    }else {
+                        iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/PawnWhite.png")).toExternalForm()));
+                    }
+                    break;
+            }
+            iv.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+                try {
+                    mouseClicked(mouseEvent);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+        return iv;
     }
 
     public void move() throws IOException {
