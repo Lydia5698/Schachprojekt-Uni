@@ -25,16 +25,16 @@ import java.util.Objects;
  * Starting point of the JavaFX GUI
  */
 public class Gui extends Application {
+
+
+    protected Stage stage;
+
+
     /**
      * This method is called by the Application to start the GUI.
      *
      * @param primaryStage The initial root stage of the application.
      */
-
-    protected Stage stage;
-
-
-
 
     @Override
     public void start(Stage primaryStage) throws Exception {

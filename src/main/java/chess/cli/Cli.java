@@ -150,7 +150,6 @@ public class Cli {
                         Move move = new Move(input);
                         if (manuals.moveOfRightColour(move, board)) {
                             board.applyMove(move);
-                            //TODO: count ai count integer 1 up, if ai-move
                             output = board.showBoard();
                             System.out.println(output);
                         } else {
