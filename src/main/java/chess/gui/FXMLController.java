@@ -3,12 +3,14 @@ package chess.gui;
 import chess.gui.Gui;
 import chess.model.*;
 import chess.model.figures.Minion;
+import chess.model.figures.Rook;
 import javafx.beans.binding.Bindings;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -128,7 +130,80 @@ public class FXMLController {
         counter++;
         move();
 
+        //boardRota
+        //white turn
+        ImageView iv;
 
+        if(board.isBlackIsTurn() == false) {
+            for(int i=0;i<8;i++) {
+                for(int j=0;j<8;j++) {
+                    switch (board.getCheckerBoard()[i][j].getMinion().getMinion_type()) {
+                        case 'K': iv = new ImageView(new Image("ChessFigures/KingWhite.png"));
+                            break;
+                        case 'Q': iv = new ImageView(new Image("ChessFigures/QueenWhite.png"));
+                            break;
+                        case 'N': iv = new ImageView(new Image("ChessFigures/KnightWhite.png"));
+                            break;
+                        case 'B': iv = new ImageView(new Image("ChessFigures/BishopWhite.png"));
+                            break;
+                        case 'R': iv = new ImageView(new Image("ChessFigures/RookWhite.png"));
+                            break;
+                        case 'P': iv = new ImageView(new Image("ChessFigures/PawnWhite.png"));
+                            break;
+                        case 'k': iv = new ImageView(new Image("ChessFigures/KingWBlack.png"));
+                            break;
+                        case 'q': iv = new ImageView(new Image("ChessFigures/QueenBlack.png"));
+                            break;
+                        case 'n': iv = new ImageView(new Image("ChessFigures/KnightBlack.png"));
+                            break;
+                        case 'b': iv = new ImageView(new Image("ChessFigures/BishopBlack.png"));
+                            break;
+                        case 'r': iv = new ImageView(new Image("ChessFigures/RookBlack.png"));
+                            break;
+                        case 'p': iv = new ImageView(new Image("ChessFigures/PawnBlack.png"));
+                            break;
+                        default: iv = new ImageView(new Image(""));
+                    }
+                    chessBoard.add(iv, i, j);
+                }
+            }
+        }
+
+            //black turn
+        else if(board.isBlackIsTurn() == true){
+            for(int i=0;i<8;i++) {
+                for(int j=0;j<8;j++) {
+                    switch (board.getCheckerBoard()[i][j].getMinion().getMinion_type()) {
+                        case 'K': iv = new ImageView(new Image("ChessFigures/KingWhite.png"));
+                            break;
+                        case 'Q': iv = new ImageView(new Image("ChessFigures/QueenWhite.png"));
+                            break;
+                        case 'N': iv = new ImageView(new Image("ChessFigures/KnightWhite.png"));
+                            break;
+                        case 'B': iv = new ImageView(new Image("ChessFigures/BishopWhite.png"));
+                            break;
+                        case 'R': iv = new ImageView(new Image("ChessFigures/RookWhite.png"));
+                            break;
+                        case 'P': iv = new ImageView(new Image("ChessFigures/PawnWhite.png"));
+                            break;
+                        case 'k': iv = new ImageView(new Image("ChessFigures/KingWBlack.png"));
+                            break;
+                        case 'q': iv = new ImageView(new Image("ChessFigures/QueenBlack.png"));
+                            break;
+                        case 'n': iv = new ImageView(new Image("ChessFigures/KnightBlack.png"));
+                            break;
+                        case 'b': iv = new ImageView(new Image("ChessFigures/BishopBlack.png"));
+                            break;
+                        case 'r': iv = new ImageView(new Image("ChessFigures/RookBlack.png"));
+                            break;
+                        case 'p': iv = new ImageView(new Image("ChessFigures/PawnBlack.png"));
+                            break;
+                        default: iv = new ImageView(new Image(""));
+                    }
+                    chessBoard.add(iv, 7-i, 7-j);
+                }
+            }
+        }
     }
 
     public void move(){
