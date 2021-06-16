@@ -1,6 +1,7 @@
 package chess.gui;
 
 import chess.model.*;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import chess.model.figures.Minion;
 import chess.model.figures.Rook;
@@ -124,28 +125,39 @@ public class FXMLController {
 
         int colIndex;
         int rowIndex;
-        if(GridPane.getColumnIndex(source) == null){
-            colIndex = 0;
-        }
-        else{
-            colIndex = GridPane.getColumnIndex(source);
-        }
-        if(GridPane.getRowIndex(source) == null){
-            rowIndex = 8;
-        }
-        else{
-            rowIndex = 8 - GridPane.getRowIndex(source);
-        }
+        colIndex = getColIndex(source);
+        rowIndex = getRowIndex(source);
         //showPossibleMoves(colIndex, rowIndex);
 
         List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
-        String input = columns.get(colIndex) + rowIndex;
+        String input = columns.get(colIndex) + (8 - rowIndex);
         halfMoves.add(input);
         position.add(event);
         System.out.println(input);
         counter++;
         move();
 
+    }
+
+    private int getRowIndex(Node source) {
+        int rowIndex;
+        if (GridPane.getRowIndex(source) == null) {
+            rowIndex = 0;
+        } else {
+            rowIndex = GridPane.getRowIndex(source);
+        }
+        return rowIndex;
+    }
+
+    private int getColIndex(Node source) {
+        int colIndex;
+        if(GridPane.getColumnIndex(source) == null){
+            colIndex = 0;
+        }
+        else{
+            colIndex = GridPane.getColumnIndex(source);
+        }
+        return colIndex;
     }
 
     private void boardRotation() {
@@ -275,12 +287,13 @@ public class FXMLController {
             if(!startCell.isEmpty() && String.valueOf(startCell.getMinion().getMinion_type()).equals("P") && endIndex.getRow() == 0 || endIndex.getRow() == 7){
                 popupPromote();
                 createsPromotetMinion();
+
                 promotion = true;
             }
 
             if (manuals.moveOfRightColour(move, board)) {
                 board.applyMove(move);
-                boardRotation();
+                //boardRotation();
             }
 
             else {
@@ -293,17 +306,19 @@ public class FXMLController {
                 Event end = position.get(1);
                 Node sourceEnd = (Node)end.getSource();
                 Node sourceStart = (Node)start.getSource();
-                Integer endCol = GridPane.getColumnIndex(sourceEnd);
-                Integer endRow = GridPane.getRowIndex(sourceEnd);
-                GridPane.setColumnIndex(sourceStart, endCol);
-                GridPane.setRowIndex(sourceStart, endRow);
+                int endCol = getColIndex(sourceEnd);
+                int endRow = getRowIndex(sourceEnd);
                 if(promotion){
                     //TODO minion löschen verschiedene Farben
-                    chessBoard.getChildren().remove(endCol,endRow);
+
+                    removeNodeByRowColumnIndex(endRow, endCol, chessBoard);
                     chessBoard.add(createsPromotetMinion(), endCol, endRow);
+                    promotion = false;
 
 
                 }
+                GridPane.setColumnIndex(sourceStart, endCol);
+                GridPane.setRowIndex(sourceStart, endRow);
 
 
                 sourceEnd.toBack();
@@ -325,20 +340,49 @@ public class FXMLController {
 
     private ImageView createsPromotetMinion() {
         ImageView promotedMinion = new ImageView();
-        String name = "/BishopBlack.png";
+        String name = "/QueenBlack.png";
+        switch (promoteTo) {
+            case "B": {
+                name = "/BishopBlack.png";
+                break;
+            }
+            case "K": {
+                name = "/KnightBlack.png";
+                break;
+            }
+            case "R": {
+                name = "/RookBlack.png";
+                break;
+            }
+        }
         Image img = new Image(getClass().getResource("ChessFigures" + name).toExternalForm());
         promotedMinion.setImage(img);
         promotedMinion.setFitWidth(90);
         promotedMinion.setFitHeight(90);
         return promotedMinion;
     }
+    public void removeNodeByRowColumnIndex(int row,int column,GridPane gridPane) {
+
+        ObservableList<Node> children = gridPane.getChildren();
+        for(Node node : children) {
+            if(node instanceof ImageView && getRowIndex(node) == row && getColIndex(node) == column) {
+                //ImageView imageView = ImageView(node);
+                gridPane.getChildren().remove(node);
+                System.out.println("flag");
+                break;
+
+            }
+
+        }
+    }
+
 
     private void beatenMinions(Node sourceEnd) {
         if(board.getBeaten().size() == 1){
             String minion = board.getBeaten().get(0);
             char minionType = minion.charAt(0);
             if(Character.isUpperCase(minionType)){
-                //sourceEnd.set
+
                 beatenMinion.add(sourceEnd,0,counterBeatenMinionsWhite);
                 counterBeatenMinionsWhite++;
 

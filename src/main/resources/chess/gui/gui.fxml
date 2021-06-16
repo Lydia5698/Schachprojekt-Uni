@@ -223,7 +223,7 @@
                <Image url="@ChessFigures/PawnBlack.png" />
             </ImageView>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <ImageView fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <ImageView fx:id="pawnBlack" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <Image url="@ChessFigures/PawnBlack.png" />
             </ImageView>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
