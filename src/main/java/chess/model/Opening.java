@@ -1,5 +1,6 @@
 package chess.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Opening {
@@ -50,7 +51,7 @@ public class Opening {
     }
 
     public List<Move> makeStringArrayToMoveList(String[] array){
-        List<Move> moveList = null;
+        List<Move> moveList = new ArrayList<>();
         for (String x : array){
             Move move = new Move(x);
             moveList.add(move);

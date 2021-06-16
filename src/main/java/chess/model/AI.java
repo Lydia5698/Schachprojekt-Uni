@@ -9,7 +9,7 @@ import java.util.List;
  */
 
 public class AI {
-    public int openingNumber = randomOpeningNumber();
+    public int openingNumber = 3;   //randomOpeningNumber(); //TODO: uncomment after tests
     public boolean colourIsBlack = false;
     public int turnNumber=0;
     List<Move> moveList = new ArrayList<>();
@@ -43,14 +43,24 @@ public class AI {
      * Method, that determines the next move that the AI should make
      * @return move that should be the next Turn for the AI
      */
-    public Move getNextMove(){
+    public Move getNextMove(Board board){
+        moveList = aiOpening.getOpeningMoveList();
         //gem move from openingList (place move integer) if exists
         if(turnNumber < moveList.size()) {
-            List<Move> moveList = aiOpening.getOpeningMoveList();
+            //List<Move> moveList = aiOpening.getOpeningMoveList();
             move = moveList.get(turnNumber);
         }
         //get move if it is possible to take
-
+        else{
+            List<Move> moveList = possibleNextMoves(board);
+            int number = randomOpeningNumber();
+            if(number< moveList.size()) {
+                move = moveList.get(number);
+            }
+            else{
+                move = moveList.get(0);
+            }
+        }
         //generate random possible move
 
         return move;
@@ -82,6 +92,15 @@ public class AI {
         return possibleMoves;
     }
 
+
     // possible next move that can take (dev: first step: take random piece, sec step: take piece with highest value
 
+
+    public boolean isColourIsBlack() {
+        return colourIsBlack;
+    }
+
+    public void setColourIsBlack(boolean colourIsBlack) {
+        this.colourIsBlack = colourIsBlack;
+    }
 }
