@@ -38,9 +38,9 @@ public class FXMLController {
     private int counterBeatenMinionsBlack = 0;
     private String promoteTo = "Q";
     private boolean promotion = false;
-    private boolean checkIsVisible = false;
-    private int beatenCounter = 0;
-    private boolean rotation = true;
+    private final boolean checkIsVisible = false;
+    private final int beatenCounter = 0;
+    private boolean rotation = false;
 
     @FXML
     private void b_neuesSpiel() {
@@ -105,6 +105,9 @@ public class FXMLController {
     @FXML
     private Button btnWhite;
 
+    @FXML
+    private Button btnOptionsGame;
+
 
 
 
@@ -112,6 +115,10 @@ public class FXMLController {
     public void showStartScreen() {
         Stage stage = (Stage) btnStartScreen.getScene().getWindow();
         gui.show_FXML("startScreen.fxml", stage);
+        stage = (Stage) btnChessBoard.getScene().getWindow();
+        stage.close();
+        //TODO Optionen immer als Popup?
+
     }
 
     public void showAnleitung() {
@@ -130,9 +137,7 @@ public class FXMLController {
     public void showOptions(){
         Stage stage = (Stage) btnOptions.getScene().getWindow();
         gui.show_FXML("options.fxml", stage);
-        /*if(checkVisible.isSelected()){
-            checkIsVisible = false;
-        }*/
+
     }
     public void showSpielauswahl(){
         Stage stage = (Stage) btnSpielstart.getScene().getWindow();
@@ -148,6 +153,10 @@ public class FXMLController {
     public void exit(){
         System.exit(0);
 
+    }
+    @FXML
+    void showOptionsGame(MouseEvent event) throws IOException {
+        popupOptionsInGame();
     }
 
     @FXML
@@ -165,13 +174,15 @@ public class FXMLController {
 
         List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
         String input;
-        if(board.isBlackIsTurn() && rotation){ // abfragen ob rotation an
+        // checks if rotation is on and changes the coordinates for black
+        if(board.isBlackIsTurn() && rotation){
             input = columns.get(colIndex) + (rowIndex+1);
 
         }
         else {
             input = columns.get(colIndex) + (8 - rowIndex);
         }
+
         halfMoves.add(input);
         position.add(event);
         System.out.println(input);
@@ -310,7 +321,7 @@ public class FXMLController {
             int diffrow = Math.abs(startIndex.getRow() - endIndex.getRow());
             if(!startCell.isEmpty() && diffrow == 1 && String.valueOf(startCell.getMinion().getMinion_type()).equals("P") && (endIndex.getRow() == 0 || endIndex.getRow() == 7)){
                 popupPromote();
-                promoteTo = "B";
+                //promoteTo = "B";
                 promotion = true;
             }
 
@@ -320,15 +331,13 @@ public class FXMLController {
 
             if (manuals.moveOfRightColour(moveNew, board)) {
                 board.applyMove(moveNew);
-
-                //TODO rotaion fix coordinates different
                 String beatenString = "Moves";
                 for (Move beatenMinion : board.getMoveList()) {
                     String moveString = beatenMinion.getStart() + "-" + beatenMinion.getEnd();
                     beatenString = String.join(",", beatenString, moveString);
                 }
                 moveList.setText(beatenString);
-                //boardRotation();
+
             }
 
             else {
@@ -367,14 +376,11 @@ public class FXMLController {
                 }
 
                 beatenMinions(sourceEnd);
-
-
-
             }
             counter = 0;
             halfMoves.clear();
             position.clear();
-            boardRotation();
+            //boardRotation();
         }
 
     }
@@ -511,11 +517,24 @@ public class FXMLController {
         newWindow.showAndWait();
 
     }
+    @FXML
+    void popupOptionsInGame() throws IOException {
+        Stage newWindow = new Stage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Gui.class.getResource("options.fxml"));
+        Parent root = (Parent) loader.load();
+        Scene secondScene = new Scene(root);
+        newWindow.setScene(secondScene);
+        newWindow.initModality(Modality.WINDOW_MODAL);
+        newWindow.initOwner(gui.stage);
+        newWindow.showAndWait();
+        //checkboxen checken falls eine der optionen true
+
+    }
 
     @FXML
     void promoteMinionBishop(MouseEvent event) {
-
-        promoteTo = btnBishop.getText();
+        setPromoteTo("Q");
         Stage stage = (Stage) btnBishop.getScene().getWindow();
         stage.close();
     }
