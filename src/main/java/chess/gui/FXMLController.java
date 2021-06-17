@@ -45,7 +45,7 @@ public class FXMLController {
     private boolean promotion = false;
     private final boolean checkIsVisible = false;
     private final int beatenCounter = 0;
-    private boolean rotation = true;
+    private boolean rotation = false;
 
     @FXML
     private void b_neuesSpiel() {
@@ -319,6 +319,7 @@ public class FXMLController {
     }
 
     public void move() throws IOException {
+
         if (counter == 2) {
             String fistField = halfMoves.get(0);
             String secondField = halfMoves.get(1);
@@ -341,7 +342,18 @@ public class FXMLController {
             System.out.println(inputNew);
 
             if (manuals.moveOfRightColour(moveNew, board)) {
+                // if ai is white make move
+                if (!ai.colourIsBlack){
+                    board.applyMove(ai.getNextMove(board));
+                    ai.increaseTurnNumber();
+                    System.out.println(board.showBoard());
+                    //update
+                    updateBoard();
+                }
                 board.applyMove(moveNew);
+                System.out.println(board.showBoard());
+
+
                 String beatenString = "Moves";
                 for (Move beatenMinion : board.getMoveList()) {
                     String moveString = beatenMinion.getStart() + "-" + beatenMinion.getEnd();
@@ -374,17 +386,28 @@ public class FXMLController {
                 updateBoard();
 
 
+
                 //sourceStart.toFront();
                 ActionEvent event = new ActionEvent();
                 if (board.isCheck()) {
                     popupCheck(event);
                     board.setCheck(false);
                 }
+
+                if (ai.colourIsBlack){
+                    board.applyMove(ai.getNextMove(board));
+                    ai.increaseTurnNumber();
+                    System.out.println(board.showBoard());
+                    //update
+                    updateBoard();
+                }
             }
             counter = 0;
             halfMoves.clear();
             position.clear();
-            boardRotation();
+            if (rotation){
+                boardRotation();
+            }
         }
 
     }
