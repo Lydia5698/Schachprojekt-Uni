@@ -41,7 +41,7 @@ public class FXMLController {
     private boolean promotion = false;
     private final boolean checkIsVisible = false;
     private final int beatenCounter = 0;
-    private boolean rotation = false;
+    private boolean rotation = true;
 
     @FXML
     private void b_neuesSpiel() {
@@ -171,7 +171,7 @@ public class FXMLController {
         int rowIndex;
         colIndex = getColIndex(source);
         rowIndex = getRowIndex(source);
-        showPossibleMoves(colIndex, rowIndex);
+        //showPossibleMoves(colIndex, rowIndex);
 
         List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
         String input;
@@ -224,7 +224,7 @@ public class FXMLController {
                     if (iv != null) {
                         iv.setFitWidth(90);
                         iv.setFitHeight(90);
-                        chessBoard.add(iv, j, 7 - i);
+                        chessBoard.add(iv, 7- j, 7 - i);
                     }
                 }
             }
@@ -232,16 +232,7 @@ public class FXMLController {
 
         //black turn
         else if (!board.isBlackIsTurn()) {
-            for (int i = 0; i < 8; i++) {
-                for (int j = 0; j < 8; j++) {
-                    iv = getImage(i, j);
-                    if (iv != null) {
-                        iv.setFitWidth(90);
-                        iv.setFitHeight(90);
-                        chessBoard.add(iv, j, i);
-                    }
-                }
-            }
+            updateBoard();
         }
     }
 
@@ -352,94 +343,43 @@ public class FXMLController {
                 if (promotion) {
                     //TODO PromoteTo richtig setzten
 
-                    if(sourceStart.getId().equals("image")){
-                        chessBoard.getChildren().remove(sourceStart);
-                    }
-                    chessBoard.add(createsPromotetMinion(endCell.getMinion().isBlack()), endCol, endRow);
                     promotion = false;
 
 
                 }
-                if(sourceStart.getId().equals("image")){
-                    GridPane.setColumnIndex(sourceStart, endCol);
-                    GridPane.setRowIndex(sourceStart, endRow);
-                }
+                beatenMinions(sourceEnd);
+                updateBoard();
 
-                sourceStart.toFront();
+
+                //sourceStart.toFront();
                 ActionEvent event = new ActionEvent();
                 if (board.isCheck()) {
                     popupCheck(event);
                     board.setCheck(false);
                 }
-
-                beatenMinions(sourceEnd);
             }
             counter = 0;
             halfMoves.clear();
             position.clear();
-            //boardRotation();
+            boardRotation();
         }
 
     }
-
-    private ImageView createsPromotetMinion(boolean black) {
-        ImageView promotedMinion = new ImageView();
-        String name = "/QueenWhite.png";
-        switch (promoteTo) {
-            case "B": {
-                if(black){
-                    name = "/BishopBlack.png";
+    private void updateBoard(){
+        ImageView iv;
+        chessBoard.getChildren().removeIf(node -> node instanceof ImageView);
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                iv = getImage(i, j);
+                if (iv != null) {
+                    iv.setFitWidth(90);
+                    iv.setFitHeight(90);
+                    chessBoard.add(iv, j, i);
+                    }
                 }
-                else {
-                    name = "/BishopWhite.png";
-                }
-                break;
-            }
-            case "K": {
-                if (black){
-                    name = "/KnightBlack.png";
-                }
-                else {
-                    name = "/KnightWhite.png";
-                }
-                break;
-            }
-            case "R": {
-                if (black){
-                    name = "/RookBlack.png";
-                }
-                else {
-                    name = "/RookWhite.png";
-                }
-                break;
-            }
-            case "Q":{
-                if (black){
-                    name = "/QueenBlack.png";
-                }
-                else {
-                    name = "/QueenWhite.png";
-                }
-                break;
             }
 
-        }
-        Image img = new Image(getClass().getResource("ChessFigures" + name).toExternalForm());
-        promotedMinion.setImage(img);
-        promotedMinion.setFitWidth(90);
-        promotedMinion.setFitHeight(90);
-        promotedMinion.setId("image");
-        promotedMinion.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-            try {
-                mouseClicked(mouseEvent);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-        return promotedMinion;
     }
-
-
     private void beatenMinions(Node sourceEnd) {
         if(board.getBeaten().size() == 1){
             String minion = board.getBeaten().get(0);
@@ -460,10 +400,13 @@ public class FXMLController {
     }
 
 
-    public void showPossibleMoves(int startCol, int startRow) {
+    public void showPossibleMoves(int startRow, int startCol) {
         CellIndex startIndex = new CellIndex(startRow, startCol);
-        chessBoard.getChildren().removeIf(node -> node instanceof Rectangle && ((Rectangle) node).getFill().equals(Paint.valueOf("#888888")));
-        if(getNodeByCoordinate(startRow, startCol) instanceof ImageView && !board.getCheckerBoard()[startRow][startCol].isEmpty()) {
+        Node node = getNodeByCoordinate(startRow,startCol);
+        //getNodeByCoordinate(startRow,startCol);
+
+        //chessBoard.getChildren().remove(node.getId().equals("background") && rectangle.getFill().equals(Paint.valueOf("#888888")));
+        if(node.getId().equals("image") && !board.getCheckerBoard()[startRow][startCol].isEmpty()) {
             List<Move> possibleMoves = (staleMate.possibleMovesForOneFigureMoveList(startIndex, board.getCheckerBoard()));
 
             for (Move move : possibleMoves) {
@@ -472,6 +415,7 @@ public class FXMLController {
                 possMove.setHeight(90);
                 possMove.setWidth(90);
                 possMove.setFill(Paint.valueOf("888888"));
+                possMove.setId("possibleMove");
                 possMove.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
                     try {
                         mouseClicked(mouseEvent);
@@ -498,12 +442,17 @@ public class FXMLController {
             } catch (Exception e){
                 nodeCol = 0;
             }
-            if (nodeRow == column + 1 && nodeCol == row + 1 && node instanceof ImageView) {
+            if (nodeRow == column + 1 && nodeCol == row + 1 && node.getId().equals("possibleMove")) {
+                chessBoard.getChildren().remove(node);
+            }
+            if (nodeRow == column + 1 && nodeCol == row + 1 && node.getId().equals("image")) {
                 return node;
             }
         }
         return null;
     }
+
+
 
     @FXML
     void popupCheck(ActionEvent event) {
