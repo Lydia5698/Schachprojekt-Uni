@@ -5,6 +5,8 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.NodeOrientation;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -41,13 +43,15 @@ public class FXMLController {
     private boolean promotion = false;
     private final boolean checkIsVisible = false;
     private final int beatenCounter = 0;
-    private boolean rotation = true;
+    private boolean rotation = false;
 
     @FXML
     private void b_neuesSpiel() {
 
     }
 
+    @FXML
+    private Group letter;
 
     @FXML
     private Button btnSpielstart;
@@ -177,7 +181,7 @@ public class FXMLController {
         String input;
         // checks if rotation is on and changes the coordinates for black
         if(board.isBlackIsTurn() && rotation){
-            input = columns.get(colIndex) + (rowIndex+1);
+            input = columns.get(7 - colIndex) + (rowIndex+1);
 
         }
         else {
@@ -228,11 +232,13 @@ public class FXMLController {
                     }
                 }
             }
+            letter.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
         }
 
         //black turn
         else if (!board.isBlackIsTurn()) {
             updateBoard();
+            letter.setNodeOrientation(NodeOrientation.INHERIT);
         }
     }
 
@@ -290,7 +296,6 @@ public class FXMLController {
                     e.printStackTrace();
                 }
             });
-            iv.setId("image");
         }
         return iv;
     }
@@ -337,21 +342,12 @@ public class FXMLController {
                 Event start = position.get(0);
                 Event end = position.get(1);
                 Node sourceEnd = (Node) end.getSource();
-                Node sourceStart = (Node) start.getSource();
-                int endCol = getColIndex(sourceEnd);
-                int endRow = getRowIndex(sourceEnd);
                 if (promotion) {
                     //TODO PromoteTo richtig setzten
-
                     promotion = false;
-
-
                 }
                 beatenMinions(sourceEnd);
                 updateBoard();
-
-
-                //sourceStart.toFront();
                 ActionEvent event = new ActionEvent();
                 if (board.isCheck()) {
                     popupCheck(event);
@@ -361,7 +357,9 @@ public class FXMLController {
             counter = 0;
             halfMoves.clear();
             position.clear();
-            boardRotation();
+            if(rotation){
+                boardRotation();
+            }
         }
 
     }
@@ -384,11 +382,11 @@ public class FXMLController {
         if(board.getBeaten().size() == 1){
             String minion = board.getBeaten().get(0);
             char minionType = minion.charAt(0);
-            if(sourceEnd.getId().equals("image")){
+            if(sourceEnd instanceof ImageView) {
                 chessBoard.getChildren().remove(sourceEnd);
                 if (Character.isUpperCase(minionType)) {
                     //sourceEnd.set
-                    beatenMinion.add(sourceEnd,0,counterBeatenMinionsWhite);
+                    beatenMinion.add(sourceEnd, 0, counterBeatenMinionsWhite);
                     counterBeatenMinionsWhite++;
                 } else {
                     beatenMinion.add(sourceEnd, 1, counterBeatenMinionsBlack);
@@ -400,13 +398,10 @@ public class FXMLController {
     }
 
 
-    public void showPossibleMoves(int startRow, int startCol) {
+    public void showPossibleMoves(int startCol, int startRow) {
         CellIndex startIndex = new CellIndex(startRow, startCol);
-        Node node = getNodeByCoordinate(startRow,startCol);
-        //getNodeByCoordinate(startRow,startCol);
-
-        //chessBoard.getChildren().remove(node.getId().equals("background") && rectangle.getFill().equals(Paint.valueOf("#888888")));
-        if(node.getId().equals("image") && !board.getCheckerBoard()[startRow][startCol].isEmpty()) {
+        chessBoard.getChildren().removeIf(node -> node instanceof Rectangle && ((Rectangle) node).getFill().equals(Paint.valueOf("#888888")));
+        if(getNodeByCoordinate(startRow, startCol) instanceof ImageView && !board.getCheckerBoard()[startRow][startCol].isEmpty()) {
             List<Move> possibleMoves = (staleMate.possibleMovesForOneFigureMoveList(startIndex, board.getCheckerBoard()));
 
             for (Move move : possibleMoves) {
@@ -415,7 +410,6 @@ public class FXMLController {
                 possMove.setHeight(90);
                 possMove.setWidth(90);
                 possMove.setFill(Paint.valueOf("888888"));
-                possMove.setId("possibleMove");
                 possMove.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
                     try {
                         mouseClicked(mouseEvent);
@@ -442,17 +436,12 @@ public class FXMLController {
             } catch (Exception e){
                 nodeCol = 0;
             }
-            if (nodeRow == column + 1 && nodeCol == row + 1 && node.getId().equals("possibleMove")) {
-                chessBoard.getChildren().remove(node);
-            }
-            if (nodeRow == column + 1 && nodeCol == row + 1 && node.getId().equals("image")) {
+            if (nodeRow == column + 1 && nodeCol == row + 1 && node instanceof ImageView) {
                 return node;
             }
         }
         return null;
     }
-
-
 
     @FXML
     void popupCheck(ActionEvent event) {
