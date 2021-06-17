@@ -1,7 +1,6 @@
 package chess.gui;
 
 import chess.model.*;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -16,6 +15,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -170,7 +171,7 @@ public class FXMLController {
         int rowIndex;
         colIndex = getColIndex(source);
         rowIndex = getRowIndex(source);
-        //showPossibleMoves(colIndex, rowIndex);
+        showPossibleMoves(colIndex, rowIndex);
 
         List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
         String input;
@@ -213,9 +214,7 @@ public class FXMLController {
     }
 
     private void boardRotation() {
-        //boardRota
-        //white turn
-        ImageView iv = null;
+        ImageView iv;
         chessBoard.getChildren().removeIf(node -> node instanceof ImageView);
 
         if (board.isBlackIsTurn()) {
@@ -227,7 +226,6 @@ public class FXMLController {
                         iv.setFitHeight(90);
                         chessBoard.add(iv, j, 7 - i);
                     }
-
                 }
             }
         }
@@ -242,13 +240,12 @@ public class FXMLController {
                         iv.setFitHeight(90);
                         chessBoard.add(iv, j, i);
                     }
-
                 }
             }
         }
     }
 
-    private ImageView getImage(int i, int j){
+    private ImageView getImage(int i, int j) {
         ImageView iv = null;
         if (!board.getCheckerBoard()[i][j].isEmpty()) {
             switch (board.getCheckerBoard()[i][j].getMinion().getMinion_type()) {
@@ -319,7 +316,7 @@ public class FXMLController {
             Cell startCell = board.getCheckerBoard()[startIndex.getRow()][startIndex.getColumn()];
             Cell endCell = board.getCheckerBoard()[endIndex.getRow()][endIndex.getColumn()];
             int diffrow = Math.abs(startIndex.getRow() - endIndex.getRow());
-            if(!startCell.isEmpty() && diffrow == 1 && String.valueOf(startCell.getMinion().getMinion_type()).equals("P") && (endIndex.getRow() == 0 || endIndex.getRow() == 7)){
+            if (!startCell.isEmpty() && diffrow == 1 && String.valueOf(startCell.getMinion().getMinion_type()).equals("P") && (endIndex.getRow() == 0 || endIndex.getRow() == 7)) {
                 popupPromote();
                 //promoteTo = "B";
                 promotion = true;
@@ -348,11 +345,11 @@ public class FXMLController {
             if (board.isAllowedMove()) {
                 Event start = position.get(0);
                 Event end = position.get(1);
-                Node sourceEnd = (Node)end.getSource();
-                Node sourceStart = (Node)start.getSource();
+                Node sourceEnd = (Node) end.getSource();
+                Node sourceStart = (Node) start.getSource();
                 int endCol = getColIndex(sourceEnd);
                 int endRow = getRowIndex(sourceEnd);
-                if(promotion){
+                if (promotion) {
                     //TODO PromoteTo richtig setzten
 
                     if(sourceStart.getId().equals("image")){
@@ -463,18 +460,45 @@ public class FXMLController {
     }
 
 
-
-    public void showPossibleMoves(int startCol, int startRow){
+    public void showPossibleMoves(int startCol, int startRow) {
         CellIndex startIndex = new CellIndex(startRow, startCol);
-        List<Move> possibleMoves = (staleMate.possibleMovesForOneFigureMoveList(startIndex, board.getCheckerBoard()));
-        String start = possibleMoves.get(1).getStart();
-        //Node endNode = getNodeByCoordinate(, endIndex.getColumn());
-        //endNode.toFront();
+        chessBoard.getChildren().removeIf(node -> node instanceof Rectangle && ((Rectangle) node).getFill().equals(Paint.valueOf("#888888")));
+        if(getNodeByCoordinate(startRow, startCol) instanceof ImageView && !board.getCheckerBoard()[startRow][startCol].isEmpty()) {
+            List<Move> possibleMoves = (staleMate.possibleMovesForOneFigureMoveList(startIndex, board.getCheckerBoard()));
+
+            for (Move move : possibleMoves) {
+                String s = "abcdefgh";
+                Rectangle possMove = new Rectangle();
+                possMove.setHeight(90);
+                possMove.setWidth(90);
+                possMove.setFill(Paint.valueOf("888888"));
+                possMove.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+                    try {
+                        mouseClicked(mouseEvent);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+                chessBoard.add(possMove, s.indexOf(move.getEnd().substring(0, 1)), Integer.parseInt(move.getEnd().substring(1)) + 1);
+            }
+        }
     }
 
-    Node getNodeByCoordinate(Integer row, Integer column) {
+    Node getNodeByCoordinate(int row, int column) {
         for (Node node : chessBoard.getChildren()) {
-            if (GridPane.getColumnIndex(node) == row && GridPane.getColumnIndex(node) == column) {
+            int nodeRow;
+            int nodeCol;
+            try {
+                nodeRow = GridPane.getRowIndex(node);
+            } catch (Exception e){
+                nodeRow = 0;
+            }
+            try {
+                nodeCol = GridPane.getColumnIndex(node);
+            } catch (Exception e){
+                nodeCol = 0;
+            }
+            if (nodeRow == column + 1 && nodeCol == row + 1 && node instanceof ImageView) {
                 return node;
             }
         }
@@ -496,7 +520,7 @@ public class FXMLController {
         Stage newWindow = new Stage();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Gui.class.getResource("promoteBlack.fxml"));
-        Parent root = (Parent) loader.load();
+        Parent root = loader.load();
         Scene secondScene = new Scene(root);
         newWindow.setScene(secondScene);
         newWindow.initModality(Modality.WINDOW_MODAL);
@@ -504,12 +528,13 @@ public class FXMLController {
         newWindow.showAndWait();
 
     }
+
     @FXML
     void popupColour() throws IOException {
         Stage newWindow = new Stage();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Gui.class.getResource("colourSelect.fxml"));
-        Parent root = (Parent) loader.load();
+        Parent root = loader.load();
         Scene secondScene = new Scene(root);
         newWindow.setScene(secondScene);
         newWindow.initModality(Modality.WINDOW_MODAL);
@@ -522,7 +547,7 @@ public class FXMLController {
         Stage newWindow = new Stage();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Gui.class.getResource("options.fxml"));
-        Parent root = (Parent) loader.load();
+        Parent root = loader.load();
         Scene secondScene = new Scene(root);
         newWindow.setScene(secondScene);
         newWindow.initModality(Modality.WINDOW_MODAL);
@@ -564,6 +589,7 @@ public class FXMLController {
 
 
     }
+
     public void setPromoteTo(String promoteTo) {
         this.promoteTo = promoteTo;
     }
@@ -579,9 +605,6 @@ public class FXMLController {
         Stage stage = (Stage) btnWhite.getScene().getWindow();
         stage.close();
     }
-
-
-
 
 
 }
