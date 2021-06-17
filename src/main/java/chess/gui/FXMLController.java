@@ -301,6 +301,7 @@ public class FXMLController {
     }
 
     public void move() throws IOException {
+        ActionEvent event = new ActionEvent();
         if (counter == 2) {
             String fistField = halfMoves.get(0);
             String secondField = halfMoves.get(1);
@@ -348,7 +349,6 @@ public class FXMLController {
                 }
                 beatenMinions(sourceEnd);
                 updateBoard();
-                ActionEvent event = new ActionEvent();
                 if (board.isCheck()) {
                     popupCheck(event);
                     board.setCheck(false);
@@ -359,6 +359,9 @@ public class FXMLController {
             position.clear();
             if(rotation){
                 boardRotation();
+            }
+            if(board.isGameEnd()){
+                popupCheckMate(event);
             }
         }
 
@@ -452,6 +455,15 @@ public class FXMLController {
         alert.show();
 
     }
+    @FXML
+    void popupCheckMate(ActionEvent event) {
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("checkMate!");
+        alert.setContentText("You are check Mate");
+        alert.show();
+
+    }
 
     @FXML
     void popupPromote() throws IOException {
@@ -494,6 +506,7 @@ public class FXMLController {
         //checkboxen checken falls eine der optionen true
 
     }
+
 
     @FXML
     void promoteMinionBishop(MouseEvent event) {
