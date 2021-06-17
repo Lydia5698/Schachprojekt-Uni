@@ -1,7 +1,7 @@
 package chess.gui;
 
+import chess.Settings;
 import chess.model.*;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -29,6 +29,9 @@ public class FXMLController {
     protected static Manuals manuals = new Manuals();
     protected static StaleMate staleMate = new StaleMate();
     protected static SpecialManuals spManuals = new SpecialManuals();
+    public Settings settings = new Settings();
+    public AI ai = new AI(true); // black ai
+
 
     private final Gui gui = new Gui(); //conbtroller f. game
     private final List<String> halfMoves = new ArrayList<>();
@@ -110,6 +113,7 @@ public class FXMLController {
 
 
     public void showStartScreen() {
+        settings.setAi_active(false);
         Stage stage = (Stage) btnStartScreen.getScene().getWindow();
         gui.show_FXML("startScreen.fxml", stage);
     }
@@ -140,6 +144,7 @@ public class FXMLController {
     }
     @FXML
     public void showKIGui() throws IOException {
+        //receiveData();
         Stage stage = (Stage) btnChessKI.getScene().getWindow();
         popupColour();
         gui.show_FXML("gui.fxml", stage);
@@ -152,6 +157,23 @@ public class FXMLController {
 
     @FXML
     private ImageView pawnBlack;
+
+
+    /*@FXML
+    public void receiveData(MouseEvent event) {
+        // Step 1
+        Node node = (Node) event.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
+        // Step 2
+        AI ai = (AI) stage.getUserData();
+        Settings settings = (Settings) stage.getUserData();
+        // Step 3
+        boolean ai_colour = ai.isColourIsBlack();
+        boolean aiIsActive = settings.isAi_active();
+    }*/
+
+
+
 
     @FXML
     void mouseClicked(MouseEvent event) throws IOException {
@@ -321,6 +343,7 @@ public class FXMLController {
             if (manuals.moveOfRightColour(moveNew, board)) {
                 board.applyMove(moveNew);
 
+
                 //TODO rotaion fix coordinates different
                 String beatenString = "Moves";
                 for (Move beatenMinion : board.getMoveList()) {
@@ -376,6 +399,15 @@ public class FXMLController {
             position.clear();
             boardRotation();
         }
+
+    }
+
+    private void aiMove(){
+
+        Move move = ai.getNextMove(board);
+        System.out.println("ai makes move in method aiMove");
+        board.applyMove(move);
+        ai.increaseTurnNumber();
 
     }
 
@@ -549,16 +581,31 @@ public class FXMLController {
         this.promoteTo = promoteTo;
     }
 
+
     @FXML
-    void colourBlack(MouseEvent event) {
+    public void colourBlack(MouseEvent event) {
+        // Step 1
+        settings.setAi_colour(false);
+        settings.setAi_active(true);
+        ai = new AI(false);
+
         Stage stage = (Stage) btnBlack.getScene().getWindow();
         stage.close();
+
     }
 
     @FXML
-    void colourWhite(MouseEvent event) {
+    public void colourWhite(MouseEvent event) {
+        //make black ai, player plays white
+
+        settings.setAi_colour(true);
+        settings.setAi_active(true);
+        ai = new AI(true);
+
+
         Stage stage = (Stage) btnWhite.getScene().getWindow();
         stage.close();
+
     }
 
 
