@@ -194,7 +194,10 @@ public class Board {
             manuals.spManuals.moveRochade(move, checkerBoard, manuals);
             blackIsTurn = !blackIsTurn;
             System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
-            System.out.println("Rochade");
+            if(!simple) {
+
+                System.out.println("Rochade");
+            }
             moveList.add(move);
             return true;
         } else {
@@ -246,6 +249,7 @@ public class Board {
     public void setSimple(boolean simple) {
         this.simple = simple;
     }
+
 
     public List<Move> getMoveList() {
         return moveList;
