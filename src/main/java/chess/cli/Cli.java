@@ -42,63 +42,59 @@ public class Cli {
         boolean inSettingsMode = true;
         boolean inAISettingsMode = false;
 
-        //TODO: set settings
-        BufferedReader brs = new BufferedReader(new InputStreamReader(System.in));
-        while(inSettingsMode) {
-            try {
-                System.out.println("Yoe are in the settings menu. To exit the menu type 'exit'. But first you have to choose. ");
-                System.out.println("Do you want to play against a human, type 'human', want to play against an ai, type 'ai': ");
-                String inputSetting = brs.readLine();
-                if (inputSetting.contains("exit")){
-                    inSettingsMode = false;
-                }
-                if (inputSetting.matches("human")){
-                    settings.setAi_active(false);
-                    inSettingsMode = false;
+        if (!simple) {
+            BufferedReader brs = new BufferedReader(new InputStreamReader(System.in));
+            while (inSettingsMode) {
+                try {
+                    System.out.println("Yoe are in the settings menu. To exit the menu type 'exit'. But first you have to choose. ");
+                    System.out.println("Do you want to play against a human, type 'human', want to play against an ai, type 'ai': ");
+                    String inputSetting = brs.readLine();
+                    if (inputSetting.contains("exit")) {
+                        inSettingsMode = false;
+                    }
+                    if (inputSetting.matches("human")) {
+                        settings.setAi_active(false);
+                        inSettingsMode = false;
 
-                }
-                else if (inputSetting.matches("ai")){
-                    settings.setAi_active(true);
-                    inAISettingsMode = true;
-                    inSettingsMode = false;
-                }
-                else if (inputSetting.contains("exit")){
-                    inSettingsMode = false;
-                }
-                else{
-                    //wait
-                    System.out.println("You have to type the right word!");
-                }
+                    } else if (inputSetting.matches("ai")) {
+                        settings.setAi_active(true);
+                        inAISettingsMode = true;
+                        inSettingsMode = false;
+                    } else if (inputSetting.contains("exit")) {
+                        inSettingsMode = false;
+                    } else {
+                        //wait
+                        System.out.println("You have to type the right word!");
+                    }
 
-            } catch (IOException e) {
-                e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        }
-        while(inAISettingsMode && settings.isAi_active()){
-            System.out.println("What colour do you want to play, 'black' or 'white'?");
-            try {
-                String inputSetting = brs.readLine();
-                if (inputSetting.matches("black")){
-                    settings.setAi_colour(false);
-                    System.out.println("You play black, the ai plays white.");
-                    inAISettingsMode = false;
-                    //create ai
-                    ai = new AI(false);
+            while (inAISettingsMode && settings.isAi_active()) {
+                System.out.println("What colour do you want to play, 'black' or 'white'?");
+                try {
+                    String inputSetting = brs.readLine();
+                    if (inputSetting.matches("black")) {
+                        settings.setAi_colour(false);
+                        System.out.println("You play black, the ai plays white.");
+                        inAISettingsMode = false;
+                        //create ai
+                        ai = new AI(false);
+                    } else if (inputSetting.matches("white")) {
+                        settings.setAi_colour(true);
+                        System.out.println("You play white, the ai plays black.");
+                        inAISettingsMode = false;
+                        //create ai
+                        ai = new AI(true);
+                    } else {
+                        System.out.println("You have to choose a colour for yourself!");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                else if (inputSetting.matches("white")){
-                    settings.setAi_colour(true);
-                    System.out.println("You play white, the ai plays black.");
-                    inAISettingsMode = false;
-                    //create ai
-                    ai = new AI(true);
-                }
-                else{
-                    System.out.println("You have to choose a colour for yourself!");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
 
+            }
         }
 
         //create ai again
