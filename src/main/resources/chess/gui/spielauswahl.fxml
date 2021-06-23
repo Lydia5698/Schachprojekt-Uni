@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chess.gui.FXMLController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chess.gui.GameChoiceController">
    <Button layoutX="266.0" layoutY="352.0" mnemonicParsing="false" onAction="#exit" prefHeight="25.0" prefWidth="87.0" text="Exit">
       <font>
          <Font name="Arial" size="13.0" />
@@ -37,4 +37,3 @@
       </font>
    </Label>
 </AnchorPane>
-

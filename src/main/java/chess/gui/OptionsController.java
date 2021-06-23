@@ -7,9 +7,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-public class OptionsController {
+public class OptionsController extends MainController {
 
-    private final Gui gui = new Gui();
     @FXML
     private CheckBox lightPossibleMoves;
 
@@ -26,21 +25,8 @@ public class OptionsController {
     private Button btnChessBoard;
 
     @FXML
-    void exit(ActionEvent event) {
-
-    }
-
-    @FXML
-    void showStartScreen(MouseEvent event) {
-        Stage stage = (Stage) btnStartScreen.getScene().getWindow();
-        gui.show_FXML("startScreen.fxml", stage); // wenn wir zur gui gehen müssen wir uns die Positionen von den Figuren merken
-
-    }
-    @FXML
     void KingCheck(ActionEvent event) {
-      /*  if(checkVisible.isSelected()){
-            FXMLController.checkIsVisible = true;
-        }*/
+
     }
 
     @FXML
@@ -48,6 +34,10 @@ public class OptionsController {
 
     }
 
+    @FXML
+    void exit(ActionEvent event) {
+        System.exit(0);
+    }
 
     @FXML
     void possibleMoves(ActionEvent event) {
@@ -59,4 +49,11 @@ public class OptionsController {
 
     }
 
+    @FXML
+    void showStartScreen(MouseEvent event) {
+        Stage stage = (Stage) btnStartScreen.getScene().getWindow();
+        getGui().show_FXML("startScreen.fxml", stage); //TODO unterscheidung wenn spiel gestartet zur Gui weiterleiten
+    }
+
 }
+

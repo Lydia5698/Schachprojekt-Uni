@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chess.gui.FXMLController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chess.gui.ActiveGameController">
    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bfbfbf" height="840.0" stroke="BLACK" strokeType="INSIDE" width="1000.0" />
    <BorderPane layoutY="90.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="749.0" prefWidth="950.0">
       <left>
@@ -179,163 +179,163 @@
                <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="ALWAYS" />
                <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="ALWAYS" />
             </rowConstraints>
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" />
             <ImageView fx:id="image" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true">
                <Image url="@ChessFigures/RookBlack.png" />
             </ImageView>
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="1" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="1" />
             <ImageView fx:id="image" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                <Image url="@ChessFigures/KnightBlack.png" />
             </ImageView>
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="2" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="2" />
             <ImageView fx:id="image" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
                <Image url="@ChessFigures/BishopBlack.png" />
             </ImageView>
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="3" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="3" />
             <ImageView fx:id="image" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3">
                <Image url="@ChessFigures/QueenBlack.png" />
             </ImageView>
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="4" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="4" />
             <ImageView fx:id="image" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4">
                <Image url="@ChessFigures/KingBlack.png" />
             </ImageView>
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="5" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="5" />
             <ImageView fx:id="image" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5">
                <Image url="@ChessFigures/BishopBlack.png" />
             </ImageView>
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="6" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="6" />
             <ImageView fx:id="image" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6">
                <Image url="@ChessFigures/KnightBlack.png" />
             </ImageView>
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="7" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="7" />
             <ImageView fx:id="image" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7">
                <Image url="@ChessFigures/RookBlack.png" />
             </ImageView>
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.rowIndex="1" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.rowIndex="1" />
             <ImageView fx:id="image" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                <Image url="@ChessFigures/PawnBlack.png" />
             </ImageView>
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <ImageView fx:id="image" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <Image url="@ChessFigures/PawnBlack.png" />
             </ImageView>
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <ImageView fx:id="image" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <Image url="@ChessFigures/PawnBlack.png" />
             </ImageView>
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
             <ImageView fx:id="image" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1">
                <Image url="@ChessFigures/PawnBlack.png" />
             </ImageView>
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
             <ImageView fx:id="image" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="1">
                <Image url="@ChessFigures/PawnBlack.png" />
             </ImageView>
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
             <ImageView fx:id="image" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="1">
                <Image url="@ChessFigures/PawnBlack.png" />
             </ImageView>
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="6" GridPane.rowIndex="1" />
             <ImageView fx:id="image" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="1">
                <Image url="@ChessFigures/PawnBlack.png" />
             </ImageView>
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="7" GridPane.rowIndex="1" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="7" GridPane.rowIndex="1" />
             <ImageView fx:id="image" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="1">
                <Image url="@ChessFigures/PawnBlack.png" />
             </ImageView>
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.rowIndex="2" />
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="5" GridPane.rowIndex="2" />
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="6" GridPane.rowIndex="2" />
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="7" GridPane.rowIndex="2" />
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.rowIndex="3" />
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="5" GridPane.rowIndex="3" />
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="6" GridPane.rowIndex="3" />
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="7" GridPane.rowIndex="3" />
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.rowIndex="4" />
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="5" GridPane.rowIndex="4" />
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="6" GridPane.rowIndex="4" />
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="7" GridPane.rowIndex="4" />
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.rowIndex="5" />
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="4" GridPane.rowIndex="5" />
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="5" GridPane.rowIndex="5" />
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="6" GridPane.rowIndex="5" />
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="7" GridPane.rowIndex="5" />
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.rowIndex="6" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.rowIndex="2" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="6" GridPane.rowIndex="2" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="7" GridPane.rowIndex="2" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.rowIndex="3" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="6" GridPane.rowIndex="3" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="7" GridPane.rowIndex="3" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.rowIndex="4" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="6" GridPane.rowIndex="4" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="7" GridPane.rowIndex="4" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.rowIndex="5" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="5" GridPane.rowIndex="5" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="6" GridPane.rowIndex="5" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="7" GridPane.rowIndex="5" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.rowIndex="6" />
             <ImageView fx:id="image" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="6">
                <Image url="@ChessFigures/PawnWhite.png" />
             </ImageView>
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <ImageView fx:id="image" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="6">
                <Image url="@ChessFigures/PawnWhite.png" />
             </ImageView>
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
             <ImageView fx:id="image" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="6">
                <Image url="@ChessFigures/PawnWhite.png" />
             </ImageView>
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="3" GridPane.rowIndex="6" />
             <ImageView fx:id="image" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="6">
                <Image url="@ChessFigures/PawnWhite.png" />
             </ImageView>
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="4" GridPane.rowIndex="6" />
             <ImageView fx:id="image" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="6">
                <Image url="@ChessFigures/PawnWhite.png" />
             </ImageView>
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="5" GridPane.rowIndex="6" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="5" GridPane.rowIndex="6" />
             <ImageView fx:id="image" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="6">
                <Image url="@ChessFigures/PawnWhite.png" />
             </ImageView>
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="6" GridPane.rowIndex="6" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="6" GridPane.rowIndex="6" />
             <ImageView fx:id="image" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="6">
                <Image url="@ChessFigures/PawnWhite.png" />
             </ImageView>
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="7" GridPane.rowIndex="6" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="7" GridPane.rowIndex="6" />
             <ImageView fx:id="image" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="6">
                <Image url="@ChessFigures/PawnWhite.png" />
             </ImageView>
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.rowIndex="7" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.rowIndex="7" />
             <ImageView fx:id="image" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="7">
                <Image url="@ChessFigures/RookWhite.png" />
             </ImageView>
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
             <ImageView fx:id="image" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="7">
                <Image url="@ChessFigures/KnightWhite.png" />
             </ImageView>
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="2" GridPane.rowIndex="7" />
             <ImageView fx:id="image" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="7">
                <Image url="@ChessFigures/BishopWhite.png" />
             </ImageView>
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="3" GridPane.rowIndex="7" />
             <ImageView fx:id="image" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="7">
                <Image url="@ChessFigures/QueenWhite.png" />
             </ImageView>
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="4" GridPane.rowIndex="7" />
             <ImageView fx:id="image" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="7">
                <Image url="@ChessFigures/KingWhite.png" />
             </ImageView>
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="5" GridPane.rowIndex="7" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="5" GridPane.rowIndex="7" />
             <ImageView fx:id="image" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="7">
                <Image url="@ChessFigures/BishopWhite.png" />
             </ImageView>
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="6" GridPane.rowIndex="7" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#307c26" height="90.0" onMouseClicked="#mouseClicked" stroke="#00000002" strokeType="INSIDE" width="90.0" GridPane.columnIndex="6" GridPane.rowIndex="7" />
             <ImageView fx:id="image" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="7">
                <Image url="@ChessFigures/KnightWhite.png" />
             </ImageView>
-            <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="7" GridPane.rowIndex="7" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fffdcf" height="90.0" onMouseClicked="#mouseClicked" stroke="TRANSPARENT" strokeType="INSIDE" width="90.0" GridPane.columnIndex="7" GridPane.rowIndex="7" />
             <ImageView fx:id="image" fitHeight="90.0" fitWidth="90.0" onMouseClicked="#mouseClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="7">
                <Image url="@ChessFigures/RookWhite.png" />
             </ImageView>

@@ -28,26 +28,22 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.*;
 
-public class FXMLController {
+public class ActiveGameController extends MainController {
     protected static Board board = new Board();
     protected static Manuals manuals = new Manuals();
     protected static StaleMate staleMate = new StaleMate();
     protected static SpecialManuals spManuals = new SpecialManuals();
     public Settings settings = new Settings();
-    public AI ai; // = new AI(true); // black ai
 
 
-    private Gui gui; //conbtroller f. game
+    //private Gui gui; //conbtroller f. game
     private final List<String> halfMoves = new ArrayList<>();
     private final List<Event> position = new ArrayList<>();
     private int counter = 0;
     private int counterBeatenMinionsWhite = 0;
     private int counterBeatenMinionsBlack = 0;
-    private String promoteTo = "Q";
     private boolean promotion = false;
-    private final boolean checkIsVisible = false;
     private final int beatenCounter = 0;
-    private boolean rotation = false;
 
     @FXML
     private void b_neuesSpiel() {
@@ -57,26 +53,11 @@ public class FXMLController {
     @FXML
     private Group letter;
 
-    @FXML
-    private Button btnSpielstart;
+
 
     @FXML
     private Button btnOptions;
 
-    @FXML
-    private Button btnCredits;
-
-    @FXML
-    private Button btnAnleitung;
-
-    @FXML
-    private Button btnChessKI;
-
-    @FXML
-    private Button btnStartScreen;
-
-    @FXML
-    private Button btnChessBoard;
 
     @FXML
     private GridPane chessBoard;
@@ -88,83 +69,16 @@ public class FXMLController {
     private Text moveList;
 
     @FXML
-    private Button btnBishop;
-
-    @FXML
-    private Button btnKnight;
-
-    @FXML
-    private Button btnRook;
-
-    @FXML
-    private Button btnQueen;
-
-    @FXML
-    private CheckBox lightPossibleMoves;
-
-    @FXML
-    private CheckBox checkVisible;
-
-    @FXML
-    private CheckBox rotateBoard;
-
-    @FXML
-    private Button btnBlack;
-
-    @FXML
-    private Button btnWhite;
-
-    @FXML
     private Button btnOptionsGame;
 
 
-
-
-
-    public void showStartScreen() {
-        settings.setAi_active(false);
-        Stage stage = (Stage) btnStartScreen.getScene().getWindow();
-        gui.show_FXML("startScreen.fxml", stage);
-        stage = (Stage) btnChessBoard.getScene().getWindow();
-        stage.close();
-        //TODO Optionen immer als Popup?
-
-    }
-
-    public void showAnleitung() {
-        Stage stage = (Stage) btnAnleitung.getScene().getWindow();
-        gui.show_FXML("anleitung.fxml", stage);
-    }
-    public void showCredits(){
-        Stage stage = (Stage) btnCredits.getScene().getWindow();
-        gui.show_FXML("credits.fxml", stage);
-
-    }
-    public void showGui(){
-        Stage stage = (Stage) btnChessBoard.getScene().getWindow();
-        gui.show_FXML("gui.fxml", stage);
-    }
     public void showOptions(){
         Stage stage = (Stage) btnOptions.getScene().getWindow();
-        gui.show_FXML("options.fxml", stage);
+        getGui().show_FXML("options.fxml", stage);
 
     }
-    public void showSpielauswahl(){
-        Stage stage = (Stage) btnSpielstart.getScene().getWindow();
-        gui.show_FXML("spielauswahl.fxml", stage);
-    }
-    @FXML
-    public void showKIGui() throws IOException {
-        //receiveData();
-        Stage stage = (Stage) btnChessKI.getScene().getWindow();
-        popupColour();
-        gui.show_FXML("gui.fxml", stage);
-    }
 
-    public void exit(){
-        System.exit(0);
 
-    }
     @FXML
     void showOptionsGame(MouseEvent event) throws IOException {
         popupOptionsInGame();
@@ -203,7 +117,7 @@ public class FXMLController {
         List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
         String input;
         // checks if rotation is on and changes the coordinates for black
-        if(board.isBlackIsTurn() && rotation){
+        if(board.isBlackIsTurn() && isRotation()){
             input = columns.get(7 - colIndex) + (rowIndex+1);
 
         }
@@ -219,26 +133,6 @@ public class FXMLController {
 
     }
 
-    private int getRowIndex(Node source) {
-        int rowIndex;
-        if (GridPane.getRowIndex(source) == null) {
-            rowIndex = 0;
-        } else {
-            rowIndex = GridPane.getRowIndex(source);
-        }
-        return rowIndex;
-    }
-
-    private int getColIndex(Node source) {
-        int colIndex;
-        if(GridPane.getColumnIndex(source) == null){
-            colIndex = 0;
-        }
-        else{
-            colIndex = GridPane.getColumnIndex(source);
-        }
-        return colIndex;
-    }
 
     private void boardRotation() {
         ImageView iv;
@@ -328,7 +222,7 @@ public class FXMLController {
         if (counter == 2) {
             String fistField = halfMoves.get(0);
             String secondField = halfMoves.get(1);
-            String input = fistField + "-" + secondField + promoteTo;
+            String input = fistField + "-" + secondField + getPromoteTo();
             Move move = new Move(input);
 
             CellIndex endIndex = Board.cellIndexFor(move.getEnd());
@@ -342,7 +236,7 @@ public class FXMLController {
                 promotion = true;
             }
 
-            String inputNew = fistField + "-" + secondField + promoteTo;
+            String inputNew = fistField + "-" + secondField + getPromoteTo();
             Move moveNew = new Move(inputNew);
             System.out.println(inputNew);
 
@@ -399,7 +293,7 @@ public class FXMLController {
             counter = 0;
             halfMoves.clear();
             position.clear();
-            if(rotation){
+            if(isRotation()){
                 boardRotation();
             }
             if(board.isGameEnd()){
@@ -511,29 +405,16 @@ public class FXMLController {
     void popupPromote() throws IOException {
         Stage newWindow = new Stage();
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Gui.class.getResource("promoteBlack.fxml"));
+        loader.setLocation(Gui.class.getResource("promote.fxml"));
         Parent root = loader.load();
         Scene secondScene = new Scene(root);
         newWindow.setScene(secondScene);
         newWindow.initModality(Modality.WINDOW_MODAL);
-        newWindow.initOwner(gui.stage);
+        newWindow.initOwner(getGui().stage);
         newWindow.showAndWait();
 
     }
 
-    @FXML
-    void popupColour() throws IOException {
-        Stage newWindow = new Stage();
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Gui.class.getResource("colourSelect.fxml"));
-        Parent root = loader.load();
-        Scene secondScene = new Scene(root);
-        newWindow.setScene(secondScene);
-        newWindow.initModality(Modality.WINDOW_MODAL);
-        newWindow.initOwner(gui.stage);
-        newWindow.showAndWait();
-
-    }
     @FXML
     void popupOptionsInGame() throws IOException {
         Stage newWindow = new Stage();
@@ -543,50 +424,31 @@ public class FXMLController {
         Scene secondScene = new Scene(root);
         newWindow.setScene(secondScene);
         newWindow.initModality(Modality.WINDOW_MODAL);
-        newWindow.initOwner(gui.stage);
+        newWindow.initOwner(getGui().stage);
         newWindow.showAndWait();
         //checkboxen checken falls eine der optionen true
 
     }
-
-
-    @FXML
-    void promoteMinionBishop(MouseEvent event) {
-        setPromoteTo("Q");
-        Stage stage = (Stage) btnBishop.getScene().getWindow();
-        stage.close();
+    private int getRowIndex(Node source) {
+        int rowIndex;
+        if (GridPane.getRowIndex(source) == null) {
+            rowIndex = 0;
+        } else {
+            rowIndex = GridPane.getRowIndex(source);
+        }
+        return rowIndex;
     }
 
-    @FXML
-    void promoteMinionKnight(MouseEvent event) {
-        promoteTo = btnKnight.getText();
-        Stage stage = (Stage) btnKnight.getScene().getWindow();
-        stage.close();
-
-
+    private int getColIndex(Node source) {
+        int colIndex;
+        if(GridPane.getColumnIndex(source) == null){
+            colIndex = 0;
+        }
+        else{
+            colIndex = GridPane.getColumnIndex(source);
+        }
+        return colIndex;
     }
-
-    @FXML
-    void promoteMinionQueen(MouseEvent event) {
-        setPromoteTo("Q");
-        Stage stage = (Stage) btnQueen.getScene().getWindow();
-        stage.close();
-
-
-    }
-
-    @FXML
-    void promoteMinionRook(MouseEvent event) {
-        Stage stage = (Stage) btnRook.getScene().getWindow();
-        stage.close();
-
-
-    }
-
-    public void setPromoteTo(String promoteTo) {
-        this.promoteTo = promoteTo;
-    }
-
 
     @FXML
     public void colourBlack(MouseEvent event) {

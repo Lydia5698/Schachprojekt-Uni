@@ -28,8 +28,7 @@ public class Gui extends Application {
 
 
     protected Stage stage;
-
-
+    //MainController mainController = new MainController();
     /**
      * This method is called by the Application to start the GUI.
      *
@@ -38,7 +37,7 @@ public class Gui extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception { //TODO oberklasse mit allen setter methoden, Menue controller , gamecontroller, bedienen das interface, in allen controllen soll die gui gesetzt werden
-        stage = primaryStage; //TODO
+        stage = primaryStage;
     show_FXML("startScreen.fxml", primaryStage);
     }
 
@@ -50,7 +49,7 @@ public class Gui extends Application {
             Scene gameScene = new Scene(root);
             primaryStage.setScene(gameScene);
             primaryStage.show();
-            ((FXMLController)loader.getController()).setGui(this); //hier noch oberklasse
+            ((MainController)loader.getController()).setGui(this); //hier noch oberklasse
 
 
         }  catch (IOException e) {
@@ -58,20 +57,6 @@ public class Gui extends Application {
             e.printStackTrace();
         }
     }
-
-
-
-
-    /*
-    Für die Combobox on Spielauswahl
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-    comboBox.getItems().removeAll(comboBox.getItems());
-    comboBox.getItems().addAll("Schwarz", "Weiß", "Zufall");
-    comboBox.getSelectionModel().select("Option B");
-    }
-     */
-
 
     /**
      * The entry point ogit f the GUI application.
@@ -81,55 +66,6 @@ public class Gui extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
-
-    /*public void update{
-        boolean simple = Arrays.asList(args).contains("--simple");
-        board.setSimple(simple);
-        String validInput = "[a-h][1-8]-[a-h][1-8]\\D?"; // Sind eingaben nach e2-e4 egal? Also als bsp: e2-e4uiei soll trotzdem den move e2-e4 ausführen?
-
-        String output = board.showBoard();
-        System.out.println(output);
-        while (!board.isGameEnd()) {
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            System.out.print("Enter Move");
-            if (board.isBlackIsTurn()) {
-                System.out.print(" for black\n");
-            } else {
-                System.out.print(" for white\n");
-            }
-            try {
-                String input = br.readLine();
-                if (input.matches(validInput)) {
-                    Move move = new Move(input);
-                    if (manuals.moveOfRightColour(move, board)) {
-                        board.applyMove(move);
-                        output = board.showBoard();
-                        System.out.println(output);
-                    } else {
-                        System.out.println("!Move not allowed");
-                    }
-                } else if (input.equals("beaten")) {
-                    String beatenString = "Beaten Figures";
-                    for (String beatenMinion : board.getBeaten()) {
-                        beatenString = String.join(",", beatenString, beatenMinion);
-                    }
-                    System.out.println(beatenString);
-                } else {
-                    System.out.println("!Invalid move");
-                }
-
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                break;
-
-            }
-        }
-    }*/
-
-
 
 }
 
