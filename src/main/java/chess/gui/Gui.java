@@ -37,8 +37,8 @@ public class Gui extends Application {
      */
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        stage = primaryStage;
+    public void start(Stage primaryStage) throws Exception { //TODO oberklasse mit allen setter methoden, Menue controller , gamecontroller, bedienen das interface, in allen controllen soll die gui gesetzt werden
+        stage = primaryStage; //TODO
     show_FXML("startScreen.fxml", primaryStage);
     }
 
@@ -50,6 +50,7 @@ public class Gui extends Application {
             Scene gameScene = new Scene(root);
             primaryStage.setScene(gameScene);
             primaryStage.show();
+            ((FXMLController)loader.getController()).setGui(this); //hier noch oberklasse
 
 
         }  catch (IOException e) {

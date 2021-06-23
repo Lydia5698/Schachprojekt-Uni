@@ -27,6 +27,9 @@ public class Cli {
     //protected boolean inSettingsMode = true;
     // protected AI ai = new AI(); //TODO later integrate this bit
     //TODO: integrate integer that counts the moves the ai made
+    //TODO !!!! aufruf mit --simple und der gui sollte funktionieren, noch eine if einbauen
+    //TODO Testcoverage
+
 
     /**
      * The entry point of the console input application.

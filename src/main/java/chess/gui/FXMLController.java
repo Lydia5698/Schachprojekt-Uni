@@ -34,10 +34,10 @@ public class FXMLController {
     protected static StaleMate staleMate = new StaleMate();
     protected static SpecialManuals spManuals = new SpecialManuals();
     public Settings settings = new Settings();
-    public AI ai = new AI(true); // black ai
+    public AI ai; // = new AI(true); // black ai
 
 
-    private final Gui gui = new Gui(); //conbtroller f. game
+    private Gui gui; //conbtroller f. game
     private final List<String> halfMoves = new ArrayList<>();
     private final List<Event> position = new ArrayList<>();
     private int counter = 0;
@@ -612,6 +612,9 @@ public class FXMLController {
         Stage stage = (Stage) btnWhite.getScene().getWindow();
         stage.close();
 
+    }
+    public void setGui(Gui gui){
+        this.gui = gui;
     }
 
 
