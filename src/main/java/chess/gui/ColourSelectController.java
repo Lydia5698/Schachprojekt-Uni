@@ -16,18 +16,20 @@ public class ColourSelectController extends MainController {
 
     @FXML
     void colourBlack(MouseEvent event) {
-        //Black AI
+        //White AI
         getGui().getSettings().setAi(new AI(false));
         getGui().getSettings().setAi_active(true);
+        getGui().getSettings().setAi_colour(false);
         Stage stage = (Stage) btnBlack.getScene().getWindow();
         stage.close();
     }
 
     @FXML
     void colourWhite(MouseEvent event) {
-        // White AI
+        // Black AI
         getGui().getSettings().setAi(new AI(true));
         getGui().getSettings().setAi_active(true);
+        getGui().getSettings().setAi_colour(true);
         Stage stage = (Stage) btnWhite.getScene().getWindow();
         stage.close();
     }
