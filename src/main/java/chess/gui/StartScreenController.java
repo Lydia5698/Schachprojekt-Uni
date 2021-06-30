@@ -21,6 +21,13 @@ public class StartScreenController extends MainController {
     private Button btnAnleitung;
 
     @FXML
+    private void initialize(){
+        //btnAnleitung.setText("LALA");
+        //btnAnleitung.setText(getGui().getSettings().getLanguage().settings());
+
+    }
+
+    @FXML
     void exit(ActionEvent event) {
         System.exit(0);
     }
@@ -42,5 +49,6 @@ public class StartScreenController extends MainController {
         Stage stage = (Stage) btnSpielstart.getScene().getWindow();
         show_FXML("spielauswahl.fxml", stage, getGui());
     }
+
 
 }

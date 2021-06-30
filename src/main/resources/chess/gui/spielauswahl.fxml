@@ -11,27 +11,22 @@
          <Font name="Arial" size="13.0" />
       </font>
    </Button>
-   <Button fx:id="btnOptions" layoutX="274.0" layoutY="311.0" mnemonicParsing="false" onMouseClicked="#showOptions" text="Optionen">
+   <Button layoutX="246.0" layoutY="225.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="125.0" text="Network Game">
       <font>
          <Font name="Arial" size="13.0" />
       </font>
    </Button>
-   <Button layoutX="246.0" layoutY="225.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="125.0" text="Netzwerkspiel">
+   <Button fx:id="btnChessKI" layoutX="246.0" layoutY="165.0" mnemonicParsing="false" onMouseClicked="#showKIGui" prefHeight="35.0" prefWidth="125.0" text="Against AI">
       <font>
          <Font name="Arial" size="13.0" />
       </font>
    </Button>
-   <Button fx:id="btnChessKI" layoutX="246.0" layoutY="165.0" mnemonicParsing="false" onMouseClicked="#showKIGui" prefHeight="35.0" prefWidth="125.0" text="Gegen KI">
+   <Button fx:id="btnChessBoard" layoutX="247.0" layoutY="107.0" mnemonicParsing="false" onMouseClicked="#showGui" prefHeight="35.0" prefWidth="125.0" text="co-op">
       <font>
          <Font name="Arial" size="13.0" />
       </font>
    </Button>
-   <Button fx:id="btnChessBoard" layoutX="247.0" layoutY="107.0" mnemonicParsing="false" onMouseClicked="#showGui" prefHeight="35.0" prefWidth="125.0" text="Normales Spiel">
-      <font>
-         <Font name="Arial" size="13.0" />
-      </font>
-   </Button>
-   <Label layoutX="207.0" layoutY="29.0" text="Spiel wählen">
+   <Label layoutX="153.0" layoutY="29.0" text="Choose your Game">
       <font>
          <Font name="Arial" size="36.0" />
       </font>

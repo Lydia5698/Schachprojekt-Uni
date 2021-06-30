@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="400.0" maxWidth="600.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chess.gui.OptionsController">
-   <CheckBox fx:id="lightPossibleMoves" layoutX="186.0" layoutY="107.0" maxHeight="18.0" maxWidth="236.0" mnemonicParsing="false" onAction="#possibleMoves" prefHeight="18.0" prefWidth="242.0" text="Mögliche Züge makieren">
+   <CheckBox fx:id="lightPossibleMoves" layoutX="186.0" layoutY="107.0" maxHeight="18.0" maxWidth="236.0" mnemonicParsing="false" onAction="#possibleMoves" prefHeight="18.0" prefWidth="242.0" text="Highlight Possible Moves">
       <font>
          <Font name="Arial" size="13.0" />
       </font>
@@ -22,22 +22,22 @@
          <Font name="Arial" size="13.0" />
       </font>
    </Button>
-   <CheckBox fx:id="checkVisible" layoutX="186.0" layoutY="154.0" maxHeight="18.0" maxWidth="265.0" mnemonicParsing="false" onAction="#KingCheck" prefHeight="18.0" prefWidth="265.0" text="Anzeigen ob der König im Schach steht">
+   <CheckBox fx:id="checkVisible" layoutX="186.0" layoutY="154.0" maxHeight="18.0" maxWidth="265.0" mnemonicParsing="false" onAction="#KingCheck" prefHeight="18.0" prefWidth="265.0" text="Show if King is in Check">
       <font>
          <Font name="Arial" size="13.0" />
       </font>
    </CheckBox>
-   <CheckBox fx:id="doubleClick" layoutX="187.0" layoutY="196.0" mnemonicParsing="false" onAction="#doubleClick" prefHeight="18.0" prefWidth="236.0" text="Kein mehrfach anklicken erlaubt">
+   <CheckBox fx:id="doubleClick" layoutX="187.0" layoutY="196.0" mnemonicParsing="false" onAction="#doubleClick" prefHeight="18.0" prefWidth="236.0" text="You can only click ones one Figure">
       <font>
          <Font name="Arial" size="13.0" />
       </font>
    </CheckBox>
-   <CheckBox fx:id="rotateBoard" layoutX="187.0" layoutY="239.0" mnemonicParsing="false" onAction="#rotateBoard" prefHeight="18.0" prefWidth="236.0" text="Spielfeld automatisch drehen">
+   <CheckBox fx:id="rotateBoard" layoutX="187.0" layoutY="239.0" mnemonicParsing="false" onAction="#rotateBoard" prefHeight="18.0" prefWidth="392.0" text="Rotate the Chessboard automatically">
       <font>
          <Font name="Arial" size="13.0" />
       </font>
    </CheckBox>
-   <Label layoutX="226.0" layoutY="24.0" prefHeight="42.0" prefWidth="159.0" text="Optionen">
+   <Label layoutX="226.0" layoutY="24.0" prefHeight="42.0" prefWidth="159.0" text="Options">
       <font>
          <Font name="Arial" size="36.0" />
       </font>

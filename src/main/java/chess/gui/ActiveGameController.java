@@ -7,6 +7,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.NodeOrientation;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -29,7 +30,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class ActiveGameController extends MainController {
-    protected static Board board = new Board();
+    protected Board board = new Board();
     protected static Manuals manuals = new Manuals();
     protected static StaleMate staleMate = new StaleMate();
     protected static SpecialManuals spManuals = new SpecialManuals();
@@ -71,15 +72,22 @@ public class ActiveGameController extends MainController {
     private void initialize(){
         updateBoard();
     }
-
-    /*if(getGui().getSettings().isAi_active() & !getGui().getSettings().isAi_colour()){
-        board.applyMove(getGui().getSettings().getAi().getNextMove(board));
-        getGui().getSettings().getAi().increaseTurnNumber();
-        System.out.println(board.showBoard());
-        //update
-        updateBoard();
+    @Override
+    public void setGui(Gui gui){
+        this.gui = gui;
+        whiteAIMove();
     }
-    */
+
+    public void whiteAIMove(){
+        if(getGui().getSettings().isAi_active() & !getGui().getSettings().isAi_colour()) {
+            board.applyMove(getGui().getSettings().getAi().getNextMove(board));
+            getGui().getSettings().getAi().increaseTurnNumber();
+            System.out.println(board.showBoard());
+            //update
+            updateBoard();
+        }
+    }
+
     @FXML
     void mouseClicked(MouseEvent event) throws IOException {
         Node source = (Node) event.getSource();
@@ -195,7 +203,7 @@ public class ActiveGameController extends MainController {
 
     public void move() throws IOException {
         ActionEvent event = new ActionEvent();
-        if (counter == 2) {
+        if (counter == 2 && !board.isGameEnd()) {
             /*if(getGui().getSettings().isAi_active() & !getGui().getSettings().isAi_colour()){ //TODO nur zug wenn der schwarze gültig war
                 board.applyMove(getGui().getSettings().getAi().getNextMove(board));           // auch ohne zweimal klicken ausführen
                 getGui().getSettings().getAi().increaseTurnNumber();
@@ -247,8 +255,10 @@ public class ActiveGameController extends MainController {
             }
 
             else {
+                popupMoveNotAllowed(event);
                 System.out.println("!Move not allowed");
                 board.setAllowedMove(false);
+                // ersten Half move merken nur bei move not allowed abfangen bei leerem feld angeklickt
             }
 
             if (board.isAllowedMove()) {
@@ -261,8 +271,11 @@ public class ActiveGameController extends MainController {
                     popupCheck(event);
                     board.setCheck(false);
                 }
+                if(board.isGameEnd()){
+                    popupCheckMate(event);
+                }
 
-               if (getGui().getSettings().isAi_active()){ //Black
+               if (getGui().getSettings().isAi_active()){
                     board.applyMove(getGui().getSettings().getAi().getNextMove(board));
                     getGui().getSettings().getAi().increaseTurnNumber();
                     System.out.println(board.showBoard());
@@ -278,9 +291,10 @@ public class ActiveGameController extends MainController {
             }
             if(board.isGameEnd()){
                 popupCheckMate(event);
-                board.setGameEnd(true);
+                board = new Board();
             }
         }
+        
 
     }
     private void updateBoard(){
@@ -320,16 +334,16 @@ public class ActiveGameController extends MainController {
 
     public void showPossibleMoves(int startCol, int startRow) {
         CellIndex startIndex = new CellIndex(startRow, startCol);
-        chessBoard.getChildren().removeIf(node -> node instanceof Rectangle && ((Rectangle) node).getFill().equals(Paint.valueOf("#888888")));
+        chessBoard.getChildren().removeIf(node -> node instanceof Rectangle && ((Rectangle) node).getFill().equals(Paint.valueOf("#ff0000")));
         if(getNodeByCoordinate(startRow, startCol) instanceof ImageView && !board.getCheckerBoard()[startRow][startCol].isEmpty()) {
             List<Move> possibleMoves = (staleMate.possibleMovesForOneFigureMoveList(startIndex, board.getCheckerBoard()));
 
             for (Move move : possibleMoves) {
                 String s = "abcdefgh";
                 Rectangle possMove = new Rectangle();
-                possMove.setHeight(90);
-                possMove.setWidth(90);
-                possMove.setFill(Paint.valueOf("888888"));
+                possMove.setHeight(10);
+                possMove.setWidth(10);
+                possMove.setFill(Paint.valueOf("#ff0000"));
                 possMove.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
                     try {
                         mouseClicked(mouseEvent);
@@ -337,9 +351,10 @@ public class ActiveGameController extends MainController {
                         e.printStackTrace();
                     }
                 });
-                chessBoard.add(possMove, s.indexOf(move.getEnd().substring(0, 1)), Integer.parseInt(move.getEnd().substring(1)) + 1);
+                chessBoard.add(possMove, s.indexOf(move.getEnd().substring(0, 1)), 8-Integer.parseInt(move.getEnd().substring(1,2)));
+                chessBoard.setAlignment(Pos.CENTER);
                 possMove.toFront();
-                // TODO wird das richtig ausgeführt oder nur von den anderen Rectangels verdeckt?
+                // TODO es werden nicht alle moves richtig angezeigt
             }
         }
     }
@@ -367,10 +382,14 @@ public class ActiveGameController extends MainController {
 
     @FXML
     void popupCheck(ActionEvent event) {
-
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("check!");
-        alert.setContentText("You are in check");
+        if(board.isBlackIsTurn()){
+            alert.setContentText("Black is in check");
+        }
+        else {
+            alert.setContentText("White is in check");
+        }
         alert.show();
 
     }
@@ -378,7 +397,20 @@ public class ActiveGameController extends MainController {
     void popupCheckMate(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("checkMate!");
-        alert.setContentText("You are check Mate");
+        if(board.isBlackIsTurn()){
+            alert.setContentText("Black is in check Mate");
+        }
+        else {
+            alert.setContentText("White is in check Mate");
+        }
+        alert.show();
+    }
+
+    @FXML
+    void popupMoveNotAllowed(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Move Not Allowed");
+        alert.setContentText("The Move you just made is not allowed.");
         alert.show();
     }
 
@@ -423,34 +455,7 @@ public class ActiveGameController extends MainController {
         return colIndex;
     }
 
-/*    @FXML
-    public void colourBlack(MouseEvent event) {
-        // Step 1
-        settings.setAi_colour(false);
-        settings.setAi_active(true);
-        ai = new AI(false);
 
-        Stage stage = (Stage) btnBlack.getScene().getWindow();
-        stage.close();
-
-    }
-
-    @FXML
-    public void colourWhite(MouseEvent event) {
-        //make black ai, player plays white
-
-        settings.setAi_colour(true);
-        settings.setAi_active(true);
-        ai = new AI(true);
-
-
-        Stage stage = (Stage) btnWhite.getScene().getWindow();
-        stage.close();
-
-    }
-    public void setGui(Gui gui){
-        this.gui = gui;
-    }*/
 
 
 }

@@ -1,5 +1,6 @@
 package chess.gui;
 
+import chess.model.Board;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -27,7 +28,6 @@ public class OptionsController extends MainController {
     @FXML
     private CheckBox rotateBoard;
 
-    //TODO checkboxen checken wenn options geöffnet wird mit initialize?
 
     @FXML
     public void initialize(){
@@ -64,6 +64,7 @@ public class OptionsController extends MainController {
     void showStartScreen(MouseEvent event) {
         Stage stage = (Stage) btnStartScreen.getScene().getWindow();
         show_FXML("startScreen.fxml", stage, getGui());
+        getGui().getSettings().setBoard(new Board());
         // set game false oder game end
     }
 
@@ -74,9 +75,17 @@ public class OptionsController extends MainController {
     }
 
     void checkBoxes(){
-        boolean rotate = getGui().getSettings().isRotateBoard();
-        System.out.println(rotate);
-        rotateBoard.setSelected(rotate);
+        rotateBoard.setSelected(getGui().getSettings().isRotateBoard());
+        lightPossibleMoves.setSelected(getGui().getSettings().isLightPossibleMoves());
+        doubleClick.setSelected(getGui().getSettings().isDoubleClick());
+        checkVisible.setSelected(getGui().getSettings().isCheckVisible());
+
+    }
+
+    @Override
+    public void setGui(Gui gui){
+        this.gui = gui;
+        checkBoxes();
     }
 
 }

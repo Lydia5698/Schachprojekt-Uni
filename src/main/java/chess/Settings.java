@@ -1,17 +1,19 @@
 package chess;
 
 import chess.model.AI;
+import chess.model.Board;
 
 public class Settings {
     //felder
     AI ai = new AI(false);
+    Board board = new Board();
+    Language language = new Language();
     protected boolean ai_active = false;
     protected boolean ai_colour = false;
     protected boolean rotateBoard = false;
     protected boolean lightPossibleMoves = false;
     protected boolean checkVisible = false;
     protected boolean doubleClick = false;
-    // TODO in settings die options von der Gui einfügen
     //gegen gegner
     //schach anzeigen lassen
     //mehrfach klicken
@@ -80,6 +82,20 @@ public class Settings {
     public void setDoubleClick(boolean doubleClick) {
         this.doubleClick = doubleClick;
     }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
+    public Language getLanguage() {
+        return language;
+    }
+
+
 
 
 }
