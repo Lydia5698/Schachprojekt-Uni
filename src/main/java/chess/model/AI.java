@@ -1,6 +1,7 @@
 package chess.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ import java.util.List;
 
 public class AI {
     public int openingNumber = randomOpeningNumber();
-    public boolean colourIsBlack = false;
+    public boolean colourIsBlack;// = false;
     public int turnNumber=0;
     List<Move> moveList = new ArrayList<>();
     Opening aiOpening;
@@ -49,25 +50,40 @@ public class AI {
      *
      */
     public Move getNextMove(Board board){
-        moveList = aiOpening.getOpeningMoveList();
+        List<Move> moveListOpening = aiOpening.getOpeningMoveList();
+        List<Move> moveListPossible = possibleNextMoves(board);
+
+        List<Move> takeMoveList = takesMove(moveListPossible, board);
+        Move moveT = takeMoveList.get(0);
+        String end = moveT.getEnd();
+        if (!(end.equals("test"))){
+            //good move here~
+            System.out.println("ai makes a veryyyy good move"); //TODO delete this line later
+            move = moveT;
+            return move;
+
+        }
         //gem move from openingList (place move integer) if exists
-        if(turnNumber < moveList.size()) {
+        else if(turnNumber < moveListOpening.size()) {
+            System.out.println("ai opening turn number: " + turnNumber);
             //List<Move> moveList = aiOpening.getOpeningMoveList();
-            move = moveList.get(turnNumber);
+            //TODO check if legal move
+            move = moveListOpening.get(turnNumber);
+            return move;
         }
         //get move if it is possible to take
-        else{
-            List<Move> moveList = possibleNextMoves(board);
-            int number = generateRandomInteger(moveList.size(), 0);
-            if(number< moveList.size()) {
-                move = moveList.get(number);
+        else{ //random move is in this else
+            int number = generateRandomInteger(moveListPossible.size(), 0);
+            System.out.println("random move number: " + Integer.toString(number));
+            if(number < moveListPossible.size()) {
+                move = moveListPossible.get(number);
             }
-            else{
-                move = moveList.get(0);
+            else{ //TODO check for check mate and stalemate!
+                move = moveListPossible.get(0);
             }
         }
         //generate random possible move
-
+        //System.out.println("this ai is playing: " );
         return move;
     }
 
@@ -98,8 +114,6 @@ public class AI {
     }
 
 
-    // possible next move that can take (dev: first step: take random piece, sec step: take piece with highest value
-
 
     public boolean isColourIsBlack() {
         return colourIsBlack;
@@ -108,4 +122,51 @@ public class AI {
     public void setColourIsBlack(boolean colourIsBlack) {
         this.colourIsBlack = colourIsBlack;
     }
+// possible next move that can take (dev: first step: take random piece, sec step: take piece with highest value
+    /**
+     * Looks for the move that captures pieces of the enemy in a list of moves. Please only give this method
+     * a list with only valid and legal moves. It is possible that this method returns an empty list.
+     * @param moveList the List of possible moves for one colour
+     * @return list of moves, that take pieces
+     */
+    public List<Move> takesMove(List<Move> moveList, Board board){
+        // make hashmap
+        List <Move> takesMoveList = new ArrayList<>();
+        Move bestMove = new Move("aa-test");
+        HashMap <String, Integer> maps = new HashMap<String, Integer>();
+        maps.put("p", 1);
+        maps.put("b", 3);
+        maps.put("n", 3);
+        maps.put("r", 5);
+        maps.put("q", 9);
+        maps.put("k", 10);
+
+        int min = -1;
+        for (Move move: moveList){ // check every move if it is possible to take a figure and give it a score according to figure
+            // check if last field is with piece
+            //String endField = move.getEnd();
+
+            CellIndex endIndex = board.cellIndexFor(move.getEnd());
+            Cell endCell = board.checkerBoard[endIndex.getRow()][endIndex.getColumn()];
+
+            if (!endCell.isEmpty()){ // if cell not empty look at the piece
+                char typ = endCell.getMinion().getMinion_type();
+                String type = Character.toString(typ);
+                int val = maps.get(type);
+                if (val > min){
+                    min = val;
+                    bestMove = move;
+                    System.out.println("best Move is :" + bestMove.getStart() +"-"+ bestMove.getEnd());
+
+                }
+                //score move with number in hashmap /sorted map
+            }
+        }
+        takesMoveList.add(bestMove);
+        //sort moves in hashmap or so, (add all remaining moves)
+
+        return takesMoveList;
+    }
+
+
 }
