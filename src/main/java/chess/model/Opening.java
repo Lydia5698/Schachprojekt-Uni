@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Opening {
     private int openingNumber;
-    private boolean colour = true; // true = black, false = white
+    private boolean colour; // = true; // true = black, false = white
     private List<Move> openingMoveList;
     private String[] londonOpeningWhite = {"d2-d4", "c1-f4", "g1-f3", "e2-e3", "f1-e2", "e1-g1"};
     private String[] londonOpeningBlack = {"d7-d5", "c7-c6", "c8-f5", "e7-e6", "f8-e7", "g8-f6", "e8-g8"};
@@ -59,5 +59,7 @@ public class Opening {
         return moveList;
     }
 
-
+    public int getOpeningNumber() {
+        return openingNumber;
+    }
 }
