@@ -7,6 +7,8 @@ import javafx.stage.Stage;
 
 public class PromoteController extends MainController{
 
+    ActiveGameController activeGameController;
+
     @FXML
     private Button btnBishop;
 
@@ -21,7 +23,7 @@ public class PromoteController extends MainController{
 
     @FXML
     void promoteMinionBishop(MouseEvent event) {
-        setPromoteTo("B");
+        activeGameController.setPromoteTo("B");
         Stage stage = (Stage) btnBishop.getScene().getWindow();
         stage.close();
 
@@ -30,7 +32,7 @@ public class PromoteController extends MainController{
 
     @FXML
     void promoteMinionKnight(MouseEvent event) {
-        setPromoteTo("N");
+        activeGameController.setPromoteTo("N");
         Stage stage = (Stage) btnKnight.getScene().getWindow();
         stage.close();
 
@@ -38,7 +40,7 @@ public class PromoteController extends MainController{
 
     @FXML
     void promoteMinionQueen(MouseEvent event) {
-        setPromoteTo("Q");
+        activeGameController.setPromoteTo("Q");
         Stage stage = (Stage) btnQueen.getScene().getWindow();
         stage.close();
 
@@ -46,10 +48,14 @@ public class PromoteController extends MainController{
 
     @FXML
     void promoteMinionRook(MouseEvent event) {
-        setPromoteTo("R");
+        activeGameController.setPromoteTo("R");
         Stage stage = (Stage) btnRook.getScene().getWindow();
         stage.close();
 
+    }
+
+    public void setController(ActiveGameController activeGameController){
+        this.activeGameController = activeGameController;
     }
 
 }

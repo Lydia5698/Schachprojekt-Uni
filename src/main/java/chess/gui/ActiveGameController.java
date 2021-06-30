@@ -33,16 +33,11 @@ public class ActiveGameController extends MainController {
     protected static Manuals manuals = new Manuals();
     protected static StaleMate staleMate = new StaleMate();
     protected static SpecialManuals spManuals = new SpecialManuals();
-    public Settings settings = new Settings();
-
-
-    //private Gui gui; //conbtroller f. game
     private final List<String> halfMoves = new ArrayList<>();
     private final List<Event> position = new ArrayList<>();
     private int counter = 0;
     private int counterBeatenMinionsWhite = 0;
     private int counterBeatenMinionsBlack = 0;
-    private boolean promotion = false;
     private final int beatenCounter = 0;
 
     @FXML
@@ -52,8 +47,6 @@ public class ActiveGameController extends MainController {
 
     @FXML
     private Group letter;
-
-
 
     @FXML
     private Button btnOptions;
@@ -69,41 +62,24 @@ public class ActiveGameController extends MainController {
     private Text moveList;
 
     @FXML
-    private Button btnOptionsGame;
-
-
-    public void showOptions(){
+    void showOptions(MouseEvent event){
         Stage stage = (Stage) btnOptions.getScene().getWindow();
-        getGui().show_FXML("options.fxml", stage);
-
-    }
-
-
-    @FXML
-    void showOptionsGame(MouseEvent event) throws IOException {
-        popupOptionsInGame();
+        show_FXML("options.fxml", stage, getGui());
     }
 
     @FXML
-    private ImageView pawnBlack;
+    private void initialize(){
+        updateBoard();
+    }
 
-
-    /*@FXML
-    public void receiveData(MouseEvent event) {
-        // Step 1
-        Node node = (Node) event.getSource();
-        Stage stage = (Stage) node.getScene().getWindow();
-        // Step 2
-        AI ai = (AI) stage.getUserData();
-        Settings settings = (Settings) stage.getUserData();
-        // Step 3
-        boolean ai_colour = ai.isColourIsBlack();
-        boolean aiIsActive = settings.isAi_active();
-    }*/
-
-
-
-
+    /*if(getGui().getSettings().isAi_active() & !getGui().getSettings().isAi_colour()){
+        board.applyMove(getGui().getSettings().getAi().getNextMove(board));
+        getGui().getSettings().getAi().increaseTurnNumber();
+        System.out.println(board.showBoard());
+        //update
+        updateBoard();
+    }
+    */
     @FXML
     void mouseClicked(MouseEvent event) throws IOException {
         Node source = (Node) event.getSource();
@@ -112,12 +88,12 @@ public class ActiveGameController extends MainController {
         int rowIndex;
         colIndex = getColIndex(source);
         rowIndex = getRowIndex(source);
-        //showPossibleMoves(colIndex, rowIndex);
+        showPossibleMoves(colIndex, rowIndex);
 
         List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
         String input;
         // checks if rotation is on and changes the coordinates for black
-        if(board.isBlackIsTurn() && isRotation()){
+        if(board.isBlackIsTurn() && getGui().getSettings().isRotateBoard()){
             input = columns.get(7 - colIndex) + (rowIndex+1);
 
         }
@@ -220,35 +196,43 @@ public class ActiveGameController extends MainController {
     public void move() throws IOException {
         ActionEvent event = new ActionEvent();
         if (counter == 2) {
+            /*if(getGui().getSettings().isAi_active() & !getGui().getSettings().isAi_colour()){ //TODO nur zug wenn der schwarze gültig war
+                board.applyMove(getGui().getSettings().getAi().getNextMove(board));           // auch ohne zweimal klicken ausführen
+                getGui().getSettings().getAi().increaseTurnNumber();
+                System.out.println(board.showBoard());
+                //update
+                updateBoard();
+            }*/
             String fistField = halfMoves.get(0);
             String secondField = halfMoves.get(1);
-            String input = fistField + "-" + secondField + getPromoteTo();
+            String input = fistField + "-" + secondField;
             Move move = new Move(input);
 
             CellIndex endIndex = Board.cellIndexFor(move.getEnd());
             CellIndex startIndex = Board.cellIndexFor(move.getStart());
             Cell startCell = board.getCheckerBoard()[startIndex.getRow()][startIndex.getColumn()];
-            Cell endCell = board.getCheckerBoard()[endIndex.getRow()][endIndex.getColumn()];
             int diffrow = Math.abs(startIndex.getRow() - endIndex.getRow());
             if (!startCell.isEmpty() && diffrow == 1 && String.valueOf(startCell.getMinion().getMinion_type()).equals("P") && (endIndex.getRow() == 0 || endIndex.getRow() == 7)) {
                 popupPromote();
-                //promoteTo = "B";
-                promotion = true;
+                input = fistField + "-" + secondField + getPromoteTo();
+
             }
 
-            String inputNew = fistField + "-" + secondField + getPromoteTo();
-            Move moveNew = new Move(inputNew);
-            System.out.println(inputNew);
+
+            Move moveNew = new Move(input);
+            System.out.println(input);
 
             if (manuals.moveOfRightColour(moveNew, board)) {
                 // if ai is white make move
-                if (!ai.colourIsBlack){
-                    board.applyMove(ai.getNextMove(board));
-                    ai.increaseTurnNumber();
+                getGui().getSettings().getAi(); //TODO AI für active Game Controller
+               /*if (!getGui().getSettings().getAi().colourIsBlack){
+
+                    board.applyMove(getGui().getSettings().getAi().getNextMove(board));
+                   getGui().getSettings().getAi().increaseTurnNumber();
                     System.out.println(board.showBoard());
                     //update
                     updateBoard();
-                }
+                }*/
                 board.applyMove(moveNew);
                 System.out.println(board.showBoard());
 
@@ -271,20 +255,16 @@ public class ActiveGameController extends MainController {
                 Event start = position.get(0);
                 Event end = position.get(1);
                 Node sourceEnd = (Node) end.getSource();
-                if (promotion) {
-                    //TODO PromoteTo richtig setzten
-                    promotion = false;
-                }
                 beatenMinions(sourceEnd);
                 updateBoard();
-                if (board.isCheck()) {
+                if (board.isCheck() & getGui().getSettings().isCheckVisible()) {
                     popupCheck(event);
                     board.setCheck(false);
                 }
 
-                if (ai.colourIsBlack){
-                    board.applyMove(ai.getNextMove(board));
-                    ai.increaseTurnNumber();
+               if (getGui().getSettings().isAi_active()){ //Black
+                    board.applyMove(getGui().getSettings().getAi().getNextMove(board));
+                    getGui().getSettings().getAi().increaseTurnNumber();
                     System.out.println(board.showBoard());
                     //update
                     updateBoard();
@@ -293,11 +273,12 @@ public class ActiveGameController extends MainController {
             counter = 0;
             halfMoves.clear();
             position.clear();
-            if(isRotation()){
+            if(getGui().getSettings().isRotateBoard() & board.isBlackIsTurn()){
                 boardRotation();
             }
             if(board.isGameEnd()){
                 popupCheckMate(event);
+                board.setGameEnd(true);
             }
         }
 
@@ -357,6 +338,8 @@ public class ActiveGameController extends MainController {
                     }
                 });
                 chessBoard.add(possMove, s.indexOf(move.getEnd().substring(0, 1)), Integer.parseInt(move.getEnd().substring(1)) + 1);
+                possMove.toFront();
+                // TODO wird das richtig ausgeführt oder nur von den anderen Rectangels verdeckt?
             }
         }
     }
@@ -393,42 +376,32 @@ public class ActiveGameController extends MainController {
     }
     @FXML
     void popupCheckMate(ActionEvent event) {
-
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("checkMate!");
         alert.setContentText("You are check Mate");
         alert.show();
-
     }
 
     @FXML
     void popupPromote() throws IOException {
+        popupPromotion("promote.fxml");
+
+    }
+
+    public void popupPromotion(String filename) throws IOException {
         Stage newWindow = new Stage();
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Gui.class.getResource("promote.fxml"));
+        loader.setLocation(Gui.class.getResource(filename));
         Parent root = loader.load();
         Scene secondScene = new Scene(root);
+        ((MainController)loader.getController()).setGui(getGui());
+        ((PromoteController)loader.getController()).setController(this);
         newWindow.setScene(secondScene);
         newWindow.initModality(Modality.WINDOW_MODAL);
         newWindow.initOwner(getGui().stage);
         newWindow.showAndWait();
-
     }
 
-    @FXML
-    void popupOptionsInGame() throws IOException {
-        Stage newWindow = new Stage();
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Gui.class.getResource("options.fxml"));
-        Parent root = loader.load();
-        Scene secondScene = new Scene(root);
-        newWindow.setScene(secondScene);
-        newWindow.initModality(Modality.WINDOW_MODAL);
-        newWindow.initOwner(getGui().stage);
-        newWindow.showAndWait();
-        //checkboxen checken falls eine der optionen true
-
-    }
     private int getRowIndex(Node source) {
         int rowIndex;
         if (GridPane.getRowIndex(source) == null) {
@@ -450,7 +423,7 @@ public class ActiveGameController extends MainController {
         return colIndex;
     }
 
-    @FXML
+/*    @FXML
     public void colourBlack(MouseEvent event) {
         // Step 1
         settings.setAi_colour(false);
@@ -477,7 +450,7 @@ public class ActiveGameController extends MainController {
     }
     public void setGui(Gui gui){
         this.gui = gui;
-    }
+    }*/
 
 
 }

@@ -13,7 +13,13 @@ public class OptionsController extends MainController {
     private CheckBox lightPossibleMoves;
 
     @FXML
+    private CheckBox doubleClick;
+
+    @FXML
     private Button btnStartScreen;
+
+    @FXML
+    private Button btnChessBoard;
 
     @FXML
     private CheckBox checkVisible;
@@ -21,17 +27,22 @@ public class OptionsController extends MainController {
     @FXML
     private CheckBox rotateBoard;
 
+    //TODO checkboxen checken wenn options geöffnet wird mit initialize?
+
     @FXML
-    private Button btnChessBoard;
+    public void initialize(){
+        //checkBoxes();
+    }
+
 
     @FXML
     void KingCheck(ActionEvent event) {
-
+        getGui().getSettings().setCheckVisible(checkVisible.isSelected());
     }
 
     @FXML
     void doubleClick(ActionEvent event) {
-
+        getGui().getSettings().setDoubleClick(doubleClick.isSelected());
     }
 
     @FXML
@@ -41,18 +52,31 @@ public class OptionsController extends MainController {
 
     @FXML
     void possibleMoves(ActionEvent event) {
-
+        getGui().getSettings().setLightPossibleMoves(lightPossibleMoves.isSelected());
     }
 
     @FXML
     void rotateBoard(ActionEvent event) {
-
+        getGui().getSettings().setRotateBoard(rotateBoard.isSelected());
     }
 
     @FXML
     void showStartScreen(MouseEvent event) {
         Stage stage = (Stage) btnStartScreen.getScene().getWindow();
-        getGui().show_FXML("startScreen.fxml", stage); //TODO unterscheidung wenn spiel gestartet zur Gui weiterleiten
+        show_FXML("startScreen.fxml", stage, getGui());
+        // set game false oder game end
+    }
+
+    @FXML
+    void showChessBoard(MouseEvent event) {
+        Stage stage = (Stage) btnChessBoard.getScene().getWindow();
+        show_FXML("activeGame.fxml", stage, getGui());
+    }
+
+    void checkBoxes(){
+        boolean rotate = getGui().getSettings().isRotateBoard();
+        System.out.println(rotate);
+        rotateBoard.setSelected(rotate);
     }
 
 }

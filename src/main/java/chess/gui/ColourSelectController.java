@@ -1,5 +1,6 @@
 package chess.gui;
 
+import chess.model.AI;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
@@ -16,11 +17,19 @@ public class ColourSelectController extends MainController {
     @FXML
     void colourBlack(MouseEvent event) {
         //Black AI
+        getGui().getSettings().setAi(new AI(true));
+        getGui().getSettings().setAi_active(true);
+        Stage stage = (Stage) btnBlack.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
     void colourWhite(MouseEvent event) {
         // White AI
+        getGui().getSettings().setAi(new AI(false));
+        getGui().getSettings().setAi_active(true);
+        Stage stage = (Stage) btnWhite.getScene().getWindow();
+        stage.close();
     }
 
 }

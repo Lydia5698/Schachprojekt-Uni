@@ -28,25 +28,19 @@ public class StartScreenController extends MainController {
     @FXML
     void showAnleitung(MouseEvent event) {
         Stage stage = (Stage) btnAnleitung.getScene().getWindow();
-        getGui().show_FXML("anleitung.fxml", stage);
+        show_FXML("anleitung.fxml", stage, getGui());
     }
 
     @FXML
     void showCredits(MouseEvent event) {
         Stage stage = (Stage) btnCredits.getScene().getWindow();
-        getGui().show_FXML("credits.fxml", stage);
-    }
-
-    @FXML
-    void showOptions(MouseEvent event) {
-        Stage stage = (Stage) btnOptions.getScene().getWindow();
-        getGui().show_FXML("options.fxml", stage);
+        show_FXML("credits.fxml", stage, getGui());
     }
 
     @FXML
     void showSpielauswahl(MouseEvent event) {
         Stage stage = (Stage) btnSpielstart.getScene().getWindow();
-        getGui().show_FXML("spielauswahl.fxml", stage);
+        show_FXML("spielauswahl.fxml", stage, getGui());
     }
 
 }

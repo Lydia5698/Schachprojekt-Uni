@@ -31,20 +31,20 @@ public class GameChoiceController extends MainController {
     @FXML
     void showGui(MouseEvent event) {
         Stage stage = (Stage) btnChessBoard.getScene().getWindow();
-        getGui().show_FXML("activeGame.fxml", stage);
+        show_FXML("activeGame.fxml", stage, getGui());
     }
 
     @FXML
     void showKIGui(MouseEvent event) throws IOException {
         popupColour();
         Stage stage = (Stage) btnChessBoard.getScene().getWindow();
-        getGui().show_FXML("activeGame.fxml", stage);
+        show_FXML("activeGame.fxml", stage, getGui());
     }
 
     @FXML
     void showOptions(MouseEvent event) {
         Stage stage = (Stage) btnOptions.getScene().getWindow();
-        getGui().show_FXML("options.fxml", stage);
+        show_FXML("options.fxml", stage, getGui());
     }
 
     @FXML
@@ -54,6 +54,7 @@ public class GameChoiceController extends MainController {
         loader.setLocation(Gui.class.getResource("colourSelect.fxml"));
         Parent root = loader.load();
         Scene secondScene = new Scene(root);
+        ((MainController)loader.getController()).setGui(getGui());
         newWindow.setScene(secondScene);
         newWindow.initModality(Modality.WINDOW_MODAL);
         newWindow.initOwner(getGui().stage);

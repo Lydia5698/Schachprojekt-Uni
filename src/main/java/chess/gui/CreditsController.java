@@ -13,7 +13,7 @@ public class CreditsController extends MainController {
     @FXML
     void showStartScreen(MouseEvent event) {
         Stage stage = (Stage) btnStartScreen.getScene().getWindow();
-        getGui().show_FXML("startScreen.fxml", stage);
+        show_FXML("startScreen.fxml", stage, getGui());
 
     }
 

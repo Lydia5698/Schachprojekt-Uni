@@ -2,6 +2,7 @@ package chess.gui;
 
 
 import chess.Main;
+import chess.Settings;
 import chess.model.Move;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.BufferedReader;
@@ -28,7 +30,7 @@ public class Gui extends Application {
 
 
     protected Stage stage;
-    //MainController mainController = new MainController();
+    Settings settings = new Settings();
     /**
      * This method is called by the Application to start the GUI.
      *
@@ -38,25 +40,10 @@ public class Gui extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception { //TODO oberklasse mit allen setter methoden, Menue controller , gamecontroller, bedienen das interface, in allen controllen soll die gui gesetzt werden
         stage = primaryStage;
-    show_FXML("startScreen.fxml", primaryStage);
+        MainController.show_FXML("startScreen.fxml", primaryStage, this);
     }
 
-    public void show_FXML(String filename, Stage primaryStage){
-        try{
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Gui.class.getResource(filename));
-            Parent root = (Parent) loader.load();
-            Scene gameScene = new Scene(root);
-            primaryStage.setScene(gameScene);
-            primaryStage.show();
-            ((MainController)loader.getController()).setGui(this); //hier noch oberklasse
 
-
-        }  catch (IOException e) {
-
-            e.printStackTrace();
-        }
-    }
 
     /**
      * The entry point ogit f the GUI application.
@@ -65,6 +52,10 @@ public class Gui extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public Settings getSettings() {
+        return settings;
     }
 
 }

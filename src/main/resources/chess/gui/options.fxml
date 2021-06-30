@@ -27,7 +27,7 @@
          <Font name="Arial" size="13.0" />
       </font>
    </CheckBox>
-   <CheckBox layoutX="187.0" layoutY="196.0" mnemonicParsing="false" onAction="#doubleClick" prefHeight="18.0" prefWidth="236.0" text="Kein mehrfach anklicken erlaubt">
+   <CheckBox fx:id="doubleClick" layoutX="187.0" layoutY="196.0" mnemonicParsing="false" onAction="#doubleClick" prefHeight="18.0" prefWidth="236.0" text="Kein mehrfach anklicken erlaubt">
       <font>
          <Font name="Arial" size="13.0" />
       </font>
@@ -42,7 +42,7 @@
          <Font name="Arial" size="36.0" />
       </font>
    </Label>
-   <Button fx:id="btnChessBoard" layoutX="21.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#showStartScreen" text="Back">
+   <Button fx:id="btnChessBoard" layoutX="21.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#showChessBoard" text="Back">
       <font>
          <Font name="Arial" size="13.0" />
       </font>

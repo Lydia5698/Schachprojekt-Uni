@@ -246,6 +246,10 @@ public class Board {
         return gameEnd;
     }
 
+    public void setGameEnd(boolean gameEnd){
+        this.gameEnd = gameEnd;
+    }
+
     public void setSimple(boolean simple) {
         this.simple = simple;
     }
@@ -294,6 +298,7 @@ public class Board {
         }
 
     }
+
     public void setCheck(boolean check) {
         this.check = check;
     }
