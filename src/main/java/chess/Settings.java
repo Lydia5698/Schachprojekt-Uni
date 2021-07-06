@@ -2,6 +2,10 @@ package chess;
 
 import chess.model.AI;
 import chess.model.Board;
+import chess.model.Move;
+import chess.network.Netw_Cli;
+import chess.network.Netw_Svr;
+import javafx.application.Platform;
 
 public class Settings {
     //felder
@@ -16,6 +20,15 @@ public class Settings {
     protected boolean doubleClick = false;
     protected boolean languageGerman = false;
     protected boolean languageEnglish = true;
+    protected boolean black = false;
+    protected Move clientMove = new Move("A0-A0");
+    protected Move serverMove = new Move ("A0-A0");
+    protected boolean moveReceived = false;
+    private int port;
+    private String ip;
+    private boolean server = false;
+
+
     //gegen gegner
     //schach anzeigen lassen
     //mehrfach klicken
@@ -23,8 +36,7 @@ public class Settings {
 
 
     //constructor
-    public Settings() {
-    }
+    public Settings() { /*LOOOL wozu brauch ich n leeren constructor*/ } //damit wenigstens was drin steht ROFL
 
     //methoden
 
@@ -116,6 +128,35 @@ public class Settings {
 
 
 
+    private Netw_Svr createServer(){
+        System.out.println("server starting");
+        return new Netw_Svr(port, data->{
+            Platform.runLater(()->{
+                if (board.isBlackIsTurn() != black){
+                    System.out.println(data);
+                    this.clientMove = new Move(data);
+                    moveReceived = true;
+                    board.applyMove(clientMove);
+                }
+            });
+        });
+    }
+    private Netw_Cli createClient(){
+        return new Netw_Cli(ip, port, data->{
+            Platform.runLater(()->{
+                if (board.isBlackIsTurn() != black){
+                    System.out.println(data);
+                    this.clientMove = new Move(data);
+                    moveReceived = true;
+                    board.applyMove(clientMove);
+                }
+            });
+        });
+    }
 
+    public boolean isMoveReceived() { return moveReceived; }
+    public Move getClientMove() { return clientMove; }
+    public Move getServerMove() { return serverMove; }
+    public boolean isServer() { return server; }
 
 }
