@@ -30,7 +30,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class ActiveGameController extends MainController {
-    protected Board board = new Board();
+    protected Board board;
     protected static Manuals manuals = new Manuals();
     protected static StaleMate staleMate = new StaleMate();
     protected static SpecialManuals spManuals = new SpecialManuals();
@@ -40,11 +40,7 @@ public class ActiveGameController extends MainController {
     private int counterBeatenMinionsWhite = 0;
     private int counterBeatenMinionsBlack = 0;
     private final int beatenCounter = 0;
-
-    @FXML
-    private void b_neuesSpiel() {
-
-    }
+    private String firstMinionClicked;
 
     @FXML
     private Group letter;
@@ -52,6 +48,8 @@ public class ActiveGameController extends MainController {
     @FXML
     private Button btnOptions;
 
+    @FXML
+    private ImageView btnLanguage;
 
     @FXML
     private GridPane chessBoard;
@@ -68,14 +66,44 @@ public class ActiveGameController extends MainController {
         show_FXML("options.fxml", stage, getGui());
     }
 
-    @FXML
-    private void initialize(){
-        updateBoard();
-    }
     @Override
     public void setGui(Gui gui){
         this.gui = gui;
         whiteAIMove();
+        if(gui.getSettings().isLanguageGerman()){
+            changeToGerman();
+        }
+        setBoard(gui.settings.getBoard());
+        updateBoard();
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
+    @FXML
+    void changeLanguage(MouseEvent event) {
+        if(getGui().getSettings().isLanguageEnglish()){
+            getGui().getSettings().setLanguageEnglish(false);
+            getGui().getSettings().setLanguageGerman(true);
+            changeToGerman();
+        }
+        else {
+            getGui().getSettings().setLanguageEnglish(true);
+            getGui().getSettings().setLanguageGerman(false);
+            changeToEnglish();
+        }
+    }
+
+    private void changeToGerman(){
+        btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource("Flags/UnitedKingdomFlag.png")).toExternalForm()));
+        btnOptions.setText(gui.getSettings().getLanguage().getDic().get(231));
+    }
+
+    private void changeToEnglish(){
+        btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource("Flags/GermanFlag.png")).toExternalForm()));
+        btnOptions.setText(gui.getSettings().getLanguage().getDic().get(131));
+
     }
 
     public void whiteAIMove(){
@@ -204,13 +232,6 @@ public class ActiveGameController extends MainController {
     public void move() throws IOException {
         ActionEvent event = new ActionEvent();
         if (counter == 2 && !board.isGameEnd()) {
-            /*if(getGui().getSettings().isAi_active() & !getGui().getSettings().isAi_colour()){ //TODO nur zug wenn der schwarze gültig war
-                board.applyMove(getGui().getSettings().getAi().getNextMove(board));           // auch ohne zweimal klicken ausführen
-                getGui().getSettings().getAi().increaseTurnNumber();
-                System.out.println(board.showBoard());
-                //update
-                updateBoard();
-            }*/
             String fistField = halfMoves.get(0);
             String secondField = halfMoves.get(1);
             String input = fistField + "-" + secondField;
@@ -219,6 +240,9 @@ public class ActiveGameController extends MainController {
             CellIndex endIndex = Board.cellIndexFor(move.getEnd());
             CellIndex startIndex = Board.cellIndexFor(move.getStart());
             Cell startCell = board.getCheckerBoard()[startIndex.getRow()][startIndex.getColumn()];
+            if(!startCell.isEmpty()){
+                firstMinionClicked = fistField;
+            }
             int diffrow = Math.abs(startIndex.getRow() - endIndex.getRow());
             if (!startCell.isEmpty() && diffrow == 1 && String.valueOf(startCell.getMinion().getMinion_type()).equals("P") && (endIndex.getRow() == 0 || endIndex.getRow() == 7)) {
                 popupPromote();
@@ -231,16 +255,6 @@ public class ActiveGameController extends MainController {
             System.out.println(input);
 
             if (manuals.moveOfRightColour(moveNew, board)) {
-                // if ai is white make move
-                getGui().getSettings().getAi(); //TODO AI für active Game Controller
-               /*if (!getGui().getSettings().getAi().colourIsBlack){
-
-                    board.applyMove(getGui().getSettings().getAi().getNextMove(board));
-                   getGui().getSettings().getAi().increaseTurnNumber();
-                    System.out.println(board.showBoard());
-                    //update
-                    updateBoard();
-                }*/
                 board.applyMove(moveNew);
                 System.out.println(board.showBoard());
 
@@ -251,18 +265,6 @@ public class ActiveGameController extends MainController {
                     beatenString = String.join(",", beatenString, moveString);
                 }
                 moveList.setText(beatenString);
-
-            }
-
-            else {
-                popupMoveNotAllowed(event);
-                System.out.println("!Move not allowed");
-                board.setAllowedMove(false);
-                // ersten Half move merken nur bei move not allowed abfangen bei leerem feld angeklickt
-            }
-
-            if (board.isAllowedMove()) {
-                Event start = position.get(0);
                 Event end = position.get(1);
                 Node sourceEnd = (Node) end.getSource();
                 beatenMinions(sourceEnd);
@@ -275,23 +277,31 @@ public class ActiveGameController extends MainController {
                     popupCheckMate(event);
                 }
 
-               if (getGui().getSettings().isAi_active()){
+                if (getGui().getSettings().isAi_active()){
                     board.applyMove(getGui().getSettings().getAi().getNextMove(board));
                     getGui().getSettings().getAi().increaseTurnNumber();
                     System.out.println(board.showBoard());
                     //update
                     updateBoard();
                 }
+
             }
+
+            else {
+                popupMoveNotAllowed(event); //TODO falscher move popup
+                board.setAllowedMove(false);
+                // ersten Half move merken nur bei move not allowed abfangen bei leerem feld angeklickt
+            }
+
             counter = 0;
             halfMoves.clear();
             position.clear();
-            if(getGui().getSettings().isRotateBoard() & board.isBlackIsTurn()){
+            if(getGui().getSettings().isRotateBoard() && !getGui().getSettings().isAi_active()){
                 boardRotation();
             }
             if(board.isGameEnd()){
                 popupCheckMate(event);
-                board = new Board();
+                //board = new Board();
             }
         }
         
@@ -383,25 +393,45 @@ public class ActiveGameController extends MainController {
     @FXML
     void popupCheck(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("check!");
-        if(board.isBlackIsTurn()){
-            alert.setContentText("Black is in check");
+        if(getGui().getSettings().isLanguageGerman()){
+            alert.setTitle("Schach!");
+            if(board.isBlackIsTurn()){
+                alert.setContentText(getGui().getSettings().getLanguage().getDic().get(280));
+            }
+            else {
+                alert.setContentText(getGui().getSettings().getLanguage().getDic().get(281));
+            }
+
         }
         else {
-            alert.setContentText("White is in check");
+            alert.setTitle("check!");
+            if (board.isBlackIsTurn()) {
+                alert.setContentText(getGui().getSettings().getLanguage().getDic().get(180));
+            } else {
+                alert.setContentText(getGui().getSettings().getLanguage().getDic().get(181));
+            }
+            alert.show();
         }
-        alert.show();
 
     }
     @FXML
     void popupCheckMate(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("checkMate!");
-        if(board.isBlackIsTurn()){
-            alert.setContentText("Black is in check Mate");
+        if(getGui().getSettings().isLanguageGerman()) {
+            alert.setTitle("Schachmatt!");
+            if (board.isBlackIsTurn()) {
+                alert.setContentText(getGui().getSettings().getLanguage().getDic().get(290));
+            } else {
+                alert.setContentText(getGui().getSettings().getLanguage().getDic().get(291));
+            }
         }
         else {
-            alert.setContentText("White is in check Mate");
+            alert.setTitle("checkMate!");
+            if (board.isBlackIsTurn()) {
+                alert.setContentText(getGui().getSettings().getLanguage().getDic().get(190));
+            } else {
+                alert.setContentText(getGui().getSettings().getLanguage().getDic().get(191));
+            }
         }
         alert.show();
     }
@@ -409,8 +439,14 @@ public class ActiveGameController extends MainController {
     @FXML
     void popupMoveNotAllowed(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Move Not Allowed");
-        alert.setContentText("The Move you just made is not allowed.");
+        if(getGui().getSettings().isLanguageGerman()){
+            alert.setTitle(getGui().getSettings().getLanguage().getDic().get(270));
+            alert.setContentText(getGui().getSettings().getLanguage().getDic().get(270));
+        }
+        else {
+            alert.setTitle(getGui().getSettings().getLanguage().getDic().get(170));
+            alert.setContentText(getGui().getSettings().getLanguage().getDic().get(171));
+        }
         alert.show();
     }
 

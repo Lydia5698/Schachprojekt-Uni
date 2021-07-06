@@ -3,6 +3,7 @@ package chess.gui;
 
 import chess.Main;
 import chess.Settings;
+import chess.model.Board;
 import chess.model.Move;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -31,6 +32,7 @@ public class Gui extends Application {
 
     protected Stage stage;
     Settings settings = new Settings();
+
     /**
      * This method is called by the Application to start the GUI.
      *

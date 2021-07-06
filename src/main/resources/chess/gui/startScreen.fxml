@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -10,19 +9,11 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chess.gui.StartScreenController">
    <Button fx:id="btnSpielstart" layoutX="243.0" layoutY="149.0" mnemonicParsing="false" onMouseClicked="#showSpielauswahl" prefHeight="33.0" prefWidth="115.0" text="Game Start" AnchorPane.topAnchor="149.0" />
    <Button layoutX="243.0" layoutY="347.0" mnemonicParsing="false" onAction="#exit" prefHeight="26.0" prefWidth="115.0" text="Exit" AnchorPane.topAnchor="340.0" />
-   <Label layoutX="224.0" layoutY="40.0" prefHeight="69.0" prefWidth="172.0" text="Chess" textAlignment="CENTER">
+   <Label fx:id="titel" layoutX="224.0" layoutY="40.0" prefHeight="69.0" prefWidth="172.0" text="Chess" textAlignment="CENTER">
       <font>
          <Font name="Arial" size="48.0" />
       </font>
    </Label>
-   <Button fx:id="btnCredits" layoutX="243.0" layoutY="306.0" mnemonicParsing="false" onMouseClicked="#showCredits" prefHeight="26.0" prefWidth="115.0" text="Credits" AnchorPane.topAnchor="306.0" />
    <Button fx:id="btnAnleitung" layoutX="243.0" layoutY="200.0" mnemonicParsing="false" onMouseClicked="#showAnleitung" prefHeight="33.0" prefWidth="115.0" text="Manual" AnchorPane.topAnchor="200.0" />
-   <Button layoutX="525.0" layoutY="27.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="29.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 15px; -fx-text-fill: #fff;">
-      <graphic>
-         <ImageView fitHeight="18.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-               <Image url="@GermanFlag.png" />
-            </image>
-         </ImageView>
-      </graphic></Button>
+   <ImageView fx:id="btnLanguage" fitHeight="18.0" fitWidth="66.0" layoutX="568.0" layoutY="14.0" onMouseClicked="#changeLanguage" pickOnBounds="true" preserveRatio="true" />
 </AnchorPane>

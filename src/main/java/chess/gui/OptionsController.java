@@ -5,13 +5,18 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+
+import java.util.Objects;
 
 public class OptionsController extends MainController {
 
     @FXML
-    private CheckBox lightPossibleMoves;
+    private CheckBox HighlightPossibleMoves;
 
     @FXML
     private CheckBox doubleClick;
@@ -23,16 +28,16 @@ public class OptionsController extends MainController {
     private Button btnChessBoard;
 
     @FXML
+    private ImageView btnLanguage;
+
+    @FXML
     private CheckBox checkVisible;
 
     @FXML
     private CheckBox rotateBoard;
 
-
     @FXML
-    public void initialize(){
-        //checkBoxes();
-    }
+    private Label title;
 
 
     @FXML
@@ -52,7 +57,7 @@ public class OptionsController extends MainController {
 
     @FXML
     void possibleMoves(ActionEvent event) {
-        getGui().getSettings().setLightPossibleMoves(lightPossibleMoves.isSelected());
+        getGui().getSettings().setLightPossibleMoves(HighlightPossibleMoves.isSelected());
     }
 
     @FXML
@@ -76,16 +81,56 @@ public class OptionsController extends MainController {
 
     void checkBoxes(){
         rotateBoard.setSelected(getGui().getSettings().isRotateBoard());
-        lightPossibleMoves.setSelected(getGui().getSettings().isLightPossibleMoves());
+        HighlightPossibleMoves.setSelected(getGui().getSettings().isLightPossibleMoves());
         doubleClick.setSelected(getGui().getSettings().isDoubleClick());
         checkVisible.setSelected(getGui().getSettings().isCheckVisible());
 
     }
+    @FXML
+    void changeLanguage(MouseEvent event) {
+        if(getGui().getSettings().isLanguageEnglish()){
+            getGui().getSettings().setLanguageEnglish(false);
+            getGui().getSettings().setLanguageGerman(true);
+            changeToGerman();
+        }
+        else {
+            getGui().getSettings().setLanguageEnglish(true);
+            getGui().getSettings().setLanguageGerman(false);
+            changeToEnglish();
+
+        }
+    }
+
+    private void changeToGerman(){
+        btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource("Flags/UnitedKingdomFlag.png")).toExternalForm()));
+        btnChessBoard.setText(gui.getSettings().getLanguage().getDic().get(230));
+        title.setText(gui.getSettings().getLanguage().getDic().get(231));
+        HighlightPossibleMoves.setText(gui.getSettings().getLanguage().getDic().get(232));
+        checkVisible.setText(gui.getSettings().getLanguage().getDic().get(233));
+        doubleClick.setText(gui.getSettings().getLanguage().getDic().get(234));
+        rotateBoard.setText(gui.getSettings().getLanguage().getDic().get(235));
+        btnStartScreen.setText(gui.getSettings().getLanguage().getDic().get(236));
+    }
+
+    private void changeToEnglish(){
+        btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource("Flags/GermanFlag.png")).toExternalForm()));
+        btnChessBoard.setText(gui.getSettings().getLanguage().getDic().get(130));
+        title.setText(gui.getSettings().getLanguage().getDic().get(131));
+        HighlightPossibleMoves.setText(gui.getSettings().getLanguage().getDic().get(132));
+        checkVisible.setText(gui.getSettings().getLanguage().getDic().get(133));
+        doubleClick.setText(gui.getSettings().getLanguage().getDic().get(134));
+        rotateBoard.setText(gui.getSettings().getLanguage().getDic().get(135));
+        btnStartScreen.setText(gui.getSettings().getLanguage().getDic().get(136));
+    }
+
 
     @Override
     public void setGui(Gui gui){
         this.gui = gui;
         checkBoxes();
+        if(gui.getSettings().isLanguageGerman()){
+            changeToGerman();
+        }
     }
 
 }

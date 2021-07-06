@@ -14,6 +14,8 @@ public class Settings {
     protected boolean lightPossibleMoves = false;
     protected boolean checkVisible = false;
     protected boolean doubleClick = false;
+    protected boolean languageGerman = false;
+    protected boolean languageEnglish = true;
     //gegen gegner
     //schach anzeigen lassen
     //mehrfach klicken
@@ -94,6 +96,24 @@ public class Settings {
     public Language getLanguage() {
         return language;
     }
+
+    public boolean isLanguageGerman() {
+        return languageGerman;
+    }
+
+    public void setLanguageGerman(boolean languageGerman) {
+        this.languageGerman = languageGerman;
+    }
+
+    public boolean isLanguageEnglish() {
+        return languageEnglish;
+    }
+
+    public void setLanguageEnglish(boolean languageEnglish) {
+        this.languageEnglish = languageEnglish;
+    }
+
+
 
 
 
