@@ -88,49 +88,31 @@ public class OptionsController extends MainController {
     }
     @FXML
     void changeLanguage(MouseEvent event) {
+        getGui().getSettings().changeLanguage();
+        changeToLanguage();
+    }
+
+    private void changeToLanguage(){
         if(getGui().getSettings().isLanguageEnglish()){
-            getGui().getSettings().setLanguageEnglish(false);
-            getGui().getSettings().setLanguageGerman(true);
-            changeToGerman();
+            btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt("203"))).toExternalForm())));
         }
         else {
-            getGui().getSettings().setLanguageEnglish(true);
-            getGui().getSettings().setLanguageGerman(false);
-            changeToEnglish();
-
+            btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt("103"))).toExternalForm())));
         }
+        btnChessBoard.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"30")));
+        title.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"31")));
+        HighlightPossibleMoves.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"32")));
+        checkVisible.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"33")));
+        doubleClick.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"34")));
+        rotateBoard.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"35")));
+        btnStartScreen.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"36")));
     }
-
-    private void changeToGerman(){
-        btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource("Flags/UnitedKingdomFlag.png")).toExternalForm()));
-        btnChessBoard.setText(gui.getSettings().getLanguage().getDic().get(230));
-        title.setText(gui.getSettings().getLanguage().getDic().get(231));
-        HighlightPossibleMoves.setText(gui.getSettings().getLanguage().getDic().get(232));
-        checkVisible.setText(gui.getSettings().getLanguage().getDic().get(233));
-        doubleClick.setText(gui.getSettings().getLanguage().getDic().get(234));
-        rotateBoard.setText(gui.getSettings().getLanguage().getDic().get(235));
-        btnStartScreen.setText(gui.getSettings().getLanguage().getDic().get(236));
-    }
-
-    private void changeToEnglish(){
-        btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource("Flags/GermanFlag.png")).toExternalForm()));
-        btnChessBoard.setText(gui.getSettings().getLanguage().getDic().get(130));
-        title.setText(gui.getSettings().getLanguage().getDic().get(131));
-        HighlightPossibleMoves.setText(gui.getSettings().getLanguage().getDic().get(132));
-        checkVisible.setText(gui.getSettings().getLanguage().getDic().get(133));
-        doubleClick.setText(gui.getSettings().getLanguage().getDic().get(134));
-        rotateBoard.setText(gui.getSettings().getLanguage().getDic().get(135));
-        btnStartScreen.setText(gui.getSettings().getLanguage().getDic().get(136));
-    }
-
 
     @Override
     public void setGui(Gui gui){
         this.gui = gui;
         checkBoxes();
-        if(gui.getSettings().isLanguageGerman()){
-            changeToGerman();
-        }
+        changeToLanguage();
     }
 
 }

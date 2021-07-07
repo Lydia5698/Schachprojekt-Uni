@@ -72,35 +72,24 @@ public class PromoteController extends MainController{
 
     @FXML
     void changeLanguage(MouseEvent event) {
+        getGui().getSettings().changeLanguage();
+        changeToLanguage();
+    }
+
+    private void changeToLanguage(){
         if(getGui().getSettings().isLanguageEnglish()){
-            getGui().getSettings().setLanguageEnglish(false);
-            getGui().getSettings().setLanguageGerman(true);
-            changeToGerman();
+            btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt("203"))).toExternalForm())));
         }
         else {
-            getGui().getSettings().setLanguageEnglish(true);
-            getGui().getSettings().setLanguageGerman(false);
-            changeToEnglish();
+            btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt("103"))).toExternalForm())));
         }
+        header.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"50")));
     }
-
-    private void changeToGerman(){
-        btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource("Flags/UnitedKingdomFlag.png")).toExternalForm()));
-        header.setText(gui.getSettings().getLanguage().getDic().get(250));
-    }
-
-    private void changeToEnglish(){
-        btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource("Flags/GermanFlag.png")).toExternalForm()));
-        header.setText(gui.getSettings().getLanguage().getDic().get(150));
-    }
-
 
     @Override
     public void setGui(Gui gui){
         this.gui = gui;
-        if(gui.getSettings().isLanguageGerman()){
-            changeToGerman();
-        }
+        changeToLanguage();
     }
 
 }

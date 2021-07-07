@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -16,27 +16,23 @@
           <Font name="Arial" size="13.0" />
         </font>
     </Button>
-    <Label layoutX="237.0" layoutY="31.0" text="Anleitung">
+    <Label layoutX="269.0" layoutY="25.0" text="Rules">
         <font>
           <Font name="Arial" size="24.0" />
         </font>
     </Label>
-    <Label layoutX="48.0" layoutY="68.0" prefHeight="36.0" prefWidth="478.0" text="In diesem Schachspiel könnt ihr gegeneinander oder gegen den Computer spielen">
-        <font>
-          <Font name="Arial" size="13.0" />
-        </font>
-    </Label>
-       <Hyperlink layoutX="60.0" layoutY="335.0" text="https://www.schachbund.de/files/dsb/srk/2019/FIDE-Regeln-2018-Final-DEU.pdf" />
-   <Label layoutX="9.0" layoutY="318.0" text="Dieses Schachspiel folgt den Allgemeinen Regeln des deutschen Schachbundes. Für weitere Informationen " />
-    <TextFlow layoutX="48.0" layoutY="100.0" prefHeight="198.0" prefWidth="478.0">
-        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Um eine Spielfigur zu ziehen muss zu erst auf die Spielfigur und dann auf das Feld auf das sie ziehen soll geklickt werden. In den Optionen kann eingestellt werden, ob die möglichen Zuge der Figur angezeigt werden, ob angezeigt wird wenn der König im Schach steht, ob sich das Feld automatisch mit dem Spieler dreht und ob man die Figur, die zuerst geklickt wurde auch ziehen muss. Außerdem werden rechts am Rand die geschlagenen Figuren angezeigt sowie die Historie der Züge. Es ist jederzeit möglich das Spiel zu verlassen. Am Anfang jedes Spiels kann der Spieler eintscheiden, welche Farbe er spielen möchte und gegen wen er spielen möchte." wrappingWidth="133.0">
-           <font>
-               <Font name="Arial" size="13.0" />
-           </font>
-        </Text>
-    </TextFlow>
-    <ImageView fx:id="btnLanguage" fitHeight="18.0" fitWidth="66.0" layoutX="568.0" layoutY="14.0"
-               onMouseClicked="#changeLanguage" pickOnBounds="true" preserveRatio="true">
-        <Image url="@Flags/GermanFlag.png"/>
+   <ScrollPane layoutX="44.0" layoutY="100.0" prefHeight="200.0" prefWidth="512.0">
+      <content>
+          <TextFlow prefHeight="198.0" prefWidth="478.0">
+              <Text fx:id="text" strokeType="OUTSIDE" strokeWidth="0.0" text="This chess game follows the general rules of the German Chess Federation. For more information" wrappingWidth="133.0">
+                 <font>
+                     <Font name="Arial" size="13.0" />
+                 </font>
+              </Text>
+          </TextFlow>
+      </content>
+   </ScrollPane>
+    <ImageView fx:id="btnLanguage" fitHeight="18.0" fitWidth="66.0" layoutX="568.0" layoutY="14.0" onMouseClicked="#changeLanguage" pickOnBounds="true" preserveRatio="true">
+        <Image url="@Flags/GermanFlag.png" />
     </ImageView>
 </AnchorPane>

@@ -70,9 +70,8 @@ public class ActiveGameController extends MainController {
     public void setGui(Gui gui){
         this.gui = gui;
         whiteAIMove();
-        if(gui.getSettings().isLanguageGerman()){
-            changeToGerman();
-        }
+        // network white Move
+        changeToLanguage();
         setBoard(gui.settings.getBoard());
         updateBoard();
     }
@@ -83,27 +82,18 @@ public class ActiveGameController extends MainController {
 
     @FXML
     void changeLanguage(MouseEvent event) {
+        getGui().getSettings().changeLanguage();
+        changeToLanguage();
+    }
+
+    private void changeToLanguage(){
         if(getGui().getSettings().isLanguageEnglish()){
-            getGui().getSettings().setLanguageEnglish(false);
-            getGui().getSettings().setLanguageGerman(true);
-            changeToGerman();
+            btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt("203"))).toExternalForm())));
         }
         else {
-            getGui().getSettings().setLanguageEnglish(true);
-            getGui().getSettings().setLanguageGerman(false);
-            changeToEnglish();
+            btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt("103"))).toExternalForm())));
         }
-    }
-
-    private void changeToGerman(){
-        btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource("Flags/UnitedKingdomFlag.png")).toExternalForm()));
-        btnOptions.setText(gui.getSettings().getLanguage().getDic().get(231));
-    }
-
-    private void changeToEnglish(){
-        btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource("Flags/GermanFlag.png")).toExternalForm()));
-        btnOptions.setText(gui.getSettings().getLanguage().getDic().get(131));
-
+        btnOptions.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"31")));
     }
 
     public void whiteAIMove(){
@@ -276,6 +266,7 @@ public class ActiveGameController extends MainController {
                 if(board.isGameEnd()){
                     popupCheckMate(event);
                 }
+                // network move
 
                 if (getGui().getSettings().isAi_active()){
                     board.applyMove(getGui().getSettings().getAi().getNextMove(board));
@@ -393,45 +384,25 @@ public class ActiveGameController extends MainController {
     @FXML
     void popupCheck(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        if(getGui().getSettings().isLanguageGerman()){
-            alert.setTitle("Schach!");
-            if(board.isBlackIsTurn()){
-                alert.setContentText(getGui().getSettings().getLanguage().getDic().get(280));
-            }
-            else {
-                alert.setContentText(getGui().getSettings().getLanguage().getDic().get(281));
-            }
-
+        alert.setTitle(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"82")));
+        if(board.isBlackIsTurn()){
+            alert.setContentText(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"80")));
         }
         else {
-            alert.setTitle("check!");
-            if (board.isBlackIsTurn()) {
-                alert.setContentText(getGui().getSettings().getLanguage().getDic().get(180));
-            } else {
-                alert.setContentText(getGui().getSettings().getLanguage().getDic().get(181));
-            }
-            alert.show();
+            alert.setContentText(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"81")));
         }
 
+        alert.show();
     }
     @FXML
     void popupCheckMate(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        if(getGui().getSettings().isLanguageGerman()) {
-            alert.setTitle("Schachmatt!");
-            if (board.isBlackIsTurn()) {
-                alert.setContentText(getGui().getSettings().getLanguage().getDic().get(290));
-            } else {
-                alert.setContentText(getGui().getSettings().getLanguage().getDic().get(291));
-            }
-        }
-        else {
-            alert.setTitle("checkMate!");
-            if (board.isBlackIsTurn()) {
-                alert.setContentText(getGui().getSettings().getLanguage().getDic().get(190));
-            } else {
-                alert.setContentText(getGui().getSettings().getLanguage().getDic().get(191));
-            }
+        alert.setTitle(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"92")));
+        if (board.isBlackIsTurn()) {
+            alert.setContentText(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"90")));
+        } else {
+            alert.setContentText(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"91")));
+
         }
         alert.show();
     }
@@ -439,14 +410,8 @@ public class ActiveGameController extends MainController {
     @FXML
     void popupMoveNotAllowed(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        if(getGui().getSettings().isLanguageGerman()){
-            alert.setTitle(getGui().getSettings().getLanguage().getDic().get(270));
-            alert.setContentText(getGui().getSettings().getLanguage().getDic().get(270));
-        }
-        else {
-            alert.setTitle(getGui().getSettings().getLanguage().getDic().get(170));
-            alert.setContentText(getGui().getSettings().getLanguage().getDic().get(171));
-        }
+        alert.setTitle(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"70")));
+        alert.setContentText(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"71")));
         alert.show();
     }
 

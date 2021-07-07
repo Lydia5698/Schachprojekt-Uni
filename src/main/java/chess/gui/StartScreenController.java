@@ -31,13 +31,6 @@ public class StartScreenController extends MainController {
     private ImageView btnLanguage;
 
     @FXML
-    private void initialize(){
-        //btnAnleitung.setText("LALA");
-        //btnAnleitung.setText(getGui().getSettings().getLanguage().settings());
-
-    }
-
-    @FXML
     void exit(ActionEvent event) {
         System.exit(0);
     }
@@ -62,43 +55,27 @@ public class StartScreenController extends MainController {
 
     @FXML
     void changeLanguage(MouseEvent event) {
+        getGui().getSettings().changeLanguage();
+        changeToLanguage();
+    }
+
+    private void changeToLanguage(){
         if(getGui().getSettings().isLanguageEnglish()){
-            getGui().getSettings().setLanguageEnglish(false);
-            getGui().getSettings().setLanguageGerman(true);
-            changeToGerman();
-            //btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource("Flags/UnitedKingdomFlag.png")).toExternalForm()));
+            btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt("203"))).toExternalForm())));
         }
         else {
-            getGui().getSettings().setLanguageEnglish(true);
-            getGui().getSettings().setLanguageGerman(false);
-            changeToEnglish();
-            //btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource("Flags/GermanFlag.png")).toExternalForm()));
-
+            btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt("103"))).toExternalForm())));
         }
-    }
-
-    private void changeToGerman(){
-        btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource("Flags/UnitedKingdomFlag.png")).toExternalForm()));
-        titel.setText(getGui().getSettings().getLanguage().getDic().get(200));
-        btnSpielstart.setText(getGui().getSettings().getLanguage().getDic().get(201));
-        btnAnleitung.setText(getGui().getSettings().getLanguage().getDic().get(202));
-    }
-
-    private void changeToEnglish(){
-        btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource("Flags/GermanFlag.png")).toExternalForm()));
-        titel.setText(getGui().getSettings().getLanguage().getDic().get(100));
-        btnSpielstart.setText(getGui().getSettings().getLanguage().getDic().get(101));
-        btnAnleitung.setText(getGui().getSettings().getLanguage().getDic().get(102));
+        titel.setText(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"00")));
+        btnSpielstart.setText(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"01")));
+        btnAnleitung.setText(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"02")));
     }
 
     @Override
     public void setGui(Gui gui){
         this.gui = gui;
-        btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource("Flags/GermanFlag.png")).toExternalForm()));
-        if(gui.getSettings().isLanguageGerman()){
-            changeToGerman();
-        }
-
+        changeToLanguage();
+        btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(203))).toExternalForm()));
     }
 
 }

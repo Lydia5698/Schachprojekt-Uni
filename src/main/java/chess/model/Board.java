@@ -1,5 +1,6 @@
 package chess.model;
 
+import chess.Settings;
 import chess.model.figures.*;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class Board {
     Cell[][] checkerBoard = new Cell[8][8]; //feldgröße
     public Manuals manuals = new Manuals();
     public StaleMate staleMate = new StaleMate();
+    public Settings settings;
     static List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
     public List<String> beaten = new ArrayList<>();
     private List<Move> moveList = new ArrayList<>();
@@ -162,7 +164,12 @@ public class Board {
         }
         // move is not allowed
         else {
-            System.out.println("!Move not allowed");
+            if(simple){
+                System.out.println("!Move not allowed");
+            }
+            else {
+                System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber()+"71")));
+            }
             allowedMove = false;
         }
     }
@@ -194,10 +201,6 @@ public class Board {
             manuals.spManuals.moveRochade(move, checkerBoard, manuals);
             blackIsTurn = !blackIsTurn;
             System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
-            if(!simple) {
-
-                System.out.println("Rochade");
-            }
             moveList.add(move);
             return true;
         } else {
@@ -282,19 +285,19 @@ public class Board {
      */
     protected void checkAndPrintCheckCheckMate(Minion minion) {
         if (manuals.isCheck(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
-            System.out.println("!Check");
+            System.out.println("!"+ settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber()+"82")));
             check = true;
 
         }
         //check if in Check Mate
         if (manuals.checkMate(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
-            System.out.println("!Check Mate");
+            System.out.println("!"+ settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber()+"92")));
             gameEnd = true;
-            System.out.println("The Game has ended");
+            System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber()+"93")));
         } else if (staleMate.isStaleMate(!minion.isBlack(), checkerBoard) && !simple) {
-            System.out.println("!Stalemate");
+            System.out.println("!" + settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber()+"94")));
             gameEnd = true;
-            System.out.println("The Game has ended");
+            System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber()+"93")));
         }
 
     }
@@ -302,6 +305,11 @@ public class Board {
     public void setCheck(boolean check) {
         this.check = check;
     }
+
+    public void setSettings(Settings settings) {
+        this.settings = settings;
+    }
+
 
 
 }

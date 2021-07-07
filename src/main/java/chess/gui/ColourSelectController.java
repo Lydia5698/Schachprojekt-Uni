@@ -47,38 +47,26 @@ public class ColourSelectController extends MainController {
     }
     @FXML
     void changeLanguage(MouseEvent event) {
+        getGui().getSettings().changeLanguage();
+        changeToLanguage();
+    }
+
+    private void changeToLanguage(){
         if(getGui().getSettings().isLanguageEnglish()){
-            getGui().getSettings().setLanguageEnglish(false);
-            getGui().getSettings().setLanguageGerman(true);
-            changeToGerman();
+            btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt("203"))).toExternalForm())));
         }
         else {
-            getGui().getSettings().setLanguageEnglish(true);
-            getGui().getSettings().setLanguageGerman(false);
-            changeToEnglish();
+            btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt("103"))).toExternalForm())));
         }
-    }
-
-    private void changeToGerman(){
-        btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource("Flags/UnitedKingdomFlag.png")).toExternalForm()));
-        title.setText(gui.getSettings().getLanguage().getDic().get(260));
-        btnBlack.setText(gui.getSettings().getLanguage().getDic().get(261));
-        btnWhite.setText(gui.getSettings().getLanguage().getDic().get(262));
-    }
-
-    private void changeToEnglish(){
-        btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource("Flags/GermanFlag.png")).toExternalForm()));
-        title.setText(gui.getSettings().getLanguage().getDic().get(160));
-        btnBlack.setText(gui.getSettings().getLanguage().getDic().get(161));
-        btnWhite.setText(gui.getSettings().getLanguage().getDic().get(162));
+        title.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"60")));
+        btnBlack.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"61")));
+        btnWhite.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"62")));
     }
 
     @Override
     public void setGui(Gui gui){
         this.gui = gui;
-        if(gui.getSettings().isLanguageGerman()){
-            changeToGerman();
-        }
+        changeToLanguage();
     }
 
 

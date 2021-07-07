@@ -27,6 +27,7 @@ public class Settings {
     private int port;
     private String ip;
     private boolean server = false;
+    String languageNumber = "1";
 
 
     //gegen gegner
@@ -124,6 +125,28 @@ public class Settings {
     public void setLanguageEnglish(boolean languageEnglish) {
         this.languageEnglish = languageEnglish;
     }
+
+    public String getLanguageNumber() {
+        return languageNumber;
+    }
+
+    public void setLanguageNumber(String languageNumber) {
+        this.languageNumber = languageNumber;
+    }
+
+    public void changeLanguage(){
+        if(isLanguageEnglish()){
+            setLanguageEnglish(false);
+            setLanguageGerman(true);
+            setLanguageNumber("2");
+        }
+        else {
+            setLanguageEnglish(true);
+            setLanguageGerman(false);
+            setLanguageNumber("1");
+        }
+    }
+
 
 
 
