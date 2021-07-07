@@ -79,7 +79,7 @@ public class ActiveGameController extends MainController {
     }
 
     public void whiteAIMove(){
-        if(getGui().getSettings().isAi_active() & !getGui().getSettings().isAi_colour()) {
+        if(getGui().getSettings().isAi_active() && !getGui().getSettings().isAi_colour()) {
             board.applyMove(getGui().getSettings().getAi().getNextMove(board));
             getGui().getSettings().getAi().increaseTurnNumber();
             System.out.println(board.showBoard());
