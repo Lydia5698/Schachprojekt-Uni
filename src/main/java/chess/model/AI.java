@@ -126,7 +126,7 @@ public class AI {
         //TODO get random move
         return possibleMoves;
     }
-    
+
     public boolean isColourIsBlack() {
         return colourIsBlack;
     }
