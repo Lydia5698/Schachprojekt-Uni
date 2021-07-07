@@ -108,6 +108,7 @@ public class StaleMate {
      */
     //method, welche moves ok sind fuer ein piece
     public List<Move> possibleMovesForOneFigureMoveList(CellIndex cellIndex, Cell[][] checkerBoard) {
+        //TODO bauern schlagen und en passante einbauen!!!!!!!!!!!!!!
         List<Move> possibleMoves = new ArrayList<>();
         Cell cell = checkerBoard[cellIndex.getRow()][cellIndex.getColumn()];
         Minion minion = cell.getMinion();
@@ -134,6 +135,7 @@ public class StaleMate {
      * @return List of pairs of the moves possible for one colour.
      */
     public List<Move> possibleMoveList(boolean isBlack, Cell[][] checkerBoard) {
+
         boolean staleMate = false;
         List<Move> moveList = new ArrayList<>();
         // check every field for figure of certain colour if colour, possibleMoves

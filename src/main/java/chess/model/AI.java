@@ -3,6 +3,9 @@ package chess.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import chess.model.Board;
+import chess.model.figures.*;
 
 /**
  * Class AI that represents our artificiall intelligence that should be able to make a next move.
@@ -67,9 +70,20 @@ public class AI {
         else if(turnNumber < moveListOpening.size()) {
             System.out.println("ai opening turn number: " + turnNumber);
             //List<Move> moveList = aiOpening.getOpeningMoveList();
-            //TODO check if legal move
             move = moveListOpening.get(turnNumber);
-            return move;
+            //make cellIndex start and cellindex end from move
+            CellIndex startCell = Board.cellIndexFor(move.getStart());
+            CellIndex endCell = Board.cellIndexFor(move.getEnd());
+
+            // make cell for cellindex start for getting the minion on this field
+            Cell[][] checkerBoard = board.getCheckerBoard();
+            Cell startCelle = checkerBoard[startCell.getRow()][startCell.getColumn()];
+            Minion minion = startCelle.getMinion();
+            //TODO check here if legal move, oly return legal moves!!!!!
+            if (minion.validMove(startCell, endCell) && board.staleMate.checkLegalMove(startCell, endCell, board.manuals, checkerBoard)&& !(startCell.getRow()==endCell.getRow() &&  startCell.getColumn() == endCell.getColumn())) {
+                System.out.println("legal move check for move from openingsequence was succsessful");
+                return move;
+            }
         }
         //get move if it is possible to take
         else{ //random move is in this else
@@ -113,8 +127,6 @@ public class AI {
         return possibleMoves;
     }
 
-
-
     public boolean isColourIsBlack() {
         return colourIsBlack;
     }
@@ -152,7 +164,7 @@ public class AI {
             if (!endCell.isEmpty()){ // if cell not empty look at the piece
                 char typ = endCell.getMinion().getMinion_type();
                 String type = Character.toString(typ);
-                int val = maps.get(type);
+                int val = maps.get(type.toLowerCase());
                 if (val > min){
                     min = val;
                     bestMove = move;
