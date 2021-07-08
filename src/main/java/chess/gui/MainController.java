@@ -8,45 +8,18 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * The MainController
+ */
 public class MainController {
     private String promoteTo;
-    private boolean checkIsVisible = false;
-    private boolean rotation = false;
-    public AI ai; // = new AI(true); // black ai
     public Gui gui;
 
-    public AI getAi() {
-        return ai;
-    }
-
-    public void setAi(AI ai) {
-        this.ai = ai;
-    }
-
-    public boolean isRotation() {
-        return rotation;
-    }
-
-    public void setRotation(boolean rotation) {
-        this.rotation = rotation;
-    }
-
-
-    public boolean isCheckIsVisible() {
-        return checkIsVisible;
-    }
-
-    public void setCheckIsVisible(boolean checkIsVisible) {
-        this.checkIsVisible = checkIsVisible;
-    }
-
     public String getPromoteTo() {
-        System.out.println("Flag 2");
         return promoteTo;
     }
 
     public void setPromoteTo(String promotion) {
-        System.out.println("Flag");
         this.promoteTo = promotion;
     }
 
@@ -57,6 +30,13 @@ public class MainController {
         this.gui = gui;
     }
 
+    /**
+     * Loads the fxml files
+     * @param filename The filename of the fxml file
+     * @param primaryStage The initial root stage of the application.
+     * @param gui The initial root gui of the application.
+     * @return the Controller for the fxml
+     */
     public static MainController show_FXML(String filename, Stage primaryStage, Gui gui){
         try{
             FXMLLoader loader = new FXMLLoader();
@@ -66,7 +46,7 @@ public class MainController {
             ((MainController)loader.getController()).setGui(gui); //hier noch oberklasse
             primaryStage.setScene(gameScene);
             primaryStage.show();
-            return ((MainController)loader.getController());
+            return loader.getController();
 
 
         }  catch (IOException e) {

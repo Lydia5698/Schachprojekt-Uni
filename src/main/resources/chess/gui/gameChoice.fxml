@@ -22,7 +22,7 @@
          <Font name="Arial" size="13.0" />
       </font>
    </Button>
-   <Button fx:id="btnChessBoard" layoutX="247.0" layoutY="107.0" mnemonicParsing="false" onMouseClicked="#showGui" prefHeight="35.0" prefWidth="125.0" text="co-op">
+   <Button fx:id="btnChessBoard" layoutX="247.0" layoutY="107.0" mnemonicParsing="false" onMouseClicked="#showGui" prefHeight="35.0" prefWidth="125.0" text="pvp">
       <font>
          <Font name="Arial" size="13.0" />
       </font>

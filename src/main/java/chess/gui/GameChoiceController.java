@@ -1,21 +1,24 @@
 package chess.gui;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * The GameChoiceController is the Controller for the gameChoice.fxml
+ * The player can decide which Game(pvp,AI,Network) he wants to play
+ */
 public class GameChoiceController extends MainController {
 
 
@@ -34,31 +37,49 @@ public class GameChoiceController extends MainController {
     @FXML
     private ImageView btnLanguage;
 
+    /**
+     * Ends the Application
+     */
     @FXML
-    void exit(ActionEvent event) {
+    void exit() {
         System.exit(0);
     }
 
+    /**
+     * Changes the Stage to the activeGame.fxml when the button pvp is pushed
+     */
     @FXML
-    void showGui(MouseEvent event) {
+    void showGui() {
         Stage stage = (Stage) btnChessBoard.getScene().getWindow();
         show_FXML("activeGame.fxml", stage, getGui());
     }
 
+    /**
+     * Changes the Stage to the activeGame.fxml when the button AgainstAI is pushed
+     * and pops the popup for the Colour Choice
+     * @throws IOException when the popup isnt getting closed
+     */
     @FXML
-    void showKIGui(MouseEvent event) throws IOException {
+    void showKIGui() throws IOException {
         popupColour();
         Stage stage = (Stage) btnChessKI.getScene().getWindow();
         show_FXML("activeGame.fxml", stage, getGui());
     }
 
+    /**
+     * Changes the Stage to the networkGui.fxml when the button Network Game is pushed
+     */
     @FXML
-    void showNetworkGame(MouseEvent event) {
+    void showNetworkGame() {
         Stage stage = (Stage) btnChessKI.getScene().getWindow();
         show_FXML("networkGui.fxml", stage, getGui());
     }
 
 
+    /**
+     * The popup shows the colourSelect.fxml and waits until the colour is selected
+     * @throws IOException in case the popup isnt getting closed
+     */
     @FXML
     void popupColour() throws IOException {
         Stage newWindow = new Stage();
@@ -71,23 +92,24 @@ public class GameChoiceController extends MainController {
         newWindow.initModality(Modality.WINDOW_MODAL);
         newWindow.initOwner(getGui().stage);
         newWindow.showAndWait();
-
     }
 
+    /**
+     * The language is changed in the settings when the Image btnLanguage is pushed
+     */
     @FXML
-    void changeLanguage(MouseEvent event) {
+    void changeLanguage() {
         getGui().getSettings().changeLanguage();
         changeToLanguage();
     }
 
+    /**
+     * Changes all buttons and text fields to the selected language
+     */
     private void changeToLanguage(){
-        if(getGui().getSettings().isLanguageEnglish()){
-            btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt("203"))).toExternalForm())));
-        }
-        else {
-            btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt("103"))).toExternalForm())));
-        }
+        btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"03"))).toExternalForm())));
         title.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"10")));
+        title.setAlignment(Pos.CENTER);
         btnChessBoard.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"11")));
         btnChessKI.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"12")));
         btnNetwork.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"13")));

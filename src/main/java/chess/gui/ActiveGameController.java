@@ -1,6 +1,5 @@
 package chess.gui;
 
-import chess.Settings;
 import chess.model.*;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -14,7 +13,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -87,12 +85,7 @@ public class ActiveGameController extends MainController {
     }
 
     private void changeToLanguage(){
-        if(getGui().getSettings().isLanguageEnglish()){
-            btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt("203"))).toExternalForm())));
-        }
-        else {
-            btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt("103"))).toExternalForm())));
-        }
+        btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"03"))).toExternalForm())));
         btnOptions.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"31")));
     }
 
@@ -114,6 +107,7 @@ public class ActiveGameController extends MainController {
         int rowIndex;
         colIndex = getColIndex(source);
         rowIndex = getRowIndex(source);
+        if(getGui().getSettings().isHighlightPossibleMoves())
         showPossibleMoves(colIndex, rowIndex);
 
         List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
@@ -244,7 +238,7 @@ public class ActiveGameController extends MainController {
             Move moveNew = new Move(input);
             System.out.println(input);
 
-            if (manuals.moveOfRightColour(moveNew, board)) {
+            if (manuals.moveOfRightColour(moveNew, board) && manuals.checkIfValidMove(startIndex,endIndex,board.getCheckerBoard())) {
                 board.applyMove(moveNew);
                 System.out.println(board.showBoard());
 
@@ -279,7 +273,7 @@ public class ActiveGameController extends MainController {
             }
 
             else {
-                popupMoveNotAllowed(event); //TODO falscher move popup
+                popupMoveNotAllowed(event);
                 board.setAllowedMove(false);
                 // ersten Half move merken nur bei move not allowed abfangen bei leerem feld angeklickt
             }
@@ -335,7 +329,7 @@ public class ActiveGameController extends MainController {
 
     public void showPossibleMoves(int startCol, int startRow) {
         CellIndex startIndex = new CellIndex(startRow, startCol);
-        chessBoard.getChildren().removeIf(node -> node instanceof Rectangle && ((Rectangle) node).getFill().equals(Paint.valueOf("#ff0000")));
+        chessBoard.getChildren().removeIf(node -> node instanceof Rectangle && ((Rectangle) node).getFill().equals(Paint.valueOf("#ff6347")));
         if(getNodeByCoordinate(startRow, startCol) instanceof ImageView && !board.getCheckerBoard()[startRow][startCol].isEmpty()) {
             List<Move> possibleMoves = (staleMate.possibleMovesForOneFigureMoveList(startIndex, board.getCheckerBoard()));
 
@@ -344,7 +338,9 @@ public class ActiveGameController extends MainController {
                 Rectangle possMove = new Rectangle();
                 possMove.setHeight(10);
                 possMove.setWidth(10);
-                possMove.setFill(Paint.valueOf("#ff0000"));
+                possMove.setFill(Paint.valueOf("#ff6347"));
+                possMove.setArcHeight(10.0d);
+                possMove.setArcWidth(10.0d);
                 possMove.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
                     try {
                         mouseClicked(mouseEvent);
@@ -352,6 +348,8 @@ public class ActiveGameController extends MainController {
                         e.printStackTrace();
                     }
                 });
+                System.out.println(s.indexOf(move.getEnd().substring(0, 1)));
+                System.out.println(8-Integer.parseInt(move.getEnd().substring(1,2)));
                 chessBoard.add(possMove, s.indexOf(move.getEnd().substring(0, 1)), 8-Integer.parseInt(move.getEnd().substring(1,2)));
                 chessBoard.setAlignment(Pos.CENTER);
                 possMove.toFront();
@@ -374,7 +372,7 @@ public class ActiveGameController extends MainController {
             } catch (Exception e){
                 nodeCol = 0;
             }
-            if (nodeRow == column + 1 && nodeCol == row + 1 && node instanceof ImageView) {
+            if (nodeRow == row  && nodeCol == column  && node instanceof ImageView) {
                 return node;
             }
         }

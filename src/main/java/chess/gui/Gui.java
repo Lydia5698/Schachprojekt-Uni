@@ -1,27 +1,8 @@
 package chess.gui;
 
-
-import chess.Main;
 import chess.Settings;
-import chess.model.Board;
-import chess.model.Move;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Objects;
-
-
 
 
 /**

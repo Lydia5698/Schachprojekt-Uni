@@ -5,11 +5,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.util.Objects;
 
+/**
+ * The PromoteController is the Controller for the promote.fxml
+ * The player can decide which Minion the Pawn is promote to
+ */
 public class PromoteController extends MainController{
 
     ActiveGameController activeGameController;
@@ -32,34 +35,42 @@ public class PromoteController extends MainController{
     @FXML
     private Label header;
 
-
+    /**
+     * Sets the promoteTo in activeGameController to B (Bishop) when the button btnBishop is pushed
+     */
     @FXML
-    void promoteMinionBishop(MouseEvent event) {
+    void promoteMinionBishop() {
         activeGameController.setPromoteTo("B");
         Stage stage = (Stage) btnBishop.getScene().getWindow();
         stage.close();
-
-
     }
 
+    /**
+     * Sets the promoteTo in activeGameController to N (Knight) when the button btnKnight is pushed
+     */
     @FXML
-    void promoteMinionKnight(MouseEvent event) {
+    void promoteMinionKnight() {
         activeGameController.setPromoteTo("N");
         Stage stage = (Stage) btnKnight.getScene().getWindow();
         stage.close();
-
     }
 
+    /**
+     * Sets the promoteTo in activeGameController to Q (Queen) when the button btnQueen is pushed
+     */
     @FXML
-    void promoteMinionQueen(MouseEvent event) {
+    void promoteMinionQueen() {
         activeGameController.setPromoteTo("Q");
         Stage stage = (Stage) btnQueen.getScene().getWindow();
         stage.close();
 
     }
 
+    /**
+     * Sets the promoteTo in activeGameController to R (Rook) when the button btnRook is pushed
+     */
     @FXML
-    void promoteMinionRook(MouseEvent event) {
+    void promoteMinionRook() {
         activeGameController.setPromoteTo("R");
         Stage stage = (Stage) btnRook.getScene().getWindow();
         stage.close();
@@ -70,19 +81,20 @@ public class PromoteController extends MainController{
         this.activeGameController = activeGameController;
     }
 
+    /**
+     * The language is changed in the settings when the Image btnLanguage is pushed
+     */
     @FXML
-    void changeLanguage(MouseEvent event) {
+    void changeLanguage() {
         getGui().getSettings().changeLanguage();
         changeToLanguage();
     }
 
+    /**
+     * Changes all buttons and text fields to the selected language
+     */
     private void changeToLanguage(){
-        if(getGui().getSettings().isLanguageEnglish()){
-            btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt("203"))).toExternalForm())));
-        }
-        else {
-            btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt("103"))).toExternalForm())));
-        }
+        btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"03"))).toExternalForm())));
         header.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"50")));
     }
 

@@ -120,7 +120,7 @@ public class Board {
      * Checks if the minion from the start Cell can make the move to the end Cell uses the methode validMove from Minion
      * Writes the String "!Move not allowed" on the Console when illegal move
      *
-     * @param move is a Move move from Cli is already split in Start and End
+     * @param move is a Move from Cli and is already split in Start and End
      * @see CellIndex
      * @see Cell
      * @see Minion

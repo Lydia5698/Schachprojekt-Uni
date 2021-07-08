@@ -7,6 +7,9 @@ import chess.network.Netw_Cli;
 import chess.network.Netw_Svr;
 import javafx.application.Platform;
 
+/**
+ * The Settings for the Gui and the Cli
+ */
 public class Settings {
     //felder
     AI ai = new AI(false);
@@ -29,15 +32,8 @@ public class Settings {
     private boolean server = false;
     String languageNumber = "1";
 
-
-    //gegen gegner
-    //schach anzeigen lassen
-    //mehrfach klicken
-    //spielfeld mitdrehen
-
-
     //constructor
-    public Settings() { /*LOOOL wozu brauch ich n leeren constructor*/ } //damit wenigstens was drin steht ROFL
+    public Settings() { board.setSettings(this); }
 
     //methoden
 
@@ -74,11 +70,11 @@ public class Settings {
         this.rotateBoard = rotateBoard;
     }
 
-    public boolean isLightPossibleMoves() {
+    public boolean isHighlightPossibleMoves() {
         return lightPossibleMoves;
     }
 
-    public void setLightPossibleMoves(boolean lightPossibleMoves) {
+    public void setHighlightPossibleMoves(boolean lightPossibleMoves) {
         this.lightPossibleMoves = lightPossibleMoves;
     }
 
@@ -146,10 +142,6 @@ public class Settings {
             setLanguageNumber("1");
         }
     }
-
-
-
-
 
     private Netw_Svr createServer(){
         System.out.println("server starting");

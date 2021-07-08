@@ -3,9 +3,15 @@ package chess;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
+/**
+ * This class has Dictionary for the different Languages
+ */
 public class Language {
-    Dictionary<Integer, String> dic = new Hashtable<>();
+    final Dictionary<Integer, String> dic = new Hashtable<>();
 
+    /**
+     * Creates a new Language instance and sets the languages in the Dictionary
+     */
     public Language(){
         setDicGerman();
         setDicEnglish();
@@ -14,13 +20,17 @@ public class Language {
         return dic;
     }
 
-    // German: all numbers with first number 2 for German, second number for the scene and last number for the texts from left to right and up to bottom
+    /**
+     * German: first number 2 for German, second number for the scene and
+     * last number for the texts from left to right and up to bottom
+     */
+
     private void setDicGerman(){
         // Start Screen
         dic.put(200, "Schach");
         dic.put(201, "Spiel start");
         dic.put(202, "Anleitung");
-        dic.put(203, "Flags/GermanFlag.png");
+        dic.put(203, "Flags/UnitedKingdomFlag.png");
         // GameChoice
         dic.put(210, "Wähle eine Spielart aus");
         dic.put(211, "Normales Spiel");
@@ -99,16 +109,19 @@ public class Language {
 
     }
 
-    // English: all numbers with first number 1 for English, second number for the scene and last number for the texts from left to right and up to bottom
+    /**
+     * English: first number 1 for English, second number for the scene and last number
+     * for the texts from left to right and up to bottom
+     */
     private void setDicEnglish(){
         // Start Screen
         dic.put(100, "Chess");
         dic.put(101, "Game Start");
         dic.put(102, "Manual");
-        dic.put(103, "Flags/UnitedKingdomFlag.png");
+        dic.put(103, "Flags/GermanFlag.png");
         // GameChoice
         dic.put(110, "Choose your Game");
-        dic.put(111, "co-op");
+        dic.put(111, "pvp");
         dic.put(112, "Against AI");
         dic.put(113, "Network Game");
         // active Game

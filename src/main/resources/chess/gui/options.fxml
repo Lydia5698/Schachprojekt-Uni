@@ -29,12 +29,12 @@
          <Font name="Arial" size="13.0" />
       </font>
    </CheckBox>
-   <CheckBox fx:id="doubleClick" layoutX="187.0" layoutY="196.0" mnemonicParsing="false" onAction="#doubleClick" prefHeight="18.0" prefWidth="236.0" text="You can only click ones one Figure">
+   <CheckBox fx:id="cbDoubleClick" layoutX="187.0" layoutY="196.0" mnemonicParsing="false" onAction="#doubleClick" prefHeight="18.0" prefWidth="236.0" text="You can only click ones one Figure">
       <font>
          <Font name="Arial" size="13.0" />
       </font>
    </CheckBox>
-   <CheckBox fx:id="rotateBoard" layoutX="187.0" layoutY="239.0" mnemonicParsing="false" onAction="#rotateBoard" prefHeight="18.0" prefWidth="392.0" text="Rotate the Chessboard automatically">
+   <CheckBox fx:id="cbRotateBoard" layoutX="187.0" layoutY="239.0" mnemonicParsing="false" onAction="#rotateBoard" prefHeight="18.0" prefWidth="392.0" text="Rotate the Chessboard automatically">
       <font>
          <Font name="Arial" size="13.0" />
       </font>
@@ -49,8 +49,7 @@
          <Font name="Arial" size="13.0" />
       </font>
    </Button>
-   <ImageView fx:id="btnLanguage" fitHeight="18.0" fitWidth="66.0" layoutX="573.0" layoutY="9.0"
-              onMouseClicked="#changeLanguage" pickOnBounds="true" preserveRatio="true">
-      <Image url="@Flags/GermanFlag.png"/>
+   <ImageView fx:id="btnLanguage" fitHeight="18.0" fitWidth="66.0" layoutX="573.0" layoutY="9.0" onMouseClicked="#changeLanguage" pickOnBounds="true" preserveRatio="true">
+      <Image url="@Flags/GermanFlag.png" />
    </ImageView>
 </AnchorPane>
