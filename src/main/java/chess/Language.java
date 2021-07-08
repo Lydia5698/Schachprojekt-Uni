@@ -95,11 +95,12 @@ public class Language {
         dic.put(274, " für Schwarz\n");
         dic.put(275, " für Weiß\n");
         dic.put(276, "!Ungültiger Zug");
-
         // check
         dic.put(280, "Schwarz steht im Schach");
         dic.put(281, "Weiß steht im Schach");
         dic.put(282, "Schach!");
+        dic.put(283, "Kein Mehrfachklicken");
+        dic.put(284, "Mehrfachklicken ist nicht erlaubt. Bitte bewege den zuerst angeklickte Figur auf dem Feld: ");
         // checkMate
         dic.put(290, "Schwarz steht im Schachmatt");
         dic.put(291, "Weiß steht im Schachmatt");
@@ -164,6 +165,8 @@ public class Language {
         dic.put(180, "Black is in check");
         dic.put(181, "White is in check");
         dic.put(182, "Check");
+        dic.put(183, "No Double click");
+        dic.put(184, "It is only allowed to move the first clicked Figure. Please move the Figure on: ");
         // checkMate
         dic.put(190, "Black is in check Mate");
         dic.put(191, "White is in check Mate");

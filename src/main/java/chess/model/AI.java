@@ -122,6 +122,8 @@ public class AI {
     // possible next move
     public List<Move> possibleNextMoves(Board board){
         // make list of all moves
+        System.out.println(colourIsBlack);
+        System.out.println(board.checkerBoard);
         List <Move> possibleMoves = board.staleMate.possibleMoveList(colourIsBlack, board.checkerBoard);
         //TODO get random move
         return possibleMoves;

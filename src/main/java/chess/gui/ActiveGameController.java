@@ -38,7 +38,8 @@ public class ActiveGameController extends MainController {
     private int counterBeatenMinionsWhite = 0;
     private int counterBeatenMinionsBlack = 0;
     private final int beatenCounter = 0;
-    private String firstMinionClicked;
+    private String firstMinionClickedWhite = "";
+    private String firstMinionClickedBlack = "";
 
     @FXML
     private Group letter;
@@ -67,10 +68,10 @@ public class ActiveGameController extends MainController {
     @Override
     public void setGui(Gui gui){
         this.gui = gui;
+        setBoard(gui.settings.getBoard());
         whiteAIMove();
         // network white Move
         changeToLanguage();
-        setBoard(gui.settings.getBoard());
         updateBoard();
     }
 
@@ -120,7 +121,14 @@ public class ActiveGameController extends MainController {
         else {
             input = columns.get(colIndex) + (8 - rowIndex);
         }
-
+        // sets first Minion Clicked for Black
+        if (getGui().getSettings().isDoubleClick() && board.isBlackIsTurn() && firstMinionClickedBlack.isEmpty()){
+            firstMinionClickedBlack = input;
+        }
+        // sets first Minion clicked for White
+        if(getGui().getSettings().isDoubleClick() && !board.isBlackIsTurn() && firstMinionClickedWhite.isEmpty()){
+            firstMinionClickedWhite = input;
+        }
         halfMoves.add(input);
         position.add(event);
         System.out.println(input);
@@ -224,9 +232,6 @@ public class ActiveGameController extends MainController {
             CellIndex endIndex = Board.cellIndexFor(move.getEnd());
             CellIndex startIndex = Board.cellIndexFor(move.getStart());
             Cell startCell = board.getCheckerBoard()[startIndex.getRow()][startIndex.getColumn()];
-            if(!startCell.isEmpty()){
-                firstMinionClicked = fistField;
-            }
             int diffrow = Math.abs(startIndex.getRow() - endIndex.getRow());
             if (!startCell.isEmpty() && diffrow == 1 && String.valueOf(startCell.getMinion().getMinion_type()).equals("P") && (endIndex.getRow() == 0 || endIndex.getRow() == 7)) {
                 popupPromote();
@@ -239,43 +244,46 @@ public class ActiveGameController extends MainController {
             System.out.println(input);
 
             if (manuals.moveOfRightColour(moveNew, board) && manuals.checkIfValidMove(startIndex,endIndex,board.getCheckerBoard())) {
-                board.applyMove(moveNew);
-                System.out.println(board.showBoard());
-
-
-                String beatenString = "Moves";
-                for (Move beatenMinion : board.getMoveList()) {
-                    String moveString = beatenMinion.getStart() + "-" + beatenMinion.getEnd();
-                    beatenString = String.join(",", beatenString, moveString);
-                }
-                moveList.setText(beatenString);
-                Event end = position.get(1);
-                Node sourceEnd = (Node) end.getSource();
-                beatenMinions(sourceEnd);
-                updateBoard();
-                if (board.isCheck() & getGui().getSettings().isCheckVisible()) {
-                    popupCheck(event);
-                    board.setCheck(false);
-                }
-                if(board.isGameEnd()){
-                    popupCheckMate(event);
-                }
-                // network move
-
-                if (getGui().getSettings().isAi_active()){
-                    board.applyMove(getGui().getSettings().getAi().getNextMove(board));
-                    getGui().getSettings().getAi().increaseTurnNumber();
+                if (!getGui().getSettings().isDoubleClick() || (firstMinionClickedWhite.equals(fistField)) || firstMinionClickedBlack.equals(fistField)){
+                    firstMinionClickedBlack = "";
+                    firstMinionClickedWhite = "";
+                    board.applyMove(moveNew);
                     System.out.println(board.showBoard());
-                    //update
+
+
+                    String beatenString = "Moves";
+                    for (Move beatenMinion : board.getMoveList()) {
+                        String moveString = beatenMinion.getStart() + "-" + beatenMinion.getEnd();
+                        beatenString = String.join(",", beatenString, moveString);
+                    }
+                    moveList.setText(beatenString);
+                    Event end = position.get(1);
+                    Node sourceEnd = (Node) end.getSource();
+                    beatenMinions(sourceEnd);
                     updateBoard();
+                    if (board.isCheck() & getGui().getSettings().isCheckVisible()) {
+                        popupCheck(event);
+                        board.setCheck(false);
+                    }
+                    if (board.isGameEnd()) {
+                        popupCheckMate(event);
+                    }
+                    // network move
+                    if (getGui().getSettings().isAi_active()) {
+                        board.applyMove(getGui().getSettings().getAi().getNextMove(board));
+                        getGui().getSettings().getAi().increaseTurnNumber();
+                        System.out.println(board.showBoard());
+                        //update
+                        updateBoard();
+                    }
+                }
+                else{
+                    popupDoubleClick(event);
                 }
 
-            }
-
-            else {
+            } else {
                 popupMoveNotAllowed(event);
                 board.setAllowedMove(false);
-                // ersten Half move merken nur bei move not allowed abfangen bei leerem feld angeklickt
             }
 
             counter = 0;
@@ -286,7 +294,6 @@ public class ActiveGameController extends MainController {
             }
             if(board.isGameEnd()){
                 popupCheckMate(event);
-                //board = new Board();
             }
         }
         
@@ -353,7 +360,6 @@ public class ActiveGameController extends MainController {
                 chessBoard.add(possMove, s.indexOf(move.getEnd().substring(0, 1)), 8-Integer.parseInt(move.getEnd().substring(1,2)));
                 chessBoard.setAlignment(Pos.CENTER);
                 possMove.toFront();
-                // TODO es werden nicht alle moves richtig angezeigt
             }
         }
     }
@@ -392,6 +398,7 @@ public class ActiveGameController extends MainController {
 
         alert.show();
     }
+
     @FXML
     void popupCheckMate(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -408,8 +415,21 @@ public class ActiveGameController extends MainController {
     @FXML
     void popupMoveNotAllowed(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"70")));
-        alert.setContentText(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"71")));
+        alert.setTitle(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "70")));
+        alert.setContentText(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "71")));
+        alert.show();
+    }
+
+    @FXML
+    void popupDoubleClick(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "83")));
+        if(board.isBlackIsTurn()){
+            alert.setContentText(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "84")) + firstMinionClickedBlack);
+        }
+        else {
+            alert.setContentText(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "84")) + firstMinionClickedWhite);
+        }
         alert.show();
     }
 
