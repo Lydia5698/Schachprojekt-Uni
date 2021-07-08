@@ -1,5 +1,6 @@
 package chess.model;
 
+import chess.Settings;
 import chess.model.figures.Minion;
 import org.junit.jupiter.api.Test;
 import java.util.List;
@@ -32,6 +33,8 @@ public class ManualsTest {
    @Test
     void getAttackersKingWhiteUnderAttack() {
         Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
         Move movePawn = new Move("e7-e6"); // Move Pawn E7-E6
         board.applyMove(movePawn);
         Move moveBishop = new Move("f8-b4"); // Move Bishop F8-B4
@@ -45,6 +48,8 @@ public class ManualsTest {
     @Test
     void getAttackersKingBlackUnderAttack() {
         Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
         Move movePawn = new Move("e2-e4"); // Move Pawn E2-E4
         board.applyMove(movePawn);
         Move moveBishop = new Move("f1-b5"); // Move Bishop F1-B5
@@ -82,6 +87,8 @@ public class ManualsTest {
     @Test
     void checkIfPieceCanNotProtectTheOwnKingWhite(){
         Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
         Move move = new Move("e2-e4");
         board.applyMove(move);
         move = new Move("e7-e5");

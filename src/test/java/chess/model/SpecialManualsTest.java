@@ -1,5 +1,6 @@
 package chess.model;
 
+import chess.Settings;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -107,6 +108,8 @@ public class SpecialManualsTest {
     @Test
     void promoteWhitePawn(){
         Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
         Move movePawn = new Move("h2-h4"); // Move Pawn H2-H4
         board.applyMove(movePawn);
         movePawn = new Move("h4-h5"); // Move Pawn H4-H5
@@ -126,6 +129,8 @@ public class SpecialManualsTest {
     @Test
     void promoteWhitePawnToRook(){
         Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
         Move movePawn = new Move("g2-g4"); // Move Pawn G2-G4
         board.applyMove(movePawn);
         movePawn = new Move("g4-g5"); // Move Pawn G4-G5
@@ -166,6 +171,8 @@ public class SpecialManualsTest {
     @Test
     void promoteWhitePawnToBishop(){
         Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
         Move movePawn = new Move("e2-e4"); // Move Pawn E2-E4
         board.applyMove(movePawn);
         movePawn = new Move("e4-e5"); // Move Pawn E4-E5
@@ -382,6 +389,8 @@ public class SpecialManualsTest {
     @Test
     void attackersPathWhiteBishopTest() {
         Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
         Move movePawn = new Move("e2-e4"); // Move Pawn E2-E4
         board.applyMove(movePawn);
         Move moveBlackPawn = new Move("d7-d5"); //Move D7-D5

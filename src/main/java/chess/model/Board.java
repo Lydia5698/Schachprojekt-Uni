@@ -309,7 +309,4 @@ public class Board {
     public void setSettings(Settings settings) {
         this.settings = settings;
     }
-
-
-
 }
