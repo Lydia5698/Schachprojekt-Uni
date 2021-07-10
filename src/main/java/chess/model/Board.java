@@ -22,14 +22,10 @@ public class Board {
     public Settings settings;
     static List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
     public List<String> beaten = new ArrayList<>();
-    private List<Move> moveList = new ArrayList<>();
+    private final List<Move> moveList = new ArrayList<>();
     private boolean blackIsTurn = false;
-    private boolean gameEnd = false;
     private boolean simple = false;
     private boolean allowedMove = true;
-    private boolean check = false;
-
-
 
     /**
      * Creates a new Board instance. The Board uses initHorizont to fill the Board with Cells and Minions
@@ -150,8 +146,8 @@ public class Board {
             blackIsTurn = !blackIsTurn;
             if(!settings.isGui_active()){
                 System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
-                checkAndPrintCheckCheckMate(minion);
             }
+            checkAndPrintCheckCheckMate(minion);
             moveList.add(move);
             manuals.spManuals.promote(endIndex, promoteTo, checkerBoard);
             allowedMove = true;
@@ -160,9 +156,7 @@ public class Board {
         // check if special move
         else if (specialMove(move, startIndex, endIndex)) {
             //check if in Check
-            if(!settings.isGui_active()){
-                checkAndPrintCheckCheckMate(minion);
-            }
+            checkAndPrintCheckCheckMate(minion);
             allowedMove = true;
         }
         // move is not allowed
@@ -245,19 +239,6 @@ public class Board {
         return checkerBoardCopy;
     }
 
-    /**
-     * gives the boolean gameEnd back
-     *
-     * @return boolean if game is ended
-     */
-    public boolean isGameEnd() {
-        return gameEnd;
-    }
-
-    public void setGameEnd(boolean gameEnd){
-        this.gameEnd = gameEnd;
-    }
-
     public void setSimple(boolean simple) {
         this.simple = simple;
     }
@@ -275,9 +256,6 @@ public class Board {
         this.allowedMove = allowedMove;
     }
 
-    public boolean isCheck() {
-        return check;
-    }
     public boolean isAllowedMove() {
         return allowedMove;
     }
@@ -290,25 +268,27 @@ public class Board {
      */
     protected void checkAndPrintCheckCheckMate(Minion minion) {
         if (manuals.isCheck(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
-            System.out.println("!"+ settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber()+"82")));
-            check = true;
+            if(settings.isGui_active()){
+                System.out.println("!"+ settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber()+"82")));
+            }
+            settings.setCheck(true);
 
         }
         //check if in Check Mate
         if (manuals.checkMate(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
-            System.out.println("!"+ settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber()+"92")));
-            gameEnd = true;
-            System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber()+"93")));
+            if(settings.isGui_active()){
+                System.out.println("!"+ settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber()+"92")));
+                System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber()+"93")));
+            }
+            settings.setGameEnd(true);
         } else if (staleMate.isStaleMate(!minion.isBlack(), checkerBoard) && !simple) {
-            System.out.println("!" + settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber()+"94")));
-            gameEnd = true;
-            System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber()+"93")));
+            if(settings.isGui_active()){
+                System.out.println("!" + settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber()+"94")));
+                System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber()+"93")));
+            }
+            settings.setGameEnd(true);
         }
 
-    }
-
-    public void setCheck(boolean check) {
-        this.check = check;
     }
 
     public void setSettings(Settings settings) {

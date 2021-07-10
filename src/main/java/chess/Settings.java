@@ -16,6 +16,8 @@ public class Settings {
     Board board = new Board();
     Language language = new Language();
     protected boolean gui_active = false;
+    protected boolean isCheck = false;
+    protected boolean gameEnd = false;
     protected boolean ai_active = false;
     protected boolean ai_colour = false;
     protected boolean rotateBoard = false;
@@ -138,6 +140,23 @@ public class Settings {
     public void setGui_active(boolean gui_active) {
         this.gui_active = gui_active;
     }
+
+    public boolean isCheck() {
+        return isCheck;
+    }
+
+    public void setCheck(boolean check) {
+        isCheck = check;
+    }
+
+    public boolean isGameEnd() {
+        return gameEnd;
+    }
+
+    public void setGameEnd(boolean gameEnd) {
+        this.gameEnd = gameEnd;
+    }
+
 
 
     public void changeLanguage(){

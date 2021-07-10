@@ -4,8 +4,14 @@ import chess.model.Board;
 import chess.model.CellIndex;
 import chess.model.Move;
 import javafx.event.Event;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
 
+import java.io.IOException;
 import java.util.List;
 
 public class ActiveGameHelper {
@@ -60,13 +66,6 @@ public class ActiveGameHelper {
         Node sourceEnd = (Node) end.getSource();
         activeGameController.beatenMinionOutput(sourceEnd);
         activeGameController.updateBoard();
-        if (activeGameController.board.isCheck() & activeGameController.getGui().getSettings().isCheckVisible()) {
-            activeGameController.popupCheck();
-            activeGameController.board.setCheck(false);
-        }
-        if (activeGameController.board.isGameEnd()) {
-            activeGameController.popupCheckMate();
-        }
         // network move
         if (activeGameController.getGui().getSettings().isAi_active()) {
             Move aiMove = activeGameController.getGui().getSettings().getAi().getNextMove(activeGameController.board);
@@ -80,7 +79,54 @@ public class ActiveGameHelper {
             activeGameController.updateBoard();
 
         }
+        if (activeGameController.getGui().getSettings().isCheck() && activeGameController.getGui().getSettings().isCheckVisible()) {
+            activeGameController.popupCheck();
+            activeGameController.getGui().getSettings().setCheck(false);
+        }
+
     }
+
+    public void whiteAIMove(){
+        if(activeGameController.getGui().getSettings().isAi_active() && !activeGameController.getGui().getSettings().isAi_colour()) {
+            activeGameController.board.applyMove(activeGameController.getGui().getSettings().getAi().getNextMove(activeGameController.board));
+            activeGameController.getGui().getSettings().getAi().increaseTurnNumber();
+            System.out.println(activeGameController.board.showBoard());
+            //update
+            activeGameController.updateBoard();
+        }
+    }
+
+    public void showPossibleMoves(int startCol, int startRow) {
+        CellIndex startIndex = new CellIndex(startRow, startCol);
+        activeGameController.getChessBoard().getChildren().removeIf(node -> node instanceof Rectangle && ((Rectangle) node).getFill().equals(Paint.valueOf("#ff6347")));
+        if(activeGameController.getNodeByCoordinate(startRow, startCol) instanceof ImageView && !activeGameController.board.getCheckerBoard()[startRow][startCol].isEmpty()) {
+            List<Move> possibleMoves = (activeGameController.board.staleMate.possibleMovesForOneFigureMoveList(startIndex, activeGameController.board.getCheckerBoard()));
+
+            for (Move move : possibleMoves) {
+                String s = "abcdefgh";
+                Rectangle possMove = new Rectangle();
+                possMove.setHeight(10);
+                possMove.setWidth(10);
+                possMove.setFill(Paint.valueOf("#ff6347"));
+                possMove.setArcHeight(10.0d);
+                possMove.setArcWidth(10.0d);
+                possMove.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+                    try {
+                        activeGameController.mouseClicked(mouseEvent);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+                System.out.println(s.indexOf(move.getEnd().substring(0, 1)));
+                System.out.println(8-Integer.parseInt(move.getEnd().substring(1,2)));
+                activeGameController.getChessBoard().add(possMove, s.indexOf(move.getEnd().substring(0, 1)), 8-Integer.parseInt(move.getEnd().substring(1,2)));
+                activeGameController.getChessBoard().setAlignment(Pos.CENTER);
+                possMove.toFront();
+            }
+        }
+    }
+
+
 
 
 }

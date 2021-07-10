@@ -66,7 +66,7 @@ public class ActiveGameController extends MainController {
         this.gui = gui;
         setBoard(gui.settings.getBoard());
         if(board.getMoveList().isEmpty()){
-            whiteAIMove();
+            activeGameHelper.whiteAIMove();
         }
         // network white Move
         changeToLanguage();
@@ -88,15 +88,6 @@ public class ActiveGameController extends MainController {
         btnOptions.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"31")));
     }
 
-    public void whiteAIMove(){
-        if(getGui().getSettings().isAi_active() && !getGui().getSettings().isAi_colour()) {
-            board.applyMove(getGui().getSettings().getAi().getNextMove(board));
-            getGui().getSettings().getAi().increaseTurnNumber();
-            System.out.println(board.showBoard());
-            //update
-            updateBoard();
-        }
-    }
 
     @FXML
     void mouseClicked(MouseEvent event) throws IOException {
@@ -107,7 +98,7 @@ public class ActiveGameController extends MainController {
         colIndex = getColIndex(source);
         rowIndex = getRowIndex(source);
         if(getGui().getSettings().isHighlightPossibleMoves())
-        showPossibleMoves(colIndex, rowIndex);
+        activeGameHelper.showPossibleMoves(colIndex, rowIndex);
 
         List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
         String input;
@@ -122,7 +113,7 @@ public class ActiveGameController extends MainController {
 
     public void move() throws IOException {
 
-        if (counter == 2 && !board.isGameEnd()) {
+        if (counter == 2 && !getGui().getSettings().isGameEnd()) {
             String fistField = halfMoves.get(0);
             String secondField = halfMoves.get(1);
             String input = fistField + "-" + secondField;
@@ -132,11 +123,7 @@ public class ActiveGameController extends MainController {
             CellIndex startIndex = Board.cellIndexFor(move.getStart());
             Cell startCell = board.getCheckerBoard()[startIndex.getRow()][startIndex.getColumn()];
             int diffrow = Math.abs(startIndex.getRow() - endIndex.getRow());
-            if (!startCell.isEmpty() && diffrow == 1 && String.valueOf(startCell.getMinion().getMinion_type()).equals("P") && (endIndex.getRow() == 0 || endIndex.getRow() == 7)) {
-                popupPromote();
-                input = fistField + "-" + secondField + getPromoteTo();
-
-            }
+            input = checkPromotion(fistField, secondField, input, endIndex, startCell, diffrow);
 
             Move moveNew = new Move(input);
 
@@ -147,12 +134,20 @@ public class ActiveGameController extends MainController {
             if(getGui().getSettings().isRotateBoard() && !getGui().getSettings().isAi_active()){
                 boardRotation();
             }
-            if(board.isGameEnd()){
+            if(getGui().getSettings().isGameEnd()){
                 popupCheckMate();
             }
         }
 
 
+    }
+
+    private String checkPromotion(String fistField, String secondField, String input, CellIndex endIndex, Cell startCell, int diffrow) throws IOException {
+        if (!startCell.isEmpty() && diffrow == 1 && String.valueOf(startCell.getMinion().getMinion_type()).equals("P") && (endIndex.getRow() == 0 || endIndex.getRow() == 7)) {
+            popupPromote();
+            input = fistField + "-" + secondField + getPromoteTo();
+        }
+        return input;
     }
 
     void history() {
@@ -284,35 +279,6 @@ public class ActiveGameController extends MainController {
     }
 
 
-    public void showPossibleMoves(int startCol, int startRow) {
-        CellIndex startIndex = new CellIndex(startRow, startCol);
-        chessBoard.getChildren().removeIf(node -> node instanceof Rectangle && ((Rectangle) node).getFill().equals(Paint.valueOf("#ff6347")));
-        if(getNodeByCoordinate(startRow, startCol) instanceof ImageView && !board.getCheckerBoard()[startRow][startCol].isEmpty()) {
-            List<Move> possibleMoves = (board.staleMate.possibleMovesForOneFigureMoveList(startIndex, board.getCheckerBoard()));
-
-            for (Move move : possibleMoves) {
-                String s = "abcdefgh";
-                Rectangle possMove = new Rectangle();
-                possMove.setHeight(10);
-                possMove.setWidth(10);
-                possMove.setFill(Paint.valueOf("#ff6347"));
-                possMove.setArcHeight(10.0d);
-                possMove.setArcWidth(10.0d);
-                possMove.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-                    try {
-                        mouseClicked(mouseEvent);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
-                System.out.println(s.indexOf(move.getEnd().substring(0, 1)));
-                System.out.println(8-Integer.parseInt(move.getEnd().substring(1,2)));
-                chessBoard.add(possMove, s.indexOf(move.getEnd().substring(0, 1)), 8-Integer.parseInt(move.getEnd().substring(1,2)));
-                chessBoard.setAlignment(Pos.CENTER);
-                possMove.toFront();
-            }
-        }
-    }
 
     Node getNodeByCoordinate(int row, int column) {
         for (Node node : chessBoard.getChildren()) {
@@ -423,5 +389,10 @@ public class ActiveGameController extends MainController {
         }
         return colIndex;
     }
+
+    public GridPane getChessBoard() {
+        return chessBoard;
+    }
+
 
 }

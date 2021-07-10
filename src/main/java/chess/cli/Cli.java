@@ -116,7 +116,7 @@ public class Cli {
 
         String output = board.showBoard();
         System.out.println(output);
-        while (!board.isGameEnd()) {
+        while (!settings.isGameEnd()) {
 
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             if (settings.isAi_active() && board.isBlackIsTurn() == settings.isAi_colour()){// wenn ai aktiviert, dann schauen, ob ai an der reihe
@@ -150,7 +150,7 @@ public class Cli {
                     System.out.print(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber+"75")));
                 }
             }
-            if (settings.isAi_active() == false || settings.isAi_active() && settings.isAi_colour() != board.isBlackIsTurn()) {
+            if (!settings.isAi_active() || settings.isAi_active() && settings.isAi_colour() != board.isBlackIsTurn()) {
                 try {
                     //TODO: see if ai is active, look if ai's move, else check input
                     // next move ai(current checkerBoard)
