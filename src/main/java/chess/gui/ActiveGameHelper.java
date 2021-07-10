@@ -14,13 +14,28 @@ import javafx.scene.shape.Rectangle;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Makes the moves and has the options for the Gui
+ */
 public class ActiveGameHelper {
     ActiveGameController activeGameController;
 
+    /**
+     * Creates a activeGameHelper for the ActiveGameController.
+     * @param activeGameController the activeGameController of the current game
+     */
     public ActiveGameHelper(ActiveGameController activeGameController){
         this.activeGameController = activeGameController;
     }
 
+    /**
+     * This method changes the Row/Column of the field clicked for the Board rotation and
+     * saves this field for the double click funktion
+     * @param colIndex column of the Field clicked
+     * @param rowIndex row of the Field clicked
+     * @param columns the indices for the columns from the letters to numbers
+     * @return the input of the field clicked changed for the options rotation and double click
+     */
     String guiOptions(int colIndex, int rowIndex, List<String> columns) {
         String input;
         if(activeGameController.board.isBlackIsTurn() && activeGameController.getGui().getSettings().isRotateBoard()){
@@ -41,22 +56,34 @@ public class ActiveGameHelper {
     }
 
 
+    /**
+     * Checks if the move is allowed and checks the first field clicked when double move is activated
+     * else pops up the popups for move not allowed
+     * @param fistField the first field clicked
+     * @param endIndex the endIndex of the move (second Field)
+     * @param startIndex the startIndex of the move (first Field)
+     * @param moveNew the move (startIndex + endIndex + promoteTo)
+     */
     void checkAndDoMove(String fistField, CellIndex endIndex, CellIndex startIndex, Move moveNew) {
         if (activeGameController.board.manuals.moveOfRightColour(moveNew, activeGameController.board) && activeGameController.board.manuals.checkIfValidMove(startIndex, endIndex,activeGameController.board.getCheckerBoard())) {
             if (!activeGameController.getGui().getSettings().isDoubleClick() || (activeGameController.firstMinionClickedWhite.equals(fistField)) || activeGameController.firstMinionClickedBlack.equals(fistField)){
                 applyCurrentMove(moveNew);
             }
             else{
-                activeGameController.popupDoubleClick();
+                activeGameController.popups.popupDoubleClick();
             }
 
         }
         else {
-            activeGameController.popupMoveNotAllowed();
+            activeGameController.popups.popupMoveNotAllowed();
             activeGameController.board.setAllowedMove(false);
         }
     }
 
+    /**
+     * Applies the move on the Board from the Player and the AI if active. And checks for check
+     * @param moveNew the move (startIndex + endIndex + promoteTo)
+     */
     private void applyCurrentMove(Move moveNew) {
         activeGameController.firstMinionClickedBlack = "";
         activeGameController.firstMinionClickedWhite = "";
@@ -79,13 +106,16 @@ public class ActiveGameHelper {
             activeGameController.updateBoard();
 
         }
-        if (activeGameController.getGui().getSettings().isCheck() && activeGameController.getGui().getSettings().isCheckVisible()) {
-            activeGameController.popupCheck();
-            activeGameController.getGui().getSettings().setCheck(false);
+        if (activeGameController.getGui().getSettings().isInCheck() && activeGameController.getGui().getSettings().isCheckVisible()) {
+            activeGameController.popups.popupCheck();
+            activeGameController.getGui().getSettings().setInCheck(false);
         }
 
     }
 
+    /**
+     * Applies the move for the White AI because the white AI must move in the beginning first
+     */
     public void whiteAIMove(){
         if(activeGameController.getGui().getSettings().isAi_active() && !activeGameController.getGui().getSettings().isAi_colour()) {
             activeGameController.board.applyMove(activeGameController.getGui().getSettings().getAi().getNextMove(activeGameController.board));
@@ -96,6 +126,11 @@ public class ActiveGameHelper {
         }
     }
 
+    /**
+     * Is an Option and shows the Possible moves a clicked Figure can make
+     * @param startCol the column of the Cell/Grid where the Figure is standing
+     * @param startRow the row of the Cell/Grid where the Figure is standing
+     */
     public void showPossibleMoves(int startCol, int startRow) {
         CellIndex startIndex = new CellIndex(startRow, startCol);
         activeGameController.getChessBoard().getChildren().removeIf(node -> node instanceof Rectangle && ((Rectangle) node).getFill().equals(Paint.valueOf("#ff6347")));

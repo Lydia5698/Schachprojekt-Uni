@@ -26,9 +26,13 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * The Controller for the active game. Where you can see the chessboard
+ */
 public class ActiveGameController extends MainController {
     protected Board board;
     protected ActiveGameHelper activeGameHelper = new ActiveGameHelper(this);
+    protected Popups popups = new Popups(this);
     protected final List<String> halfMoves = new ArrayList<>();
     protected final List<Event> position = new ArrayList<>();
     protected int counter = 0;
@@ -55,12 +59,19 @@ public class ActiveGameController extends MainController {
     @FXML
     private Text moveList;
 
+    /**
+     * Shows the fxml file options
+     */
     @FXML
     void showOptions(){
         Stage stage = (Stage) btnOptions.getScene().getWindow();
         show_FXML("options.fxml", stage, getGui());
     }
 
+    /**
+     * Sets the Gui, makes the white AI move, changes the Language and updates the Board
+     * @param gui The current active Gui
+     */
     @Override
     public void setGui(Gui gui){
         this.gui = gui;
@@ -77,18 +88,31 @@ public class ActiveGameController extends MainController {
         this.board = board;
     }
 
+    /**
+     * The language is changed in the settings when the Image btnLanguage is pushed
+     */
     @FXML
-    void changeLanguage(MouseEvent event) {
+    void changeLanguage() {
         getGui().getSettings().changeLanguage();
         changeToLanguage();
     }
 
+    /**
+     * Changes all buttons and text fields to the selected language
+     */
     private void changeToLanguage(){
         btnLanguage.setImage(new Image(Objects.requireNonNull(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "03")))).toExternalForm())));
         btnOptions.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"31")));
     }
 
 
+    /**
+     * Saves the mouseEvent and the pos of the field clicked.
+     * if rotation and double click is activated the input is beeing changed
+     * activates the methode move
+     * @param event the event when the player clicks on a field
+     * @throws IOException for the popups if they dont get closed
+     */
     @FXML
     void mouseClicked(MouseEvent event) throws IOException {
         Node source = (Node) event.getSource();
@@ -97,13 +121,13 @@ public class ActiveGameController extends MainController {
         int rowIndex;
         colIndex = getColIndex(source);
         rowIndex = getRowIndex(source);
-        if(getGui().getSettings().isHighlightPossibleMoves())
-        activeGameHelper.showPossibleMoves(colIndex, rowIndex);
+        if(getGui().getSettings().isHighlightPossibleMoves()){
+            activeGameHelper.showPossibleMoves(colIndex, rowIndex);
 
+        }
         List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
-        String input;
         // checks if rotation is on and changes the coordinates for black
-        input = activeGameHelper.guiOptions(colIndex, rowIndex, columns);
+        String input = activeGameHelper.guiOptions(colIndex, rowIndex, columns);
         halfMoves.add(input);
         position.add(event);
         counter++;
@@ -111,8 +135,13 @@ public class ActiveGameController extends MainController {
 
     }
 
+    /**
+     * if two fields are clicked move creates the move from the halfMoves list and checks for Promotion
+     * then the methode checkAndDoMove is called to apply the move
+     * if rotate board is activated the board gets rotated after every drawn move
+     * @throws IOException for the popups if they dont get closed
+     */
     public void move() throws IOException {
-
         if (counter == 2 && !getGui().getSettings().isGameEnd()) {
             String fistField = halfMoves.get(0);
             String secondField = halfMoves.get(1);
@@ -121,9 +150,7 @@ public class ActiveGameController extends MainController {
 
             CellIndex endIndex = Board.cellIndexFor(move.getEnd());
             CellIndex startIndex = Board.cellIndexFor(move.getStart());
-            Cell startCell = board.getCheckerBoard()[startIndex.getRow()][startIndex.getColumn()];
-            int diffrow = Math.abs(startIndex.getRow() - endIndex.getRow());
-            input = checkPromotion(fistField, secondField, input, endIndex, startCell, diffrow);
+            input = checkPromotion(input,startIndex ,endIndex);
 
             Move moveNew = new Move(input);
 
@@ -135,21 +162,38 @@ public class ActiveGameController extends MainController {
                 boardRotation();
             }
             if(getGui().getSettings().isGameEnd()){
-                popupCheckMate();
+                popups.popupCheckMate();
             }
         }
 
 
     }
 
-    private String checkPromotion(String fistField, String secondField, String input, CellIndex endIndex, Cell startCell, int diffrow) throws IOException {
+    /**
+     * checks if the Pawn is allowed to make a promotion
+     * @param input the current move without the promotion
+     * @param startIndex the startIndex of the current move. The position of the Pawn
+     * @param endIndex the endIndex of the current move
+     * @return the new move with promoteTo. The letter for the Promotion
+     * @throws IOException for the popups if they dont get closed
+     */
+    private String checkPromotion(String input,CellIndex startIndex, CellIndex endIndex) throws IOException {
+        int diffrow = Math.abs(startIndex.getRow() - endIndex.getRow());
+        Cell startCell = board.getCheckerBoard()[startIndex.getRow()][startIndex.getColumn()];
+        String fistField = halfMoves.get(0);
+        String secondField = halfMoves.get(1);
+        String promoteMove = input;
+
         if (!startCell.isEmpty() && diffrow == 1 && String.valueOf(startCell.getMinion().getMinion_type()).equals("P") && (endIndex.getRow() == 0 || endIndex.getRow() == 7)) {
-            popupPromote();
-            input = fistField + "-" + secondField + getPromoteTo();
+            popupPromotion("promote.fxml");
+            promoteMove = fistField + "-" + secondField + getPromoteTo();
         }
-        return input;
+        return promoteMove;
     }
 
+    /**
+     * The history of the moves. It is getting printed above the chessboard
+     */
     void history() {
         String beatenString = "Moves";
         for (Move beatenMinion : board.getMoveList()) {
@@ -160,6 +204,9 @@ public class ActiveGameController extends MainController {
     }
 
 
+    /**
+     * rotates the Board. Deletes the old images and sets the new one in a rotated order
+     */
     private void boardRotation() {
         ImageView iv;
         chessBoard.getChildren().removeIf(node -> node instanceof ImageView);
@@ -185,6 +232,12 @@ public class ActiveGameController extends MainController {
         }
     }
 
+    /**
+     * Sets the Images for the Board. Gets the information of the Figures from the Board. Loads the Images from the Directory ChessFigures
+     * @param i the row of the chessboard
+     * @param j column of the chessboard
+     * @return the Image at the Index (row, column)
+     */
     private ImageView getImage(int i, int j) {
         ImageView iv = null;
         if (!board.getCheckerBoard()[i][j].isEmpty()) {
@@ -244,6 +297,9 @@ public class ActiveGameController extends MainController {
         return iv;
     }
 
+    /**
+     * Updates the Board after every drawn move. Rotation of the Board. Gets the Information from the board
+     */
     void updateBoard(){
         ImageView iv;
         chessBoard.getChildren().removeIf(node -> node instanceof ImageView);
@@ -259,6 +315,11 @@ public class ActiveGameController extends MainController {
             }
 
     }
+
+    /**
+     * Sets the beaten Minions on the Grid next to the chessboard. It distinguished between black and white Minions beaten
+     * @param sourceEnd the source (Minion) which is getting beaten
+     */
     void beatenMinionOutput(Node sourceEnd) {
         if(board.getBeaten().size() == 1){
             String minion = board.getBeaten().get(0);
@@ -279,7 +340,13 @@ public class ActiveGameController extends MainController {
     }
 
 
-
+    /**
+     * Gets the Node with Coordinates from the Gridpane chessboard. Only returns the Images at this position not the
+     * background
+     * @param row the row of the wanted node
+     * @param column the column of the wanted node
+     * @return the node at the coordinates
+     */
     Node getNodeByCoordinate(int row, int column) {
         for (Node node : chessBoard.getChildren()) {
             int nodeRow;
@@ -301,60 +368,13 @@ public class ActiveGameController extends MainController {
         return null;
     }
 
+
+    /**
+     * Pops up the promotionPopup where you can decide in which Minion you Pawn should be promoted
+     * @param filename the filename of the promotion fxml
+     * @throws IOException for the popups if they dont get closed
+     */
     @FXML
-    void popupCheck() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"82")));
-        if(board.isBlackIsTurn()){
-            alert.setContentText(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"80")));
-        }
-        else {
-            alert.setContentText(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"81")));
-        }
-
-        alert.show();
-    }
-
-    @FXML
-    void popupCheckMate() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"92")));
-        if (board.isBlackIsTurn()) {
-            alert.setContentText(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"90")));
-        } else {
-            alert.setContentText(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"91")));
-
-        }
-        alert.show();
-    }
-
-    @FXML
-    void popupMoveNotAllowed() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "70")));
-        alert.setContentText(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "71")));
-        alert.show();
-    }
-
-    @FXML
-    void popupDoubleClick() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "83")));
-        if(board.isBlackIsTurn()){
-            alert.setContentText(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "84")) + firstMinionClickedBlack);
-        }
-        else {
-            alert.setContentText(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "84")) + firstMinionClickedWhite);
-        }
-        alert.show();
-    }
-
-    @FXML
-    void popupPromote() throws IOException {
-        popupPromotion("promote.fxml");
-
-    }
-
     public void popupPromotion(String filename) throws IOException {
         Stage newWindow = new Stage();
         FXMLLoader loader = new FXMLLoader();
@@ -369,6 +389,11 @@ public class ActiveGameController extends MainController {
         newWindow.showAndWait();
     }
 
+    /**
+     * The row index of the Gridpane is null for 0.
+     * @param source the node which is clicked
+     * @return the right row index without null
+     */
     private int getRowIndex(Node source) {
         int rowIndex;
         if (GridPane.getRowIndex(source) == null) {
@@ -379,6 +404,11 @@ public class ActiveGameController extends MainController {
         return rowIndex;
     }
 
+    /**
+     * The column index of the Gridpane is null for 0.
+     * @param source the node which is clicked
+     * @return the right column index without null
+     */
     private int getColIndex(Node source) {
         int colIndex;
         if(GridPane.getColumnIndex(source) == null){

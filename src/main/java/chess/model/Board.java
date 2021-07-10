@@ -271,7 +271,7 @@ public class Board {
             if(settings.isGui_active()){
                 System.out.println("!"+ settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber()+"82")));
             }
-            settings.setCheck(true);
+            settings.setInCheck(true);
 
         }
         //check if in Check Mate

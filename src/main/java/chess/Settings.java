@@ -16,7 +16,7 @@ public class Settings {
     Board board = new Board();
     Language language = new Language();
     protected boolean gui_active = false;
-    protected boolean isCheck = false;
+    protected boolean isInCheck = false;
     protected boolean gameEnd = false;
     protected boolean ai_active = false;
     protected boolean ai_colour = false;
@@ -35,6 +35,9 @@ public class Settings {
     private boolean server = false;
     String languageNumber = "1";
 
+    /**
+     * Sets the setting in the Board
+     */
     //constructor
     public Settings() { board.setSettings(this); }
 
@@ -141,12 +144,12 @@ public class Settings {
         this.gui_active = gui_active;
     }
 
-    public boolean isCheck() {
-        return isCheck;
+    public boolean isInCheck() {
+        return isInCheck;
     }
 
-    public void setCheck(boolean check) {
-        isCheck = check;
+    public void setInCheck(boolean inCheck) {
+        isInCheck = inCheck;
     }
 
     public boolean isGameEnd() {
@@ -158,7 +161,9 @@ public class Settings {
     }
 
 
-
+    /**
+     * Changes the booleans for the Language and updates the Language number so the right Language is load from the Dictionary
+     */
     public void changeLanguage(){
         if(isLanguageEnglish()){
             setLanguageEnglish(false);
