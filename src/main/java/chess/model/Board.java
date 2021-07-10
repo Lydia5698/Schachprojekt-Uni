@@ -148,18 +148,21 @@ public class Board {
             startCell.setMinion(null);
             endCell.setMinion(minion);
             blackIsTurn = !blackIsTurn;
-            System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
+            if(!settings.isGui_active()){
+                System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
+                checkAndPrintCheckCheckMate(minion);
+            }
             moveList.add(move);
             manuals.spManuals.promote(endIndex, promoteTo, checkerBoard);
-            //check if in Check or in CheckMate
-            checkAndPrintCheckCheckMate(minion);
             allowedMove = true;
 
         }
         // check if special move
         else if (specialMove(move, startIndex, endIndex)) {
             //check if in Check
-            checkAndPrintCheckCheckMate(minion);
+            if(!settings.isGui_active()){
+                checkAndPrintCheckCheckMate(minion);
+            }
             allowedMove = true;
         }
         // move is not allowed
@@ -168,7 +171,9 @@ public class Board {
                 System.out.println("!Move not allowed");
             }
             else {
-                System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber()+"71")));
+                if(!settings.isGui_active()){
+                    System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber()+"71")));
+                }
             }
             allowedMove = false;
         }

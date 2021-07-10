@@ -15,6 +15,7 @@ public class Settings {
     AI ai = new AI(false);
     Board board = new Board();
     Language language = new Language();
+    protected boolean gui_active = false;
     protected boolean ai_active = false;
     protected boolean ai_colour = false;
     protected boolean rotateBoard = false;
@@ -129,6 +130,15 @@ public class Settings {
     public void setLanguageNumber(String languageNumber) {
         this.languageNumber = languageNumber;
     }
+
+    public boolean isGui_active() {
+        return gui_active;
+    }
+
+    public void setGui_active(boolean gui_active) {
+        this.gui_active = gui_active;
+    }
+
 
     public void changeLanguage(){
         if(isLanguageEnglish()){

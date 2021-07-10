@@ -15,10 +15,10 @@ import java.util.Objects;
 public class StartScreenController extends MainController {
 
     @FXML
-    private Button btnSpielstart;
+    private Button btnGameStart;
 
     @FXML
-    private Button btnAnleitung;
+    private Button btnRules;
 
     @FXML
     private Label titel;
@@ -35,20 +35,20 @@ public class StartScreenController extends MainController {
     }
 
     /**
-     * Changes the Stage to the anleitung.fxml when the button rules is pushed
+     * Changes the Stage to the manual.fxml when the button rules is pushed
      */
     @FXML
-    void showAnleitung() {
-        Stage stage = (Stage) btnAnleitung.getScene().getWindow();
-        show_FXML("anleitung.fxml", stage, getGui());
+    void showRules() {
+        Stage stage = (Stage) btnRules.getScene().getWindow();
+        show_FXML("manual.fxml", stage, getGui());
     }
 
     /**
      * Changes the Stage to the gameChoice.fxml when the button Game Start is pushed
      */
     @FXML
-    void showSpielauswahl() {
-        Stage stage = (Stage) btnSpielstart.getScene().getWindow();
+    void showGameChoice() {
+        Stage stage = (Stage) btnGameStart.getScene().getWindow();
         show_FXML("gameChoice.fxml", stage, getGui());
     }
 
@@ -65,16 +65,17 @@ public class StartScreenController extends MainController {
      * Changes all buttons and text fields to the selected language
      */
     private void changeToLanguage(){
-        btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"03"))).toExternalForm())));
+        btnLanguage.setImage(new Image(Objects.requireNonNull(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "03")))).toExternalForm())));
         titel.setText(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"00")));
-        btnSpielstart.setText(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"01")));
-        btnAnleitung.setText(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"02")));
+        btnGameStart.setText(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"01")));
+        btnRules.setText(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"02")));
     }
 
     @Override
     public void setGui(Gui gui){
         this.gui = gui;
         changeToLanguage();
+        getGui().getSettings().setGui_active(true);
         btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(103))).toExternalForm()));
     }
 

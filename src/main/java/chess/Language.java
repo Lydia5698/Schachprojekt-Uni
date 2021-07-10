@@ -42,7 +42,7 @@ public class Language {
         dic.put(230, "Zurück");
         dic.put(231, "Optionen");
         dic.put(232, "Zeigt mögliche Züge an");
-        dic.put(233, "Zeigt an ob der König im Schach steht");
+        dic.put(233, "Zeigt an, ob der König im Schach steht");
         dic.put(234, "Kein Mehrfachklicken erlaubt");
         dic.put(235, "Das Spielfeld wird automatisch nach jedem Zug gedreht");
         dic.put(236, "Spiel beenden");
@@ -55,7 +55,7 @@ public class Language {
                 "Standardmäßig ist die Ausgabe ob jemand im Schach steht unterdrückt. Dies kann in den Optionen geändert werden. " +
                 "Außerdem kann in den Optionen eingestellt werden, ob die möglichen Züge der angeklickten Figur angezeigt werden sollen. " +
                 "Die Rotation des Bordes kann auch in den hier aktiviert werden. Dann Rotiert das Board immer mit dem aktiven Spieler. " +
-                "Die letzte Option ist das Mehrfachklicken zum verbieten. Dann kann der Spieler nur die Figur ziehen, die zuerst angeklickt wurde\n" +
+                "Die letzte Option ist das Mehrfachklicken zu verbieten. Dann kann der Spieler nur die Figur ziehen, die zuerst angeklickt wurde\n" +
                 "\n" +
                 "Die Optionen sind erreichbar sobald man das Spiel gestartet hat\n" +
                 "\n" +
@@ -72,6 +72,7 @@ public class Language {
                 "Bei diesem Spielmodus kannst du mit deinen Freund/-innen übers Netzwerk spielen\n" +
                 "\n" +
                 "Dieses Schachspiel folgt den Allgemeinen Regeln des deutschen Schachbundes. Für weitere Informationen "); // Anleitung Text
+        dic.put(242, "Anleitung");
         // promote
         dic.put(250, "Wähle eine Figur um deinen Pawn zu befördern");
         // colourSelect
@@ -137,7 +138,31 @@ public class Language {
         dic.put(136, "End Game");
         // manual
         dic.put(140, "Back");
-        dic.put(141, "This chess game follows the general rules of the German Chess Federation. For more information"); // Anleitung Text
+        dic.put(141, "The pieces in this chess game are moved with a click.\n" +
+                "This means that first the field with the figure must be clicked and then the field on which the figure is to be dragged.\n" +
+                "  \n" +
+                "Options\n" +
+                "By default, the output whether someone is in check is suppressed. This can be changed in the options.\n" +
+                "In addition, you can set in the options whether the possible moves of the clicked figure should be displayed.\n" +
+                "The rotation of the board can also be activated here. Then the board always rotates with the active player.\n" +
+                "The last option is to prohibit multiple clicks. Then the player can only move the figure that was clicked first\n" +
+                "\n" +
+                " The options are available as soon as you have started the game\n" +
+                "\n" +
+                "Start Game\n" +
+                "At the beginning of each game you can choose between three types of game\n" +
+                "\n" +
+                "pvp\n" +
+                "A normal game of chess is played here. It all takes place locally on your computer. So grab a friend to play this game mode.\n" +
+                "\n" +
+                "AgainstAI\n" +
+                "In this game mode you can play against the computer. Before starting the game, you can choose which color you want to play. The computer will then play the other color.\n" +
+                "\n" +
+                "Network Game\n" +
+                "In this game mode you can play with your friends over the network\n" +
+                "\n" +
+                "This chess game follows the general rules of the German Chess Federation. For more information"); // Anleitung Text
+        dic.put(142, "Manual");
         // promote
         dic.put(150, "Choose a Figure to Promote your Pawn");
         // colourSelect

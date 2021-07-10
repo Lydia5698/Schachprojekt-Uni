@@ -2,6 +2,7 @@ package chess.gui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
@@ -10,10 +11,10 @@ import javafx.stage.Stage;
 import java.util.Objects;
 
 /**
- * The RulesController is the Controller for the anleitung.fxml
+ * The RulesController is the Controller for the manual.fxml
  * The player can read how to play the Game
  */
-public class RulesController extends MainController{
+public class ManualController extends MainController{
 
     @FXML
     private Button btnStartScreen;
@@ -23,6 +24,9 @@ public class RulesController extends MainController{
 
     @FXML
     private Text text;
+
+    @FXML
+    private Label title;
 
     /**
      * Changes the Stage to the startScreen.fxml when the button back is pushed
@@ -46,9 +50,10 @@ public class RulesController extends MainController{
      * Changes all buttons and text fields to the selected language
      */
     private void changeToLanguage(){
-        btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"03"))).toExternalForm())));
+        btnLanguage.setImage(new Image(Objects.requireNonNull(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "03")))).toExternalForm())));
         btnStartScreen.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"40")));
         text.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"41")));
+        title.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"42")));
     }
 
     @Override

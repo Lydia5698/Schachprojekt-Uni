@@ -7,13 +7,13 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chess.gui.StartScreenController">
-   <Button fx:id="btnSpielstart" layoutX="243.0" layoutY="149.0" mnemonicParsing="false" onMouseClicked="#showSpielauswahl" prefHeight="33.0" prefWidth="115.0" text="Game Start" AnchorPane.topAnchor="149.0" />
+   <Button fx:id="btnGameStart" layoutX="243.0" layoutY="149.0" mnemonicParsing="false" onMouseClicked="#showGameChoice" prefHeight="33.0" prefWidth="115.0" text="Game Start" AnchorPane.topAnchor="149.0" />
    <Button layoutX="243.0" layoutY="347.0" mnemonicParsing="false" onAction="#exit" prefHeight="26.0" prefWidth="115.0" text="Exit" AnchorPane.topAnchor="340.0" />
    <Label fx:id="titel" layoutX="224.0" layoutY="40.0" prefHeight="69.0" prefWidth="172.0" text="Chess" textAlignment="CENTER">
       <font>
          <Font name="Arial" size="48.0" />
       </font>
    </Label>
-   <Button fx:id="btnAnleitung" layoutX="243.0" layoutY="200.0" mnemonicParsing="false" onMouseClicked="#showAnleitung" prefHeight="33.0" prefWidth="115.0" text="Manual" AnchorPane.topAnchor="200.0" />
+   <Button fx:id="btnRules" layoutX="243.0" layoutY="200.0" mnemonicParsing="false" onMouseClicked="#showRules" prefHeight="33.0" prefWidth="115.0" text="Manual" AnchorPane.topAnchor="200.0" />
    <ImageView fx:id="btnLanguage" fitHeight="18.0" fitWidth="66.0" layoutX="568.0" layoutY="14.0" onMouseClicked="#changeLanguage" pickOnBounds="true" preserveRatio="true" />
 </AnchorPane>
