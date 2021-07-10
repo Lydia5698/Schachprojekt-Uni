@@ -28,13 +28,14 @@ import java.util.*;
 
 public class ActiveGameController extends MainController {
     protected Board board;
-    private final List<String> halfMoves = new ArrayList<>();
-    private final List<Event> position = new ArrayList<>();
-    private int counter = 0;
-    private int counterBeatenMinionsWhite = 0;
-    private int counterBeatenMinionsBlack = 0;
-    private String firstMinionClickedWhite = "";
-    private String firstMinionClickedBlack = "";
+    protected ActiveGameHelper activeGameHelper = new ActiveGameHelper(this);
+    protected final List<String> halfMoves = new ArrayList<>();
+    protected final List<Event> position = new ArrayList<>();
+    protected int counter = 0;
+    protected int counterBeatenMinionsWhite = 0;
+    protected int counterBeatenMinionsBlack = 0;
+    protected String firstMinionClickedWhite = "";
+    protected String firstMinionClickedBlack = "";
 
     @FXML
     private Group letter;
@@ -111,26 +112,14 @@ public class ActiveGameController extends MainController {
         List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
         String input;
         // checks if rotation is on and changes the coordinates for black
-        if(board.isBlackIsTurn() && getGui().getSettings().isRotateBoard()){
-            input = columns.get(7 - colIndex) + (rowIndex+1);
-        }
-        else {
-            input = columns.get(colIndex) + (8 - rowIndex);
-        }
-        // sets first Minion Clicked for Black
-        if (getGui().getSettings().isDoubleClick() && board.isBlackIsTurn() && firstMinionClickedBlack.isEmpty()){
-            firstMinionClickedBlack = input;
-        }
-        // sets first Minion clicked for White
-        if(getGui().getSettings().isDoubleClick() && !board.isBlackIsTurn() && firstMinionClickedWhite.isEmpty()){
-            firstMinionClickedWhite = input;
-        }
+        input = activeGameHelper.guiOptions(colIndex, rowIndex, columns);
         halfMoves.add(input);
         position.add(event);
         counter++;
         move();
 
     }
+
     public void move() throws IOException {
 
         if (counter == 2 && !board.isGameEnd()) {
@@ -151,7 +140,7 @@ public class ActiveGameController extends MainController {
 
             Move moveNew = new Move(input);
 
-            checkAndDoMove(fistField, endIndex, startIndex, moveNew);
+            activeGameHelper.checkAndDoMove(fistField, endIndex, startIndex, moveNew);
             counter = 0;
             halfMoves.clear();
             position.clear();
@@ -166,54 +155,7 @@ public class ActiveGameController extends MainController {
 
     }
 
-    private void checkAndDoMove(String fistField, CellIndex endIndex, CellIndex startIndex, Move moveNew) {
-        if (board.manuals.moveOfRightColour(moveNew, board) && board.manuals.checkIfValidMove(startIndex, endIndex,board.getCheckerBoard())) {
-            if (!getGui().getSettings().isDoubleClick() || (firstMinionClickedWhite.equals(fistField)) || firstMinionClickedBlack.equals(fistField)){
-                applyCurrentMove(moveNew);
-            }
-            else{
-                popupDoubleClick();
-            }
-
-        }
-        else {
-            popupMoveNotAllowed();
-            board.setAllowedMove(false);
-        }
-    }
-
-    private void applyCurrentMove(Move moveNew) {
-        firstMinionClickedBlack = "";
-        firstMinionClickedWhite = "";
-        board.applyMove(moveNew);
-        history();
-        Event end = position.get(1);
-        Node sourceEnd = (Node) end.getSource();
-        beatenMinion(sourceEnd);
-        updateBoard();
-        if (board.isCheck() & getGui().getSettings().isCheckVisible()) {
-            popupCheck();
-            board.setCheck(false);
-        }
-        if (board.isGameEnd()) {
-            popupCheckMate();
-        }
-        // network move
-        if (getGui().getSettings().isAi_active()) {
-            Move aiMove = getGui().getSettings().getAi().getNextMove(board);
-            board.applyMove(aiMove);
-            // geschlagene figur vom AI Move
-            CellIndex endIndex = Board.cellIndexFor(aiMove.getEnd());
-            sourceEnd = getNodeByCoordinate(endIndex.getRow(), endIndex.getColumn());
-            getGui().getSettings().getAi().increaseTurnNumber();
-            //update
-            beatenMinion(sourceEnd);
-            updateBoard();
-
-        }
-    }
-
-    private void history() {
+    void history() {
         String beatenString = "Moves";
         for (Move beatenMinion : board.getMoveList()) {
             String moveString = beatenMinion.getStart() + "-" + beatenMinion.getEnd();
@@ -307,7 +249,7 @@ public class ActiveGameController extends MainController {
         return iv;
     }
 
-    private void updateBoard(){
+    void updateBoard(){
         ImageView iv;
         chessBoard.getChildren().removeIf(node -> node instanceof ImageView);
         for (int i = 0; i < 8; i++) {
@@ -322,7 +264,7 @@ public class ActiveGameController extends MainController {
             }
 
     }
-    private void beatenMinion(Node sourceEnd) {
+    void beatenMinionOutput(Node sourceEnd) {
         if(board.getBeaten().size() == 1){
             String minion = board.getBeaten().get(0);
             char minionType = minion.charAt(0);
