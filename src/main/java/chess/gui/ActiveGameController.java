@@ -1,6 +1,7 @@
 package chess.gui;
 
 import chess.model.*;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,20 +33,21 @@ import java.util.*;
 public class ActiveGameController extends MainController {
     protected Board board;
     protected ActiveGameHelper activeGameHelper = new ActiveGameHelper(this);
-    protected Popups popups = new Popups(this);
+    protected Popups popups;
     protected final List<String> halfMoves = new ArrayList<>();
     protected final List<Event> position = new ArrayList<>();
     protected int counter = 0;
     protected int counterBeatenMinionsWhite = 0;
     protected int counterBeatenMinionsBlack = 0;
-    protected String firstMinionClickedWhite = "";
-    protected String firstMinionClickedBlack = "";
 
     @FXML
     private Group letter;
 
     @FXML
     private Button btnOptions;
+
+    @FXML
+    private ImageView btnSave;
 
     @FXML
     private ImageView btnLanguage;
@@ -66,6 +68,7 @@ public class ActiveGameController extends MainController {
     void showOptions(){
         Stage stage = (Stage) btnOptions.getScene().getWindow();
         show_FXML("options.fxml", stage, getGui());
+        //popups.savePopup();
     }
 
     /**
@@ -76,6 +79,7 @@ public class ActiveGameController extends MainController {
     public void setGui(Gui gui){
         this.gui = gui;
         setBoard(gui.settings.getBoard());
+        popups = new Popups();
         if(board.getMoveList().isEmpty()){
             activeGameHelper.whiteAIMove();
         }
@@ -103,6 +107,12 @@ public class ActiveGameController extends MainController {
     private void changeToLanguage(){
         btnLanguage.setImage(new Image(Objects.requireNonNull(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "03")))).toExternalForm())));
         btnOptions.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"31")));
+    }
+
+    @FXML
+    void saveGame(MouseEvent event) {
+        Stage stage = (Stage) btnSave.getScene().getWindow();
+        show_FXML("saveScreen.fxml", stage, getGui());
     }
 
 

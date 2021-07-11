@@ -38,6 +38,12 @@ public class CellIndex {
         this.column = column;
     }
 
+    /**
+     * makes an Index to a move as an String
+     * @param index the start Index
+     * @param end the end Index
+     * @return the move as an String
+     */
     public String makeIndexIntoString(CellIndex index, CellIndex end){
         char[] boardLetters = "abcdefgh".toCharArray();
         String idx = "";

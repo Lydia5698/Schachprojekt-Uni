@@ -1,5 +1,6 @@
 package chess.gui;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,12 +14,16 @@ import java.util.Objects;
  * The first Stage where the player can access the rules or the game choice
  */
 public class StartScreenController extends MainController {
+    //Popups popups = new Popups(getGui());
 
     @FXML
     private Button btnGameStart;
 
     @FXML
     private Button btnRules;
+
+    @FXML
+    private Button btnloadGame;
 
     @FXML
     private Label titel;
@@ -77,6 +82,11 @@ public class StartScreenController extends MainController {
         changeToLanguage();
         getGui().getSettings().setGui_active(true);
         btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(103))).toExternalForm()));
+    }
+
+    @FXML
+    void loadGame(ActionEvent event) {
+
     }
 
 }

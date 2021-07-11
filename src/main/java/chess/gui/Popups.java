@@ -1,70 +1,86 @@
 package chess.gui;
 
+import javafx.css.converter.StringConverter;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import javafx.scene.control.TextFormatter;
 
-import java.io.IOException;
 
-public class Popups {
-    ActiveGameController activeGameController;
-    public Popups(ActiveGameController activeGameController){
-        this.activeGameController = activeGameController;
-    }
 
+
+/**
+ * Creates all the Popups for the Gui
+ */
+public class Popups extends MainController {
+    Gui gui;
+
+
+    /**
+     * Pops up the popup for check
+     */
     @FXML
     void popupCheck() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(activeGameController.getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(activeGameController.getGui().getSettings().getLanguageNumber()+"82")));
-        if(activeGameController.board.isBlackIsTurn()){
-            alert.setContentText(activeGameController.getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(activeGameController.getGui().getSettings().getLanguageNumber()+"80")));
+        alert.setTitle(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber()+"82")));
+        if(gui.getSettings().getBoard().isBlackIsTurn()){
+            alert.setContentText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber()+"80")));
         }
         else {
-            alert.setContentText(activeGameController.getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(activeGameController.getGui().getSettings().getLanguageNumber()+"81")));
+            alert.setContentText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber()+"81")));
         }
 
         alert.show();
     }
 
+    /**
+     * Pops up the popup for check Mate
+     */
     @FXML
     void popupCheckMate() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(activeGameController.getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(activeGameController.getGui().getSettings().getLanguageNumber()+"92")));
-        if (activeGameController.board.isBlackIsTurn()) {
-            alert.setContentText(activeGameController.getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(activeGameController.getGui().getSettings().getLanguageNumber()+"90")));
+        alert.setTitle(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber()+"92")));
+        if (gui.getSettings().getBoard().isBlackIsTurn()) {
+            alert.setContentText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber()+"90")));
         } else {
-            alert.setContentText(activeGameController.getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(activeGameController.getGui().getSettings().getLanguageNumber()+"91")));
+            alert.setContentText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber()+"91")));
 
         }
         alert.show();
     }
 
+    /**
+     * Pops up the popup for move not allowed
+     */
     @FXML
     void popupMoveNotAllowed() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(activeGameController.getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(activeGameController.getGui().getSettings().getLanguageNumber() + "70")));
-        alert.setContentText(activeGameController.getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(activeGameController.getGui().getSettings().getLanguageNumber() + "71")));
+        alert.setTitle(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber() + "70")));
+        alert.setContentText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber() + "71")));
         alert.show();
     }
 
+    /**
+     * Pops up the popup for double click not allowed
+     */
     @FXML
-    void popupDoubleClick() {
+    void popupDoubleClick(String firstMinionClickedBlack, String firstMinionClickedWhite) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(activeGameController.getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(activeGameController.getGui().getSettings().getLanguageNumber() + "83")));
-        if(activeGameController.board.isBlackIsTurn()){
-            alert.setContentText(activeGameController.getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(activeGameController.getGui().getSettings().getLanguageNumber() + "84")) + activeGameController.firstMinionClickedBlack);
+        alert.setTitle(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber() + "83")));
+        if(gui.getSettings().getBoard().isBlackIsTurn()){
+            alert.setContentText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber() + "84")) + firstMinionClickedBlack);
         }
         else {
-            alert.setContentText(activeGameController.getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(activeGameController.getGui().getSettings().getLanguageNumber() + "84")) + activeGameController.firstMinionClickedWhite);
+            alert.setContentText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber() + "84")) + firstMinionClickedWhite);
         }
         alert.show();
     }
 
+    @Override
+    public void setGui(Gui gui){
+        this.gui = gui;
 
+    }
 
 
 }

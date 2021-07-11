@@ -19,6 +19,8 @@ import java.util.List;
  */
 public class ActiveGameHelper {
     ActiveGameController activeGameController;
+    protected String firstMinionClickedWhite = "";
+    protected String firstMinionClickedBlack = "";
 
     /**
      * Creates a activeGameHelper for the ActiveGameController.
@@ -45,12 +47,12 @@ public class ActiveGameHelper {
             input = columns.get(colIndex) + (8 - rowIndex);
         }
         // sets first Minion Clicked for Black
-        if (activeGameController.getGui().getSettings().isDoubleClick() && activeGameController.board.isBlackIsTurn() && activeGameController.firstMinionClickedBlack.isEmpty()){
-            activeGameController.firstMinionClickedBlack = input;
+        if (activeGameController.getGui().getSettings().isDoubleClick() && activeGameController.board.isBlackIsTurn() && firstMinionClickedBlack.isEmpty()){
+            firstMinionClickedBlack = input;
         }
         // sets first Minion clicked for White
-        if(activeGameController.getGui().getSettings().isDoubleClick() && !activeGameController.board.isBlackIsTurn() && activeGameController.firstMinionClickedWhite.isEmpty()){
-            activeGameController.firstMinionClickedWhite = input;
+        if(activeGameController.getGui().getSettings().isDoubleClick() && !activeGameController.board.isBlackIsTurn() && firstMinionClickedWhite.isEmpty()){
+            firstMinionClickedWhite = input;
         }
         return input;
     }
@@ -66,11 +68,11 @@ public class ActiveGameHelper {
      */
     void checkAndDoMove(String fistField, CellIndex endIndex, CellIndex startIndex, Move moveNew) {
         if (activeGameController.board.manuals.moveOfRightColour(moveNew, activeGameController.board) && activeGameController.board.manuals.checkIfValidMove(startIndex, endIndex,activeGameController.board.getCheckerBoard())) {
-            if (!activeGameController.getGui().getSettings().isDoubleClick() || (activeGameController.firstMinionClickedWhite.equals(fistField)) || activeGameController.firstMinionClickedBlack.equals(fistField)){
+            if (!activeGameController.getGui().getSettings().isDoubleClick() || (firstMinionClickedWhite.equals(fistField)) || firstMinionClickedBlack.equals(fistField)){
                 applyCurrentMove(moveNew);
             }
             else{
-                activeGameController.popups.popupDoubleClick();
+                activeGameController.popups.popupDoubleClick(firstMinionClickedBlack, firstMinionClickedWhite);
             }
 
         }
@@ -85,8 +87,8 @@ public class ActiveGameHelper {
      * @param moveNew the move (startIndex + endIndex + promoteTo)
      */
     private void applyCurrentMove(Move moveNew) {
-        activeGameController.firstMinionClickedBlack = "";
-        activeGameController.firstMinionClickedWhite = "";
+        firstMinionClickedBlack = "";
+        firstMinionClickedWhite = "";
         activeGameController.board.applyMove(moveNew);
         activeGameController.history();
         Event end = activeGameController.position.get(1);
@@ -106,7 +108,7 @@ public class ActiveGameHelper {
             activeGameController.updateBoard();
 
         }
-        if (activeGameController.getGui().getSettings().isInCheck() && activeGameController.getGui().getSettings().isCheckVisible()) {
+        if (activeGameController.getGui().getSettings().getIsInCheck() && activeGameController.getGui().getSettings().isCheckVisible()) {
             activeGameController.popups.popupCheck();
             activeGameController.getGui().getSettings().setInCheck(false);
         }

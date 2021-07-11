@@ -144,7 +144,7 @@ public class Settings {
         this.gui_active = gui_active;
     }
 
-    public boolean isInCheck() {
+    public boolean getIsInCheck() {
         return isInCheck;
     }
 

@@ -16,4 +16,5 @@
    </Label>
    <Button fx:id="btnRules" layoutX="243.0" layoutY="200.0" mnemonicParsing="false" onMouseClicked="#showRules" prefHeight="33.0" prefWidth="115.0" text="Manual" AnchorPane.topAnchor="200.0" />
    <ImageView fx:id="btnLanguage" fitHeight="18.0" fitWidth="66.0" layoutX="568.0" layoutY="14.0" onMouseClicked="#changeLanguage" pickOnBounds="true" preserveRatio="true" />
+   <Button fx:id="btnloadGame" layoutX="243.0" layoutY="250.0" mnemonicParsing="false" onAction="#loadGame" prefHeight="33.0" prefWidth="115.0" text="Load Game" />
 </AnchorPane>

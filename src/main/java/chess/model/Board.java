@@ -42,7 +42,10 @@ public class Board {
     }
 
 
-
+    /**
+     * saves the board in a String
+     * @return string output with the Board
+     */
     public String showBoard() {
         StringBuilder output = new StringBuilder();                       // stringbuilder erzeugen eines neuen objektes
         int horizontNum = 8;                                              // varibale deklarieren (max value)
@@ -58,6 +61,11 @@ public class Board {
         return output.toString();                                         //rückgabe des string output
     }
 
+    /**
+     * iterates over the row and sets the Minions
+     * @param horizont the row of the Board
+     * @param black the colour of the minion
+     */
     private void initHorizont(int horizont, boolean black) {              //aufbauen der truppen
         char[] officerline = "RNBQKBNR".toCharArray();                    //offiziere in string schreiben
 
@@ -74,6 +82,13 @@ public class Board {
     }
 
 
+    /**
+     * initialises the Board with the Figures
+     * @param horizont the row of the Board
+     * @param black the colour of the minion
+     * @param tmp the Pawns in a temporary String
+     * @param i the current row
+     */
     private void initialiseCellsWithFigures(int horizont, boolean black, char[] tmp, int i) {
         switch (tmp[i]) {
             case 'R':

@@ -27,6 +27,9 @@ public class OptionsController extends MainController {
     private Button btnStartScreen;
 
     @FXML
+    private Button btnExit;
+
+    @FXML
     private Button btnChessBoard;
 
     @FXML
@@ -65,7 +68,9 @@ public class OptionsController extends MainController {
      */
     @FXML
     void exit() {
-        System.exit(0);
+        Stage stage = (Stage) btnExit.getScene().getWindow();
+        show_FXML("saveScreen.fxml", stage, getGui());
+        //System.exit(0);
     }
 
     /**
@@ -130,7 +135,7 @@ public class OptionsController extends MainController {
      * Changes all buttons and text fields to the selected language
      */
     private void changeToLanguage(){
-        btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"03"))).toExternalForm())));
+        btnLanguage.setImage(new Image(Objects.requireNonNull(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "03")))).toExternalForm())));
         btnChessBoard.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"30")));
         title.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"31")));
         HighlightPossibleMoves.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"32")));

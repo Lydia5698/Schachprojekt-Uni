@@ -1,10 +1,12 @@
 package chess.gui;
 
 import chess.model.AI;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 
@@ -46,6 +48,11 @@ public class MainController {
             ((MainController)loader.getController()).setGui(gui); //hier noch oberklasse
             primaryStage.setScene(gameScene);
             primaryStage.show();
+         /*   primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                public void handle(WindowEvent we) {
+                     // TODO hier save funktion einfügen
+                }
+            });*/
             return loader.getController();
 
 

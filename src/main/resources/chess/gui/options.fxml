@@ -14,7 +14,7 @@
          <Font name="Arial" size="13.0" />
       </font>
    </CheckBox>
-   <Button layoutX="188.0" layoutY="344.0" mnemonicParsing="false" onAction="#exit" prefHeight="42.0" prefWidth="209.0" text="Exit">
+   <Button fx:id="btnExit" layoutX="188.0" layoutY="344.0" mnemonicParsing="false" onAction="#exit" prefHeight="42.0" prefWidth="209.0" text="Exit">
       <font>
          <Font name="Arial" size="13.0" />
       </font>

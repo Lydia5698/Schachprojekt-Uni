@@ -2,7 +2,9 @@ package chess.gui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.util.function.UnaryOperator;
@@ -28,6 +30,13 @@ public class NetworkController extends MainController {
     @FXML
     private Button submit;
 
+    @FXML
+    private RadioButton hostGame;
+
+    @FXML
+    private RadioButton joinGame;
+
+
     @Override
     public void setGui(Gui gui){
         this.gui = gui;
@@ -48,7 +57,7 @@ public class NetworkController extends MainController {
     }
 
     @FXML
-    void submit(ActionEvent event) {
+    void submit(ActionEvent event) { //TODO wahl zwischen host game and join Game
         ipAdress.getText();
         portnumber.getText(); // von hier zu settings ins Network? Was ist mit der Farbwahl?
         Stage stage = (Stage) submit.getScene().getWindow();
@@ -68,29 +77,56 @@ public class NetworkController extends MainController {
         return "^" + ipAddress;
     }
 
-    UnaryOperator<TextFormatter.Change> filter = new UnaryOperator<TextFormatter.Change>() {
+    UnaryOperator<TextFormatter.Change> filter = t -> {
 
-        @Override
-        public TextFormatter.Change apply(TextFormatter.Change t) {
-
-            if (t.isReplaced())
-                if(t.getText().matches("[^0-9]"))
-                    t.setText(t.getControlText().substring(t.getRangeStart(), t.getRangeEnd()));
+        if (t.isReplaced())
+            if(t.getText().matches("[^0-9]"))
+                t.setText(t.getControlText().substring(t.getRangeStart(), t.getRangeEnd()));
 
 
-            if (t.isAdded()) {
-                if (t.getControlText().contains(".")) {
-                    if (t.getText().matches("[^0-9]")) {
-                        t.setText("");
-                    }
-                } else if (t.getText().matches("[^0-9.]")) {
+        if (t.isAdded()) {
+            if (t.getControlText().contains(".")) {
+                if (t.getText().matches("[^0-9]")) {
                     t.setText("");
                 }
+            } else if (t.getText().matches("[^0-9.]")) {
+                t.setText("");
             }
-
-            return t;
         }
+
+        return t;
     };
+
+
+    @FXML
+    void hostNetworkGame(ActionEvent event) {
+        joinGame.setSelected(false);
+        setProperties();
+    }
+
+    @FXML
+    void joinNetworkGame(ActionEvent event) {
+        hostGame.setSelected(false);
+        setProperties();
+    }
+
+    void setProperties(){
+        if(joinGame.isSelected()){
+            ipAdress.setVisible(false);
+            portnumber.setVisible(false);
+            txtIpAdress.setVisible(false);
+            txtPortnumber.setVisible(false);
+        }
+        else if(hostGame.isSelected()) {
+            ipAdress.setVisible(true);
+            portnumber.setVisible(true);
+            txtIpAdress.setVisible(true);
+            txtPortnumber.setVisible(true);
+        }
+    }
+
+
+
 
 
 }
