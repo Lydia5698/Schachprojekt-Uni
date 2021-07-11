@@ -2,9 +2,7 @@ package chess.gui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.util.function.UnaryOperator;
@@ -38,7 +36,7 @@ public class NetworkController extends MainController {
 
 
     @Override
-    public void setGui(Gui gui){
+    public void setGui(Gui gui) {
         this.gui = gui;
         ipAdress.setTextFormatter(ipAddressTextFormatter());
         portnumber.setTextFormatter(new TextFormatter<>(filter));
@@ -63,14 +61,13 @@ public class NetworkController extends MainController {
         Stage stage = (Stage) submit.getScene().getWindow();
         show_FXML("activeGame.fxml", stage, getGui());
     }
-    public static TextFormatter<TextFormatter.Change> ipAddressTextFormatter()
-    {
+
+    public static TextFormatter<TextFormatter.Change> ipAddressTextFormatter() {
         UnaryOperator<TextFormatter.Change> ipAddressFilter = change -> change.getControlNewText().matches(ipAddressRegex) ? change : null;
         return new TextFormatter<>(ipAddressFilter);
     }
 
-    private static String makePartialIPRegex()
-    {
+    private static String makePartialIPRegex() {
         String partialBlock = "(([01]?[0-9]{0,2})|(2[0-4][0-9])|(25[0-5]))";
         String subsequentPartialBlock = "(\\." + partialBlock + ")";
         String ipAddress = partialBlock + "?" + subsequentPartialBlock + "{0,3}";
@@ -80,7 +77,7 @@ public class NetworkController extends MainController {
     UnaryOperator<TextFormatter.Change> filter = t -> {
 
         if (t.isReplaced())
-            if(t.getText().matches("[^0-9]"))
+            if (t.getText().matches("[^0-9]"))
                 t.setText(t.getControlText().substring(t.getRangeStart(), t.getRangeEnd()));
 
 
@@ -110,23 +107,19 @@ public class NetworkController extends MainController {
         setProperties();
     }
 
-    void setProperties(){
-        if(joinGame.isSelected()){
+    void setProperties() {
+        if (joinGame.isSelected()) {
             ipAdress.setVisible(false);
             portnumber.setVisible(false);
             txtIpAdress.setVisible(false);
             txtPortnumber.setVisible(false);
-        }
-        else if(hostGame.isSelected()) {
+        } else if (hostGame.isSelected()) {
             ipAdress.setVisible(true);
             portnumber.setVisible(true);
             txtIpAdress.setVisible(true);
             txtPortnumber.setVisible(true);
         }
     }
-
-
-
 
 
 }

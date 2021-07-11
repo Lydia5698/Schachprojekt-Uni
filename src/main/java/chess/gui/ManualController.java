@@ -14,7 +14,7 @@ import java.util.Objects;
  * The RulesController is the Controller for the manual.fxml
  * The player can read how to play the Game
  */
-public class ManualController extends MainController{
+public class ManualController extends MainController {
 
     @FXML
     private Button btnStartScreen;
@@ -49,15 +49,15 @@ public class ManualController extends MainController{
     /**
      * Changes all buttons and text fields to the selected language
      */
-    private void changeToLanguage(){
+    private void changeToLanguage() {
         btnLanguage.setImage(new Image(Objects.requireNonNull(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "03")))).toExternalForm())));
-        btnStartScreen.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"40")));
-        text.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"41")));
-        title.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"42")));
+        btnStartScreen.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "40")));
+        text.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "41")));
+        title.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "42")));
     }
 
     @Override
-    public void setGui(Gui gui){
+    public void setGui(Gui gui) {
         this.gui = gui;
         changeToLanguage();
 

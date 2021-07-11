@@ -44,6 +44,7 @@ public class Board {
 
     /**
      * saves the board in a String
+     *
      * @return string output with the Board
      */
     public String showBoard() {
@@ -63,8 +64,9 @@ public class Board {
 
     /**
      * iterates over the row and sets the Minions
+     *
      * @param horizont the row of the Board
-     * @param black the colour of the minion
+     * @param black    the colour of the minion
      */
     private void initHorizont(int horizont, boolean black) {              //aufbauen der truppen
         char[] officerline = "RNBQKBNR".toCharArray();                    //offiziere in string schreiben
@@ -84,10 +86,11 @@ public class Board {
 
     /**
      * initialises the Board with the Figures
+     *
      * @param horizont the row of the Board
-     * @param black the colour of the minion
-     * @param tmp the Pawns in a temporary String
-     * @param i the current row
+     * @param black    the colour of the minion
+     * @param tmp      the Pawns in a temporary String
+     * @param i        the current row
      */
     private void initialiseCellsWithFigures(int horizont, boolean black, char[] tmp, int i) {
         switch (tmp[i]) {
@@ -159,7 +162,7 @@ public class Board {
             startCell.setMinion(null);
             endCell.setMinion(minion);
             blackIsTurn = !blackIsTurn;
-            if(!settings.isGui_active()){
+            if (!settings.isGui_active()) {
                 System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
             }
             checkAndPrintCheckCheckMate(minion);
@@ -176,12 +179,11 @@ public class Board {
         }
         // move is not allowed
         else {
-            if(simple){
+            if (simple) {
                 System.out.println("!Move not allowed");
-            }
-            else {
-                if(!settings.isGui_active()){
-                    System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber()+"71")));
+            } else {
+                if (!settings.isGui_active()) {
+                    System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber() + "71")));
                 }
             }
             allowedMove = false;
@@ -283,23 +285,23 @@ public class Board {
      */
     protected void checkAndPrintCheckCheckMate(Minion minion) {
         if (manuals.isCheck(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
-            if(settings.isGui_active()){
-                System.out.println("!"+ settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber()+"82")));
+            if (settings.isGui_active()) {
+                System.out.println("!" + settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber() + "82")));
             }
             settings.setInCheck(true);
 
         }
         //check if in Check Mate
         if (manuals.checkMate(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
-            if(settings.isGui_active()){
-                System.out.println("!"+ settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber()+"92")));
-                System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber()+"93")));
+            if (settings.isGui_active()) {
+                System.out.println("!" + settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber() + "92")));
+                System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber() + "93")));
             }
             settings.setGameEnd(true);
         } else if (staleMate.isStaleMate(!minion.isBlack(), checkerBoard) && !simple) {
-            if(settings.isGui_active()){
-                System.out.println("!" + settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber()+"94")));
-                System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber()+"93")));
+            if (settings.isGui_active()) {
+                System.out.println("!" + settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber() + "94")));
+                System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber() + "93")));
             }
             settings.setGameEnd(true);
         }

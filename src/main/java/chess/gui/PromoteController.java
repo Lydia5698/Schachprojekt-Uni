@@ -13,7 +13,7 @@ import java.util.Objects;
  * The PromoteController is the Controller for the promote.fxml
  * The player can decide which Minion the Pawn is promote to
  */
-public class PromoteController extends MainController{
+public class PromoteController extends MainController {
 
     ActiveGameController activeGameController;
 
@@ -79,9 +79,10 @@ public class PromoteController extends MainController{
 
     /**
      * Sets the active Game controller so that the promoteTo gets set in the activeGameController
+     *
      * @param activeGameController the activeGameController
      */
-    public void setController(ActiveGameController activeGameController){
+    public void setController(ActiveGameController activeGameController) {
         this.activeGameController = activeGameController;
     }
 
@@ -97,13 +98,13 @@ public class PromoteController extends MainController{
     /**
      * Changes all buttons and text fields to the selected language
      */
-    private void changeToLanguage(){
+    private void changeToLanguage() {
         btnLanguage.setImage(new Image(Objects.requireNonNull(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "03")))).toExternalForm())));
-        header.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"50")));
+        header.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "50")));
     }
 
     @Override
-    public void setGui(Gui gui){
+    public void setGui(Gui gui) {
         this.gui = gui;
         changeToLanguage();
     }

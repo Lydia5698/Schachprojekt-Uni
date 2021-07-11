@@ -7,8 +7,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextFormatter;
 
 
-
-
 /**
  * Creates all the Popups for the Gui
  */
@@ -22,12 +20,11 @@ public class Popups extends MainController {
     @FXML
     void popupCheck() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber()+"82")));
-        if(gui.getSettings().getBoard().isBlackIsTurn()){
-            alert.setContentText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber()+"80")));
-        }
-        else {
-            alert.setContentText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber()+"81")));
+        alert.setTitle(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber() + "82")));
+        if (gui.getSettings().getBoard().isBlackIsTurn()) {
+            alert.setContentText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber() + "80")));
+        } else {
+            alert.setContentText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber() + "81")));
         }
 
         alert.show();
@@ -39,11 +36,11 @@ public class Popups extends MainController {
     @FXML
     void popupCheckMate() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber()+"92")));
+        alert.setTitle(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber() + "92")));
         if (gui.getSettings().getBoard().isBlackIsTurn()) {
-            alert.setContentText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber()+"90")));
+            alert.setContentText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber() + "90")));
         } else {
-            alert.setContentText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber()+"91")));
+            alert.setContentText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber() + "91")));
 
         }
         alert.show();
@@ -67,17 +64,16 @@ public class Popups extends MainController {
     void popupDoubleClick(String firstMinionClickedBlack, String firstMinionClickedWhite) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber() + "83")));
-        if(gui.getSettings().getBoard().isBlackIsTurn()){
+        if (gui.getSettings().getBoard().isBlackIsTurn()) {
             alert.setContentText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber() + "84")) + firstMinionClickedBlack);
-        }
-        else {
+        } else {
             alert.setContentText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber() + "84")) + firstMinionClickedWhite);
         }
         alert.show();
     }
 
     @Override
-    public void setGui(Gui gui){
+    public void setGui(Gui gui) {
         this.gui = gui;
 
     }

@@ -114,7 +114,7 @@ public class OptionsController extends MainController {
     /**
      * sets the checkboxes as active/not active
      */
-    void checkBoxes(){
+    void checkBoxes() {
         cbRotateBoard.setSelected(getGui().getSettings().isRotateBoard());
         HighlightPossibleMoves.setSelected(getGui().getSettings().isHighlightPossibleMoves());
         cbDoubleClick.setSelected(getGui().getSettings().isDoubleClick());
@@ -134,19 +134,19 @@ public class OptionsController extends MainController {
     /**
      * Changes all buttons and text fields to the selected language
      */
-    private void changeToLanguage(){
+    private void changeToLanguage() {
         btnLanguage.setImage(new Image(Objects.requireNonNull(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "03")))).toExternalForm())));
-        btnChessBoard.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"30")));
-        title.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"31")));
-        HighlightPossibleMoves.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"32")));
-        checkVisible.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"33")));
-        cbDoubleClick.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"34")));
-        cbRotateBoard.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"35")));
-        btnStartScreen.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"36")));
+        btnChessBoard.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "30")));
+        title.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "31")));
+        HighlightPossibleMoves.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "32")));
+        checkVisible.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "33")));
+        cbDoubleClick.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "34")));
+        cbRotateBoard.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "35")));
+        btnStartScreen.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "36")));
     }
 
     @Override
-    public void setGui(Gui gui){
+    public void setGui(Gui gui) {
         this.gui = gui;
         checkBoxes();
         changeToLanguage();

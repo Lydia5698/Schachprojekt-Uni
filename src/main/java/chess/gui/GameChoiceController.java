@@ -57,6 +57,7 @@ public class GameChoiceController extends MainController {
     /**
      * Changes the Stage to the activeGame.fxml when the button AgainstAI is pushed
      * and pops the popup for the Colour Choice
+     *
      * @throws IOException when the popup isnt getting closed
      */
     @FXML
@@ -78,6 +79,7 @@ public class GameChoiceController extends MainController {
 
     /**
      * The popup shows the colourSelect.fxml and waits until the colour is selected
+     *
      * @throws IOException in case the popup isnt getting closed
      */
     @FXML
@@ -87,7 +89,7 @@ public class GameChoiceController extends MainController {
         loader.setLocation(Gui.class.getResource("colourSelect.fxml"));
         Parent root = loader.load();
         Scene secondScene = new Scene(root);
-        ((MainController)loader.getController()).setGui(getGui());
+        ((MainController) loader.getController()).setGui(getGui());
         newWindow.setScene(secondScene);
         newWindow.initModality(Modality.WINDOW_MODAL);
         newWindow.initOwner(getGui().stage);
@@ -106,18 +108,18 @@ public class GameChoiceController extends MainController {
     /**
      * Changes all buttons and text fields to the selected language
      */
-    private void changeToLanguage(){
-        btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"03"))).toExternalForm())));
-        title.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"10")));
+    private void changeToLanguage() {
+        btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "03"))).toExternalForm())));
+        title.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "10")));
         title.setAlignment(Pos.CENTER);
-        btnChessBoard.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"11")));
-        btnChessKI.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"12")));
-        btnNetwork.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"13")));
+        btnChessBoard.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "11")));
+        btnChessKI.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "12")));
+        btnNetwork.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "13")));
 
     }
 
     @Override
-    public void setGui(Gui gui){
+    public void setGui(Gui gui) {
         this.gui = gui;
         changeToLanguage();
     }

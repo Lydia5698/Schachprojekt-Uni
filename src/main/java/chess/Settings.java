@@ -28,18 +28,20 @@ public class Settings {
     protected boolean languageEnglish = true;
     protected boolean black = false;
     protected Move clientMove = new Move("A0-A0");
-    protected Move serverMove = new Move ("A0-A0");
+    protected Move serverMove = new Move("A0-A0");
     protected boolean moveReceived = false;
     private int port;
     private String ip;
-    private boolean server = false;
+    private final boolean server = false;
     String languageNumber = "1";
 
     /**
      * Sets the setting in the Board
      */
     //constructor
-    public Settings() { board.setSettings(this); }
+    public Settings() {
+        board.setSettings(this);
+    }
 
     //methoden
 
@@ -164,36 +166,23 @@ public class Settings {
     /**
      * Changes the booleans for the Language and updates the Language number so the right Language is load from the Dictionary
      */
-    public void changeLanguage(){
-        if(isLanguageEnglish()){
+    public void changeLanguage() {
+        if (isLanguageEnglish()) {
             setLanguageEnglish(false);
             setLanguageGerman(true);
             setLanguageNumber("2");
-        }
-        else {
+        } else {
             setLanguageEnglish(true);
             setLanguageGerman(false);
             setLanguageNumber("1");
         }
     }
 
-    private Netw_Svr createServer(){
+    private Netw_Svr createServer() {
         System.out.println("server starting");
-        return new Netw_Svr(port, data->{
-            Platform.runLater(()->{
-                if (board.isBlackIsTurn() != black){
-                    System.out.println(data);
-                    this.clientMove = new Move(data);
-                    moveReceived = true;
-                    board.applyMove(clientMove);
-                }
-            });
-        });
-    }
-    private Netw_Cli createClient(){
-        return new Netw_Cli(ip, port, data->{
-            Platform.runLater(()->{
-                if (board.isBlackIsTurn() != black){
+        return new Netw_Svr(port, data -> {
+            Platform.runLater(() -> {
+                if (board.isBlackIsTurn() != black) {
                     System.out.println(data);
                     this.clientMove = new Move(data);
                     moveReceived = true;
@@ -203,9 +192,33 @@ public class Settings {
         });
     }
 
-    public boolean isMoveReceived() { return moveReceived; }
-    public Move getClientMove() { return clientMove; }
-    public Move getServerMove() { return serverMove; }
-    public boolean isServer() { return server; }
+    private Netw_Cli createClient() {
+        return new Netw_Cli(ip, port, data -> {
+            Platform.runLater(() -> {
+                if (board.isBlackIsTurn() != black) {
+                    System.out.println(data);
+                    this.clientMove = new Move(data);
+                    moveReceived = true;
+                    board.applyMove(clientMove);
+                }
+            });
+        });
+    }
+
+    public boolean isMoveReceived() {
+        return moveReceived;
+    }
+
+    public Move getClientMove() {
+        return clientMove;
+    }
+
+    public Move getServerMove() {
+        return serverMove;
+    }
+
+    public boolean isServer() {
+        return server;
+    }
 
 }

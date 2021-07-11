@@ -65,7 +65,7 @@ public class ActiveGameController extends MainController {
      * Shows the fxml file options
      */
     @FXML
-    void showOptions(){
+    void showOptions() {
         Stage stage = (Stage) btnOptions.getScene().getWindow();
         show_FXML("options.fxml", stage, getGui());
         //popups.savePopup();
@@ -73,14 +73,15 @@ public class ActiveGameController extends MainController {
 
     /**
      * Sets the Gui, makes the white AI move, changes the Language and updates the Board
+     *
      * @param gui The current active Gui
      */
     @Override
-    public void setGui(Gui gui){
+    public void setGui(Gui gui) {
         this.gui = gui;
         setBoard(gui.settings.getBoard());
         popups = new Popups();
-        if(board.getMoveList().isEmpty()){
+        if (board.getMoveList().isEmpty()) {
             activeGameHelper.whiteAIMove();
         }
         // network white Move
@@ -104,9 +105,9 @@ public class ActiveGameController extends MainController {
     /**
      * Changes all buttons and text fields to the selected language
      */
-    private void changeToLanguage(){
+    private void changeToLanguage() {
         btnLanguage.setImage(new Image(Objects.requireNonNull(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "03")))).toExternalForm())));
-        btnOptions.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber()+"31")));
+        btnOptions.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "31")));
     }
 
     @FXML
@@ -120,6 +121,7 @@ public class ActiveGameController extends MainController {
      * Saves the mouseEvent and the pos of the field clicked.
      * if rotation and double click is activated the input is beeing changed
      * activates the methode move
+     *
      * @param event the event when the player clicks on a field
      * @throws IOException for the popups if they dont get closed
      */
@@ -131,7 +133,7 @@ public class ActiveGameController extends MainController {
         int rowIndex;
         colIndex = getColIndex(source);
         rowIndex = getRowIndex(source);
-        if(getGui().getSettings().isHighlightPossibleMoves()){
+        if (getGui().getSettings().isHighlightPossibleMoves()) {
             activeGameHelper.showPossibleMoves(colIndex, rowIndex);
 
         }
@@ -149,6 +151,7 @@ public class ActiveGameController extends MainController {
      * if two fields are clicked move creates the move from the halfMoves list and checks for Promotion
      * then the methode checkAndDoMove is called to apply the move
      * if rotate board is activated the board gets rotated after every drawn move
+     *
      * @throws IOException for the popups if they dont get closed
      */
     public void move() throws IOException {
@@ -160,7 +163,7 @@ public class ActiveGameController extends MainController {
 
             CellIndex endIndex = Board.cellIndexFor(move.getEnd());
             CellIndex startIndex = Board.cellIndexFor(move.getStart());
-            input = checkPromotion(input,startIndex ,endIndex);
+            input = checkPromotion(input, startIndex, endIndex);
 
             Move moveNew = new Move(input);
 
@@ -168,10 +171,10 @@ public class ActiveGameController extends MainController {
             counter = 0;
             halfMoves.clear();
             position.clear();
-            if(getGui().getSettings().isRotateBoard() && !getGui().getSettings().isAi_active()){
+            if (getGui().getSettings().isRotateBoard() && !getGui().getSettings().isAi_active()) {
                 boardRotation();
             }
-            if(getGui().getSettings().isGameEnd()){
+            if (getGui().getSettings().isGameEnd()) {
                 popups.popupCheckMate();
             }
         }
@@ -181,13 +184,14 @@ public class ActiveGameController extends MainController {
 
     /**
      * checks if the Pawn is allowed to make a promotion
-     * @param input the current move without the promotion
+     *
+     * @param input      the current move without the promotion
      * @param startIndex the startIndex of the current move. The position of the Pawn
-     * @param endIndex the endIndex of the current move
+     * @param endIndex   the endIndex of the current move
      * @return the new move with promoteTo. The letter for the Promotion
      * @throws IOException for the popups if they dont get closed
      */
-    private String checkPromotion(String input,CellIndex startIndex, CellIndex endIndex) throws IOException {
+    private String checkPromotion(String input, CellIndex startIndex, CellIndex endIndex) throws IOException {
         int diffrow = Math.abs(startIndex.getRow() - endIndex.getRow());
         Cell startCell = board.getCheckerBoard()[startIndex.getRow()][startIndex.getColumn()];
         String fistField = halfMoves.get(0);
@@ -228,7 +232,7 @@ public class ActiveGameController extends MainController {
                     if (iv != null) {
                         iv.setFitWidth(90);
                         iv.setFitHeight(90);
-                        chessBoard.add(iv, 7- j, 7 - i);
+                        chessBoard.add(iv, 7 - j, 7 - i);
                     }
                 }
             }
@@ -244,6 +248,7 @@ public class ActiveGameController extends MainController {
 
     /**
      * Sets the Images for the Board. Gets the information of the Figures from the Board. Loads the Images from the Directory ChessFigures
+     *
      * @param i the row of the chessboard
      * @param j column of the chessboard
      * @return the Image at the Index (row, column)
@@ -310,7 +315,7 @@ public class ActiveGameController extends MainController {
     /**
      * Updates the Board after every drawn move. Rotation of the Board. Gets the Information from the board
      */
-    void updateBoard(){
+    void updateBoard() {
         ImageView iv;
         chessBoard.getChildren().removeIf(node -> node instanceof ImageView);
         for (int i = 0; i < 8; i++) {
@@ -320,21 +325,22 @@ public class ActiveGameController extends MainController {
                     iv.setFitWidth(90);
                     iv.setFitHeight(90);
                     chessBoard.add(iv, j, i);
-                    }
                 }
             }
+        }
 
     }
 
     /**
      * Sets the beaten Minions on the Grid next to the chessboard. It distinguished between black and white Minions beaten
+     *
      * @param sourceEnd the source (Minion) which is getting beaten
      */
     void beatenMinionOutput(Node sourceEnd) {
-        if(board.getBeaten().size() == 1){
+        if (board.getBeaten().size() == 1) {
             String minion = board.getBeaten().get(0);
             char minionType = minion.charAt(0);
-            if(sourceEnd instanceof ImageView) {
+            if (sourceEnd instanceof ImageView) {
                 chessBoard.getChildren().remove(sourceEnd);
                 if (Character.isUpperCase(minionType)) {
                     //sourceEnd.set
@@ -353,7 +359,8 @@ public class ActiveGameController extends MainController {
     /**
      * Gets the Node with Coordinates from the Gridpane chessboard. Only returns the Images at this position not the
      * background
-     * @param row the row of the wanted node
+     *
+     * @param row    the row of the wanted node
      * @param column the column of the wanted node
      * @return the node at the coordinates
      */
@@ -363,15 +370,15 @@ public class ActiveGameController extends MainController {
             int nodeCol;
             try {
                 nodeRow = GridPane.getRowIndex(node);
-            } catch (Exception e){
+            } catch (Exception e) {
                 nodeRow = 0;
             }
             try {
                 nodeCol = GridPane.getColumnIndex(node);
-            } catch (Exception e){
+            } catch (Exception e) {
                 nodeCol = 0;
             }
-            if (nodeRow == row  && nodeCol == column  && node instanceof ImageView) {
+            if (nodeRow == row && nodeCol == column && node instanceof ImageView) {
                 return node;
             }
         }
@@ -381,6 +388,7 @@ public class ActiveGameController extends MainController {
 
     /**
      * Pops up the promotionPopup where you can decide in which Minion you Pawn should be promoted
+     *
      * @param filename the filename of the promotion fxml
      * @throws IOException for the popups if they dont get closed
      */
@@ -391,8 +399,8 @@ public class ActiveGameController extends MainController {
         loader.setLocation(Gui.class.getResource(filename));
         Parent root = loader.load();
         Scene secondScene = new Scene(root);
-        ((MainController)loader.getController()).setGui(getGui());
-        ((PromoteController)loader.getController()).setController(this);
+        ((MainController) loader.getController()).setGui(getGui());
+        ((PromoteController) loader.getController()).setController(this);
         newWindow.setScene(secondScene);
         newWindow.initModality(Modality.WINDOW_MODAL);
         newWindow.initOwner(getGui().stage);
@@ -401,6 +409,7 @@ public class ActiveGameController extends MainController {
 
     /**
      * The row index of the Gridpane is null for 0.
+     *
      * @param source the node which is clicked
      * @return the right row index without null
      */
@@ -416,15 +425,15 @@ public class ActiveGameController extends MainController {
 
     /**
      * The column index of the Gridpane is null for 0.
+     *
      * @param source the node which is clicked
      * @return the right column index without null
      */
     private int getColIndex(Node source) {
         int colIndex;
-        if(GridPane.getColumnIndex(source) == null){
+        if (GridPane.getColumnIndex(source) == null) {
             colIndex = 0;
-        }
-        else{
+        } else {
             colIndex = GridPane.getColumnIndex(source);
         }
         return colIndex;

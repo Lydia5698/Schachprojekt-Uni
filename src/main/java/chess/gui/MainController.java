@@ -28,24 +28,26 @@ public class MainController {
     public Gui getGui() {
         return gui;
     }
-    public void setGui(Gui gui){
+
+    public void setGui(Gui gui) {
         this.gui = gui;
     }
 
     /**
      * Loads the fxml files
-     * @param filename The filename of the fxml file
+     *
+     * @param filename     The filename of the fxml file
      * @param primaryStage The initial root stage of the application.
-     * @param gui The initial root gui of the application.
+     * @param gui          The initial root gui of the application.
      * @return the Controller for the fxml
      */
-    public static MainController show_FXML(String filename, Stage primaryStage, Gui gui){
-        try{
+    public static MainController show_FXML(String filename, Stage primaryStage, Gui gui) {
+        try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Gui.class.getResource(filename));
             Parent root = loader.load();
             Scene gameScene = new Scene(root);
-            ((MainController)loader.getController()).setGui(gui); //hier noch oberklasse
+            ((MainController) loader.getController()).setGui(gui); //hier noch oberklasse
             primaryStage.setScene(gameScene);
             primaryStage.show();
          /*   primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -56,13 +58,12 @@ public class MainController {
             return loader.getController();
 
 
-        }  catch (IOException e) {
+        } catch (IOException e) {
 
             e.printStackTrace();
         }
         return null;
     }
-
 
 
 }

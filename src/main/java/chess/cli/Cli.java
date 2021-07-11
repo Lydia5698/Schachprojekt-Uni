@@ -48,8 +48,8 @@ public class Cli {
             BufferedReader brs = new BufferedReader(new InputStreamReader(System.in));
             while (inSettingsMode) {
                 try {
-                    System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber+"63")));
-                    System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber+"64")));
+                    System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "63")));
+                    System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "64")));
                     String inputSetting = brs.readLine();
                     if (inputSetting.contains("exit")) {
                         inSettingsMode = false;
@@ -76,7 +76,7 @@ public class Cli {
                         inSettingsMode = false;
                     } else {
                         //wait
-                        System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber+"65")));
+                        System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "65")));
                     }
 
                 } catch (IOException e) {
@@ -84,23 +84,23 @@ public class Cli {
                 }
             }
             while (inAISettingsMode && settings.isAi_active()) {
-                System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber+"66")));
+                System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "66")));
                 try {
                     String inputSetting = brs.readLine();
                     if (inputSetting.matches("black")) {
                         settings.setAi_colour(false);
-                        System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber+"67")));
+                        System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "67")));
                         inAISettingsMode = false;
                         //create ai
                         ai = new AI(false);
                     } else if (inputSetting.matches("white")) {
                         settings.setAi_colour(true);
-                        System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber+"68")));
+                        System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "68")));
                         inAISettingsMode = false;
                         //create ai
                         ai = new AI(true);
                     } else {
-                        System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber+"69")));
+                        System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "69")));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -119,13 +119,13 @@ public class Cli {
         while (!settings.isGameEnd()) {
 
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            if (settings.isAi_active() && board.isBlackIsTurn() == settings.isAi_colour()){// wenn ai aktiviert, dann schauen, ob ai an der reihe
-                System.out.print(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber+"72")));
+            if (settings.isAi_active() && board.isBlackIsTurn() == settings.isAi_colour()) {// wenn ai aktiviert, dann schauen, ob ai an der reihe
+                System.out.print(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "72")));
                 if (board.isBlackIsTurn()) { // ai is black and its turn it is
                     //look in movelist // get move at point
                     Move move = ai.getNextMove(board);
                     //apply move
-                    System.out.println(move.getStart()+ "-"+ move.getEnd());
+                    System.out.println(move.getStart() + "-" + move.getEnd());
                     board.applyMove(move);
                     //TODO: count ai count integer 1 up, if ai-move
                     ai.increaseTurnNumber();
@@ -134,20 +134,19 @@ public class Cli {
                 } else if (!board.isBlackIsTurn()) { // ai is white and its turn it is
                     Move move = ai.getNextMove(board);
                     // apply move
-                    System.out.println(move.getStart()+ "-"+ move.getEnd());
+                    System.out.println(move.getStart() + "-" + move.getEnd());
                     board.applyMove(move);
                     //TODO: count ai count integer 1 up, if ai-move
                     ai.increaseTurnNumber();
                     output = board.showBoard();
                     System.out.println(output);
                 }
-            }
-            else {
-                System.out.print(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber+"73")));
+            } else {
+                System.out.print(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "73")));
                 if (board.isBlackIsTurn()) {
-                    System.out.print(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber+"74")));
+                    System.out.print(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "74")));
                 } else if (!board.isBlackIsTurn()) {
-                    System.out.print(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber+"75")));
+                    System.out.print(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "75")));
                 }
             }
             if (!settings.isAi_active() || settings.isAi_active() && settings.isAi_colour() != board.isBlackIsTurn()) {
@@ -164,7 +163,7 @@ public class Cli {
                             output = board.showBoard();
                             System.out.println(output);
                         } else {
-                            System.out.println("!"+ settings.getLanguage().getDic().get(Integer.parseInt(languageNumber+"70")));
+                            System.out.println("!" + settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "70")));
                         }
                     } else if (input.equals("beaten")) {
                         String beatenString = "Beaten Figures";
@@ -173,7 +172,7 @@ public class Cli {
                         }
                         System.out.println(beatenString);
                     } else {
-                        System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber+"76")));
+                        System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "76")));
                     }
 
                 } catch (IOException e) {

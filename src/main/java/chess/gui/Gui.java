@@ -27,7 +27,6 @@ public class Gui extends Application {
     }
 
 
-
     /**
      * The entry point ogit f the GUI application.
      *

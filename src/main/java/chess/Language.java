@@ -12,10 +12,11 @@ public class Language {
     /**
      * Creates a new Language instance and sets the languages in the Dictionary
      */
-    public Language(){
+    public Language() {
         setDicGerman();
         setDicEnglish();
     }
+
     public Dictionary<Integer, String> getDic() {
         return dic;
     }
@@ -25,7 +26,7 @@ public class Language {
      * last number for the texts from left to right and up to bottom
      */
 
-    private void setDicGerman(){
+    private void setDicGerman() {
         // Start Screen
         dic.put(200, "Schach");
         dic.put(201, "Spiel start");
@@ -79,7 +80,7 @@ public class Language {
         dic.put(260, "Wähle eine Farbe um gegen die KI zu spielen");
         dic.put(261, "Schwarz");
         dic.put(262, "Weiß");
-          //Cli colour Select
+        //Cli colour Select
         dic.put(263, "Du befindest dich im Einstellungsmenü. Um die Sprache zu ändern, gib 'deutsch' oder 'englisch' ein, wenn du das Menü verlassen möchtest, gib 'exit' ein. Aber zuerst musst du dich entscheiden.");
         dic.put(264, "Willst du gegen einen Menschen spielen, tippe 'mensch', willst gegen eine KI spielen, tippe 'ki':");
         dic.put(265, "Bitte überprüfe deine Eingabe");
@@ -115,7 +116,7 @@ public class Language {
      * English: first number 1 for English, second number for the scene and last number
      * for the texts from left to right and up to bottom
      */
-    private void setDicEnglish(){
+    private void setDicEnglish() {
         // Start Screen
         dic.put(100, "Chess");
         dic.put(101, "Game Start");
@@ -169,7 +170,7 @@ public class Language {
         dic.put(160, "Which color do you want to play against the AI?");
         dic.put(161, "Black");
         dic.put(162, "White");
-           //Cli colour Select
+        //Cli colour Select
         dic.put(163, "You are in the settings menu. To change the Language type 'german' or 'english' if you want to exit the menu type 'exit'. But first you have to choose.");
         dic.put(164, "Do you want to play against a human, type 'human', want to play against an ai, type 'ai':");
         dic.put(165, "Please correct your input");

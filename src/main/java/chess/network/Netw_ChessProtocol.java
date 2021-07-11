@@ -63,7 +63,8 @@ public class Netw_ChessProtocol {
             if (white && workingInput.equals("black")) {
                 status = OutputMSG;
             } else if (!white && workingInput.equals(("white"))) {
-                status = stillWait; }
+                status = stillWait;
+            }
         } else if (status == stillWait) {
             if (workingInput.equals("ok")) {
                 status = stillWait;
@@ -71,11 +72,13 @@ public class Netw_ChessProtocol {
                 cltMove = workingInput;
                 receivedMove = true;
                 theOutput = "ok";
-                status = OutputMSG; }
+                status = OutputMSG;
+            }
         } else if (status == OutputMSG && enteredMove) {
             theOutput = svrMove;
             enteredMove = false;
-            status = stillWait; }
+            status = stillWait;
+        }
 
         return theOutput;
     }
@@ -83,9 +86,11 @@ public class Netw_ChessProtocol {
     public boolean validateInput(String input) {
         return true;
     }//testing with true
+
     public void setInputMove(String inputMove) {
         this.svrMove = inputMove;
     }
+
     public String getCltMove() {
         while (!receivedMove) {
         }

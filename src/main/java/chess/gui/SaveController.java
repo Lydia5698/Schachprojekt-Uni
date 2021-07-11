@@ -22,6 +22,7 @@ public class SaveController extends MainController {
 
     @FXML
     void saveName(ActionEvent event) {
+
     }
 
     @FXML
@@ -31,8 +32,8 @@ public class SaveController extends MainController {
 
     UnaryOperator<TextFormatter.Change> filter = t -> {
 
-        if (t.isReplaced()){
-            if(!t.getText().matches("\\w")){
+        if (t.isReplaced()) {
+            if (!t.getText().matches("\\w")) {
                 t.setText(t.getControlText().substring(t.getRangeStart(), t.getRangeEnd()));
 
             }
@@ -48,7 +49,7 @@ public class SaveController extends MainController {
     };
 
     @Override
-    public void setGui(Gui gui){
+    public void setGui(Gui gui) {
         this.gui = gui;
         txtField.setTextFormatter(new TextFormatter<>(filter));
     }
