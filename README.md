@@ -27,7 +27,34 @@ Es gelten die
 Somit ergeben sich zusätzliche Vorgaben: Sollte im Dialog über dem neuen Schachfeld ein`”!Check”` (Schach) auftauchen, so sorgt der Spieler dafür, dass der nächste Zug den König aus dem Schach bringt oder diesen Schützt. Nach einem`”!CheckMate”` (Schach Matt) oder`”!Patt”` (Unentschieden) endet das Spiel.
 Eine Aufgabe ist nicht implentiert.
 4.	GUI - Graphical User Interface
-Funktion nicht verfügbar.
+Die Gui startet mit dem Start Screen dort kann sich die `Anleitung` druchgelesen werden oder das Spiel über den Button Game Start gestartet werden. Als nächstes kann sich der Spieler entscheiden, welchen `Spielmodus` er wählen möchte. Zur Auswahl stehen:
+
+  4.1 `Normales Spiel`
+  hier spielt der Spieler gegen eine andere Person lokal an seinem Computer. 
+
+  4.2 `Gegen die KI` 
+  hier kann der Spieler gegen den Computer antreten. Dafür muss er als nächstes seine Farbe (weiß oder schwarz) wählen, damit das Spiel starten kann.
+
+  4.3 `Netzwerkspiel`
+  hier kann der Spieler gegen eine andere Person über das Netzwerk spielen. Hierfür muss er eine/seine? iP Adresse und Portnummer angeben.
+
+Der Spieler kann während des Spiels jederzeit auf die `Optionen` zugreifen und folgende Dinge anpassen:
+
+  4.4 `Zeigt mögliche Züge an`
+  bei dieser Option werden alle Züge die die Figur machen kann mit einem roten Punkt angezeigt. Dafür muss der Spieler die Option aktivieren und dann auf eine   Figur klicken
+
+  4.5 `Zeigt an, ob der König im Schach steht`
+  Nachdem die Option aktiviert wurde wird das Schach über ein Popup angezeigt. 
+  
+  4.6 `Kein Mehrfachklicken erlaub`
+  Bei dieser Option ist es verboten mehr als eine Figur anzuklicken. Das heißt, dass der Spieler immer die Figur ziehen muss die er zuerst angelickt hat.
+
+  4.7 `Das Spielfeld wird automatisch gedreht`
+  hier wird nach jedem Zug das Spielfeld so gedreht, dass die Person, die als nächstes ihren Zug ausführt, unten ist.
+
+Die Optionen sind alle Standartmäßig deaktiviert. Außerdem kann der Spieler jederzeit die Sprache wechseln. Dafür muss er auf den Button oben rechts mit der Flagge klicken. Zur Auswahl stehen Deutsch und Englisch.
+
+Das Spiel kann jederzeit beendet werden, wenn der Spieler in den Optionen auf `Spiel beenden` klickt. Dann wird er wieder zum Start Screen zurück geleitet. Außerdem kann die Anwendung auch jederzeit durch `exit` beendet werden. 
 
 
 # Maven

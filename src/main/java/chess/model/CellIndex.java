@@ -38,17 +38,24 @@ public class CellIndex {
         this.column = column;
     }
 
-    public String makeIndexIntoString(CellIndex index, CellIndex end){
+    /**
+     * makes an Index to a move as an String
+     *
+     * @param index the start Index
+     * @param end   the end Index
+     * @return the move as an String
+     */
+    public String makeIndexIntoString(CellIndex index, CellIndex end) {
         char[] boardLetters = "abcdefgh".toCharArray();
         String idx = "";
         String idx1 = "";
         String idx2 = "";
-        String number = Integer.toString(8-index.getRow());
+        String number = Integer.toString(8 - index.getRow());
         Character letter = boardLetters[index.getColumn()];
-        idx1 = String.valueOf(letter) + number;
-        String number2 = Integer.toString(8-end.getRow());
+        idx1 = letter + number;
+        String number2 = Integer.toString(8 - end.getRow());
         Character letter2 = boardLetters[end.getColumn()];
-        idx2 = String.valueOf((letter2)) + number2;
+        idx2 = letter2 + number2;
 
         idx = idx1 + "-" + idx2;
         return idx;

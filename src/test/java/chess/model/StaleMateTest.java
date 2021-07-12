@@ -1,6 +1,7 @@
 package chess.model;
 
 //import javafx.util.Pair;
+import chess.Settings;
 import org.junit.jupiter.api.Test;
 
 //import java.util.ArrayList;
@@ -19,6 +20,8 @@ public class StaleMateTest {
     @Test
     void isStaleMateTrueStaleMate() {
         Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
         StaleMate staleMate = new StaleMate();
         Move move = new Move("e2-e3");
         board.applyMove(move);

@@ -1,6 +1,5 @@
 package chess.gui;
 
-import chess.Settings;
 import chess.model.*;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -14,7 +13,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -29,22 +27,18 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * The Controller for the active game. Where you can see the chessboard
+ */
 public class ActiveGameController extends MainController {
-    protected Board board = new Board();
-    protected static Manuals manuals = new Manuals();
-    protected static StaleMate staleMate = new StaleMate();
-    protected static SpecialManuals spManuals = new SpecialManuals();
-    private final List<String> halfMoves = new ArrayList<>();
-    private final List<Event> position = new ArrayList<>();
-    private int counter = 0;
-    private int counterBeatenMinionsWhite = 0;
-    private int counterBeatenMinionsBlack = 0;
-    private final int beatenCounter = 0;
-
-    @FXML
-    private void b_neuesSpiel() {
-
-    }
+    protected Board board;
+    protected ActiveGameHelper activeGameHelper = new ActiveGameHelper(this);
+    protected Popups popups;
+    protected final List<String> halfMoves = new ArrayList<>();
+    protected final List<Event> position = new ArrayList<>();
+    protected int counter = 0;
+    protected int counterBeatenMinionsWhite = 0;
+    protected int counterBeatenMinionsBlack = 0;
 
     @FXML
     private Group letter;
@@ -52,6 +46,11 @@ public class ActiveGameController extends MainController {
     @FXML
     private Button btnOptions;
 
+    @FXML
+    private ImageView btnSave;
+
+    @FXML
+    private ImageView btnLanguage;
 
     @FXML
     private GridPane chessBoard;
@@ -62,32 +61,70 @@ public class ActiveGameController extends MainController {
     @FXML
     private Text moveList;
 
+    /**
+     * Shows the fxml file options
+     */
     @FXML
-    void showOptions(MouseEvent event){
+    void showOptions() {
         Stage stage = (Stage) btnOptions.getScene().getWindow();
         show_FXML("options.fxml", stage, getGui());
+        //popups.savePopup();
+    }
+
+    /**
+     * Sets the Gui, makes the white AI move, changes the Language and updates the Board
+     *
+     * @param gui The current active Gui
+     */
+    @Override
+    public void setGui(Gui gui) {
+        this.gui = gui;
+        setBoard(gui.settings.getBoard());
+        popups = new Popups();
+        if (board.getMoveList().isEmpty()) {
+            activeGameHelper.whiteAIMove();
+        }
+        // network white Move
+        changeToLanguage();
+        updateBoard();
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
+    /**
+     * The language is changed in the settings when the Image btnLanguage is pushed
+     */
+    @FXML
+    void changeLanguage() {
+        getGui().getSettings().changeLanguage();
+        changeToLanguage();
+    }
+
+    /**
+     * Changes all buttons and text fields to the selected language
+     */
+    private void changeToLanguage() {
+        btnLanguage.setImage(new Image(Objects.requireNonNull(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "03")))).toExternalForm())));
+        btnOptions.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "31")));
     }
 
     @FXML
-    private void initialize(){
-        updateBoard();
-    }
-    @Override
-    public void setGui(Gui gui){
-        this.gui = gui;
-        whiteAIMove();
+    void saveGame(MouseEvent event) {
+        Stage stage = (Stage) btnSave.getScene().getWindow();
+        show_FXML("saveScreen.fxml", stage, getGui());
     }
 
-    public void whiteAIMove(){
-        if(getGui().getSettings().isAi_active() && !getGui().getSettings().isAi_colour()) {
-            board.applyMove(getGui().getSettings().getAi().getNextMove(board));
-            getGui().getSettings().getAi().increaseTurnNumber();
-            System.out.println(board.showBoard());
-            //update
-            updateBoard();
-        }
-    }
 
+    /**
+     * Saves the mouseEvent and the pos of the field clicked.
+     * if rotation and double click is activated the input is beeing changed
+     * activates the methode move
+     *
+     * @param event the event when the player clicks on a field
+     * @throws IOException for the popups if they dont get closed
+     */
     @FXML
     void mouseClicked(MouseEvent event) throws IOException {
         Node source = (Node) event.getSource();
@@ -96,28 +133,94 @@ public class ActiveGameController extends MainController {
         int rowIndex;
         colIndex = getColIndex(source);
         rowIndex = getRowIndex(source);
-        showPossibleMoves(colIndex, rowIndex);
+        if (getGui().getSettings().isHighlightPossibleMoves()) {
+            activeGameHelper.showPossibleMoves(colIndex, rowIndex);
 
+        }
         List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
-        String input;
         // checks if rotation is on and changes the coordinates for black
-        if(board.isBlackIsTurn() && getGui().getSettings().isRotateBoard()){
-            input = columns.get(7 - colIndex) + (rowIndex+1);
-
-        }
-        else {
-            input = columns.get(colIndex) + (8 - rowIndex);
-        }
-
+        String input = activeGameHelper.guiOptions(colIndex, rowIndex, columns);
         halfMoves.add(input);
         position.add(event);
-        System.out.println(input);
         counter++;
         move();
 
     }
 
+    /**
+     * if two fields are clicked move creates the move from the halfMoves list and checks for Promotion
+     * then the methode checkAndDoMove is called to apply the move
+     * if rotate board is activated the board gets rotated after every drawn move
+     *
+     * @throws IOException for the popups if they dont get closed
+     */
+    public void move() throws IOException {
+        if (counter == 2 && !getGui().getSettings().isGameEnd()) {
+            String fistField = halfMoves.get(0);
+            String secondField = halfMoves.get(1);
+            String input = fistField + "-" + secondField;
+            Move move = new Move(input);
 
+            CellIndex endIndex = Board.cellIndexFor(move.getEnd());
+            CellIndex startIndex = Board.cellIndexFor(move.getStart());
+            input = checkPromotion(input, startIndex, endIndex);
+
+            Move moveNew = new Move(input);
+
+            activeGameHelper.checkAndDoMove(fistField, endIndex, startIndex, moveNew);
+            counter = 0;
+            halfMoves.clear();
+            position.clear();
+            if (getGui().getSettings().isRotateBoard() && !getGui().getSettings().isAi_active()) {
+                boardRotation();
+            }
+            if (getGui().getSettings().isGameEnd()) {
+                popups.popupCheckMate();
+            }
+        }
+
+
+    }
+
+    /**
+     * checks if the Pawn is allowed to make a promotion
+     *
+     * @param input      the current move without the promotion
+     * @param startIndex the startIndex of the current move. The position of the Pawn
+     * @param endIndex   the endIndex of the current move
+     * @return the new move with promoteTo. The letter for the Promotion
+     * @throws IOException for the popups if they dont get closed
+     */
+    private String checkPromotion(String input, CellIndex startIndex, CellIndex endIndex) throws IOException {
+        int diffrow = Math.abs(startIndex.getRow() - endIndex.getRow());
+        Cell startCell = board.getCheckerBoard()[startIndex.getRow()][startIndex.getColumn()];
+        String fistField = halfMoves.get(0);
+        String secondField = halfMoves.get(1);
+        String promoteMove = input;
+
+        if (!startCell.isEmpty() && diffrow == 1 && String.valueOf(startCell.getMinion().getMinion_type()).equals("P") && (endIndex.getRow() == 0 || endIndex.getRow() == 7)) {
+            popupPromotion("promote.fxml");
+            promoteMove = fistField + "-" + secondField + getPromoteTo();
+        }
+        return promoteMove;
+    }
+
+    /**
+     * The history of the moves. It is getting printed above the chessboard
+     */
+    void history() {
+        String beatenString = "Moves";
+        for (Move beatenMinion : board.getMoveList()) {
+            String moveString = beatenMinion.getStart() + "-" + beatenMinion.getEnd();
+            beatenString = String.join(",", beatenString, moveString);
+        }
+        moveList.setText(beatenString);
+    }
+
+
+    /**
+     * rotates the Board. Deletes the old images and sets the new one in a rotated order
+     */
     private void boardRotation() {
         ImageView iv;
         chessBoard.getChildren().removeIf(node -> node instanceof ImageView);
@@ -129,7 +232,7 @@ public class ActiveGameController extends MainController {
                     if (iv != null) {
                         iv.setFitWidth(90);
                         iv.setFitHeight(90);
-                        chessBoard.add(iv, 7- j, 7 - i);
+                        chessBoard.add(iv, 7 - j, 7 - i);
                     }
                 }
             }
@@ -143,6 +246,13 @@ public class ActiveGameController extends MainController {
         }
     }
 
+    /**
+     * Sets the Images for the Board. Gets the information of the Figures from the Board. Loads the Images from the Directory ChessFigures
+     *
+     * @param i the row of the chessboard
+     * @param j column of the chessboard
+     * @return the Image at the Index (row, column)
+     */
     private ImageView getImage(int i, int j) {
         ImageView iv = null;
         if (!board.getCheckerBoard()[i][j].isEmpty()) {
@@ -190,6 +300,7 @@ public class ActiveGameController extends MainController {
                     }
                     break;
             }
+            assert iv != null;
             iv.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
                 try {
                     mouseClicked(mouseEvent);
@@ -201,103 +312,10 @@ public class ActiveGameController extends MainController {
         return iv;
     }
 
-    public void move() throws IOException {
-        ActionEvent event = new ActionEvent();
-        if (counter == 2 && !board.isGameEnd()) {
-            /*if(getGui().getSettings().isAi_active() & !getGui().getSettings().isAi_colour()){ //TODO nur zug wenn der schwarze gültig war
-                board.applyMove(getGui().getSettings().getAi().getNextMove(board));           // auch ohne zweimal klicken ausführen
-                getGui().getSettings().getAi().increaseTurnNumber();
-                System.out.println(board.showBoard());
-                //update
-                updateBoard();
-            }*/
-            String fistField = halfMoves.get(0);
-            String secondField = halfMoves.get(1);
-            String input = fistField + "-" + secondField;
-            Move move = new Move(input);
-
-            CellIndex endIndex = Board.cellIndexFor(move.getEnd());
-            CellIndex startIndex = Board.cellIndexFor(move.getStart());
-            Cell startCell = board.getCheckerBoard()[startIndex.getRow()][startIndex.getColumn()];
-            int diffrow = Math.abs(startIndex.getRow() - endIndex.getRow());
-            if (!startCell.isEmpty() && diffrow == 1 && String.valueOf(startCell.getMinion().getMinion_type()).equals("P") && (endIndex.getRow() == 0 || endIndex.getRow() == 7)) {
-                popupPromote();
-                input = fistField + "-" + secondField + getPromoteTo();
-
-            }
-
-
-            Move moveNew = new Move(input);
-            System.out.println(input);
-
-            if (manuals.moveOfRightColour(moveNew, board)) {
-                // if ai is white make move
-                getGui().getSettings().getAi(); //TODO AI für active Game Controller
-               /*if (!getGui().getSettings().getAi().colourIsBlack){
-
-                    board.applyMove(getGui().getSettings().getAi().getNextMove(board));
-                   getGui().getSettings().getAi().increaseTurnNumber();
-                    System.out.println(board.showBoard());
-                    //update
-                    updateBoard();
-                }*/
-                board.applyMove(moveNew);
-                System.out.println(board.showBoard());
-
-
-                String beatenString = "Moves";
-                for (Move beatenMinion : board.getMoveList()) {
-                    String moveString = beatenMinion.getStart() + "-" + beatenMinion.getEnd();
-                    beatenString = String.join(",", beatenString, moveString);
-                }
-                moveList.setText(beatenString);
-
-            }
-
-            else {
-                popupMoveNotAllowed(event);
-                System.out.println("!Move not allowed");
-                board.setAllowedMove(false);
-                // ersten Half move merken nur bei move not allowed abfangen bei leerem feld angeklickt
-            }
-
-            if (board.isAllowedMove()) {
-                Event start = position.get(0);
-                Event end = position.get(1);
-                Node sourceEnd = (Node) end.getSource();
-                beatenMinions(sourceEnd);
-                updateBoard();
-                if (board.isCheck() & getGui().getSettings().isCheckVisible()) {
-                    popupCheck(event);
-                    board.setCheck(false);
-                }
-                if(board.isGameEnd()){
-                    popupCheckMate(event);
-                }
-
-               if (getGui().getSettings().isAi_active()){
-                    board.applyMove(getGui().getSettings().getAi().getNextMove(board));
-                    getGui().getSettings().getAi().increaseTurnNumber();
-                    System.out.println(board.showBoard());
-                    //update
-                    updateBoard();
-                }
-            }
-            counter = 0;
-            halfMoves.clear();
-            position.clear();
-            if(getGui().getSettings().isRotateBoard() & board.isBlackIsTurn()){
-                boardRotation();
-            }
-            if(board.isGameEnd()){
-                popupCheckMate(event);
-                board = new Board();
-            }
-        }
-        
-
-    }
-    private void updateBoard(){
+    /**
+     * Updates the Board after every drawn move. Rotation of the Board. Gets the Information from the board
+     */
+    void updateBoard() {
         ImageView iv;
         chessBoard.getChildren().removeIf(node -> node instanceof ImageView);
         for (int i = 0; i < 8; i++) {
@@ -307,16 +325,22 @@ public class ActiveGameController extends MainController {
                     iv.setFitWidth(90);
                     iv.setFitHeight(90);
                     chessBoard.add(iv, j, i);
-                    }
                 }
             }
+        }
 
     }
-    private void beatenMinions(Node sourceEnd) {
-        if(board.getBeaten().size() == 1){
+
+    /**
+     * Sets the beaten Minions on the Grid next to the chessboard. It distinguished between black and white Minions beaten
+     *
+     * @param sourceEnd the source (Minion) which is getting beaten
+     */
+    void beatenMinionOutput(Node sourceEnd) {
+        if (board.getBeaten().size() == 1) {
             String minion = board.getBeaten().get(0);
             char minionType = minion.charAt(0);
-            if(sourceEnd instanceof ImageView) {
+            if (sourceEnd instanceof ImageView) {
                 chessBoard.getChildren().remove(sourceEnd);
                 if (Character.isUpperCase(minionType)) {
                     //sourceEnd.set
@@ -332,108 +356,63 @@ public class ActiveGameController extends MainController {
     }
 
 
-    public void showPossibleMoves(int startCol, int startRow) {
-        CellIndex startIndex = new CellIndex(startRow, startCol);
-        chessBoard.getChildren().removeIf(node -> node instanceof Rectangle && ((Rectangle) node).getFill().equals(Paint.valueOf("#ff0000")));
-        if(getNodeByCoordinate(startRow, startCol) instanceof ImageView && !board.getCheckerBoard()[startRow][startCol].isEmpty()) {
-            List<Move> possibleMoves = (staleMate.possibleMovesForOneFigureMoveList(startIndex, board.getCheckerBoard()));
-
-            for (Move move : possibleMoves) {
-                String s = "abcdefgh";
-                Rectangle possMove = new Rectangle();
-                possMove.setHeight(10);
-                possMove.setWidth(10);
-                possMove.setFill(Paint.valueOf("#ff0000"));
-                possMove.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-                    try {
-                        mouseClicked(mouseEvent);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
-                chessBoard.add(possMove, s.indexOf(move.getEnd().substring(0, 1)), 8-Integer.parseInt(move.getEnd().substring(1,2)));
-                chessBoard.setAlignment(Pos.CENTER);
-                possMove.toFront();
-                // TODO es werden nicht alle moves richtig angezeigt
-            }
-        }
-    }
-
+    /**
+     * Gets the Node with Coordinates from the Gridpane chessboard. Only returns the Images at this position not the
+     * background
+     *
+     * @param row    the row of the wanted node
+     * @param column the column of the wanted node
+     * @return the node at the coordinates
+     */
     Node getNodeByCoordinate(int row, int column) {
         for (Node node : chessBoard.getChildren()) {
             int nodeRow;
             int nodeCol;
             try {
                 nodeRow = GridPane.getRowIndex(node);
-            } catch (Exception e){
+            } catch (Exception e) {
                 nodeRow = 0;
             }
             try {
                 nodeCol = GridPane.getColumnIndex(node);
-            } catch (Exception e){
+            } catch (Exception e) {
                 nodeCol = 0;
             }
-            if (nodeRow == column + 1 && nodeCol == row + 1 && node instanceof ImageView) {
+            if (nodeRow == row && nodeCol == column && node instanceof ImageView) {
                 return node;
             }
         }
         return null;
     }
 
+
+    /**
+     * Pops up the promotionPopup where you can decide in which Minion you Pawn should be promoted
+     *
+     * @param filename the filename of the promotion fxml
+     * @throws IOException for the popups if they dont get closed
+     */
     @FXML
-    void popupCheck(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("check!");
-        if(board.isBlackIsTurn()){
-            alert.setContentText("Black is in check");
-        }
-        else {
-            alert.setContentText("White is in check");
-        }
-        alert.show();
-
-    }
-    @FXML
-    void popupCheckMate(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("checkMate!");
-        if(board.isBlackIsTurn()){
-            alert.setContentText("Black is in check Mate");
-        }
-        else {
-            alert.setContentText("White is in check Mate");
-        }
-        alert.show();
-    }
-
-    @FXML
-    void popupMoveNotAllowed(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Move Not Allowed");
-        alert.setContentText("The Move you just made is not allowed.");
-        alert.show();
-    }
-
-    @FXML
-    void popupPromote() throws IOException {
-        popupPromotion("promote.fxml");
-
-    }
-
     public void popupPromotion(String filename) throws IOException {
         Stage newWindow = new Stage();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Gui.class.getResource(filename));
         Parent root = loader.load();
         Scene secondScene = new Scene(root);
-        ((MainController)loader.getController()).setGui(getGui());
-        ((PromoteController)loader.getController()).setController(this);
+        ((MainController) loader.getController()).setGui(getGui());
+        ((PromoteController) loader.getController()).setController(this);
         newWindow.setScene(secondScene);
         newWindow.initModality(Modality.WINDOW_MODAL);
         newWindow.initOwner(getGui().stage);
         newWindow.showAndWait();
     }
 
+    /**
+     * The row index of the Gridpane is null for 0.
+     *
+     * @param source the node which is clicked
+     * @return the right row index without null
+     */
     private int getRowIndex(Node source) {
         int rowIndex;
         if (GridPane.getRowIndex(source) == null) {
@@ -444,18 +423,25 @@ public class ActiveGameController extends MainController {
         return rowIndex;
     }
 
+    /**
+     * The column index of the Gridpane is null for 0.
+     *
+     * @param source the node which is clicked
+     * @return the right column index without null
+     */
     private int getColIndex(Node source) {
         int colIndex;
-        if(GridPane.getColumnIndex(source) == null){
+        if (GridPane.getColumnIndex(source) == null) {
             colIndex = 0;
-        }
-        else{
+        } else {
             colIndex = GridPane.getColumnIndex(source);
         }
         return colIndex;
     }
 
-
+    public GridPane getChessBoard() {
+        return chessBoard;
+    }
 
 
 }

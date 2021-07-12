@@ -98,7 +98,6 @@ public class StaleMate {
     }
 
 
-
     /**
      * The method possibleMovesForOneFigureMoveList adds all possible Moves for one figuere to a moves List.
      *
@@ -116,7 +115,7 @@ public class StaleMate {
             for (int col = 0; col < 8; col++) {
                 CellIndex end = new CellIndex(row, col);
                 //check if move is legal
-                if (minion.validMove(cellIndex, end) && checkLegalMove(cellIndex, end, manuals, checkerBoard)&& !(cellIndex.getRow()==end.getRow() &&  cellIndex.getColumn() == end.getColumn())) {
+                if (minion.validMove(cellIndex, end) && checkLegalMove(cellIndex, end, manuals, checkerBoard) && !(cellIndex.getRow() == end.getRow() && cellIndex.getColumn() == end.getColumn())) {
                     //check ifLegalMove
                     // make index into string
                     String input = cellIndex.makeIndexIntoString(cellIndex, end);
@@ -130,7 +129,8 @@ public class StaleMate {
 
     /**
      * Method that gives back a possible List of moves for one colour.
-     * @param isBlack the colour of the moves that should be generated.
+     *
+     * @param isBlack      the colour of the moves that should be generated.
      * @param checkerBoard the current checkerBoard.
      * @return List of pairs of the moves possible for one colour.
      */

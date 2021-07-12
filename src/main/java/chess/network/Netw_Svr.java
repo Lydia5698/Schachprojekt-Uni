@@ -4,7 +4,8 @@ import java.util.function.Consumer;
 
 public class Netw_Svr extends Netw_Con {
 
-    private int port;
+    private final int port;
+
     public Netw_Svr(int port, Consumer<String> callBackWhenReceived) {
         super(callBackWhenReceived);
         this.port = port;

@@ -1,5 +1,6 @@
 package chess.model;
 
+import chess.Settings;
 import chess.model.figures.*;
 
 import java.util.ArrayList;
@@ -18,16 +19,13 @@ public class Board {
     Cell[][] checkerBoard = new Cell[8][8]; //feldgröße
     public Manuals manuals = new Manuals();
     public StaleMate staleMate = new StaleMate();
+    public Settings settings;
     static List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
     public List<String> beaten = new ArrayList<>();
-    private List<Move> moveList = new ArrayList<>();
+    private final List<Move> moveList = new ArrayList<>();
     private boolean blackIsTurn = false;
-    private boolean gameEnd = false;
     private boolean simple = false;
     private boolean allowedMove = true;
-    private boolean check = false;
-
-
 
     /**
      * Creates a new Board instance. The Board uses initHorizont to fill the Board with Cells and Minions
@@ -44,7 +42,11 @@ public class Board {
     }
 
 
-
+    /**
+     * saves the board in a String
+     *
+     * @return string output with the Board
+     */
     public String showBoard() {
         StringBuilder output = new StringBuilder();                       // stringbuilder erzeugen eines neuen objektes
         int horizontNum = 8;                                              // varibale deklarieren (max value)
@@ -60,6 +62,12 @@ public class Board {
         return output.toString();                                         //rückgabe des string output
     }
 
+    /**
+     * iterates over the row and sets the Minions
+     *
+     * @param horizont the row of the Board
+     * @param black    the colour of the minion
+     */
     private void initHorizont(int horizont, boolean black) {              //aufbauen der truppen
         char[] officerline = "RNBQKBNR".toCharArray();                    //offiziere in string schreiben
 
@@ -76,6 +84,14 @@ public class Board {
     }
 
 
+    /**
+     * initialises the Board with the Figures
+     *
+     * @param horizont the row of the Board
+     * @param black    the colour of the minion
+     * @param tmp      the Pawns in a temporary String
+     * @param i        the current row
+     */
     private void initialiseCellsWithFigures(int horizont, boolean black, char[] tmp, int i) {
         switch (tmp[i]) {
             case 'R':
@@ -118,7 +134,7 @@ public class Board {
      * Checks if the minion from the start Cell can make the move to the end Cell uses the methode validMove from Minion
      * Writes the String "!Move not allowed" on the Console when illegal move
      *
-     * @param move is a Move move from Cli is already split in Start and End
+     * @param move is a Move from Cli and is already split in Start and End
      * @see CellIndex
      * @see Cell
      * @see Minion
@@ -146,11 +162,12 @@ public class Board {
             startCell.setMinion(null);
             endCell.setMinion(minion);
             blackIsTurn = !blackIsTurn;
-            System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
+            if (!settings.isGui_active()) {
+                System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
+            }
+            checkAndPrintCheckCheckMate(minion);
             moveList.add(move);
             manuals.spManuals.promote(endIndex, promoteTo, checkerBoard);
-            //check if in Check or in CheckMate
-            checkAndPrintCheckCheckMate(minion);
             allowedMove = true;
 
         }
@@ -162,7 +179,13 @@ public class Board {
         }
         // move is not allowed
         else {
-            System.out.println("!Move not allowed");
+            if (simple) {
+                System.out.println("!Move not allowed");
+            } else {
+                if (!settings.isGui_active()) {
+                    System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber() + "71")));
+                }
+            }
             allowedMove = false;
         }
     }
@@ -194,10 +217,6 @@ public class Board {
             manuals.spManuals.moveRochade(move, checkerBoard, manuals);
             blackIsTurn = !blackIsTurn;
             System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
-            if(!simple) {
-
-                System.out.println("Rochade");
-            }
             moveList.add(move);
             return true;
         } else {
@@ -237,19 +256,6 @@ public class Board {
         return checkerBoardCopy;
     }
 
-    /**
-     * gives the boolean gameEnd back
-     *
-     * @return boolean if game is ended
-     */
-    public boolean isGameEnd() {
-        return gameEnd;
-    }
-
-    public void setGameEnd(boolean gameEnd){
-        this.gameEnd = gameEnd;
-    }
-
     public void setSimple(boolean simple) {
         this.simple = simple;
     }
@@ -267,9 +273,6 @@ public class Board {
         this.allowedMove = allowedMove;
     }
 
-    public boolean isCheck() {
-        return check;
-    }
     public boolean isAllowedMove() {
         return allowedMove;
     }
@@ -282,26 +285,30 @@ public class Board {
      */
     protected void checkAndPrintCheckCheckMate(Minion minion) {
         if (manuals.isCheck(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
-            System.out.println("!Check");
-            check = true;
+            if (settings.isGui_active()) {
+                System.out.println("!" + settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber() + "82")));
+            }
+            settings.setInCheck(true);
 
         }
         //check if in Check Mate
         if (manuals.checkMate(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
-            System.out.println("!Check Mate");
-            gameEnd = true;
-            System.out.println("The Game has ended");
+            if (settings.isGui_active()) {
+                System.out.println("!" + settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber() + "92")));
+                System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber() + "93")));
+            }
+            settings.setGameEnd(true);
         } else if (staleMate.isStaleMate(!minion.isBlack(), checkerBoard) && !simple) {
-            System.out.println("!Stalemate");
-            gameEnd = true;
-            System.out.println("The Game has ended");
+            if (settings.isGui_active()) {
+                System.out.println("!" + settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber() + "94")));
+                System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber() + "93")));
+            }
+            settings.setGameEnd(true);
         }
 
     }
 
-    public void setCheck(boolean check) {
-        this.check = check;
+    public void setSettings(Settings settings) {
+        this.settings = settings;
     }
-
-
 }

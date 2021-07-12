@@ -2,6 +2,7 @@ package chess;
 
 import chess.cli.Cli;
 import chess.gui.Gui;
+
 import java.util.Arrays;
 
 /**

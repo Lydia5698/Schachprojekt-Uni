@@ -1,26 +1,8 @@
 package chess.gui;
 
-
-import chess.Main;
 import chess.Settings;
-import chess.model.Move;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Objects;
-
-
 
 
 /**
@@ -31,6 +13,7 @@ public class Gui extends Application {
 
     protected Stage stage;
     Settings settings = new Settings();
+
     /**
      * This method is called by the Application to start the GUI.
      *
@@ -42,7 +25,6 @@ public class Gui extends Application {
         stage = primaryStage;
         MainController.show_FXML("startScreen.fxml", primaryStage, this);
     }
-
 
 
     /**

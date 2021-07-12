@@ -12,8 +12,8 @@ import java.util.List;
 public class Move {
     static List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
 
-    private String start;
-    private String end;
+    private final String start;
+    private final String end;
 
     /**
      * Splits the input from the Console? in a Start and End point. And saves them in the private Strings start and end

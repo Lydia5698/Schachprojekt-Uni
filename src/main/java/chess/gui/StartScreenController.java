@@ -3,52 +3,91 @@ package chess.gui;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
+/**
+ * The StartScreenController is the Controller for the startScreen.fxml
+ * The first Stage where the player can access the rules or the game choice
+ */
 public class StartScreenController extends MainController {
+    //Popups popups = new Popups(getGui());
 
     @FXML
-    private Button btnSpielstart;
+    private Button btnGameStart;
 
     @FXML
-    private Button btnOptions;
+    private Button btnRules;
 
     @FXML
-    private Button btnCredits;
+    private Button btnloadGame;
 
     @FXML
-    private Button btnAnleitung;
+    private Label titel;
 
     @FXML
-    private void initialize(){
-        //btnAnleitung.setText("LALA");
-        //btnAnleitung.setText(getGui().getSettings().getLanguage().settings());
+    private ImageView btnLanguage;
 
-    }
-
+    /**
+     * Ends the Application
+     */
     @FXML
-    void exit(ActionEvent event) {
+    void exit() {
         System.exit(0);
     }
 
+    /**
+     * Changes the Stage to the manual.fxml when the button rules is pushed
+     */
     @FXML
-    void showAnleitung(MouseEvent event) {
-        Stage stage = (Stage) btnAnleitung.getScene().getWindow();
-        show_FXML("anleitung.fxml", stage, getGui());
+    void showRules() {
+        Stage stage = (Stage) btnRules.getScene().getWindow();
+        show_FXML("manual.fxml", stage, getGui());
+    }
+
+    /**
+     * Changes the Stage to the gameChoice.fxml when the button Game Start is pushed
+     */
+    @FXML
+    void showGameChoice() {
+        Stage stage = (Stage) btnGameStart.getScene().getWindow();
+        show_FXML("gameChoice.fxml", stage, getGui());
+    }
+
+    /**
+     * The language is changed in the settings when the Image btnLanguage is pushed
+     */
+    @FXML
+    void changeLanguage() {
+        getGui().getSettings().changeLanguage();
+        changeToLanguage();
+    }
+
+    /**
+     * Changes all buttons and text fields to the selected language
+     */
+    private void changeToLanguage() {
+        btnLanguage.setImage(new Image(Objects.requireNonNull(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "03")))).toExternalForm())));
+        titel.setText(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "00")));
+        btnGameStart.setText(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "01")));
+        btnRules.setText(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "02")));
+    }
+
+    @Override
+    public void setGui(Gui gui) {
+        this.gui = gui;
+        changeToLanguage();
+        getGui().getSettings().setGui_active(true);
+        btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(103))).toExternalForm()));
     }
 
     @FXML
-    void showCredits(MouseEvent event) {
-        Stage stage = (Stage) btnCredits.getScene().getWindow();
-        show_FXML("credits.fxml", stage, getGui());
-    }
+    void loadGame(ActionEvent event) {
 
-    @FXML
-    void showSpielauswahl(MouseEvent event) {
-        Stage stage = (Stage) btnSpielstart.getScene().getWindow();
-        show_FXML("spielauswahl.fxml", stage, getGui());
     }
-
 
 }

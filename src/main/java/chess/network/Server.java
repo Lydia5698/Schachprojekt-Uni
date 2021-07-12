@@ -12,7 +12,7 @@ public class Server extends Thread {
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
-    private Netw_ChessProtocol netw_cp;
+    private final Netw_ChessProtocol netw_cp;
 
     public Server(int port) {
         this.portNo = port;
@@ -40,9 +40,9 @@ public class Server extends Thread {
 
         while (true) {
             try {
-                if(netw_cp.getStatus() == 3){
+                if (netw_cp.getStatus() == 3) {
                     output = netw_cp.processInput("", black);
-                }else{
+                } else {
                     if ((input = in.readLine()) != null) {
                         String workingInput = input.toLowerCase();
                         output = netw_cp.processInput(workingInput, black);
@@ -57,12 +57,15 @@ public class Server extends Thread {
             }
         }
     }
+
     public void setWhite(boolean white) {
         this.black = white;
     }
+
     public boolean isWhite() {
         return black;
     }
+
     public Netw_ChessProtocol getNetw_cp() {
         return netw_cp;
     }

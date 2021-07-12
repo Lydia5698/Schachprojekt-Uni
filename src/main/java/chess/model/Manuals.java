@@ -15,7 +15,7 @@ import static chess.model.Board.cellIndexFor;
  */
 public class Manuals {
     //regelwerk; valide steuerung der minions
-    SpecialManuals spManuals = new SpecialManuals();
+    public SpecialManuals spManuals = new SpecialManuals();
     //public StaleMate staleMate = new StaleMate();
 
     /**
@@ -218,7 +218,7 @@ public class Manuals {
      * @param checkerboard chessboard
      * @return boolean if valid move
      */
-    protected boolean checkIfValidMove(CellIndex start, CellIndex end, Cell[][] checkerboard) {
+    public boolean checkIfValidMove(CellIndex start, CellIndex end, Cell[][] checkerboard) {
         Cell startCell = checkerboard[start.getRow()][start.getColumn()];
         Minion minion = startCell.getMinion();
         if (minion.validMove(start, end) || spManuals.pawnBeats(start, end, checkerboard)) {

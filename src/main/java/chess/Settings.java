@@ -7,34 +7,41 @@ import chess.network.Netw_Cli;
 import chess.network.Netw_Svr;
 import javafx.application.Platform;
 
+/**
+ * The Settings for the Gui and the Cli
+ */
 public class Settings {
     //felder
     AI ai = new AI(false);
     Board board = new Board();
     Language language = new Language();
+    protected boolean gui_active = false;
+    protected boolean isInCheck = false;
+    protected boolean gameEnd = false;
     protected boolean ai_active = false;
     protected boolean ai_colour = false;
     protected boolean rotateBoard = false;
     protected boolean lightPossibleMoves = false;
     protected boolean checkVisible = false;
     protected boolean doubleClick = false;
+    protected boolean languageGerman = false;
+    protected boolean languageEnglish = true;
     protected boolean black = false;
     protected Move clientMove = new Move("A0-A0");
-    protected Move serverMove = new Move ("A0-A0");
+    protected Move serverMove = new Move("A0-A0");
     protected boolean moveReceived = false;
     private int port;
     private String ip;
-    private boolean server = false;
+    private final boolean server = false;
+    String languageNumber = "1";
 
-
-    //gegen gegner
-    //schach anzeigen lassen
-    //mehrfach klicken
-    //spielfeld mitdrehen
-
-
+    /**
+     * Sets the setting in the Board
+     */
     //constructor
-    public Settings() { /*LOOOL wozu brauch ich n leeren constructor*/ } //damit wenigstens was drin steht ROFL
+    public Settings() {
+        board.setSettings(this);
+    }
 
     //methoden
 
@@ -71,11 +78,11 @@ public class Settings {
         this.rotateBoard = rotateBoard;
     }
 
-    public boolean isLightPossibleMoves() {
+    public boolean isHighlightPossibleMoves() {
         return lightPossibleMoves;
     }
 
-    public void setLightPossibleMoves(boolean lightPossibleMoves) {
+    public void setHighlightPossibleMoves(boolean lightPossibleMoves) {
         this.lightPossibleMoves = lightPossibleMoves;
     }
 
@@ -107,24 +114,75 @@ public class Settings {
         return language;
     }
 
+    public boolean isLanguageGerman() {
+        return languageGerman;
+    }
 
-    private Netw_Svr createServer(){
+    public void setLanguageGerman(boolean languageGerman) {
+        this.languageGerman = languageGerman;
+    }
+
+    public boolean isLanguageEnglish() {
+        return languageEnglish;
+    }
+
+    public void setLanguageEnglish(boolean languageEnglish) {
+        this.languageEnglish = languageEnglish;
+    }
+
+    public String getLanguageNumber() {
+        return languageNumber;
+    }
+
+    public void setLanguageNumber(String languageNumber) {
+        this.languageNumber = languageNumber;
+    }
+
+    public boolean isGui_active() {
+        return gui_active;
+    }
+
+    public void setGui_active(boolean gui_active) {
+        this.gui_active = gui_active;
+    }
+
+    public boolean getIsInCheck() {
+        return isInCheck;
+    }
+
+    public void setInCheck(boolean inCheck) {
+        isInCheck = inCheck;
+    }
+
+    public boolean isGameEnd() {
+        return gameEnd;
+    }
+
+    public void setGameEnd(boolean gameEnd) {
+        this.gameEnd = gameEnd;
+    }
+
+
+    /**
+     * Changes the booleans for the Language and updates the Language number so the right Language is load from the Dictionary
+     */
+    public void changeLanguage() {
+        if (isLanguageEnglish()) {
+            setLanguageEnglish(false);
+            setLanguageGerman(true);
+            setLanguageNumber("2");
+        } else {
+            setLanguageEnglish(true);
+            setLanguageGerman(false);
+            setLanguageNumber("1");
+        }
+    }
+
+    private Netw_Svr createServer() {
         System.out.println("server starting");
-        return new Netw_Svr(port, data->{
-            Platform.runLater(()->{
-                if (board.isBlackIsTurn() != black){
-                    System.out.println(data);
-                    this.clientMove = new Move(data);
-                    moveReceived = true;
-                    board.applyMove(clientMove);
-                }
-            });
-        });
-    }
-    private Netw_Cli createClient(){
-        return new Netw_Cli(ip, port, data->{
-            Platform.runLater(()->{
-                if (board.isBlackIsTurn() != black){
+        return new Netw_Svr(port, data -> {
+            Platform.runLater(() -> {
+                if (board.isBlackIsTurn() != black) {
                     System.out.println(data);
                     this.clientMove = new Move(data);
                     moveReceived = true;
@@ -134,9 +192,33 @@ public class Settings {
         });
     }
 
-    public boolean isMoveReceived() { return moveReceived; }
-    public Move getClientMove() { return clientMove; }
-    public Move getServerMove() { return serverMove; }
-    public boolean isServer() { return server; }
+    private Netw_Cli createClient() {
+        return new Netw_Cli(ip, port, data -> {
+            Platform.runLater(() -> {
+                if (board.isBlackIsTurn() != black) {
+                    System.out.println(data);
+                    this.clientMove = new Move(data);
+                    moveReceived = true;
+                    board.applyMove(clientMove);
+                }
+            });
+        });
+    }
+
+    public boolean isMoveReceived() {
+        return moveReceived;
+    }
+
+    public Move getClientMove() {
+        return clientMove;
+    }
+
+    public Move getServerMove() {
+        return serverMove;
+    }
+
+    public boolean isServer() {
+        return server;
+    }
 
 }
