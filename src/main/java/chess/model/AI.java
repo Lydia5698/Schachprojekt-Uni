@@ -55,6 +55,7 @@ public class AI {
     public Move getNextMove(Board board){
         List<Move> moveListOpening = aiOpening.getOpeningMoveList();
         List<Move> moveListPossible = possibleNextMoves(board);
+        Boolean noRandomMove = false;
 
         List<Move> takeMoveList = takesMove(moveListPossible, board);
         Move moveT = takeMoveList.get(0);
@@ -78,17 +79,19 @@ public class AI {
             // make cell for cellindex start for getting the minion on this field
             Cell[][] checkerBoard = board.getCheckerBoard();
             Cell startCelle = checkerBoard[startCell.getRow()][startCell.getColumn()];
-            Minion minion = startCelle.getMinion();
+            Minion minion = startCelle.getMinion(); //TODO minion darf nicht empty sein
             //TODO check here if legal move, oly return legal moves!!!!!
-            if (minion.validMove(startCell, endCell) && board.staleMate.checkLegalMove(startCell, endCell, board.manuals, checkerBoard)&& !(startCell.getRow()==endCell.getRow() &&  startCell.getColumn() == endCell.getColumn())) {
-                System.out.println("legal move check for move from openingsequence was succsessful");
-                return move;
+            if (!startCelle.isEmpty()){
+                if (minion.validMove(startCell, endCell) && board.staleMate.checkLegalMove(startCell, endCell, board.manuals, checkerBoard) && !(startCell.getRow() == endCell.getRow() && startCell.getColumn() == endCell.getColumn())) {
+                    System.out.println("legal move check for move from openingsequence was succsessful");
+                    return move;
+                }
             }
         }
         //get move if it is possible to take
-        else{ //random move is in this else
+        if(!noRandomMove){ //random move is in this else //TODO: remove bug else if geht er rein, aber wenn dann kein ergebnis kommt, dann geht er nicht mehr in die nachfolgende else
             int number = generateRandomInteger(moveListPossible.size(), 0);
-            System.out.println("random move number: " + Integer.toString(number));
+            System.out.println("random move number: " + number);
             if(number < moveListPossible.size()) {
                 move = moveListPossible.get(number);
             }
@@ -123,7 +126,6 @@ public class AI {
     public List<Move> possibleNextMoves(Board board){
         // make list of all moves
         List <Move> possibleMoves = board.staleMate.possibleMoveList(colourIsBlack, board.checkerBoard);
-        //TODO get random move
         return possibleMoves;
     }
 
