@@ -188,6 +188,13 @@ public class Board {
             }
             allowedMove = false;
         }
+        if (allowedMove && blackIsTurn != settings.isBlack()){
+            try {
+                settings.getConnection().send(move.getStart() + "-" + move.getEnd() + promoteTo);
+            } catch (Exception e) {
+                System.out.println (" exception when send");
+            }
+        }
     }
 
     /**

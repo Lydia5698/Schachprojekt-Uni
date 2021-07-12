@@ -4,7 +4,7 @@ import java.net.*;
 import java.io.*;
 
 public class Server extends Thread {
-    private int portNo = 4444;
+    private int portNo = 4848;
     private boolean black = false;
     private String input = "";
     private String output = "";
@@ -32,7 +32,7 @@ public class Server extends Thread {
         }
     }
 
-    @Override
+    @Override // auto response
     public void run() {
         //initial conversation
         output = netw_cp.processInput(null, black);
