@@ -4,6 +4,7 @@ import chess.model.AI;
 import chess.model.Board;
 import chess.model.Move;
 import chess.network.Netw_Cli;
+import chess.network.Netw_Con;
 import chess.network.Netw_Svr;
 import javafx.application.Platform;
 
@@ -34,7 +35,7 @@ public class Settings {
     private String ip;
     private final boolean server = false;
     String languageNumber = "1";
-
+    private Netw_Con connection;
     /**
      * Sets the setting in the Board
      */
@@ -178,7 +179,7 @@ public class Settings {
         }
     }
 
-    private Netw_Svr createServer() {
+    public Netw_Svr createServer() {
         System.out.println("server starting");
         return new Netw_Svr(port, data -> {
             Platform.runLater(() -> {
@@ -192,7 +193,7 @@ public class Settings {
         });
     }
 
-    private Netw_Cli createClient() {
+    public Netw_Cli createClient() {
         return new Netw_Cli(ip, port, data -> {
             Platform.runLater(() -> {
                 if (board.isBlackIsTurn() != black) {
@@ -200,25 +201,29 @@ public class Settings {
                     this.clientMove = new Move(data);
                     moveReceived = true;
                     board.applyMove(clientMove);
+
                 }
             });
         });
     }
 
+    public void setIp(String ip) { this.ip = ip; }
+    public void setPort(int port) { this.port = port; }
+    public void initCon () throws Exception{ connection.startConnection(); }
+    public void stopCon () throws Exception{ connection.closeConnection(); }
+    public Netw_Con getConnection() { return connection;    }
+    public void setConnection(Netw_Con connection) { this.connection = connection; }
+    public boolean isBlack() { return black; }
     public boolean isMoveReceived() {
         return moveReceived;
-    }
-
+    }  //zug wird empfangen und verarbeitet
     public Move getClientMove() {
         return clientMove;
     }
-
     public Move getServerMove() {
         return serverMove;
     }
-
     public boolean isServer() {
         return server;
     }
-
 }

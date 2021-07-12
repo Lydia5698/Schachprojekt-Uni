@@ -56,8 +56,16 @@ public class NetworkController extends MainController {
 
     @FXML
     void submit(ActionEvent event) { //TODO wahl zwischen host game and join Game
-        ipAdress.getText();
-        portnumber.getText(); // von hier zu settings ins Network? Was ist mit der Farbwahl?
+        gui.settings.setIp(ipAdress.getText());
+        gui.settings.setPort(4848); // von hier zu settings ins Network? Was ist mit der Farbwahl?
+        if (hostGame.isSelected()){
+            gui.getSettings().setConnection(gui.getSettings().createServer());}
+        else if(joinGame.isSelected()){
+            gui.getSettings().setConnection(gui.getSettings().createClient());}
+        try { gui.getSettings().initCon();}
+        catch (Exception e){
+            System.out.println ("exception when establishing con"); }
+
         Stage stage = (Stage) submit.getScene().getWindow();
         show_FXML("activeGame.fxml", stage, getGui());
     }
