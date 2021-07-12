@@ -18,7 +18,7 @@ public class Popups extends MainController {
      * Pops up the popup for check
      */
     @FXML
-    void popupCheck() {
+    void popupCheck(Gui gui) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber() + "82")));
         if (gui.getSettings().getBoard().isBlackIsTurn()) {
@@ -34,7 +34,7 @@ public class Popups extends MainController {
      * Pops up the popup for check Mate
      */
     @FXML
-    void popupCheckMate() {
+    void popupCheckMate(Gui gui) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber() + "92")));
         if (gui.getSettings().getBoard().isBlackIsTurn()) {
@@ -50,7 +50,7 @@ public class Popups extends MainController {
      * Pops up the popup for move not allowed
      */
     @FXML
-    void popupMoveNotAllowed() {
+    void popupMoveNotAllowed(Gui gui) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber() + "70")));
         alert.setContentText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber() + "71")));
@@ -61,7 +61,7 @@ public class Popups extends MainController {
      * Pops up the popup for double click not allowed
      */
     @FXML
-    void popupDoubleClick(String firstMinionClickedBlack, String firstMinionClickedWhite) {
+    void popupDoubleClick(String firstMinionClickedBlack, String firstMinionClickedWhite, Gui gui) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber() + "83")));
         if (gui.getSettings().getBoard().isBlackIsTurn()) {
