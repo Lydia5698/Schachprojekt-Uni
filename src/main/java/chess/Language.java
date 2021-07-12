@@ -70,9 +70,10 @@ public class Language {
                 "Bei diesem Spielmodus kannst du gegen den Computer spielen. Du kannst vor dem Spiel wählen, ob welche Farbe du spielen möchtest. Der Computer wird dann die andere Farbe spielen.\n" +
                 "\n" +
                 "Netzwerkspiel\n" +
-                "Bei diesem Spielmodus kannst du mit deinen Freund/-innen übers Netzwerk spielen\n" +
+                "Bei diesem Spielmodus kannst du mit deinen Freund/-innen übers Netzwerk spielen. Um das Spiel zu starten muss eine Person das Spiel hosten und der andere muss dem Spiel beitreten\n" +
+                "Derjenige, der das Spiel hostet kann sich aussuchen, welche Farbe er spielen möchte. Der andere Spieler muss die IP-Addresse des Gegners eintagen." + "\n" +
                 "\n" +
-                "Dieses Schachspiel folgt den Allgemeinen Regeln des deutschen Schachbundes. Für weitere Informationen "); // Anleitung Text
+                "Dieses Schachspiel folgt den Allgemeinen Regeln des deutschen Schachbundes."); // Anleitung Text
         dic.put(242, "Anleitung");
         // promote
         dic.put(250, "Wähle eine Figur um deinen Pawn zu befördern");
@@ -160,9 +161,10 @@ public class Language {
                 "In this game mode you can play against the computer. Before starting the game, you can choose which color you want to play. The computer will then play the other color.\n" +
                 "\n" +
                 "Network Game\n" +
-                "In this game mode you can play with your friends over the network\n" +
+                "In this game mode you can play with your friends over the network. To Play one must Host a Game. This Person can choose which colour he wants to play." + "\n" +
+                "The second Player must Join a Game. He must enter the IP-Address of the Hosting Person" + "\n" +
                 "\n" +
-                "This chess game follows the general rules of the German Chess Federation. For more information"); // Anleitung Text
+                "This chess game follows the general rules of the German Chess Federation."); // Anleitung Text
         dic.put(142, "Manual");
         // promote
         dic.put(150, "Choose a Figure to Promote your Pawn");

@@ -17,7 +17,7 @@ public class NetworkController extends MainController {
     private Label txtIpAdress;
 
     @FXML
-    private CheckBox colour;
+    private CheckBox ckbxColour;
 
     @FXML
     private Button submit;
@@ -41,13 +41,12 @@ public class NetworkController extends MainController {
 
     }
 
-
-
     @FXML
-    void submit(ActionEvent event) { //TODO wahl zwischen host game and join Game
+    void submit(ActionEvent event) {
         ipAdress.getText();
+        getGui().getSettings().setBlack(ckbxColour.isSelected());
         gui.settings.setIp(ipAdress.getText());
-        gui.settings.setPort(4848); // von hier zu settings ins Network? Was ist mit der Farbwahl?
+        gui.settings.setPort(4848);
         if (hostGame.isSelected()){
             gui.getSettings().setConnection(gui.getSettings().createServer());}
         else if(joinGame.isSelected()){
@@ -72,27 +71,6 @@ public class NetworkController extends MainController {
         return "^" + ipAddress;
     }
 
-    UnaryOperator<TextFormatter.Change> filter = t -> {
-
-        if (t.isReplaced())
-            if (t.getText().matches("[^0-9]"))
-                t.setText(t.getControlText().substring(t.getRangeStart(), t.getRangeEnd()));
-
-
-        if (t.isAdded()) {
-            if (t.getControlText().contains(".")) {
-                if (t.getText().matches("[^0-9]")) {
-                    t.setText("");
-                }
-            } else if (t.getText().matches("[^0-9.]")) {
-                t.setText("");
-            }
-        }
-
-        return t;
-    };
-
-
     @FXML
     void hostNetworkGame(ActionEvent event) {
         joinGame.setSelected(false);
@@ -109,9 +87,11 @@ public class NetworkController extends MainController {
         if (joinGame.isSelected()) {
             ipAdress.setVisible(true);
             txtIpAdress.setVisible(true);
+            ckbxColour.setVisible(false);
         } else if (hostGame.isSelected()) {
             ipAdress.setVisible(false);
             txtIpAdress.setVisible(false);
+            ckbxColour.setVisible(true);
         }
     }
 

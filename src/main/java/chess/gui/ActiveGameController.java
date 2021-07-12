@@ -84,6 +84,9 @@ public class ActiveGameController extends MainController {
         if (board.getMoveList().isEmpty()) {
             activeGameHelper.whiteAIMove();
         }
+        if(gui.getSettings().isMoveReceived()){
+            networkMove();
+        }
         // network white Move
         changeToLanguage();
         updateBoard();
@@ -128,6 +131,7 @@ public class ActiveGameController extends MainController {
      */
     @FXML
     void mouseClicked(MouseEvent event) throws IOException {
+        updateBoard();
         Node source = (Node) event.getSource();
 
         int colIndex;
@@ -169,6 +173,7 @@ public class ActiveGameController extends MainController {
             Move moveNew = new Move(input);
 
             activeGameHelper.checkAndDoMove(fistField, endIndex, startIndex, moveNew);
+            networkMove();
             counter = 0;
             halfMoves.clear();
             position.clear();
@@ -179,8 +184,11 @@ public class ActiveGameController extends MainController {
                 popups.popupCheckMate(getGui());
             }
         }
+    }
 
-
+    private void networkMove(){
+        getGui().getSettings().createClient();
+        updateBoard();
     }
 
     /**

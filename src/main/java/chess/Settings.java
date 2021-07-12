@@ -226,4 +226,8 @@ public class Settings {
     public boolean isServer() {
         return server;
     }
+    public void setBlack(boolean black) {
+        this.black = black;
+    }
+
 }
