@@ -87,6 +87,7 @@ public class ActiveGameController extends MainController {
         // network white Move
         changeToLanguage();
         updateBoard();
+        history();
     }
 
     public void setBoard(Board board) {

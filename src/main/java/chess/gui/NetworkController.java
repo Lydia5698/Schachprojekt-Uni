@@ -16,11 +16,6 @@ public class NetworkController extends MainController {
     @FXML
     private Label txtIpAdress;
 
-    @FXML
-    private Label txtPortnumber;
-
-    @FXML
-    private TextField portnumber;
 
     @FXML
     private CheckBox colour;
@@ -39,7 +34,6 @@ public class NetworkController extends MainController {
     public void setGui(Gui gui) {
         this.gui = gui;
         ipAdress.setTextFormatter(ipAddressTextFormatter());
-        portnumber.setTextFormatter(new TextFormatter<>(filter));
     }
 
     @FXML
@@ -48,16 +42,11 @@ public class NetworkController extends MainController {
 
     }
 
-    @FXML
-    void portnumberInput(ActionEvent event) {
-        portnumber.setTextFormatter(new TextFormatter<>(filter));
 
-    }
 
     @FXML
     void submit(ActionEvent event) { //TODO wahl zwischen host game and join Game
         ipAdress.getText();
-        portnumber.getText(); // von hier zu settings ins Network? Was ist mit der Farbwahl?
         Stage stage = (Stage) submit.getScene().getWindow();
         show_FXML("activeGame.fxml", stage, getGui());
     }
@@ -109,15 +98,11 @@ public class NetworkController extends MainController {
 
     void setProperties() {
         if (joinGame.isSelected()) {
-            ipAdress.setVisible(false);
-            portnumber.setVisible(false);
-            txtIpAdress.setVisible(false);
-            txtPortnumber.setVisible(false);
-        } else if (hostGame.isSelected()) {
             ipAdress.setVisible(true);
-            portnumber.setVisible(true);
             txtIpAdress.setVisible(true);
-            txtPortnumber.setVisible(true);
+        } else if (hostGame.isSelected()) {
+            ipAdress.setVisible(false);
+            txtIpAdress.setVisible(false);
         }
     }
 
