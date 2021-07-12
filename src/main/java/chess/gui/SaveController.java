@@ -21,6 +21,14 @@ public class SaveController extends MainController {
     private Button btnSubmit;
 
     @FXML
+    private Button btnCancel;
+
+    @FXML
+    void exit(ActionEvent event) {
+        System.exit(0);
+    }
+
+    @FXML
     void saveName(ActionEvent event) {
 
     }
