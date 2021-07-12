@@ -175,7 +175,7 @@ public class ActiveGameController extends MainController {
                 boardRotation();
             }
             if (getGui().getSettings().isGameEnd()) {
-                popups.popupCheckMate();
+                popups.popupCheckMate(getGui());
             }
         }
 

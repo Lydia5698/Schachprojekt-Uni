@@ -16,6 +16,7 @@ import java.util.Objects;
  */
 public class StartScreenController extends MainController {
     //Popups popups = new Popups(getGui());
+    LoadController loadController = new LoadController();
 
     @FXML
     private Button btnGameStart;
@@ -87,7 +88,8 @@ public class StartScreenController extends MainController {
 
     @FXML
     void loadGame(ActionEvent event) {
-
+        Stage stage = (Stage) btnloadGame.getScene().getWindow();
+        loadController.loadFile(stage);
     }
 
 }

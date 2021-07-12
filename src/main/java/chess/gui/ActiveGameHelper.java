@@ -73,11 +73,11 @@ public class ActiveGameHelper {
             if (!activeGameController.getGui().getSettings().isDoubleClick() || (firstMinionClickedWhite.equals(fistField)) || firstMinionClickedBlack.equals(fistField)) {
                 applyCurrentMove(moveNew);
             } else {
-                activeGameController.popups.popupDoubleClick(firstMinionClickedBlack, firstMinionClickedWhite);
+                activeGameController.popups.popupDoubleClick(firstMinionClickedBlack, firstMinionClickedWhite, activeGameController.getGui());
             }
 
         } else {
-            activeGameController.popups.popupMoveNotAllowed();
+            activeGameController.popups.popupMoveNotAllowed(activeGameController.getGui());
             activeGameController.board.setAllowedMove(false);
         }
     }
@@ -110,7 +110,7 @@ public class ActiveGameHelper {
 
         }
         if (activeGameController.getGui().getSettings().getIsInCheck() && activeGameController.getGui().getSettings().isCheckVisible()) {
-            activeGameController.popups.popupCheck();
+            activeGameController.popups.popupCheck(activeGameController.getGui());
             activeGameController.getGui().getSettings().setInCheck(false);
         }
 
