@@ -2,31 +2,29 @@ package chess.gui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import java.util.Objects;
 import java.util.function.UnaryOperator;
 
 public class NetworkController extends MainController {
     private static final String ipAddressRegex = makePartialIPRegex();
 
     @FXML
-    private TextField ipAdress;
+    private TextField ipAddress;
 
     @FXML
-    private Label txtIpAdress;
+    private Label txtIpAddress;
 
     @FXML
-    private Label txtPortnumber;
+    private CheckBox ckbxColour;
 
     @FXML
-    private TextField portnumber;
-
-    @FXML
-    private CheckBox colour;
-
-    @FXML
-    private Button submit;
+    private Button btnSubmit;
 
     @FXML
     private RadioButton hostGame;
@@ -34,31 +32,61 @@ public class NetworkController extends MainController {
     @FXML
     private RadioButton joinGame;
 
+    @FXML
+    private ImageView btnLanguage;
+
 
     @Override
     public void setGui(Gui gui) {
         this.gui = gui;
-        ipAdress.setTextFormatter(ipAddressTextFormatter());
-        portnumber.setTextFormatter(new TextFormatter<>(filter));
+        ipAddress.setTextFormatter(ipAddressTextFormatter());
+        changeToLanguage();
+    }
+
+    /**
+     * The language is changed in the settings when the Image btnLanguage is pushed
+     */
+    @FXML
+    void changeLanguage() {
+        getGui().getSettings().changeLanguage();
+        changeToLanguage();
+    }
+
+    /**
+     * Changes all buttons and text fields to the selected language
+     */
+    private void changeToLanguage() {
+        btnLanguage.setImage(new Image(Objects.requireNonNull(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "03")))).toExternalForm())));
+        hostGame.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "95")));
+        joinGame.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "96")));
+        ckbxColour.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "97")));
+        txtIpAddress.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "98")));
+        btnSubmit.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "99")));
+
+    }
+
+
+    @FXML
+    void ipAddressInput() {
+        ipAddress.setTextFormatter(ipAddressTextFormatter());
+
     }
 
     @FXML
-    void ipAdressInput(ActionEvent event) {
-        ipAdress.setTextFormatter(ipAddressTextFormatter());
+    void submit() {
+        ipAddress.getText();
+        getGui().getSettings().setBlack(ckbxColour.isSelected());
+        gui.settings.setIp(ipAddress.getText());
+        gui.settings.setPort(4848);
+        if (hostGame.isSelected()){
+            gui.getSettings().setConnection(gui.getSettings().createServer());}
+        else if(joinGame.isSelected()){
+            gui.getSettings().setConnection(gui.getSettings().createClient());}
+        try { gui.getSettings().initCon();}
+        catch (Exception e){
+            System.out.println ("exception when establishing con"); }
 
-    }
-
-    @FXML
-    void portnumberInput(ActionEvent event) {
-        portnumber.setTextFormatter(new TextFormatter<>(filter));
-
-    }
-
-    @FXML
-    void submit(ActionEvent event) { //TODO wahl zwischen host game and join Game
-        ipAdress.getText();
-        portnumber.getText(); // von hier zu settings ins Network? Was ist mit der Farbwahl?
-        Stage stage = (Stage) submit.getScene().getWindow();
+        Stage stage = (Stage) btnSubmit.getScene().getWindow();
         show_FXML("activeGame.fxml", stage, getGui());
     }
 
@@ -74,50 +102,27 @@ public class NetworkController extends MainController {
         return "^" + ipAddress;
     }
 
-    UnaryOperator<TextFormatter.Change> filter = t -> {
-
-        if (t.isReplaced())
-            if (t.getText().matches("[^0-9]"))
-                t.setText(t.getControlText().substring(t.getRangeStart(), t.getRangeEnd()));
-
-
-        if (t.isAdded()) {
-            if (t.getControlText().contains(".")) {
-                if (t.getText().matches("[^0-9]")) {
-                    t.setText("");
-                }
-            } else if (t.getText().matches("[^0-9.]")) {
-                t.setText("");
-            }
-        }
-
-        return t;
-    };
-
-
     @FXML
-    void hostNetworkGame(ActionEvent event) {
+    void hostNetworkGame() {
         joinGame.setSelected(false);
         setProperties();
     }
 
     @FXML
-    void joinNetworkGame(ActionEvent event) {
+    void joinNetworkGame() {
         hostGame.setSelected(false);
         setProperties();
     }
 
     void setProperties() {
         if (joinGame.isSelected()) {
-            ipAdress.setVisible(false);
-            portnumber.setVisible(false);
-            txtIpAdress.setVisible(false);
-            txtPortnumber.setVisible(false);
+            ipAddress.setVisible(true);
+            txtIpAddress.setVisible(true);
+            ckbxColour.setVisible(false);
         } else if (hostGame.isSelected()) {
-            ipAdress.setVisible(true);
-            portnumber.setVisible(true);
-            txtIpAdress.setVisible(true);
-            txtPortnumber.setVisible(true);
+            ipAddress.setVisible(false);
+            txtIpAddress.setVisible(false);
+            ckbxColour.setVisible(true);
         }
     }
 

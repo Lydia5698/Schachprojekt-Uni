@@ -343,8 +343,8 @@
    <ImageView fx:id="btnLanguage" fitHeight="18.0" fitWidth="66.0" layoutX="901.0" layoutY="18.0" onMouseClicked="#changeLanguage" pickOnBounds="true" preserveRatio="true">
       <Image url="@Flags/GermanFlag.png" />
    </ImageView>
-   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="39.0" layoutX="847.0" layoutY="6.0" stroke="BLACK" strokeType="INSIDE" style="-fx-background-color: #ffffff; -fx-background-radius: 2px; " width="39.0" />
-   <ImageView fx:id="btnSave" fitHeight="26.0" fitWidth="28.0" layoutX="853.0" layoutY="13.0" onMouseClicked="#saveGame" pickOnBounds="true" preserveRatio="true">
+   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d3d3d3" height="25.0" layoutX="866.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" style="-fx-background-color: #ffffff; -fx-background-radius: 2px; " width="24.0" />
+   <ImageView fx:id="btnSave" fitHeight="18.0" fitWidth="18.0" layoutX="869.0" layoutY="18.0" onMouseClicked="#saveGame" pickOnBounds="true" preserveRatio="true">
       <Image url="@Flags/floppy-disk.png" />
    </ImageView>
 </AnchorPane>

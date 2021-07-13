@@ -3,8 +3,9 @@ package chess;
 import chess.model.AI;
 import chess.model.Board;
 import chess.model.Move;
-import chess.network.Netw_Cli;
-import chess.network.Netw_Svr;
+import chess.network.NetwCli;
+import chess.network.NetwCon;
+import chess.network.NetwSvr;
 import javafx.application.Platform;
 
 /**
@@ -34,7 +35,7 @@ public class Settings {
     private String ip;
     private final boolean server = false;
     String languageNumber = "1";
-
+    private NetwCon connection;
     /**
      * Sets the setting in the Board
      */
@@ -178,9 +179,9 @@ public class Settings {
         }
     }
 
-    private Netw_Svr createServer() {
+    public NetwSvr createServer() {
         System.out.println("server starting");
-        return new Netw_Svr(port, data -> {
+        return new NetwSvr(port, data -> {
             Platform.runLater(() -> {
                 if (board.isBlackIsTurn() != black) {
                     System.out.println(data);
@@ -192,33 +193,41 @@ public class Settings {
         });
     }
 
-    private Netw_Cli createClient() {
-        return new Netw_Cli(ip, port, data -> {
+    public NetwCli createClient() {
+        return new NetwCli(ip, port, data -> {
             Platform.runLater(() -> {
                 if (board.isBlackIsTurn() != black) {
                     System.out.println(data);
                     this.clientMove = new Move(data);
                     moveReceived = true;
                     board.applyMove(clientMove);
+
                 }
             });
         });
     }
 
+    public void setIp(String ip) { this.ip = ip; }
+    public void setPort(int port) { this.port = port; }
+    public void initCon () throws Exception{ connection.startConnection(); }
+    public void stopCon () throws Exception{ connection.closeConnection(); }
+    public NetwCon getConnection() { return connection;    }
+    public void setConnection(NetwCon connection) { this.connection = connection; }
+    public boolean isBlack() { return black; }
     public boolean isMoveReceived() {
         return moveReceived;
-    }
-
+    }  //zug wird empfangen und verarbeitet
     public Move getClientMove() {
         return clientMove;
     }
-
     public Move getServerMove() {
         return serverMove;
     }
-
     public boolean isServer() {
         return server;
+    }
+    public void setBlack(boolean black) {
+        this.black = black;
     }
 
 }

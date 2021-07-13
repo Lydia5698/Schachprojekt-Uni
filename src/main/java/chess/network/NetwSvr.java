@@ -2,11 +2,11 @@ package chess.network;
 
 import java.util.function.Consumer;
 
-public class Netw_Svr extends Netw_Con {
+public class NetwSvr extends NetwCon {
 
     private final int port;
 
-    public Netw_Svr(int port, Consumer<String> callBackWhenReceived) {
+    public NetwSvr(int port, Consumer<String> callBackWhenReceived) {
         super(callBackWhenReceived);
         this.port = port;
     }

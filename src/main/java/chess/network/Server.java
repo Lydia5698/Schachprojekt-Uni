@@ -4,7 +4,7 @@ import java.net.*;
 import java.io.*;
 
 public class Server extends Thread {
-    private int portNo = 4444;
+    private int portNo = 4848;
     private boolean black = false;
     private String input = "";
     private String output = "";
@@ -12,11 +12,11 @@ public class Server extends Thread {
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
-    private final Netw_ChessProtocol netw_cp;
+    private final NetwChessProtocol netw_cp;
 
     public Server(int port) {
         this.portNo = port;
-        netw_cp = new Netw_ChessProtocol();
+        netw_cp = new NetwChessProtocol();
     }
 
     public void startSocket() {
@@ -32,7 +32,7 @@ public class Server extends Thread {
         }
     }
 
-    @Override
+    @Override // auto response
     public void run() {
         //initial conversation
         output = netw_cp.processInput(null, black);
@@ -66,7 +66,7 @@ public class Server extends Thread {
         return black;
     }
 
-    public Netw_ChessProtocol getNetw_cp() {
+    public NetwChessProtocol getNetw_cp() {
         return netw_cp;
     }
 }

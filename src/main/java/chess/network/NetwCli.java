@@ -2,12 +2,12 @@ package chess.network;
 
 import java.util.function.Consumer;
 
-public class Netw_Cli extends Netw_Con {
+public class NetwCli extends NetwCon {
 
     private final String ip;
     private final int port;
 
-    public Netw_Cli(String ip, int port, Consumer<String> onReceiveCallback) {
+    public NetwCli(String ip, int port, Consumer<String> onReceiveCallback) {
         super(onReceiveCallback);
         this.ip = ip;
         this.port = port;

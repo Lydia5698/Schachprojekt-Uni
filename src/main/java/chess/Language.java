@@ -4,8 +4,13 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 
 /**
+ * We are suppressing the PMD in this one, because we are setting the values of the Dictionary and it is unreasonable
+ * to make many methods just to set the values. The values are always the same so we dont think that it is necessary
+ * to make many methods
+
  * This class has Dictionary for the different Languages
  */
+@SuppressWarnings("PMD.NcssCount")
 public class Language {
     final Dictionary<Integer, String> dic = new Hashtable<>();
 
@@ -32,6 +37,7 @@ public class Language {
         dic.put(201, "Spiel start");
         dic.put(202, "Anleitung");
         dic.put(203, "Flags/UnitedKingdomFlag.png");
+        dic.put(204, "Spiel laden");
         // GameChoice
         dic.put(210, "Wähle eine Spielart aus");
         dic.put(211, "Normales Spiel");
@@ -70,9 +76,10 @@ public class Language {
                 "Bei diesem Spielmodus kannst du gegen den Computer spielen. Du kannst vor dem Spiel wählen, ob welche Farbe du spielen möchtest. Der Computer wird dann die andere Farbe spielen.\n" +
                 "\n" +
                 "Netzwerkspiel\n" +
-                "Bei diesem Spielmodus kannst du mit deinen Freund/-innen übers Netzwerk spielen\n" +
+                "Bei diesem Spielmodus kannst du mit deinen Freund/-innen übers Netzwerk spielen. Um das Spiel zu starten muss eine Person das Spiel hosten und der andere muss dem Spiel beitreten\n" +
+                "Derjenige, der das Spiel hostet kann sich aussuchen, welche Farbe er spielen möchte. Der andere Spieler muss die IP-Addresse des Gegners eintagen." + "\n" +
                 "\n" +
-                "Dieses Schachspiel folgt den Allgemeinen Regeln des deutschen Schachbundes. Für weitere Informationen "); // Anleitung Text
+                "Dieses Schachspiel folgt den Allgemeinen Regeln des deutschen Schachbundes."); // Anleitung Text
         dic.put(242, "Anleitung");
         // promote
         dic.put(250, "Wähle eine Figur um deinen Pawn zu befördern");
@@ -109,6 +116,12 @@ public class Language {
         dic.put(292, "Schachmatt!");
         dic.put(293, "Das Spiel ist vorbei");
         dic.put(294, "Patt");
+        // Network Game
+        dic.put(295,"Spiel hosten");
+        dic.put(296,"Spiel beitreten");
+        dic.put(297,"Spiel mit schwarz");
+        dic.put(298,"IP-Addresse");
+        dic.put(299,"Bestätigen");
 
     }
 
@@ -122,6 +135,7 @@ public class Language {
         dic.put(101, "Game Start");
         dic.put(102, "Manual");
         dic.put(103, "Flags/GermanFlag.png");
+        dic.put(104, "Load Game");
         // GameChoice
         dic.put(110, "Choose your Game");
         dic.put(111, "pvp");
@@ -160,9 +174,10 @@ public class Language {
                 "In this game mode you can play against the computer. Before starting the game, you can choose which color you want to play. The computer will then play the other color.\n" +
                 "\n" +
                 "Network Game\n" +
-                "In this game mode you can play with your friends over the network\n" +
+                "In this game mode you can play with your friends over the network. To Play one must Host a Game. This Person can choose which colour he wants to play." + "\n" +
+                "The second Player must Join a Game. He must enter the IP-Address of the Hosting Person" + "\n" +
                 "\n" +
-                "This chess game follows the general rules of the German Chess Federation. For more information"); // Anleitung Text
+                "This chess game follows the general rules of the German Chess Federation."); // Anleitung Text
         dic.put(142, "Manual");
         // promote
         dic.put(150, "Choose a Figure to Promote your Pawn");
@@ -199,6 +214,12 @@ public class Language {
         dic.put(192, "checkMate!");
         dic.put(193, "The Game has ended");
         dic.put(194, "Stalemate");
+        // Network Game
+        dic.put(195,"Host Game");
+        dic.put(196,"Join Game");
+        dic.put(197,"Play with Black");
+        dic.put(198,"IP-Address");
+        dic.put(199,"Submit");
 
     }
 }
