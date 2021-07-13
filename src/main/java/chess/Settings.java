@@ -3,9 +3,9 @@ package chess;
 import chess.model.AI;
 import chess.model.Board;
 import chess.model.Move;
-import chess.network.Netw_Cli;
-import chess.network.Netw_Con;
-import chess.network.Netw_Svr;
+import chess.network.NetwCli;
+import chess.network.NetwCon;
+import chess.network.NetwSvr;
 import javafx.application.Platform;
 
 /**
@@ -35,7 +35,7 @@ public class Settings {
     private String ip;
     private final boolean server = false;
     String languageNumber = "1";
-    private Netw_Con connection;
+    private NetwCon connection;
     /**
      * Sets the setting in the Board
      */
@@ -179,9 +179,9 @@ public class Settings {
         }
     }
 
-    public Netw_Svr createServer() {
+    public NetwSvr createServer() {
         System.out.println("server starting");
-        return new Netw_Svr(port, data -> {
+        return new NetwSvr(port, data -> {
             Platform.runLater(() -> {
                 if (board.isBlackIsTurn() != black) {
                     System.out.println(data);
@@ -193,8 +193,8 @@ public class Settings {
         });
     }
 
-    public Netw_Cli createClient() {
-        return new Netw_Cli(ip, port, data -> {
+    public NetwCli createClient() {
+        return new NetwCli(ip, port, data -> {
             Platform.runLater(() -> {
                 if (board.isBlackIsTurn() != black) {
                     System.out.println(data);
@@ -211,8 +211,8 @@ public class Settings {
     public void setPort(int port) { this.port = port; }
     public void initCon () throws Exception{ connection.startConnection(); }
     public void stopCon () throws Exception{ connection.closeConnection(); }
-    public Netw_Con getConnection() { return connection;    }
-    public void setConnection(Netw_Con connection) { this.connection = connection; }
+    public NetwCon getConnection() { return connection;    }
+    public void setConnection(NetwCon connection) { this.connection = connection; }
     public boolean isBlack() { return black; }
     public boolean isMoveReceived() {
         return moveReceived;

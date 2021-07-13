@@ -1,24 +1,19 @@
 package chess.gui;
 
 import chess.model.*;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.NodeOrientation;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -115,9 +110,10 @@ public class ActiveGameController extends MainController {
     }
 
     @FXML
-    void saveGame(MouseEvent event) {
+    void saveGame() {
         Stage stage = (Stage) btnSave.getScene().getWindow();
-        show_FXML("saveScreen.fxml", stage, getGui());
+        loadSaveController.saveFile(stage);
+        //show_FXML("saveScreen.fxml", stage, getGui());
     }
 
 
@@ -173,7 +169,9 @@ public class ActiveGameController extends MainController {
             Move moveNew = new Move(input);
 
             activeGameHelper.checkAndDoMove(fistField, endIndex, startIndex, moveNew);
-            networkMove();
+            if(getGui().getSettings().isMoveReceived()){ // netowkmove ausgabe
+                networkMove();
+            }
             counter = 0;
             halfMoves.clear();
             position.clear();

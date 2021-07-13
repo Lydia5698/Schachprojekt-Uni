@@ -16,7 +16,6 @@ import java.util.Objects;
  */
 public class StartScreenController extends MainController {
     //Popups popups = new Popups(getGui());
-    LoadController loadController = new LoadController();
 
     @FXML
     private Button btnGameStart;
@@ -76,6 +75,7 @@ public class StartScreenController extends MainController {
         titel.setText(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "00")));
         btnGameStart.setText(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "01")));
         btnRules.setText(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "02")));
+        btnloadGame.setText(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "04")));
     }
 
     @Override
@@ -89,7 +89,7 @@ public class StartScreenController extends MainController {
     @FXML
     void loadGame(ActionEvent event) {
         Stage stage = (Stage) btnloadGame.getScene().getWindow();
-        loadController.loadFile(stage);
+        loadSaveController.loadFile(stage);
     }
 
 }

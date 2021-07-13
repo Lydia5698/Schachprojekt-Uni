@@ -3,9 +3,7 @@ package chess.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
-import chess.model.Board;
 import chess.model.figures.*;
 
 /**
@@ -127,9 +125,8 @@ public class AI {
         // make list of all moves
         System.out.println(colourIsBlack);
         System.out.println(board.checkerBoard);
-        List<Move> possibleMoves = board.staleMate.possibleMoveList(colourIsBlack, board.checkerBoard);
         //TODO get random move
-        return possibleMoves;
+        return board.staleMate.possibleMoveList(colourIsBlack, board.checkerBoard);
     }
 
     public boolean isColourIsBlack() {
@@ -152,7 +149,7 @@ public class AI {
         // make hashmap
         List<Move> takesMoveList = new ArrayList<>();
         Move bestMove = new Move("aa-test");
-        HashMap<String, Integer> maps = new HashMap<String, Integer>();
+        HashMap<String, Integer> maps = new HashMap<>();
         maps.put("p", 1);
         maps.put("b", 3);
         maps.put("n", 3);

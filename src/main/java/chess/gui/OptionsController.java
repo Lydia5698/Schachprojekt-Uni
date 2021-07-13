@@ -69,7 +69,7 @@ public class OptionsController extends MainController {
     @FXML
     void exit() {
         Stage stage = (Stage) btnExit.getScene().getWindow();
-        show_FXML("saveScreen.fxml", stage, getGui());
+        loadSaveController.saveFile(stage);
         //System.exit(0);
     }
 

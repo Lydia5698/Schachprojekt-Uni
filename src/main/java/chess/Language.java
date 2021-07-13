@@ -4,8 +4,13 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 
 /**
+ * We are suppressing the PMD in this one, because we are setting the values of the Dictionary and it is unreasonable
+ * to make many methods just to set the values. The values are always the same so we dont think that it is necessary
+ * to make many methods
+
  * This class has Dictionary for the different Languages
  */
+@SuppressWarnings("PMD.NcssCount")
 public class Language {
     final Dictionary<Integer, String> dic = new Hashtable<>();
 
@@ -32,6 +37,7 @@ public class Language {
         dic.put(201, "Spiel start");
         dic.put(202, "Anleitung");
         dic.put(203, "Flags/UnitedKingdomFlag.png");
+        dic.put(204, "Spiel laden");
         // GameChoice
         dic.put(210, "Wähle eine Spielart aus");
         dic.put(211, "Normales Spiel");
@@ -110,6 +116,12 @@ public class Language {
         dic.put(292, "Schachmatt!");
         dic.put(293, "Das Spiel ist vorbei");
         dic.put(294, "Patt");
+        // Network Game
+        dic.put(295,"Spiel hosten");
+        dic.put(296,"Spiel beitreten");
+        dic.put(297,"Spiel mit schwarz");
+        dic.put(298,"IP-Addresse");
+        dic.put(299,"Bestätigen");
 
     }
 
@@ -123,6 +135,7 @@ public class Language {
         dic.put(101, "Game Start");
         dic.put(102, "Manual");
         dic.put(103, "Flags/GermanFlag.png");
+        dic.put(104, "Load Game");
         // GameChoice
         dic.put(110, "Choose your Game");
         dic.put(111, "pvp");
@@ -201,6 +214,12 @@ public class Language {
         dic.put(192, "checkMate!");
         dic.put(193, "The Game has ended");
         dic.put(194, "Stalemate");
+        // Network Game
+        dic.put(195,"Host Game");
+        dic.put(196,"Join Game");
+        dic.put(197,"Play with Black");
+        dic.put(198,"IP-Address");
+        dic.put(199,"Submit");
 
     }
 }

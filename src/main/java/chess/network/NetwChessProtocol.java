@@ -36,7 +36,7 @@ s: checkmate, SanFranTschüsko
 
 package chess.network;
 
-public class Netw_ChessProtocol {
+public class NetwChessProtocol {
 
     private static final int Start = 0;
     private static final int Wait = 1;

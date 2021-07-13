@@ -4,11 +4,11 @@ import java.io.*;
 import java.net.*;
 import java.util.function.Consumer;
 
-public abstract class Netw_Con {
+public abstract class NetwCon {
     private final ConnectionThread thread_con = new ConnectionThread();
     private final Consumer<String> callBackWhenReceived;
 
-    public Netw_Con(Consumer<String> callBackWhenReceived) {
+    public NetwCon(Consumer<String> callBackWhenReceived) {
         this.callBackWhenReceived = callBackWhenReceived;
         thread_con.setDaemon(true);
     }

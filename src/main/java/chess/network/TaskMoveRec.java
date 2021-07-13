@@ -5,10 +5,10 @@ import chess.model.Move;
 import javafx.concurrent.Task;
 
 //todo methdoenaufruf in der GUI scenebuilder bla bla machen
-public class Task_MoveRec extends Task<Move> { //movereceived
+public class TaskMoveRec extends Task<Move> { //movereceived
     private final Settings ioController;
 
-    public Task_MoveRec(Settings ioController) {
+    public TaskMoveRec(Settings ioController) {
         this.ioController = ioController;
     }
 

@@ -1,12 +1,9 @@
 package chess.gui;
 
-import chess.model.AI;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 
@@ -16,6 +13,7 @@ import java.io.IOException;
 public class MainController {
     private String promoteTo;
     public Gui gui;
+    LoadSaveController loadSaveController = new LoadSaveController();
 
     public String getPromoteTo() {
         return promoteTo;
@@ -32,6 +30,7 @@ public class MainController {
     public void setGui(Gui gui) {
         this.gui = gui;
     }
+
 
     /**
      * Loads the fxml files
