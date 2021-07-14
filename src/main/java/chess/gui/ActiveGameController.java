@@ -79,7 +79,7 @@ public class ActiveGameController extends MainController {
         if (board.getMoveList().isEmpty()) {
             activeGameHelper.whiteAIMove();
         }
-        if(gui.getSettings().isMoveReceived()){
+        if(gui.getSettings().isNetwork_active()){
             networkMove();
         }
         // network white Move
@@ -109,6 +109,9 @@ public class ActiveGameController extends MainController {
         btnOptions.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "31")));
     }
 
+    /**
+     * Opens the File Chooser were you can save the current Game
+     */
     @FXML
     void saveGame() {
         Stage stage = (Stage) btnSave.getScene().getWindow();
@@ -129,6 +132,10 @@ public class ActiveGameController extends MainController {
     void mouseClicked(MouseEvent event) throws IOException {
         updateBoard();
         Node source = (Node) event.getSource();
+
+        if(getGui().getSettings().isNetwork_active()){ // networkmove ausgabe
+            networkMove();
+        }
 
         int colIndex;
         int rowIndex;
@@ -169,7 +176,7 @@ public class ActiveGameController extends MainController {
             Move moveNew = new Move(input);
 
             activeGameHelper.checkAndDoMove(fistField, endIndex, startIndex, moveNew);
-            if(getGui().getSettings().isMoveReceived()){ // netowkmove ausgabe
+            if(getGui().getSettings().isNetwork_active()){ // netowkmove ausgabe
                 networkMove();
             }
             counter = 0;
@@ -179,11 +186,16 @@ public class ActiveGameController extends MainController {
                 boardRotation();
             }
             if (getGui().getSettings().isGameEnd()) {
-                popups.popupCheckMate(getGui());
+                popups.popupCheckMate(gui);
+                getGui().getSettings().setAi_active(false);
+                getGui().getSettings().setNetwork_active(false);
             }
         }
     }
 
+    /**
+     * Calls the methode crateClient in the Settings class. And after the move the board gets updated
+     */
     private void networkMove(){
         getGui().getSettings().createClient();
         updateBoard();
@@ -263,50 +275,7 @@ public class ActiveGameController extends MainController {
     private ImageView getImage(int i, int j) {
         ImageView iv = null;
         if (!board.getCheckerBoard()[i][j].isEmpty()) {
-            switch (board.getCheckerBoard()[i][j].getMinion().getMinion_type()) {
-                case 'K':
-                    if (board.getCheckerBoard()[i][j].getMinion().isBlack()) {
-                        iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/KingBlack.png")).toExternalForm()));
-                    } else {
-                        iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/KingWhite.png")).toExternalForm()));
-                    }
-                    break;
-                case 'Q':
-                    if (board.getCheckerBoard()[i][j].getMinion().isBlack()) {
-                        iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/QueenBlack.png")).toExternalForm()));
-                    } else {
-                        iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/QueenWhite.png")).toExternalForm()));
-                    }
-                    break;
-                case 'N':
-                    if (board.getCheckerBoard()[i][j].getMinion().isBlack()) {
-                        iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/KnightBlack.png")).toExternalForm()));
-                    } else {
-                        iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/KnightWhite.png")).toExternalForm()));
-                    }
-                    break;
-                case 'B':
-                    if (board.getCheckerBoard()[i][j].getMinion().isBlack()) {
-                        iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/BishopBlack.png")).toExternalForm()));
-                    } else {
-                        iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/BishopWhite.png")).toExternalForm()));
-                    }
-                    break;
-                case 'R':
-                    if (board.getCheckerBoard()[i][j].getMinion().isBlack()) {
-                        iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/RookBlack.png")).toExternalForm()));
-                    } else {
-                        iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/RookWhite.png")).toExternalForm()));
-                    }
-                    break;
-                case 'P':
-                    if (board.getCheckerBoard()[i][j].getMinion().isBlack()) {
-                        iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/PawnBlack.png")).toExternalForm()));
-                    } else {
-                        iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/PawnWhite.png")).toExternalForm()));
-                    }
-                    break;
-            }
+            iv = getImageView(i, j, false, false);
             assert iv != null;
             iv.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
                 try {
@@ -315,6 +284,66 @@ public class ActiveGameController extends MainController {
                     e.printStackTrace();
                 }
             });
+        }
+        return iv;
+    }
+
+    private ImageView getImageView(int i, int j, boolean beatenMinions, boolean colour) {
+        char minion;
+        String toChar;
+        ImageView iv = null;
+        if(!beatenMinions){
+            minion = board.getCheckerBoard()[i][j].getMinion().getMinion_type();
+            colour = board.getCheckerBoard()[i][j].getMinion().isBlack();
+        }
+        else {
+            toChar = board.getBeaten().get(i);
+            minion = toChar.charAt(0);
+            minion = Character.toUpperCase(minion);
+        }
+        switch (minion) {
+            case 'K':
+                if (colour) {
+                    iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/KingBlack.png")).toExternalForm()));
+                } else {
+                    iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/KingWhite.png")).toExternalForm()));
+                }
+                break;
+            case 'Q':
+                if (colour) {
+                    iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/QueenBlack.png")).toExternalForm()));
+                } else {
+                    iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/QueenWhite.png")).toExternalForm()));
+                }
+                break;
+            case 'N':
+                if (colour) {
+                    iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/KnightBlack.png")).toExternalForm()));
+                } else {
+                    iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/KnightWhite.png")).toExternalForm()));
+                }
+                break;
+            case 'B':
+                if (colour) {
+                    iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/BishopBlack.png")).toExternalForm()));
+                } else {
+                    iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/BishopWhite.png")).toExternalForm()));
+                }
+                break;
+            case 'R':
+                if (colour) {
+                    iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/RookBlack.png")).toExternalForm()));
+                } else {
+                    iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/RookWhite.png")).toExternalForm()));
+                }
+                break;
+            case 'P':
+                if (colour) {
+                    iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/PawnBlack.png")).toExternalForm()));
+                } else {
+                    iv = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("ChessFigures/PawnWhite.png")).toExternalForm()));
+                }
+                break;
         }
         return iv;
     }
@@ -341,26 +370,33 @@ public class ActiveGameController extends MainController {
     /**
      * Sets the beaten Minions on the Grid next to the chessboard. It distinguished between black and white Minions beaten
      *
-     * @param sourceEnd the source (Minion) which is getting beaten
      */
-    void beatenMinionOutput(Node sourceEnd) {
+    void beatenMinionOutput() {
+        String minion;
+        ImageView iv;
+        char minionType;
         if (board.getBeaten().size() == 1) {
-            String minion = board.getBeaten().get(0);
-            char minionType = minion.charAt(0);
-            if (sourceEnd instanceof ImageView) {
-                chessBoard.getChildren().remove(sourceEnd);
-                if (Character.isUpperCase(minionType)) {
-                    //sourceEnd.set
-                    beatenMinion.add(sourceEnd, 0, counterBeatenMinionsWhite);
-                    counterBeatenMinionsWhite++;
-                } else {
-                    beatenMinion.add(sourceEnd, 1, counterBeatenMinionsBlack);
-                    counterBeatenMinionsBlack++;
-                }
+            minion = board.getBeaten().get(0);
+            minionType = minion.charAt(0);
+            if (Character.isUpperCase(minionType)) {
+                //sourceEnd.set
+                iv = getImageView(0,1,true, false);
+                iv.setFitHeight(90);
+                iv.setFitWidth(90);
+                beatenMinion.add(iv, 0, counterBeatenMinionsWhite);
+                counterBeatenMinionsWhite++;
+            } else {
+                iv = getImageView(0,1,true,true);
+                iv.setFitHeight(90);
+                iv.setFitWidth(90);
+                beatenMinion.add(iv, 1, counterBeatenMinionsBlack);
+                counterBeatenMinionsBlack++;
             }
-            board.getBeaten().clear();
         }
+        board.getBeaten().clear();
     }
+
+
 
 
     /**

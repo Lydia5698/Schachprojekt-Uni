@@ -66,18 +66,25 @@ public class NetworkController extends MainController {
     }
 
 
+    /**
+     * Sets the TextFormatter to the ipAddress Textfield
+     */
     @FXML
     void ipAddressInput() {
         ipAddress.setTextFormatter(ipAddressTextFormatter());
 
     }
 
+    /**
+     * Gets the ipAddress from the ipAddress field and gets the selected colour. It also sets the ipAddress and the port in the Settings
+     */
     @FXML
     void submit() {
         ipAddress.getText();
         getGui().getSettings().setBlack(ckbxColour.isSelected());
         gui.settings.setIp(ipAddress.getText());
         gui.settings.setPort(4848);
+        gui.getSettings().setNetwork_active(true);
         if (hostGame.isSelected()){
             gui.getSettings().setConnection(gui.getSettings().createServer());}
         else if(joinGame.isSelected()){
@@ -90,11 +97,19 @@ public class NetworkController extends MainController {
         show_FXML("activeGame.fxml", stage, getGui());
     }
 
+    /**
+     * Creates the ipAddress Text Formatter
+     * @return the Text Formatter for the ipAddress
+     */
     public static TextFormatter<TextFormatter.Change> ipAddressTextFormatter() {
         UnaryOperator<TextFormatter.Change> ipAddressFilter = change -> change.getControlNewText().matches(ipAddressRegex) ? change : null;
         return new TextFormatter<>(ipAddressFilter);
     }
 
+    /**
+     * Creates the Regex and only allowes the Pattern of an ipAddress
+     * @return the Regex for the Text Formatter
+     */
     private static String makePartialIPRegex() {
         String partialBlock = "(([01]?[0-9]{0,2})|(2[0-4][0-9])|(25[0-5]))";
         String subsequentPartialBlock = "(\\." + partialBlock + ")";
@@ -102,18 +117,28 @@ public class NetworkController extends MainController {
         return "^" + ipAddress;
     }
 
+    /**
+     * Selects the joinGame Radio Button and sets the Properties
+     */
     @FXML
     void hostNetworkGame() {
         joinGame.setSelected(false);
         setProperties();
     }
 
+    /**
+     * Selects the hostGame Radio Button and sets the Properties
+     */
     @FXML
     void joinNetworkGame() {
         hostGame.setSelected(false);
         setProperties();
     }
 
+    /**
+     * It sets the Properties when you click on the Radio Button so that the ip Address is only visible for the
+     * Join Game and the colour choice only for the Host Game
+     */
     void setProperties() {
         if (joinGame.isSelected()) {
             ipAddress.setVisible(true);

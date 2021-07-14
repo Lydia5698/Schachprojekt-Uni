@@ -86,8 +86,11 @@ public class StartScreenController extends MainController {
         btnLanguage.setImage(new Image(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(103))).toExternalForm()));
     }
 
+    /**
+     * Opens the FileChooser and gives the choice to load a txt File
+     */
     @FXML
-    void loadGame(ActionEvent event) {
+    void loadGame() {
         Stage stage = (Stage) btnloadGame.getScene().getWindow();
         loadSaveController.loadFile(stage);
     }
