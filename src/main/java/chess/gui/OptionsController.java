@@ -99,8 +99,12 @@ public class OptionsController extends MainController {
     void showStartScreen() {
         Stage stage = (Stage) btnStartScreen.getScene().getWindow();
         show_FXML("startScreen.fxml", stage, getGui());
-        getGui().getSettings().setBoard(new Board());
-        // set game false oder game end
+        Board board = new Board();
+        board.setSettings(gui.settings);
+        getGui().getSettings().setBoard(board);
+        getGui().getSettings().setNetwork_active(false);
+        getGui().getSettings().setAi_active(false);
+
     }
 
     /**

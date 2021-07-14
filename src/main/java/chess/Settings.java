@@ -17,6 +17,7 @@ public class Settings {
     Board board = new Board();
     Language language = new Language();
     protected boolean gui_active = false;
+    protected boolean network_active = false;
     protected boolean isInCheck = false;
     protected boolean gameEnd = false;
     protected boolean ai_active = false;
@@ -27,6 +28,7 @@ public class Settings {
     protected boolean doubleClick = false;
     protected boolean languageGerman = false;
     protected boolean languageEnglish = true;
+    protected boolean languageKlingon = false;
     protected boolean black = false;
     protected Move clientMove = new Move("A0-A0");
     protected Move serverMove = new Move("A0-A0");
@@ -163,18 +165,36 @@ public class Settings {
         this.gameEnd = gameEnd;
     }
 
+    public boolean isLanguageKlingon() {
+        return languageKlingon;
+    }
+
+    public void setLanguageKlingon(boolean languageKlingon) {
+        this.languageKlingon = languageKlingon;
+    }
+
+
 
     /**
      * Changes the booleans for the Language and updates the Language number so the right Language is load from the Dictionary
      */
     public void changeLanguage() {
-        if (isLanguageEnglish()) {
+        if(isLanguageEnglish()) {
             setLanguageEnglish(false);
             setLanguageGerman(true);
+            setLanguageKlingon(false);
             setLanguageNumber("2");
-        } else {
+        }
+        else if(isLanguageGerman()){
+            setLanguageEnglish(false);
+            setLanguageGerman(false);
+            setLanguageKlingon(true);
+            setLanguageNumber("3");
+        }
+        else {
             setLanguageEnglish(true);
             setLanguageGerman(false);
+            setLanguageKlingon(false);
             setLanguageNumber("1");
         }
     }
@@ -228,6 +248,12 @@ public class Settings {
     }
     public void setBlack(boolean black) {
         this.black = black;
+    }
+    public boolean isNetwork_active() {
+        return network_active;
+    }
+    public void setNetwork_active(boolean network_active) {
+        this.network_active = network_active;
     }
 
 }

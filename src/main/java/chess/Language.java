@@ -20,6 +20,7 @@ public class Language {
     public Language() {
         setDicGerman();
         setDicEnglish();
+        setDicKlingon();
     }
 
     public Dictionary<Integer, String> getDic() {
@@ -36,7 +37,7 @@ public class Language {
         dic.put(200, "Schach");
         dic.put(201, "Spiel start");
         dic.put(202, "Anleitung");
-        dic.put(203, "Flags/UnitedKingdomFlag.png");
+        dic.put(203, "Flags/Klingon.png");
         dic.put(204, "Spiel laden");
         // GameChoice
         dic.put(210, "Wähle eine Spielart aus");
@@ -220,6 +221,100 @@ public class Language {
         dic.put(197,"Play with Black");
         dic.put(198,"IP-Address");
         dic.put(199,"Submit");
+
+    }
+
+    private void setDicKlingon() {
+        // Start Screen (klingon latin)
+        dic.put(300, "che'ron");
+        dic.put(301, "bI'reS");
+        dic.put(302, "ghojmoH");
+        dic.put(303, "Flags/UnitedKingdomFlag.png");
+        dic.put(304, "lIS");
+        // GameChoice
+        dic.put(310, "mInDu'");
+        dic.put(311, "motlh");
+        dic.put(312, "ngeb");
+        dic.put(313, "rar");
+        // active Game
+        dic.put(320, "Duh");
+        // options
+        dic.put(330, "chap");
+        dic.put(331, "Duh");
+        dic.put(332, "'ach nav QIbHa'");
+        dic.put(333, "SepDaj veng jIvHa'wI'");
+        dic.put(334, "muqIchdaj Sovbe'chugh, vaj DaH ghotvam");
+        dic.put(335, "HoSchoHpu' chepmoHlu'");
+        dic.put(336, "bertlham");
+        // manual
+        dic.put(340, "chap");
+        dic.put(341, "ghotvam qorDu' ghotghom. " +
+                "vaj, jIHvaD muvchuqlaHmo' tlhoghvam.\n" +
+                "\n" +
+                "Duh\n" +
+                "'ach qaSpu'DI' malja', Qu' cho'mo'. Qo'noS taghchoH Hujvam'e'. " +
+                "'ach Hegh QorghlaHbe'bogh QoylaHbe' 'arqon rop'e' 'oghlaHbe' QorghwI', sIbI' 'oH rop ghItlh'e' SIbI' 'oH, 'ach pIm ngoDmey'e' luchenmoHlu'. " +
+                "lojmIt DeghwI' 'ach Qoch 'el QoylaHbe' DeghwI' Qoy. wamwI'ghomHom ra'wI' lumuvHa'chuq. " +
+                "ngoQvammo' QoQ Huj poS. veng wa'DIchDaq nuvpu' mIv'a' tIn puS.\n" +
+                "\n" +
+                "qaStaHvIS DaraPbe'bogh\n" +
+                "\n" +
+                "bI'reS\n" +
+                "yapchoH loDnI'wI' DaSovchoHQo'\n" +
+                "\n" +
+                "motlh\n" +
+                "'umbe'law' ghItlhvam. 'ach Hajqu'choH. vItlhobmeH jIH maSuvjaj. \n" +
+                "\n" +
+                "ngeb\n" +
+                "Qo'noS luchenmoHlaHchu' 'e' Datu' 'e' yIchaw'. QumwI'lIjDaq yIloSmoH! chaHvaD Humanpu' chaH\n" +
+                "\n" +
+                "rar\n" +
+                "ngaghwI'na' Dechbogh qo'mey puS. law'ta' ropmo' qechmaj boQ'a' neH.\n" +
+                "QuvvamDaq QottaHghach mIw wIje'laHbe'. latlh lut vIlaD." + "\n" +
+                "\n" +
+                "ghIlghameSvaD ghIlghameS 'e' chaw' ghIlghameS"); // Anleitung Text
+        dic.put(342, "ghojmoH");
+        // promote
+        dic.put(350, "tlhIngan maH");
+        // colourSelect
+        dic.put(360, "QI'yaH, chaw'wI' quvHa'mo' QIch'e'");
+        dic.put(361, "qIj");
+        dic.put(362, "chIS");
+        //Cli colour Select
+        dic.put(363, "naDev DaDalaH. maj, jItlheDchugh, vaj tera'Nganpu' bIH, 'e' vIghoj. yablIjDaq ghob Dapabchugh, vaj yImuvHa'.");
+        dic.put(364, "bImuSHa'chugh, pagh, bIqemtaHvIS,:");
+        dic.put(365, "tIqlIj yIlo' 'e' DaHar");
+        dic.put(366, "nuq DaneH, 'qIj' ghap 'chIS'?");
+        dic.put(367, "chu' qIj, ngeb moj chIS.");
+        dic.put(368, "chu' chIS, ngeb moj qIj.");
+        dic.put(369, "DuqIp 'oH.");
+        // move not allowed
+        dic.put(370, "qechbe'meH mIwvam'e'");
+        dic.put(371, "qechbe'meH mIwvam'e'");
+        //AI
+        dic.put(372, "ngeb vIH: ");
+        dic.put(373, " vIH ngeQ");
+        dic.put(374, " qIj\n");
+        dic.put(375, " chIS\n");
+        dic.put(376, "!Qagh vIH");
+        // check
+        dic.put(380, "qIj che'ron");
+        dic.put(381, "chIS che'ron");
+        dic.put(382, "che'ron!");
+        dic.put(383, "vaj qoghlIj puS");
+        dic.put(384, "bIQaHmeH qoH DaSovbe'. ngaQmoH nuvpu', ghItlhpa' yuQmaj ngoQ: ");
+        // checkMate
+        dic.put(390, "qIj choz");
+        dic.put(391, "chIS chot");
+        dic.put(392, "chot!");
+        dic.put(393, "bertlham");
+        dic.put(394, "tlhol");
+        // Network Game
+        dic.put(395,"qa'vaQ 'eH, chav Data");
+        dic.put(396,"qa'vaQ muv");
+        dic.put(397,"qa'vaQ qIj");
+        dic.put(398,"SoQ");
+        dic.put(399,"lu'");
 
     }
 }

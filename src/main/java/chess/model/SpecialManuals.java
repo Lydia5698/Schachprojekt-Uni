@@ -176,7 +176,7 @@ public class SpecialManuals {
      * @param checkerboard Chessboard
      * @return a boolean if the en Passant is valid
      */
-    boolean isValidEnPassant(CellIndex startIndex, CellIndex endIndex, Cell[][] checkerboard, List<Move> moveList) {
+    public boolean isValidEnPassant(CellIndex startIndex, CellIndex endIndex, Cell[][] checkerboard, List<Move> moveList) {
         Cell startCell = checkerboard[startIndex.row][startIndex.column];
         Cell endCell = checkerboard[endIndex.row][endIndex.column];
         int diffRow = startIndex.getRow() - endIndex.getRow(); //positiv dann gehen wir nach oben, negativ nach unten (weil wir von oben zählen)
@@ -251,7 +251,7 @@ public class SpecialManuals {
         return false;
     }
 
-    private boolean figureRochadeHasMoved(List<Move> MoveList, CellIndex start, CellIndex end, Cell[][] checkerboard) {
+    public boolean figureRochadeHasMoved(List<Move> MoveList, CellIndex start, CellIndex end, Cell[][] checkerboard) {
         Cell startCell = checkerboard[start.row][start.column];
         String posRookWLeft = "a1";
         String posRookWRight = "h1";

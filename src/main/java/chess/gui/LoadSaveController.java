@@ -26,6 +26,11 @@ public class LoadSaveController {
         this.gui = gui;
     }
 
+    /**
+     * Opens the FileChooser. The Player can choose a Txt file to load
+     * @param stage the current stage
+     */
+
     public void loadFile(Stage stage) throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Check File");
@@ -45,8 +50,9 @@ public class LoadSaveController {
     }
 
     /**
+     * Opens the FileChooser. The Player can choose where the Txt file is saved
      * Method to save a running chess game. Saves every move in a new line.
-     * @param stage
+     * @param stage the current stage
      */
     public void saveFile(Stage stage){
         FileChooser fileChooser = new FileChooser();

@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * The MainController
+ * The MainController has the methode to show the FXML and sets the Gui
  */
 public class MainController {
     private String promoteTo;
