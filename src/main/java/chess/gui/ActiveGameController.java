@@ -132,10 +132,10 @@ public class ActiveGameController extends MainController {
      */
     @FXML
     void mouseClicked(MouseEvent event) throws IOException {
-        updateBoard();
         Node source = (Node) event.getSource();
 
         if(getGui().getSettings().isNetwork_active()){ // networkmove ausgabe
+            updateBoard();
             networkMove();
         }
 
@@ -177,19 +177,12 @@ public class ActiveGameController extends MainController {
             input = checkPromotion(input, startIndex, endIndex);
 
             Move moveNew = new Move(input);
-            if(!startCell.isEmpty()){
-                activeGameHelper.checkAndDoMove(fistField, endIndex, startIndex, moveNew);
+            activeGameHelper.checkAndDoMove(moveNew);
 
-            }
-            if(getGui().getSettings().isNetwork_active()){ // netowkmove ausgabe
-                networkMove();
-            }
             counter = 0;
             halfMoves.clear();
             position.clear();
-            if (getGui().getSettings().isRotateBoard() && !getGui().getSettings().isAi_active()) {
-                boardRotation();
-            }
+
             if (getGui().getSettings().isGameEnd()) {
                 popups.popupCheckMate(gui);
                 getGui().getSettings().setAi_active(false);
@@ -201,7 +194,7 @@ public class ActiveGameController extends MainController {
     /**
      * Calls the methode crateClient in the Settings class. And after the move the board gets updated
      */
-    private void networkMove(){
+    void networkMove(){
         getGui().getSettings().createClient();
         updateBoard();
     }
@@ -245,7 +238,7 @@ public class ActiveGameController extends MainController {
     /**
      * rotates the Board. Deletes the old images and sets the new one in a rotated order
      */
-    private void boardRotation() {
+    void boardRotation() {
         ImageView iv;
         chessBoard.getChildren().removeIf(node -> node instanceof ImageView);
 

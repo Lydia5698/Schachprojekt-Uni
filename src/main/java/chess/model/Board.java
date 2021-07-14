@@ -25,7 +25,7 @@ public class Board {
     private final List<Move> moveList = new ArrayList<>();
     private boolean blackIsTurn = false;
     private boolean simple = false;
-    private boolean allowedMove = true;
+    private boolean allowedMove = false;
 
     /**
      * Creates a new Board instance. The Board uses initHorizont to fill the Board with Cells and Minions
@@ -172,6 +172,7 @@ public class Board {
             moveList.add(move);
             manuals.spManuals.promote(endIndex, promoteTo, checkerBoard);
             allowedMove = true;
+            System.out.println(allowedMove);
 
         }
         // check if special move
@@ -295,7 +296,7 @@ public class Board {
      */
     protected void checkAndPrintCheckCheckMate(Minion minion) {
         if (manuals.isCheck(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
-            if (settings.isGui_active()) {
+            if (!settings.isGui_active()) {
                 System.out.println("!" + settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber() + "82")));
             }
             settings.setInCheck(true);
@@ -303,13 +304,13 @@ public class Board {
         }
         //check if in Check Mate
         if (manuals.checkMate(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
-            if (settings.isGui_active()) {
+            if (!settings.isGui_active()) {
                 System.out.println("!" + settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber() + "92")));
                 System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber() + "93")));
             }
             settings.setGameEnd(true);
         } else if (staleMate.isStaleMate(!minion.isBlack(), checkerBoard) && !simple) {
-            if (settings.isGui_active()) {
+            if (!settings.isGui_active()) {
                 System.out.println("!" + settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber() + "94")));
                 System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber() + "93")));
             }

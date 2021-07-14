@@ -200,11 +200,11 @@ public class Settings {
     }
 
     public NetwSvr createServer() {
-        System.out.println("server starting");
+        //System.out.println("server starting");
         return new NetwSvr(port, data -> {
             Platform.runLater(() -> {
                 if (board.isBlackIsTurn() != black) {
-                    System.out.println(data);
+                    //System.out.println(data);
                     this.clientMove = new Move(data);
                     moveReceived = true;
                     board.applyMove(clientMove);
@@ -217,7 +217,7 @@ public class Settings {
         return new NetwCli(ip, port, data -> {
             Platform.runLater(() -> {
                 if (board.isBlackIsTurn() != black) {
-                    System.out.println(data);
+                    //System.out.println(data);
                     this.clientMove = new Move(data);
                     moveReceived = true;
                     board.applyMove(clientMove);

@@ -42,6 +42,7 @@ public class Cli {
         boolean inSettingsMode = true;
         boolean inAISettingsMode = false;
         boolean inNetworkSettingsMode = false;
+        boolean join = false;
         String languageNumber = "1";
         board.setSettings(settings);
 
@@ -123,7 +124,6 @@ public class Cli {
 
             }
             while (inNetworkSettingsMode) {
-                boolean join = false;
                 if(!join){
                     System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "05")));
                 }
@@ -131,6 +131,7 @@ public class Cli {
                 try {
                     String inputSetting = brs.readLine();
                     if (inputSetting.matches("join")) {
+                        join = true;
                         System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "06")));
                     } else if (inputSetting.matches("host")) {
                         settings.setConnection(settings.createServer());
