@@ -76,7 +76,11 @@ public class ActiveGameHelper {
             if (activeGameController.getGui().getSettings().isGameEnd()) {
                 activeGameController.popups.popupCheckMate(activeGameController.gui);
                 activeGameController.getGui().getSettings().setAi_active(false);
-                activeGameController.getGui().getSettings().setNetwork_active(false);
+                activeGameController.getGui().settings.getSettingsNetwork().setNetwork_active(false);
+            }
+            if(activeGameController.getGui().settings.getSettingsNetwork().isNetwork_active()){ // netowkmove ausgabe
+                activeGameController.networkMove();
+                activeGameController.updateBoard();
             }
             if (activeGameController.getGui().getSettings().isAi_active()) {
                 Move aiMove = activeGameController.getGui().getSettings().getAi().getNextMove(activeGameController.board);
@@ -88,9 +92,7 @@ public class ActiveGameHelper {
                 activeGameController.beatenMinionOutput();
                 activeGameController.updateBoard();
             }
-            if(activeGameController.getGui().getSettings().isNetwork_active()){ // netowkmove ausgabe
-                activeGameController.networkMove();
-            }
+
         }
         else{
             activeGameController.popups.popupMoveNotAllowed(activeGameController.getGui());

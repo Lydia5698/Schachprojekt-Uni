@@ -81,7 +81,8 @@ public class Language {
                 "\n" +
                 "Netzwerkspiel\n" +
                 "Bei diesem Spielmodus kannst du mit deinen Freund/-innen übers Netzwerk spielen. Um das Spiel zu starten muss eine Person das Spiel hosten und der andere muss dem Spiel beitreten\n" +
-                "Derjenige, der das Spiel hostet kann sich aussuchen, welche Farbe er spielen möchte. Der andere Spieler muss die IP-Addresse des Gegners eintagen." + "\n" +
+                "Derjenige, der das Spiel hostet kann sich aussuchen, welche Farbe er spielen möchte. Der andere Spieler muss die IP-Addresse des Gegners eintagen. wenn du das board updaten möchtest " +
+                "um den gegnerischen Zug zu sehen, musst du einmal auf das Spielfeld klicken" + "\n" +
                 "\n" +
                 "Dieses Schachspiel folgt den Allgemeinen Regeln des deutschen Schachbundes."); // Anleitung Text
         dic.put(242, "Anleitung");
@@ -182,7 +183,7 @@ public class Language {
                 "\n" +
                 "Network Game\n" +
                 "In this game mode you can play with your friends over the network. To Play one must Host a Game. This Person can choose which colour he wants to play." + "\n" +
-                "The second Player must Join a Game. He must enter the IP-Address of the Hosting Person" + "\n" +
+                "The second Player must Join a Game. He must enter the IP-Address of the Hosting Person. if you want to update the board to see the opponent's move you have to click once on the playing field" + "\n" +
                 "\n" +
                 "This chess game follows the general rules of the German Chess Federation."); // Anleitung Text
         dic.put(142, "Manual");
@@ -276,7 +277,7 @@ public class Language {
                 "\n" +
                 "rar\n" +
                 "ngaghwI'na' Dechbogh qo'mey puS. law'ta' ropmo' qechmaj boQ'a' neH.\n" +
-                "QuvvamDaq QottaHghach mIw wIje'laHbe'. latlh lut vIlaD." + "\n" +
+                "QuvvamDaq QottaHghach mIw wIje'laHbe'. latlh lut vIlaD. jagh Datuqchugh vaj mu'mey Dalo'taHvIS" + "\n" +
                 "\n" +
                 "ghIlghameSvaD ghIlghameS 'e' chaw' ghIlghameS"); // Anleitung Text
         dic.put(342, "ghojmoH");

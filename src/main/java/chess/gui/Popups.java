@@ -20,11 +20,11 @@ public class Popups extends MainController {
     @FXML
     void popupCheck(Gui gui) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber() + "82")));
+        alert.setTitle(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getSettingsLanguage().getLanguageNumber() + "82")));
         if (gui.getSettings().getBoard().isBlackIsTurn()) {
-            alert.setContentText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber() + "80")));
+            alert.setContentText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getSettingsLanguage().getLanguageNumber() + "80")));
         } else {
-            alert.setContentText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber() + "81")));
+            alert.setContentText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getSettingsLanguage().getLanguageNumber() + "81")));
         }
 
         alert.show();
@@ -36,11 +36,11 @@ public class Popups extends MainController {
     @FXML
     void popupCheckMate(Gui gui) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber() + "92")));
+        alert.setTitle(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getSettingsLanguage().getLanguageNumber() + "92")));
         if (gui.getSettings().getBoard().isBlackIsTurn()) {
-            alert.setContentText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber() + "90")));
+            alert.setContentText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getSettingsLanguage().getLanguageNumber() + "90")));
         } else {
-            alert.setContentText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber() + "91")));
+            alert.setContentText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getSettingsLanguage().getLanguageNumber() + "91")));
 
         }
         alert.show();
@@ -52,8 +52,8 @@ public class Popups extends MainController {
     @FXML
     void popupMoveNotAllowed(Gui gui) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber() + "70")));
-        alert.setContentText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber() + "71")));
+        alert.setTitle(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getSettingsLanguage().getLanguageNumber() + "70")));
+        alert.setContentText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getSettingsLanguage().getLanguageNumber() + "71")));
         alert.show();
     }
 
@@ -63,11 +63,11 @@ public class Popups extends MainController {
     @FXML
     void popupDoubleClick(String firstMinionClickedBlack, String firstMinionClickedWhite, Gui gui) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber() + "83")));
+        alert.setTitle(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getSettingsLanguage().getLanguageNumber() + "83")));
         if (gui.getSettings().getBoard().isBlackIsTurn()) {
-            alert.setContentText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber() + "84")) + firstMinionClickedBlack);
+            alert.setContentText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getSettingsLanguage().getLanguageNumber() + "84")) + firstMinionClickedBlack);
         } else {
-            alert.setContentText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber() + "84")) + firstMinionClickedWhite);
+            alert.setContentText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getSettingsLanguage().getLanguageNumber() + "84")) + firstMinionClickedWhite);
         }
         alert.show();
     }

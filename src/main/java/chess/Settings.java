@@ -2,11 +2,7 @@ package chess;
 
 import chess.model.AI;
 import chess.model.Board;
-import chess.model.Move;
-import chess.network.NetwCli;
-import chess.network.NetwCon;
-import chess.network.NetwSvr;
-import javafx.application.Platform;
+
 
 /**
  * The Settings for the Gui and the Cli
@@ -15,9 +11,10 @@ public class Settings {
     //felder
     AI ai = new AI(false);
     Board board = new Board();
-    Language language = new Language();
+    //Language language = new Language();
     protected boolean gui_active = false;
-    protected boolean network_active = false;
+    protected SettingsNetwork settingsNetwork;
+    protected SettingsLanguage settingsLanguage = new SettingsLanguage();
     protected boolean isInCheck = false;
     protected boolean gameEnd = false;
     protected boolean ai_active = false;
@@ -26,24 +23,17 @@ public class Settings {
     protected boolean lightPossibleMoves = false;
     protected boolean checkVisible = false;
     protected boolean doubleClick = false;
-    protected boolean languageGerman = false;
+/*    protected boolean languageGerman = false;
     protected boolean languageEnglish = true;
     protected boolean languageKlingon = false;
-    protected boolean black = false;
-    protected Move clientMove = new Move("A0-A0");
-    protected Move serverMove = new Move("A0-A0");
-    protected boolean moveReceived = false;
-    private int port;
-    private String ip;
-    private final boolean server = false;
-    String languageNumber = "1";
-    private NetwCon connection;
+    String languageNumber = "1";*/
     /**
      * Sets the setting in the Board
      */
     //constructor
     public Settings() {
         board.setSettings(this);
+        setSettingsNetwork(new SettingsNetwork(board));
     }
 
     //methoden
@@ -113,33 +103,7 @@ public class Settings {
         this.board = board;
     }
 
-    public Language getLanguage() {
-        return language;
-    }
 
-    public boolean isLanguageGerman() {
-        return languageGerman;
-    }
-
-    public void setLanguageGerman(boolean languageGerman) {
-        this.languageGerman = languageGerman;
-    }
-
-    public boolean isLanguageEnglish() {
-        return languageEnglish;
-    }
-
-    public void setLanguageEnglish(boolean languageEnglish) {
-        this.languageEnglish = languageEnglish;
-    }
-
-    public String getLanguageNumber() {
-        return languageNumber;
-    }
-
-    public void setLanguageNumber(String languageNumber) {
-        this.languageNumber = languageNumber;
-    }
 
     public boolean isGui_active() {
         return gui_active;
@@ -165,95 +129,18 @@ public class Settings {
         this.gameEnd = gameEnd;
     }
 
-    public boolean isLanguageKlingon() {
-        return languageKlingon;
+
+    public SettingsNetwork getSettingsNetwork() {
+        return settingsNetwork;
+    }
+    public void setSettingsNetwork(SettingsNetwork settingsNetwork) {
+        this.settingsNetwork = settingsNetwork;
+    }
+    public SettingsLanguage getSettingsLanguage() {
+        return settingsLanguage;
     }
 
-    public void setLanguageKlingon(boolean languageKlingon) {
-        this.languageKlingon = languageKlingon;
+    public void setSettingsLanguage(SettingsLanguage settingsLanguage) {
+        this.settingsLanguage = settingsLanguage;
     }
-
-
-
-    /**
-     * Changes the booleans for the Language and updates the Language number so the right Language is load from the Dictionary
-     */
-    public void changeLanguage() {
-        if(isLanguageEnglish()) {
-            setLanguageEnglish(false);
-            setLanguageGerman(true);
-            setLanguageKlingon(false);
-            setLanguageNumber("2");
-        }
-        else if(isLanguageGerman()){
-            setLanguageEnglish(false);
-            setLanguageGerman(false);
-            setLanguageKlingon(true);
-            setLanguageNumber("3");
-        }
-        else {
-            setLanguageEnglish(true);
-            setLanguageGerman(false);
-            setLanguageKlingon(false);
-            setLanguageNumber("1");
-        }
-    }
-
-    public NetwSvr createServer() {
-        //System.out.println("server starting");
-        return new NetwSvr(port, data -> {
-            Platform.runLater(() -> {
-                if (board.isBlackIsTurn() != black) {
-                    //System.out.println(data);
-                    this.clientMove = new Move(data);
-                    moveReceived = true;
-                    board.applyMove(clientMove);
-                }
-            });
-        });
-    }
-
-    public NetwCli createClient() {
-        return new NetwCli(ip, port, data -> {
-            Platform.runLater(() -> {
-                if (board.isBlackIsTurn() != black) {
-                    //System.out.println(data);
-                    this.clientMove = new Move(data);
-                    moveReceived = true;
-                    board.applyMove(clientMove);
-
-                }
-            });
-        });
-    }
-
-    public void setIp(String ip) { this.ip = ip; }
-    public void setPort(int port) { this.port = port; }
-    public void initCon () throws Exception{ connection.startConnection(); }
-    public void stopCon () throws Exception{ connection.closeConnection(); }
-    public NetwCon getConnection() { return connection;    }
-    public void setConnection(NetwCon connection) { this.connection = connection; }
-    public boolean isBlack() { return black; }
-    public boolean isMoveReceived() {
-        return moveReceived;
-    }  //zug wird empfangen und verarbeitet
-    public Move getClientMove() {
-        return clientMove;
-    }
-    public Move getServerMove() {
-        return serverMove;
-    }
-    public boolean isServer() {
-        return server;
-    }
-    public void setBlack(boolean black) {
-        this.black = black;
-    }
-    public boolean isNetwork_active() {
-        return network_active;
-    }
-    public void setNetwork_active(boolean network_active) {
-        this.network_active = network_active;
-    }
-
 }

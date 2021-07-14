@@ -79,7 +79,7 @@ public class ActiveGameController extends MainController {
         if (board.getMoveList().isEmpty()) {
             activeGameHelper.whiteAIMove();
         }
-        if(gui.getSettings().isNetwork_active()){
+        if(gui.settings.getSettingsNetwork().isNetwork_active()){
             networkMove();
         }
         // network white Move
@@ -98,7 +98,7 @@ public class ActiveGameController extends MainController {
      */
     @FXML
     void changeLanguage() {
-        getGui().getSettings().changeLanguage();
+        getGui().getSettings().getSettingsLanguage().changeLanguage();
         changeToLanguage();
     }
 
@@ -106,8 +106,8 @@ public class ActiveGameController extends MainController {
      * Changes all buttons and text fields to the selected language
      */
     private void changeToLanguage() {
-        btnLanguage.setImage(new Image(Objects.requireNonNull(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "03")))).toExternalForm())));
-        btnOptions.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "31")));
+        btnLanguage.setImage(new Image(Objects.requireNonNull(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "03")))).toExternalForm())));
+        btnOptions.setText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "31")));
     }
 
     /**
@@ -134,9 +134,10 @@ public class ActiveGameController extends MainController {
     void mouseClicked(MouseEvent event) throws IOException {
         Node source = (Node) event.getSource();
 
-        if(getGui().getSettings().isNetwork_active()){ // networkmove ausgabe
-            updateBoard();
+        if(getGui().settings.getSettingsNetwork().isNetwork_active()){ // networkmove ausgabe
             networkMove();
+            updateBoard();
+
         }
 
         int colIndex;
@@ -177,7 +178,10 @@ public class ActiveGameController extends MainController {
             input = checkPromotion(input, startIndex, endIndex);
 
             Move moveNew = new Move(input);
-            activeGameHelper.checkAndDoMove(moveNew);
+            if(!startCell.isEmpty()){
+                activeGameHelper.checkAndDoMove(moveNew);
+
+            }
 
             counter = 0;
             halfMoves.clear();
@@ -186,7 +190,7 @@ public class ActiveGameController extends MainController {
             if (getGui().getSettings().isGameEnd()) {
                 popups.popupCheckMate(gui);
                 getGui().getSettings().setAi_active(false);
-                getGui().getSettings().setNetwork_active(false);
+                getGui().settings.getSettingsNetwork().setNetwork_active(false);
             }
         }
     }
@@ -195,7 +199,7 @@ public class ActiveGameController extends MainController {
      * Calls the methode crateClient in the Settings class. And after the move the board gets updated
      */
     void networkMove(){
-        getGui().getSettings().createClient();
+        getGui().settings.getSettingsNetwork().createClient();
         updateBoard();
     }
 
@@ -371,7 +375,7 @@ public class ActiveGameController extends MainController {
      */
     void beatenMinionOutput() {
         ImageView iv;
-        String minion = "";
+        String minion;
         char minionType;
         if (board.getBeaten().size() >= 1) {
             beatenMinion.getChildren().clear();

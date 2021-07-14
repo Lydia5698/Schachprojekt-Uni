@@ -1,6 +1,7 @@
 package chess.model;
 
 import chess.Settings;
+import chess.SettingsNetwork;
 import chess.model.figures.*;
 
 import java.util.ArrayList;
@@ -172,8 +173,6 @@ public class Board {
             moveList.add(move);
             manuals.spManuals.promote(endIndex, promoteTo, checkerBoard);
             allowedMove = true;
-            System.out.println(allowedMove);
-
         }
         // check if special move
         else if (specialMove(move, startIndex, endIndex)) {
@@ -187,14 +186,14 @@ public class Board {
                 System.out.println("!Move not allowed");
             } else {
                 if (!settings.isGui_active()) {
-                    System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber() + "71")));
+                    System.out.println(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "71")));
                 }
             }
             allowedMove = false;
         }
-        if (settings.isNetwork_active() && allowedMove && blackIsTurn != settings.isBlack()){
+        if (settings.getSettingsNetwork().isNetwork_active() && allowedMove && blackIsTurn != settings.getSettingsNetwork().isBlack()){
             try {
-                settings.getConnection().send(move.getStart() + "-" + move.getEnd() + promoteTo);
+                settings.getSettingsNetwork().getConnection().send(move.getStart() + "-" + move.getEnd() + promoteTo);
             } catch (Exception e) {
                 System.out.println (" exception when send");
             }
@@ -297,7 +296,7 @@ public class Board {
     protected void checkAndPrintCheckCheckMate(Minion minion) {
         if (manuals.isCheck(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
             if (!settings.isGui_active()) {
-                System.out.println("!" + settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber() + "82")));
+                System.out.println("!" + settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "82")));
             }
             settings.setInCheck(true);
 
@@ -305,14 +304,14 @@ public class Board {
         //check if in Check Mate
         if (manuals.checkMate(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
             if (!settings.isGui_active()) {
-                System.out.println("!" + settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber() + "92")));
-                System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber() + "93")));
+                System.out.println("!" + settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "92")));
+                System.out.println(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "93")));
             }
             settings.setGameEnd(true);
         } else if (staleMate.isStaleMate(!minion.isBlack(), checkerBoard) && !simple) {
             if (!settings.isGui_active()) {
-                System.out.println("!" + settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber() + "94")));
-                System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(settings.getLanguageNumber() + "93")));
+                System.out.println("!" + settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "94")));
+                System.out.println(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "93")));
             }
             settings.setGameEnd(true);
         }
@@ -325,4 +324,6 @@ public class Board {
     public Settings getSettings() {
         return settings;
     }
+
+
 }
