@@ -91,13 +91,12 @@ public class Cli {
                         loadGame= true;
 
                         //TODO: print files in path
-                        System.out.println("Choose one of the following chess games to load by typing in the correct name of the file:");
+                        System.out.println("Choose one of the following chess games to load by clicking enter before typing in the correct name of the file:");
 
                         File folder = new File("src");
                         File[] listOfFiles = folder.listFiles();
 
-                        for (int i = 0; i < listOfFiles.length; i++) {
-                            File file = listOfFiles[i];
+                        for (File file: listOfFiles) {
                             if (file.isFile() && file.getName().endsWith(".txt")) {
                                 System.out.println(file.getName());
                             }
@@ -109,10 +108,16 @@ public class Cli {
 
                     }
                     else if(loadGame) {
-                        File file = new File(brs.readLine());
+                        File file = new File("src/" + brs.readLine());
+                        System.out.println("file was read, now give it to parser");
                         Parser.parserLoadCli(file, board);
+                        System.out.println("file was parsed");
                         loadGame = false;
-                        board.showBoard();
+                        if(board.getSettings().isAi_active()){
+                            ai = board.getSettings().getAi();
+                        }
+                        //System.out.println(board.showBoard());
+                        inSettingsMode = false;
                     }
                     else {
                         //wait
@@ -246,7 +251,7 @@ public class Cli {
                     }
                     else if(saveGame){
                         String gameName = input;
-                        File selectedFile = new File(gameName);    //creates a new file instance
+                        File selectedFile = new File("src/" + gameName);    //creates a new file instance
                         try {
                             BufferedWriter writer = new BufferedWriter(new FileWriter(selectedFile)); //Erzeugen eines effizienten Writers für Textdateien
                             for (Move move : board.getMoveList()){
