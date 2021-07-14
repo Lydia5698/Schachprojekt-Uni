@@ -49,9 +49,9 @@ public class SettingsNetwork{
                     activeGameController.history();
                     activeGameController.beatenMinionOutput();
                     activeGameController.updateBoard();
-                    if (activeGameController.getGui().getSettings().getIsInCheck() && activeGameController.getGui().getSettings().isCheckVisible()) {
+                    if (activeGameController.getGui().getSettings().isInCheck() && activeGameController.getGui().getSettings().isCheckVisible()) {
                         activeGameController.getPopups().popupCheck(activeGameController.getGui());
-                        activeGameController.getGui().getSettings().setInCheck(false);
+                        activeGameController.getGui().getSettings().setIsInCheck(false);
                     }
                 }
             });
@@ -73,9 +73,9 @@ public class SettingsNetwork{
                     activeGameController.history();
                     activeGameController.beatenMinionOutput();
                     activeGameController.updateBoard();
-                    if (activeGameController.getGui().getSettings().getIsInCheck() && activeGameController.getGui().getSettings().isCheckVisible()) {
+                    if (activeGameController.getGui().getSettings().isInCheck() && activeGameController.getGui().getSettings().isCheckVisible()) {
                         activeGameController.getPopups().popupCheck(activeGameController.getGui());
-                        activeGameController.getGui().getSettings().setInCheck(false);
+                        activeGameController.getGui().getSettings().setIsInCheck(false);
                     }
                 }
             });

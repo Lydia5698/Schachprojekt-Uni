@@ -78,7 +78,7 @@ public class ActiveGameHelper {
             checkPopups();
             // the network move is applied
             if(activeGameController.getGui().settings.getSettingsNetwork().isNetwork_active()){ // netowkmove ausgabe
-                activeGameController.networkMove();
+                //activeGameController.networkMove();
                 activeGameController.updateBoard();
             }
             // the AI move is applied
