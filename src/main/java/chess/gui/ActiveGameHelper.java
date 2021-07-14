@@ -1,12 +1,9 @@
 package chess.gui;
 
-import chess.model.Board;
 import chess.model.CellIndex;
 import chess.model.Move;
-import chess.model.SpecialManuals;
 import javafx.event.Event;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
@@ -20,7 +17,6 @@ import java.util.List;
  */
 public class ActiveGameHelper {
     ActiveGameController activeGameController;
-    SpecialManuals spManuals = new SpecialManuals();
     protected String firstMinionClickedWhite = "";
     protected String firstMinionClickedBlack = "";
 
@@ -62,62 +58,48 @@ public class ActiveGameHelper {
 
 
     /**
-     * Checks if the move is allowed and checks the first field clicked when double move is activated
-     * else pops up the popups for move not allowed
-     *
-     * @param fistField  the first field clicked
-     * @param endIndex   the endIndex of the move (second Field)
-     * @param startIndex the startIndex of the move (first Field)
+     * Applies the move on the Board and pops up the popup if move is not allowed
      * @param moveNew    the move (startIndex + endIndex + promoteTo)
      */
-    void checkAndDoMove(String fistField, CellIndex endIndex, CellIndex startIndex, Move moveNew) {
-        if (activeGameController.board.manuals.moveOfRightColour(moveNew, activeGameController.board) && activeGameController.board.manuals.checkIfValidMove(startIndex, endIndex, activeGameController.board.getCheckerBoard())){
-
-                if (!activeGameController.getGui().getSettings().isDoubleClick() || (firstMinionClickedWhite.equals(fistField)) || firstMinionClickedBlack.equals(fistField)) {
-                    applyCurrentMove(moveNew);
-                } else {
-                    activeGameController.popups.popupDoubleClick(firstMinionClickedBlack, firstMinionClickedWhite, activeGameController.getGui());
-                }
+    void checkAndDoMove(String fistField, Move moveNew) {
+        if (!activeGameController.getGui().getSettings().isDoubleClick() || (firstMinionClickedWhite.equals(fistField)) || firstMinionClickedBlack.equals(fistField)) {
+            activeGameController.board.applyMove(moveNew);
+        } else {
+            activeGameController.popups.popupDoubleClick(firstMinionClickedBlack, firstMinionClickedWhite, activeGameController.getGui());
         }
-        else if (spManuals.isValidEnPassant(startIndex, endIndex, activeGameController.board.getCheckerBoard(), activeGameController.board.getMoveList())
-                || spManuals.figureRochadeHasMoved(activeGameController.board.getMoveList(), startIndex, endIndex, activeGameController.board.getCheckerBoard())) {
-            applyCurrentMove(moveNew);
-        }
-
-        else{
-        activeGameController.popups.popupMoveNotAllowed(activeGameController.getGui());
-        activeGameController.board.setAllowedMove(false);
-        }
-    }
-
-    /**
-     * Applies the move on the Board from the Player and the AI if active. And checks for check
-     *
-     * @param moveNew the move (startIndex + endIndex + promoteTo)
-     */
-    private void applyCurrentMove(Move moveNew) {
-        firstMinionClickedBlack = "";
-        firstMinionClickedWhite = "";
-        activeGameController.board.applyMove(moveNew);
-        activeGameController.history();
-        Event end = activeGameController.position.get(1);
-        Node sourceEnd = (Node) end.getSource();
-        activeGameController.beatenMinionOutput();
-        activeGameController.updateBoard();
-        if (activeGameController.getGui().getSettings().isAi_active()) {
-            Move aiMove = activeGameController.getGui().getSettings().getAi().getNextMove(activeGameController.board);
-            activeGameController.board.applyMove(aiMove);
-            // geschlagene figur vom AI Move
-            CellIndex endIndex = Board.cellIndexFor(aiMove.getEnd());
-            activeGameController.getGui().getSettings().getAi().increaseTurnNumber();
-            //update
+        if(activeGameController.board.isAllowedMove()) {
+            firstMinionClickedBlack = "";
+            firstMinionClickedWhite = "";
+            activeGameController.history();
             activeGameController.beatenMinionOutput();
             activeGameController.updateBoard();
+            if (activeGameController.getGui().getSettings().getIsInCheck() && activeGameController.getGui().getSettings().isCheckVisible()) {
+                activeGameController.popups.popupCheck(activeGameController.getGui());
+                activeGameController.getGui().getSettings().setInCheck(false);
+            }
+            if (activeGameController.getGui().getSettings().isGameEnd()) {
+                activeGameController.popups.popupCheckMate(activeGameController.gui);
+                activeGameController.getGui().getSettings().setAi_active(false);
+                activeGameController.getGui().settings.getSettingsNetwork().setNetwork_active(false);
+            }
+            if(activeGameController.getGui().settings.getSettingsNetwork().isNetwork_active()){ // netowkmove ausgabe
+                activeGameController.networkMove();
+                activeGameController.updateBoard();
+            }
+            if (activeGameController.getGui().getSettings().isAi_active()) {
+                Move aiMove = activeGameController.getGui().getSettings().getAi().getNextMove(activeGameController.board);
+                activeGameController.board.applyMove(aiMove);
+                // geschlagene figur vom AI Move
+                //CellIndex endIndex = Board.cellIndexFor(aiMove.getEnd());
+                activeGameController.getGui().getSettings().getAi().increaseTurnNumber();
+                //update
+                activeGameController.beatenMinionOutput();
+                activeGameController.updateBoard();
+            }
 
         }
-        if (activeGameController.getGui().getSettings().getIsInCheck() && activeGameController.getGui().getSettings().isCheckVisible()) {
-            activeGameController.popups.popupCheck(activeGameController.getGui());
-            activeGameController.getGui().getSettings().setInCheck(false);
+        else{
+            activeGameController.popups.popupMoveNotAllowed(activeGameController.getGui());
         }
 
     }

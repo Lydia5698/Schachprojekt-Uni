@@ -48,7 +48,7 @@ public class NetworkController extends MainController {
      */
     @FXML
     void changeLanguage() {
-        getGui().getSettings().changeLanguage();
+        getGui().getSettings().getSettingsLanguage().changeLanguage();
         changeToLanguage();
     }
 
@@ -56,12 +56,12 @@ public class NetworkController extends MainController {
      * Changes all buttons and text fields to the selected language
      */
     private void changeToLanguage() {
-        btnLanguage.setImage(new Image(Objects.requireNonNull(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "03")))).toExternalForm())));
-        hostGame.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "95")));
-        joinGame.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "96")));
-        ckbxColour.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "97")));
-        txtIpAddress.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "98")));
-        btnSubmit.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "99")));
+        btnLanguage.setImage(new Image(Objects.requireNonNull(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "03")))).toExternalForm())));
+        hostGame.setText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "95")));
+        joinGame.setText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "96")));
+        ckbxColour.setText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "97")));
+        txtIpAddress.setText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "98")));
+        btnSubmit.setText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "99")));
 
     }
 
@@ -81,15 +81,15 @@ public class NetworkController extends MainController {
     @FXML
     void submit() {
         ipAddress.getText();
-        getGui().getSettings().setBlack(ckbxColour.isSelected());
-        gui.settings.setIp(ipAddress.getText());
-        gui.settings.setPort(4848);
-        gui.getSettings().setNetwork_active(true);
+        getGui().settings.getSettingsNetwork().setBlack(ckbxColour.isSelected());
+        gui.settings.getSettingsNetwork().setIp(ipAddress.getText());
+        gui.settings.getSettingsNetwork().setPort(4848);
+        gui.settings.getSettingsNetwork().setNetwork_active(true);
         if (hostGame.isSelected()){
-            gui.getSettings().setConnection(gui.getSettings().createServer());}
+            gui.settings.getSettingsNetwork().setConnection(gui.settings.getSettingsNetwork().createServer());}
         else if(joinGame.isSelected()){
-            gui.getSettings().setConnection(gui.getSettings().createClient());}
-        try { gui.getSettings().initCon();}
+            gui.settings.getSettingsNetwork().setConnection(gui.settings.getSettingsNetwork().createClient());}
+        try { gui.settings.getSettingsNetwork().initCon();}
         catch (Exception e){
             System.out.println ("exception when establishing con"); }
 

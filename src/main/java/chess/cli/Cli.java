@@ -4,6 +4,7 @@ package chess.cli;
 //import chess.gui.Gui;
 
 import chess.Settings;
+import chess.SettingsNetwork;
 import chess.model.*;
 
 import java.io.*;
@@ -37,6 +38,7 @@ public class Cli {
         boolean inSettingsMode = true;
         boolean inAISettingsMode = false;
         boolean inNetworkSettingsMode = false;
+        boolean join = false;
         String languageNumber = "1";
         board.setSettings(settings);
         boolean loadGame= false;
@@ -46,28 +48,28 @@ public class Cli {
             BufferedReader brs = new BufferedReader(new InputStreamReader(System.in));
             while (inSettingsMode) {
                 try {
-                    System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "63")));
-                    System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "64")));
+                    System.out.println(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(languageNumber + "63")));
+                    System.out.println(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(languageNumber + "64")));
                     String inputSetting = brs.readLine();
                     if (inputSetting.contains("exit")) {
                         inSettingsMode = false;
                     }
                     if (inputSetting.matches("german") || inputSetting.contains("deutsch") || inputSetting.contains("chen")) {
-                        settings.setLanguageEnglish(false);
-                        settings.setLanguageGerman(true);
-                        settings.setLanguageKlingon(false);
+                        settings.getSettingsLanguage().setLanguageEnglish(false);
+                        settings.getSettingsLanguage().setLanguageGerman(true);
+                        settings.getSettingsLanguage().setLanguageKlingon(false);
                         languageNumber = "2";
                     }
                     if (inputSetting.matches("english") || inputSetting.contains("englisch") || inputSetting.contains("Te ra'")) {
-                        settings.setLanguageEnglish(true);
-                        settings.setLanguageGerman(false);
-                        settings.setLanguageKlingon(false);
+                        settings.getSettingsLanguage().setLanguageEnglish(true);
+                        settings.getSettingsLanguage().setLanguageGerman(false);
+                        settings.getSettingsLanguage().setLanguageKlingon(false);
                         languageNumber = "1";
                     }
                     if (inputSetting.matches("klingon") || inputSetting.contains("klingonisch") || inputSetting.contains("tlhIngan")) {
-                        settings.setLanguageEnglish(false);
-                        settings.setLanguageGerman(false);
-                        settings.setLanguageKlingon(true);
+                        settings.getSettingsLanguage().setLanguageEnglish(false);
+                        settings.getSettingsLanguage().setLanguageGerman(false);
+                        settings.getSettingsLanguage().setLanguageKlingon(true);
                         languageNumber = "3";
                     }
                     if (inputSetting.matches("human") || inputSetting.contains("mensch") || inputSetting.contains("loD")) {
@@ -79,7 +81,7 @@ public class Cli {
                         inAISettingsMode = true;
                         inSettingsMode = false;
                     } else if (inputSetting.matches("network") || inputSetting.contains("netzwerk")|| inputSetting.contains("joq")) {
-                        settings.createClient();
+                        settings.getSettingsNetwork().createClient();
                         inSettingsMode = false;
                         inNetworkSettingsMode = true;
                         // IP Addresse eingabe
@@ -121,7 +123,7 @@ public class Cli {
                     }
                     else {
                         //wait
-                        System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "65")));
+                        System.out.println(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(languageNumber + "65")));
                     }
 
                 } catch (IOException e) {
@@ -129,23 +131,23 @@ public class Cli {
                 }
             }
             while (inAISettingsMode && settings.isAi_active()) {
-                System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "66")));
+                System.out.println(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(languageNumber + "66")));
                 try {
                     String inputSetting = brs.readLine();
                     if (inputSetting.matches("black")) {
                         settings.setAi_colour(false);
-                        System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "67")));
+                        System.out.println(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(languageNumber + "67")));
                         inAISettingsMode = false;
                         //create ai
                         ai = new AI(false);
                     } else if (inputSetting.matches("white")) {
                         settings.setAi_colour(true);
-                        System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "68")));
+                        System.out.println(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(languageNumber + "68")));
                         inAISettingsMode = false;
                         //create ai
                         ai = new AI(true);
                     } else {
-                        System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "69")));
+                        System.out.println(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(languageNumber + "69")));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -153,30 +155,30 @@ public class Cli {
 
             }
             while (inNetworkSettingsMode) {
-                boolean join = false;
                 if(!join){
-                    System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "05")));
+                    System.out.println(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(languageNumber + "05")));
                 }
 
                 try {
                     String inputSetting = brs.readLine();
                     if (inputSetting.matches("join")) {
-                        System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "06")));
+                        join = true;
+                        System.out.println(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(languageNumber + "06")));
                     } else if (inputSetting.matches("host")) {
-                        settings.setConnection(settings.createServer());
-                        settings.setPort(4848);
-                        settings.setNetwork_active(true); // farbwahl
+                        settings.getSettingsNetwork().setConnection(settings.getSettingsNetwork().createServer());
+                        settings.getSettingsNetwork().setPort(4848);
+                        settings.getSettingsNetwork().setNetwork_active(true); // farbwahl
                         inNetworkSettingsMode = false;
-                        try { settings.initCon();}
+                        try { settings.getSettingsNetwork().initCon();}
                         catch (Exception e){
                             System.out.println ("exception when establishing con"); }
                     } else {
-                        settings.setIp(inputSetting);
-                        settings.setConnection(settings.createClient());
-                        settings.setPort(4848);
-                        settings.setNetwork_active(true);
+                        settings.getSettingsNetwork().setIp(inputSetting);
+                        settings.getSettingsNetwork().setConnection(settings.getSettingsNetwork().createClient());
+                        settings.getSettingsNetwork().setPort(4848);
+                        settings.getSettingsNetwork().setNetwork_active(true);
                         inNetworkSettingsMode = false;
-                        try { settings.initCon();}
+                        try { settings.getSettingsNetwork().initCon();}
                         catch (Exception e){
                             System.out.println ("exception when establishing con"); }
                     }
@@ -197,7 +199,7 @@ public class Cli {
 
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             if (settings.isAi_active() && board.isBlackIsTurn() == settings.isAi_colour()) {// wenn ai aktiviert, dann schauen, ob ai an der reihe
-                System.out.print(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "72")));
+                System.out.print(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(languageNumber + "72")));
                 if (board.isBlackIsTurn()) { // ai is black and its turn it is
                     //look in movelist // get move at point
                     Move move = ai.getNextMove(board);
@@ -219,11 +221,11 @@ public class Cli {
                     System.out.println(output);
                 }
             } else {
-                System.out.print(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "73")));
+                System.out.print(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(languageNumber + "73")));
                 if (board.isBlackIsTurn()) {
-                    System.out.print(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "74")));
+                    System.out.print(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(languageNumber + "74")));
                 } else if (!board.isBlackIsTurn()) {
-                    System.out.print(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "75")));
+                    System.out.print(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(languageNumber + "75")));
                 }
             }
             if (!settings.isAi_active() || settings.isAi_active() && settings.isAi_colour() != board.isBlackIsTurn()) {
@@ -236,7 +238,7 @@ public class Cli {
                             output = board.showBoard();
                             System.out.println(output);
                         } else {
-                            System.out.println("!" + settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "70")));
+                            System.out.println("!" + settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(languageNumber + "70")));
                         }
                     } else if (input.equals("beaten")) {
                         String beatenString = "Beaten Figures";
@@ -292,7 +294,7 @@ public class Cli {
                         }
                     }
                     else {
-                        System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "76")));
+                        System.out.println(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(languageNumber + "76")));
                     }
 
                 } catch (IOException e) {

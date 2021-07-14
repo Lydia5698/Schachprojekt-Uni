@@ -1,6 +1,7 @@
 package chess.gui;
 
 import chess.Settings;
+import chess.SettingsNetwork;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -39,6 +40,7 @@ public class Gui extends Application {
     public Settings getSettings() {
         return settings;
     }
+
 
 }
 

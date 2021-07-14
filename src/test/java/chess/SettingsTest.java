@@ -9,6 +9,6 @@ class SettingsTest {
     @Test
     void LanguageTest(){
         Settings settings = new Settings();
-        assertTrue(settings.getLanguage().getDic().get(100).equals("Chess"));
+        assertEquals("Chess", settings.getSettingsLanguage().getLanguage().getDic().get(100));
     }
 }

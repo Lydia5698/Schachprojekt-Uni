@@ -36,7 +36,7 @@ Die Gui startet mit dem Start Screen dort kann sich die `Anleitung` druchgelesen
   hier kann der Spieler gegen den Computer antreten. Dafür muss er als nächstes seine Farbe (weiß oder schwarz) wählen, damit das Spiel starten kann.
 
   4.3 `Netzwerkspiel`
-  hier kann der Spieler gegen eine andere Person über das Netzwerk spielen. Hierfür muss er eine/seine? iP Adresse und Portnummer angeben.
+  hier kann der Spieler gegen eine andere Person über das Netzwerk spielen. Hierfür muss er eine/seine? iP Adresse und Portnummer angeben. Wenn du das board    updaten möchtest um den gegnerischen Zug zu sehen, musst du einmal auf das Spielfeld klicken.
 
 Der Spieler kann während des Spiels jederzeit auf die `Optionen` zugreifen und folgende Dinge anpassen:
 
