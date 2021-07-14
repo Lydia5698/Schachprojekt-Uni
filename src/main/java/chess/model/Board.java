@@ -20,9 +20,6 @@ public class Board {
     public Manuals manuals = new Manuals();
     public StaleMate staleMate = new StaleMate();
     public Settings settings;
-
-
-
     static List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
     public List<String> beaten = new ArrayList<>();
     private final List<Move> moveList = new ArrayList<>();
