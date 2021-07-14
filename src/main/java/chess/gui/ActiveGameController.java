@@ -118,7 +118,6 @@ public class ActiveGameController extends MainController {
         Stage stage = (Stage) btnSave.getScene().getWindow();
         LoadSaveController loadSaveController = new LoadSaveController(getGui());
         loadSaveController.saveFile(stage);
-        //show_FXML("saveScreen.fxml", stage, getGui());
     }
 
 
@@ -179,7 +178,7 @@ public class ActiveGameController extends MainController {
 
             Move moveNew = new Move(input);
             if(!startCell.isEmpty()){
-                activeGameHelper.checkAndDoMove(moveNew);
+                activeGameHelper.checkAndDoMove(fistField ,moveNew);
 
             }
 

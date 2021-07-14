@@ -61,8 +61,12 @@ public class ActiveGameHelper {
      * Applies the move on the Board and pops up the popup if move is not allowed
      * @param moveNew    the move (startIndex + endIndex + promoteTo)
      */
-    void checkAndDoMove(Move moveNew) {
-        activeGameController.board.applyMove(moveNew);
+    void checkAndDoMove(String fistField, Move moveNew) {
+        if (!activeGameController.getGui().getSettings().isDoubleClick() || (firstMinionClickedWhite.equals(fistField)) || firstMinionClickedBlack.equals(fistField)) {
+            activeGameController.board.applyMove(moveNew);
+        } else {
+            activeGameController.popups.popupDoubleClick(firstMinionClickedBlack, firstMinionClickedWhite, activeGameController.getGui());
+        }
         if(activeGameController.board.isAllowedMove()) {
             firstMinionClickedBlack = "";
             firstMinionClickedWhite = "";
