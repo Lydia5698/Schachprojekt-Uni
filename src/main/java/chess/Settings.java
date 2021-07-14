@@ -1,5 +1,6 @@
 package chess;
 
+import chess.gui.ActiveGameController;
 import chess.model.AI;
 import chess.model.Board;
 
@@ -33,7 +34,6 @@ public class Settings {
     }
 
     //methoden
-
 
     public boolean isAi_active() {
         return ai_active;
@@ -134,6 +134,10 @@ public class Settings {
     }
     public SettingsLanguage getSettingsLanguage() {
         return settingsLanguage;
+    }
+
+    public void setActiveGameController(ActiveGameController activeGameController){
+        this.settingsNetwork.setActiveGameController(activeGameController);
     }
 
     public void setSettingsLanguage(SettingsLanguage settingsLanguage) {

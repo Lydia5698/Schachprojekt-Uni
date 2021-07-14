@@ -1,5 +1,6 @@
 package chess;
 
+import chess.gui.ActiveGameController;
 import chess.model.Board;
 import chess.model.Move;
 import chess.network.NetwCli;
@@ -21,6 +22,7 @@ public class SettingsNetwork{
     private final boolean server = false;
     private NetwCon connection;
     protected boolean network_active = false;
+    private ActiveGameController activeGameController;
 
     /**
      * creates a SettingsNetwork instance and gets the current board
@@ -36,14 +38,21 @@ public class SettingsNetwork{
      * @return Network Server
      */
     public NetwSvr createServer() {
-        //System.out.println("server starting");
+        System.out.println("server starting");
         return new NetwSvr(port, data -> {
             Platform.runLater(() -> {
                 if (board.isBlackIsTurn() != black) {
-                    //System.out.println(data);
+                    System.out.println(data);
                     this.clientMove = new Move(data);
                     moveReceived = true;
                     board.applyMove(clientMove);
+                    activeGameController.history();
+                    activeGameController.beatenMinionOutput();
+                    activeGameController.updateBoard();
+                    if (activeGameController.getGui().getSettings().getIsInCheck() && activeGameController.getGui().getSettings().isCheckVisible()) {
+                        activeGameController.getPopups().popupCheck(activeGameController.getGui());
+                        activeGameController.getGui().getSettings().setInCheck(false);
+                    }
                 }
             });
         });
@@ -57,11 +66,17 @@ public class SettingsNetwork{
         return new NetwCli(ip, port, data -> {
             Platform.runLater(() -> {
                 if (board.isBlackIsTurn() != black) {
-                    //System.out.println(data);
+                    System.out.println(data);
                     this.clientMove = new Move(data);
                     moveReceived = true;
                     board.applyMove(clientMove);
-
+                    activeGameController.history();
+                    activeGameController.beatenMinionOutput();
+                    activeGameController.updateBoard();
+                    if (activeGameController.getGui().getSettings().getIsInCheck() && activeGameController.getGui().getSettings().isCheckVisible()) {
+                        activeGameController.getPopups().popupCheck(activeGameController.getGui());
+                        activeGameController.getGui().getSettings().setInCheck(false);
+                    }
                 }
             });
         });
@@ -106,5 +121,7 @@ public class SettingsNetwork{
         this.network_active = network_active;
     }
 
-
+    public void setActiveGameController(ActiveGameController activeGameController) {
+        this.activeGameController = activeGameController;
+    }
 }

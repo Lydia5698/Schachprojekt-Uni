@@ -93,18 +93,18 @@ public class Parser {
             //Read File Line By Line
             while ((strLine = br.readLine()) != null)   {
                 // Print the content on the console
-                //System.out.println (strLine);
+                System.out.println (strLine);
                 if(strLine.contains("|")){
                     movesOver = true;
-                    //System.out.println("seperator is here");
+                    System.out.println("seperator is here");
                 }
                 if(!movesOver){
                     Move move = new Move(strLine);
                     board.applyMove(move);
-                    //System.out.println("Made move :" + strLine);
+                    System.out.println("Made move :" + strLine);
                 }
                 else{
-                    //System.out.println("set settings here for the game");
+                    System.out.println("set settings here for the game");
                     //set settings
                     if(strLine.equals("AI-active t")) {
                         board.getSettings().setAi_active(true);
@@ -118,13 +118,10 @@ public class Parser {
                         board.getSettings().getAi().setTurnNumber(Integer.parseInt(turnnumber));
                     }
                 }
-
-
             }
 
             //Close the input stream
             fileInputStream.close();
-
         } catch (IOException e) {
             e.printStackTrace();
         }

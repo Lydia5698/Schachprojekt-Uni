@@ -78,9 +78,11 @@ public class ActiveGameController extends MainController {
         if (board.getMoveList().isEmpty()) {
             activeGameHelper.whiteAIMove();
         }
-        if(gui.settings.getSettingsNetwork().isNetwork_active()){
+        /*if(gui.getSettings().isNetwork_active()){
             networkMove();
         }
+        }*/
+        // network white Move
         changeToLanguage();
         updateBoard();
         history();
@@ -131,11 +133,9 @@ public class ActiveGameController extends MainController {
     void mouseClicked(MouseEvent event) throws IOException {
         Node source = (Node) event.getSource();
 
-        if(getGui().settings.getSettingsNetwork().isNetwork_active()){ // networkmove ausgabe
+        /*if(getGui().getSettings().isNetwork_active()){ // networkmove ausgabe
             networkMove();
-            updateBoard();
-
-        }
+        }*/
 
         int colIndex;
         int rowIndex;
@@ -162,6 +162,7 @@ public class ActiveGameController extends MainController {
      *
      * @throws IOException for the popups if they dont get closed
      */
+    //TODO: Beliebige Züge möglich (evtl. Kontrolle in board.applymove ebenfalls nicht vorhanden)
     public void move() throws IOException {
         if (counter == 2 && !getGui().getSettings().isGameEnd()) {
             String fistField = halfMoves.get(0);
@@ -181,7 +182,9 @@ public class ActiveGameController extends MainController {
             else {
                 popups.popupMoveNotAllowed(getGui());
             }
-
+            /*if(getGui().getSettings().isNetwork_active()){ // netowkmove ausgabe
+                networkMove();
+            }*/
             counter = 0;
             halfMoves.clear();
             position.clear();
@@ -194,13 +197,13 @@ public class ActiveGameController extends MainController {
         }
     }
 
-    /**
+    /*/**TODO: Thread-Bombe!!!!!
      * Calls the methode crateClient in the Settings class. And after the move the board gets updated
      */
-    void networkMove(){
-        getGui().settings.getSettingsNetwork().createClient();
+    /*private void networkMove(){
+        getGui().getSettings().createClient();
         updateBoard();
-    }
+    }*/
 
     /**
      * checks if the Pawn is allowed to make a promotion
@@ -228,7 +231,7 @@ public class ActiveGameController extends MainController {
     /**
      * The history of the moves. It is getting printed above the chessboard
      */
-    void history() {
+    public void history() {
         String appliedMoves = "Moves";
         for (Move move : board.getMoveList()) {
             String moveString = move.getStart() + "-" + move.getEnd();
@@ -352,7 +355,7 @@ public class ActiveGameController extends MainController {
     /**
      * Updates the Board after every drawn move. Rotation of the Board. Gets the Information from the board
      */
-    void updateBoard() {
+    public void updateBoard() {
         ImageView iv;
         chessBoard.getChildren().removeIf(node -> node instanceof ImageView);
         for (int i = 0; i < 8; i++) {
@@ -372,7 +375,7 @@ public class ActiveGameController extends MainController {
      * Sets the beaten Minions on the Grid next to the chessboard. It distinguished between black and white Minions beaten
      *
      */
-    void beatenMinionOutput() {
+    public void beatenMinionOutput() {
         ImageView iv;
         String minion;
         char minionType;
@@ -492,5 +495,7 @@ public class ActiveGameController extends MainController {
         return chessBoard;
     }
 
-
+    public Popups getPopups() {
+        return popups;
+    }
 }

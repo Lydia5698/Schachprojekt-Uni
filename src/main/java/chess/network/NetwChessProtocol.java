@@ -36,6 +36,8 @@ s: checkmate, SanFranTschüsko
 
 package chess.network;
 
+import chess.Settings;
+
 public class NetwChessProtocol {
 
     private static final int Start = 0;
@@ -47,6 +49,13 @@ public class NetwChessProtocol {
     private String cltMove;
     private boolean enteredMove = false;
     private boolean receivedMove = false;
+    private Settings settings;
+
+    public NetwChessProtocol(Settings settings){
+        this.settings = settings;
+    }
+
+    public NetwChessProtocol(){}
 
     public String processInput(String workingInput, boolean white) {
         String theOutput = "";
