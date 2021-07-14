@@ -27,16 +27,6 @@ public class Settings {
 /*    protected boolean languageGerman = false;
     protected boolean languageEnglish = true;
     protected boolean languageKlingon = false;
-    protected boolean black = false;
-    protected Move clientMove = new Move("A0-A0");
-    protected Move serverMove = new Move("A0-A0");
-    protected boolean moveReceived = false;
-    private int port;
-    private String ip;
-    private final boolean server = false;
-    private String languageNumber = "1";
-    private NetwCon connection;
-    private ActiveGameController activeGameController;
     String languageNumber = "1";*/
     /**
      * Sets the setting in the Board
@@ -48,15 +38,6 @@ public class Settings {
     }
 
     //methoden
-
-
-    public ActiveGameController getActiveGameController() {
-        return activeGameController;
-    }
-
-    public void setActiveGameController(ActiveGameController activeGameController) {
-        this.activeGameController = activeGameController;
-    }
 
     public boolean isAi_active() {
         return ai_active;
@@ -159,74 +140,8 @@ public class Settings {
         return settingsLanguage;
     }
 
-    public NetwSvr createServer() {
-        System.out.println("server starting");
-        return new NetwSvr(port, data -> {
-            Platform.runLater(() -> {
-                if (board.isBlackIsTurn() != black) {
-                    System.out.println(data);
-                    this.clientMove = new Move(data);
-                    moveReceived = true;
-                    board.applyMove(clientMove);
-                    activeGameController.history();
-                    activeGameController.beatenMinionOutput();
-                    activeGameController.updateBoard();
-                    if (activeGameController.getGui().getSettings().getIsInCheck() && activeGameController.getGui().getSettings().isCheckVisible()) {
-                        activeGameController.getPopups().popupCheck(activeGameController.getGui());
-                        activeGameController.getGui().getSettings().setInCheck(false);
-                    }
-                }
-            });
-        });
-    }
-
-    public NetwCli createClient() {
-        return new NetwCli(ip, port, data -> {
-            Platform.runLater(() -> {
-                if (board.isBlackIsTurn() != black) {
-                    System.out.println(data);
-                    this.clientMove = new Move(data);
-                    moveReceived = true;
-                    board.applyMove(clientMove);
-                    activeGameController.history();
-                    activeGameController.beatenMinionOutput();
-                    activeGameController.updateBoard();
-                    if (activeGameController.getGui().getSettings().getIsInCheck() && activeGameController.getGui().getSettings().isCheckVisible()) {
-                        activeGameController.getPopups().popupCheck(activeGameController.getGui());
-                        activeGameController.getGui().getSettings().setInCheck(false);
-                    }
-                }
-            });
-        });
-    }
-
-    public void setIp(String ip) { this.ip = ip; }
-    public void setPort(int port) { this.port = port; }
-    public void initCon () throws Exception{ connection.startConnection(); }
-    public void stopCon () throws Exception{ connection.closeConnection(); }
-    public NetwCon getConnection() { return connection;    }
-    public void setConnection(NetwCon connection) { this.connection = connection; }
-    public boolean isBlack() { return black; }
-    public boolean isMoveReceived() {
-        return moveReceived;
-    }  //zug wird empfangen und verarbeitet
-    public Move getClientMove() {
-        return clientMove;
-    }
-    public Move getServerMove() {
-        return serverMove;
-    }
-    public boolean isServer() {
-        return server;
-    }
-    public void setBlack(boolean black) {
-        this.black = black;
-    }
-    public boolean isNetwork_active() {
-        return network_active;
-    }
-    public void setNetwork_active(boolean network_active) {
-        this.network_active = network_active;
+    public void setActiveGameController(ActiveGameController activeGameController){
+        this.settingsNetwork.setActiveGameController(activeGameController);
     }
 
     public void setSettingsLanguage(SettingsLanguage settingsLanguage) {

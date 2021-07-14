@@ -373,7 +373,7 @@ public class ActiveGameController extends MainController {
      * Sets the beaten Minions on the Grid next to the chessboard. It distinguished between black and white Minions beaten
      *
      */
-    void beatenMinionOutput() {
+    public void beatenMinionOutput() {
         ImageView iv;
         String minion;
         char minionType;
