@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.Objects;
 
 /**
@@ -89,7 +90,12 @@ public class StartScreenController extends MainController {
     @FXML
     void loadGame(ActionEvent event) {
         Stage stage = (Stage) btnloadGame.getScene().getWindow();
-        loadSaveController.loadFile(stage);
+        LoadSaveController loadSaveController = new LoadSaveController(getGui());
+        try {
+            loadSaveController.loadFile(stage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

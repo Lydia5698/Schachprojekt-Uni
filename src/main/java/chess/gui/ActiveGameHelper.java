@@ -135,7 +135,7 @@ public class ActiveGameHelper {
      * @param startCol the column of the Cell/Grid where the Figure is standing
      * @param startRow the row of the Cell/Grid where the Figure is standing
      */
-    public void showPossibleMoves(int startCol, int startRow) {
+    public void showPossibleMoves(int startCol, int startRow) { //TODO enpassante rochade
         CellIndex startIndex = new CellIndex(startRow, startCol);
         activeGameController.getChessBoard().getChildren().removeIf(node -> node instanceof Rectangle && ((Rectangle) node).getFill().equals(Paint.valueOf("#ff6347")));
         if (activeGameController.getNodeByCoordinate(startRow, startCol) instanceof ImageView && !activeGameController.board.getCheckerBoard()[startRow][startCol].isEmpty()) {

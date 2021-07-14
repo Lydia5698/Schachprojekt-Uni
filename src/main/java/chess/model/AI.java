@@ -108,6 +108,9 @@ public class AI {
     public int getTurnNumber() {
         return turnNumber;
     }
+    public void setTurnNumber(int number){
+        this.turnNumber=number;
+    }
 
     /**
      * increases the AI turnNumber by one.
