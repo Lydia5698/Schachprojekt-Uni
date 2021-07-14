@@ -2,7 +2,6 @@ package chess.gui;
 
 import chess.model.CellIndex;
 import chess.model.Move;
-import javafx.event.Event;
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -62,30 +61,27 @@ public class ActiveGameHelper {
      * @param moveNew    the move (startIndex + endIndex + promoteTo)
      */
     void checkAndDoMove(String fistField, Move moveNew) {
+        // checks if double click is active and the right figure is clicked
         if (!activeGameController.getGui().getSettings().isDoubleClick() || (firstMinionClickedWhite.equals(fistField)) || firstMinionClickedBlack.equals(fistField)) {
             activeGameController.board.applyMove(moveNew);
-        } else {
+        } // pops up the popup if the clicked figure isnt the first clicked figure
+        else {
             activeGameController.popups.popupDoubleClick(firstMinionClickedBlack, firstMinionClickedWhite, activeGameController.getGui());
         }
+        // if the move was allowed the board gets updated and the history gets printed
         if(activeGameController.board.isAllowedMove()) {
             firstMinionClickedBlack = "";
             firstMinionClickedWhite = "";
             activeGameController.history();
             activeGameController.beatenMinionOutput();
             activeGameController.updateBoard();
-            if (activeGameController.getGui().getSettings().getIsInCheck() && activeGameController.getGui().getSettings().isCheckVisible()) {
-                activeGameController.popups.popupCheck(activeGameController.getGui());
-                activeGameController.getGui().getSettings().setInCheck(false);
-            }
-            if (activeGameController.getGui().getSettings().isGameEnd()) {
-                activeGameController.popups.popupCheckMate(activeGameController.gui);
-                activeGameController.getGui().getSettings().setAi_active(false);
-                activeGameController.getGui().settings.getSettingsNetwork().setNetwork_active(false);
-            }
+            checkPopups();
+            // the network move is applied
             if(activeGameController.getGui().settings.getSettingsNetwork().isNetwork_active()){ // netowkmove ausgabe
                 activeGameController.networkMove();
                 activeGameController.updateBoard();
             }
+            // the AI move is applied
             if (activeGameController.getGui().getSettings().isAi_active()) {
                 Move aiMove = activeGameController.getGui().getSettings().getAi().getNextMove(activeGameController.board);
                 activeGameController.board.applyMove(aiMove);
@@ -96,12 +92,25 @@ public class ActiveGameHelper {
                 activeGameController.beatenMinionOutput();
                 activeGameController.updateBoard();
             }
+            checkPopups();
 
-        }
+        }// popup move not allowed
         else{
             activeGameController.popups.popupMoveNotAllowed(activeGameController.getGui());
         }
 
+    }
+
+    private void checkPopups() {
+        if (activeGameController.getGui().getSettings().isInCheck() && activeGameController.getGui().getSettings().isCheckVisible()) {
+            activeGameController.popups.popupCheck(activeGameController.getGui());
+            activeGameController.getGui().getSettings().setIsInCheck(false);
+        }
+        if (activeGameController.getGui().getSettings().isGameEnd()) {
+            activeGameController.popups.popupCheckMate(activeGameController.gui);
+            activeGameController.getGui().getSettings().setAi_active(false);
+            activeGameController.getGui().settings.getSettingsNetwork().setNetwork_active(false);
+        }
     }
 
     /**

@@ -11,7 +11,6 @@ public class Settings {
     //felder
     AI ai = new AI(false);
     Board board = new Board();
-    //Language language = new Language();
     protected boolean gui_active = false;
     protected SettingsNetwork settingsNetwork;
     protected SettingsLanguage settingsLanguage = new SettingsLanguage();
@@ -20,13 +19,10 @@ public class Settings {
     protected boolean ai_active = false;
     protected boolean ai_colour = false;
     protected boolean rotateBoard = false;
-    protected boolean lightPossibleMoves = false;
+    protected boolean HighlightPossibleMoves = false;
     protected boolean checkVisible = false;
     protected boolean doubleClick = false;
-/*    protected boolean languageGerman = false;
-    protected boolean languageEnglish = true;
-    protected boolean languageKlingon = false;
-    String languageNumber = "1";*/
+
     /**
      * Sets the setting in the Board
      */
@@ -72,11 +68,11 @@ public class Settings {
     }
 
     public boolean isHighlightPossibleMoves() {
-        return lightPossibleMoves;
+        return HighlightPossibleMoves;
     }
 
     public void setHighlightPossibleMoves(boolean lightPossibleMoves) {
-        this.lightPossibleMoves = lightPossibleMoves;
+        this.HighlightPossibleMoves = lightPossibleMoves;
     }
 
     public boolean isCheckVisible() {
@@ -113,11 +109,11 @@ public class Settings {
         this.gui_active = gui_active;
     }
 
-    public boolean getIsInCheck() {
+    public boolean isInCheck() {
         return isInCheck;
     }
 
-    public void setInCheck(boolean inCheck) {
+    public void setIsInCheck(boolean inCheck) {
         isInCheck = inCheck;
     }
 

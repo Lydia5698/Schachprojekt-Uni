@@ -155,10 +155,9 @@ public class Board {
             promoteTo = move.getEnd().substring(2, 3);
         }
         // adds the beaten minion to the List beaten
-        if (!endCell.isEmpty()){ //has to be in two steps to avoid nullpointer
-            if(minion.isBlack() == !isBeaten.isBlack()){
-                beaten.add(String.valueOf(isBeaten.print_minions()));
-            }
+        if (!endCell.isEmpty() && minion.isBlack() == !isBeaten.isBlack()){ //has to be in two steps to avoid nullpointer
+            beaten.add(String.valueOf(isBeaten.print_minions()));
+
         }
 
         // check if normal move
@@ -298,7 +297,7 @@ public class Board {
             if (!settings.isGui_active()) {
                 System.out.println("!" + settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "82")));
             }
-            settings.setInCheck(true);
+            settings.setIsInCheck(true);
 
         }
         //check if in Check Mate

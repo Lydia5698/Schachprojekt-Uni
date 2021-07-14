@@ -63,7 +63,6 @@ public class ActiveGameController extends MainController {
     void showOptions() {
         Stage stage = (Stage) btnOptions.getScene().getWindow();
         show_FXML("options.fxml", stage, getGui());
-        //popups.savePopup();
     }
 
     /**
@@ -82,7 +81,6 @@ public class ActiveGameController extends MainController {
         if(gui.settings.getSettingsNetwork().isNetwork_active()){
             networkMove();
         }
-        // network white Move
         changeToLanguage();
         updateBoard();
         history();
@@ -177,20 +175,22 @@ public class ActiveGameController extends MainController {
             input = checkPromotion(input, startIndex, endIndex);
 
             Move moveNew = new Move(input);
-            if(!startCell.isEmpty()){
+            if(board.manuals.moveOfRightColour(moveNew, board)){
                 activeGameHelper.checkAndDoMove(fistField ,moveNew);
-
+            }
+            else {
+                popups.popupMoveNotAllowed(getGui());
             }
 
             counter = 0;
             halfMoves.clear();
             position.clear();
 
-            if (getGui().getSettings().isGameEnd()) {
+           /* if (getGui().getSettings().isGameEnd()) {
                 popups.popupCheckMate(gui);
                 getGui().getSettings().setAi_active(false);
                 getGui().settings.getSettingsNetwork().setNetwork_active(false);
-            }
+            }*/
         }
     }
 
@@ -229,12 +229,12 @@ public class ActiveGameController extends MainController {
      * The history of the moves. It is getting printed above the chessboard
      */
     void history() {
-        String beatenString = "Moves";
-        for (Move beatenMinion : board.getMoveList()) {
-            String moveString = beatenMinion.getStart() + "-" + beatenMinion.getEnd();
-            beatenString = String.join(",", beatenString, moveString);
+        String appliedMoves = "Moves";
+        for (Move move : board.getMoveList()) {
+            String moveString = move.getStart() + "-" + move.getEnd();
+            appliedMoves = String.join(",", appliedMoves, moveString);
         }
-        moveList.setText(beatenString);
+        moveList.setText(appliedMoves);
     }
 
 
@@ -276,7 +276,8 @@ public class ActiveGameController extends MainController {
     private ImageView getImage(int i, int j) {
         ImageView iv = null;
         if (!board.getCheckerBoard()[i][j].isEmpty()) {
-            iv = getImageView(i, j, false, false);
+            boolean colour = board.getCheckerBoard()[i][j].getMinion().isBlack();
+            iv = getImageView(i, j, false, colour);
             assert iv != null;
             iv.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
                 try {
@@ -295,7 +296,6 @@ public class ActiveGameController extends MainController {
         ImageView iv = null;
         if(!beatenMinions){
             minion = board.getCheckerBoard()[i][j].getMinion().getMinion_type();
-            colour = board.getCheckerBoard()[i][j].getMinion().isBlack();
         }
         else {
             toChar = board.getBeaten().get(i);

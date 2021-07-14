@@ -7,11 +7,10 @@ import chess.network.NetwCon;
 import chess.network.NetwSvr;
 import javafx.application.Platform;
 
+/**
+ * The settingsNetwork is the settings class for the network
+ */
 public class SettingsNetwork{
-    public SettingsNetwork(Board board){
-        this.board = board;
-    }
-
     protected boolean black = false;
     protected Board board;
     protected Move clientMove = new Move("A0-A0");
@@ -23,6 +22,19 @@ public class SettingsNetwork{
     private NetwCon connection;
     protected boolean network_active = false;
 
+    /**
+     * creates a SettingsNetwork instance and gets the current board
+     *
+     * @param board
+     */
+    public SettingsNetwork(Board board){
+        this.board = board;
+    }
+
+    /**
+     * creates the Network server
+     * @return Network Server
+     */
     public NetwSvr createServer() {
         //System.out.println("server starting");
         return new NetwSvr(port, data -> {
@@ -37,6 +49,10 @@ public class SettingsNetwork{
         });
     }
 
+    /**
+     * creates the Network client
+     * @return Network client
+     */
     public NetwCli createClient() {
         return new NetwCli(ip, port, data -> {
             Platform.runLater(() -> {
@@ -53,7 +69,17 @@ public class SettingsNetwork{
 
     public void setIp(String ip) { this.ip = ip; }
     public void setPort(int port) { this.port = port; }
+
+    /**
+     * initialize the connection for the Network Game
+     * @throws Exception in case the connection fails
+     */
     public void initCon () throws Exception{ connection.startConnection(); }
+
+    /**
+     * stops the connection for the Network Game
+     * @throws Exception in case the connection cant be stopped
+     */
     public void stopCon () throws Exception{ connection.closeConnection(); }
     public NetwCon getConnection() { return connection;    }
     public void setConnection(NetwCon connection) { this.connection = connection; }

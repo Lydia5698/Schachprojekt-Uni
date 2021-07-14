@@ -109,20 +109,18 @@ public class StaleMate {
     public List<Move> possibleMovesForOneFigureMoveList(CellIndex cellIndex, Cell[][] checkerBoard, List<Move> moveList) {
         //TODO bauern schlagen und en passante einbauen!!!!!!!!!!!!!!
         List<Move> possibleMoves = new ArrayList<>();
-        Cell cell = checkerBoard[cellIndex.getRow()][cellIndex.getColumn()];
-        Minion minion = cell.getMinion();
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
                 CellIndex end = new CellIndex(row, col);
                 //check if move is legal
-                if (manuals.checkIfValidMove(cellIndex,end,checkerBoard) && checkLegalMove(cellIndex, end, manuals, checkerBoard) && !(cellIndex.getRow() == end.getRow() && cellIndex.getColumn() == end.getColumn())) {
-                    if(manuals.spManuals.isValidEnPassant(cellIndex,end,checkerBoard,moveList) || manuals.spManuals.figureRochadeHasMoved(moveList,cellIndex,end,checkerBoard)){
-                        //check ifLegalMove
-                        // make index into string
-                        String input = cellIndex.makeIndexIntoString(cellIndex, end);
-                        Move move = new Move(input);
-                        possibleMoves.add(move);
-                    }
+                if (manuals.checkIfValidMove(cellIndex,end,checkerBoard) && checkLegalMove(cellIndex, end, manuals, checkerBoard) && !(cellIndex.getRow() == end.getRow() && cellIndex.getColumn() == end.getColumn())
+                && (manuals.spManuals.isValidEnPassant(cellIndex,end,checkerBoard,moveList) || manuals.spManuals.figureRochadeHasMoved(moveList,cellIndex,end,checkerBoard))) {
+                    //check ifLegalMove
+                    // make index into string
+                    String input = cellIndex.makeIndexIntoString(cellIndex, end);
+                    Move move = new Move(input);
+                    possibleMoves.add(move);
+
 
                 }
             }

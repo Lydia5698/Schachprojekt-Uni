@@ -4,7 +4,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SettingsTest {
+/**
+ * tests the SettingsLanguage class. Sets the Dictionary and checks if the entry is the right one
+ */
+class SettingsLanguageTest {
 
     @Test
     void LanguageTest(){

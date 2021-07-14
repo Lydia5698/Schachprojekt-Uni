@@ -26,6 +26,11 @@ public class LoadSaveController {
         show_FXML("activeGame.fxml", stage, gui);
     }
 
+    /**
+     * creates a LoadSaveController instance to load or save files. The controller gets the
+     * current gui
+     * @param gui current gui
+     */
     public LoadSaveController(Gui gui) {
         this.gui = gui;
     }
@@ -45,9 +50,7 @@ public class LoadSaveController {
         parser.parserLoadGui(selectedFile, gui);
 
         //zur active gamecontroller
-        if (true){
-            showGui(stage);
-        }
+        showGui(stage);
 
     }
 

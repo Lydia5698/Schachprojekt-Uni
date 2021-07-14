@@ -1,8 +1,6 @@
 package chess.gui;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -11,6 +9,9 @@ import javafx.stage.Stage;
 import java.util.Objects;
 import java.util.function.UnaryOperator;
 
+/**
+ * The Controller for the network game. You need to host or join a Game to see the chessboard
+ */
 public class NetworkController extends MainController {
     private static final String ipAddressRegex = makePartialIPRegex();
 

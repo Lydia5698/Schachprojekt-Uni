@@ -4,7 +4,6 @@ package chess.cli;
 //import chess.gui.Gui;
 
 import chess.Settings;
-import chess.SettingsNetwork;
 import chess.model.*;
 
 import java.io.*;

@@ -251,6 +251,14 @@ public class SpecialManuals {
         return false;
     }
 
+    /**
+     * checks if the King or the Rook has moved
+     * @param MoveList the applied moves
+     * @param start the startIndex of the current move
+     * @param end the endIndex of the current move
+     * @param checkerboard the current checkerboard with all minions on it
+     * @return boolean if the king or the Rook has moved
+     */
     public boolean figureRochadeHasMoved(List<Move> MoveList, CellIndex start, CellIndex end, Cell[][] checkerboard) {
         Cell startCell = checkerboard[start.row][start.column];
         String posRookWLeft = "a1";
@@ -368,7 +376,7 @@ public class SpecialManuals {
 
         // checks if the fields between the King and Rook are attacked
         // case right short Rochade
-        if (end.getColumn() == 6 && manuals.checkMoveMakesNoSelfCheck(start, RookRCellIndex, checkerBoard, manuals)) {
+        if (end.getColumn() == 6 && manuals.checkMoveMakesNoSelfCheck(start, RookRCellIndex, checkerBoard,manuals)) {
             startCell.setMinion(null);
             RookRCell.setMinion(null);
             newRookIndexShort.setMinion(rookR);
@@ -376,7 +384,7 @@ public class SpecialManuals {
         }
         // checks if the fields between the King and Rook are attacked
         // case left long Rochade
-        if (end.getColumn() == 2 && manuals.checkMoveMakesNoSelfCheck(start, RookLCellIndex, checkerBoard, manuals)) {
+        if (end.getColumn() == 2 && manuals.checkMoveMakesNoSelfCheck(start, RookLCellIndex, checkerBoard,manuals)) {
             startCell.setMinion(null);
             RookLCell.setMinion(null);
             newRookIndexLong.setMinion(rookL);
