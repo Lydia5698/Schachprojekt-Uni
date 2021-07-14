@@ -13,7 +13,7 @@ import java.io.IOException;
 public class MainController {
     private String promoteTo;
     public Gui gui;
-    LoadSaveController loadSaveController = new LoadSaveController();
+    //LoadSaveController loadSaveController = new LoadSaveController(gui);
 
     public String getPromoteTo() {
         return promoteTo;

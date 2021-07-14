@@ -20,6 +20,9 @@ public class Board {
     public Manuals manuals = new Manuals();
     public StaleMate staleMate = new StaleMate();
     public Settings settings;
+
+
+
     static List<String> columns = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
     public List<String> beaten = new ArrayList<>();
     private final List<Move> moveList = new ArrayList<>();
@@ -154,9 +157,12 @@ public class Board {
             promoteTo = move.getEnd().substring(2, 3);
         }
         // adds the beaten minion to the List beaten
-        if (!endCell.isEmpty() && minion.isBlack() == !isBeaten.isBlack()) {
-            beaten.add(String.valueOf(isBeaten.print_minions()));
+        if (!endCell.isEmpty()){ //has to be in two steps to avoid nullpointer
+            if(minion.isBlack() == !isBeaten.isBlack()){
+                beaten.add(String.valueOf(isBeaten.print_minions()));
+            }
         }
+
         // check if normal move
         if (manuals.checkIfValidMove(startIndex, endIndex, checkerBoard) && manuals.checkMoveMakesNoSelfCheck(startIndex, endIndex, checkerBoard, manuals)) {
             startCell.setMinion(null);
@@ -317,5 +323,8 @@ public class Board {
 
     public void setSettings(Settings settings) {
         this.settings = settings;
+    }
+    public Settings getSettings() {
+        return settings;
     }
 }

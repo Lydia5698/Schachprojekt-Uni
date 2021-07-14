@@ -115,6 +115,7 @@ public class ActiveGameController extends MainController {
     @FXML
     void saveGame() {
         Stage stage = (Stage) btnSave.getScene().getWindow();
+        LoadSaveController loadSaveController = new LoadSaveController(getGui());
         loadSaveController.saveFile(stage);
         //show_FXML("saveScreen.fxml", stage, getGui());
     }

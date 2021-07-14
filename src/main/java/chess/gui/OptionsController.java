@@ -69,6 +69,7 @@ public class OptionsController extends MainController {
     @FXML
     void exit() {
         Stage stage = (Stage) btnExit.getScene().getWindow();
+        LoadSaveController loadSaveController = new LoadSaveController(getGui());
         loadSaveController.saveFile(stage);
         //System.exit(0);
     }
