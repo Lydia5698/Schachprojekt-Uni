@@ -63,14 +63,14 @@ public class AI {
         String end = moveT.getEnd();
         if (!(end.equals("test"))) {
             //good move here~
-            System.out.println("ai makes a veryyyy good move"); //TODO delete this line later
+            //System.out.println("ai makes a veryyyy good move"); //TODO delete this line later
             move = moveT;
             return move;
 
         }
         //gem move from openingList (place move integer) if exists
         else if (turnNumber < moveListOpening.size()) {
-            System.out.println("ai opening turn number: " + turnNumber);
+            //System.out.println("ai opening turn number: " + turnNumber);
             //List<Move> moveList = aiOpening.getOpeningMoveList();
             move = moveListOpening.get(turnNumber);
             //make cellIndex start and cellindex end from move
@@ -84,7 +84,7 @@ public class AI {
             //TODO check here if legal move, oly return legal moves!!!!!
             if (!startCelle.isEmpty()){
                 if (minion.validMove(startCell, endCell) && board.staleMate.checkLegalMove(startCell, endCell, board.manuals, checkerBoard) && !(startCell.getRow() == endCell.getRow() && startCell.getColumn() == endCell.getColumn())) {
-                    System.out.println("legal move check for move from openingsequence was succsessful");
+                    //System.out.println("legal move check for move from openingsequence was succsessful");
                     return move;
                 }
             }
@@ -92,7 +92,7 @@ public class AI {
         //get move if it is possible to take
         if(!noRandomMove){ //random move is in this else //TODO: remove bug else if geht er rein, aber wenn dann kein ergebnis kommt, dann geht er nicht mehr in die nachfolgende else
             int number = generateRandomInteger(moveListPossible.size(), 0);
-            System.out.println("random move number: " + number);
+            //System.out.println("random move number: " + number);
             if(number < moveListPossible.size()) {
                 move = moveListPossible.get(number);
             } else { //TODO check for check mate and stalemate!
@@ -129,8 +129,8 @@ public class AI {
     // possible next move
     public List<Move> possibleNextMoves(Board board) {
         // make list of all moves
-        System.out.println(colourIsBlack);
-        System.out.println(board.showBoard());
+        //System.out.println(colourIsBlack);
+        //System.out.println(board.showBoard());
         //TODO get random move
         return board.staleMate.possibleMoveList(colourIsBlack, board.checkerBoard, board.getMoveList());
     }
@@ -178,7 +178,7 @@ public class AI {
                 if (val > min) {
                     min = val;
                     bestMove = move;
-                    System.out.println("best Move is :" + bestMove.getStart() + "-" + bestMove.getEnd());
+                    //System.out.println("best Move is :" + bestMove.getStart() + "-" + bestMove.getEnd());
 
                 }
                 //score move with number in hashmap /sorted map

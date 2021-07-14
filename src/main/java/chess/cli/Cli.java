@@ -4,14 +4,9 @@ package chess.cli;
 //import chess.gui.Gui;
 
 import chess.Settings;
-import chess.model.AI;
-import chess.model.Board;
-import chess.model.Manuals;
-import chess.model.Move;
+import chess.model.*;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.Arrays;
 
 /**
@@ -45,6 +40,8 @@ public class Cli {
         boolean join = false;
         String languageNumber = "1";
         board.setSettings(settings);
+        boolean loadGame= false;
+        boolean saveGame = false;
 
         if (!simple) {
             BufferedReader brs = new BufferedReader(new InputStreamReader(System.in));
@@ -90,7 +87,35 @@ public class Cli {
                     }
                     else if (inputSetting.contains("exit")) {
                         inSettingsMode = false;
-                    } else {
+                    }
+                    else if (inputSetting.contains("load game")){
+                        loadGame= true;
+
+                        //TODO: print files in path
+                        System.out.println("Choose one of the following chess games to load by typing in the correct name of the file:");
+
+                        File folder = new File("src");
+                        File[] listOfFiles = folder.listFiles();
+
+                        for (int i = 0; i < listOfFiles.length; i++) {
+                            File file = listOfFiles[i];
+                            if (file.isFile() && file.getName().endsWith(".txt")) {
+                                System.out.println(file.getName());
+                            }
+                        }
+
+                    }
+                    else if(inputSetting.contains("Spiel laden")){
+                        System.out.println("deutsch spielwahl");
+
+                    }
+                    else if(loadGame) {
+                        File file = new File(brs.readLine());
+                        Parser.parserLoadCli(file, board);
+                        loadGame = false;
+                        board.showBoard();
+                    }
+                    else {
                         //wait
                         System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "65")));
                     }
@@ -175,7 +200,7 @@ public class Cli {
                     //apply move
                     System.out.println(move.getStart() + "-" + move.getEnd());
                     board.applyMove(move);
-                    //TODO: count ai count integer 1 up, if ai-move
+                    //count ai count integer 1 up, if ai-move
                     ai.increaseTurnNumber();
                     output = board.showBoard();
                     System.out.println(output);
@@ -184,7 +209,7 @@ public class Cli {
                     // apply move
                     System.out.println(move.getStart() + "-" + move.getEnd());
                     board.applyMove(move);
-                    //TODO: count ai count integer 1 up, if ai-move
+                    //count ai count integer 1 up, if ai-move
                     ai.increaseTurnNumber();
                     output = board.showBoard();
                     System.out.println(output);
@@ -199,10 +224,6 @@ public class Cli {
             }
             if (!settings.isAi_active() || settings.isAi_active() && settings.isAi_colour() != board.isBlackIsTurn()) {
                 try {
-                    //TODO: see if ai is active, look if ai's move, else check input
-                    // next move ai(current checkerBoard)
-                    // possibleNextMoves(board)
-                    // apply nextMove
                     String input = br.readLine();
                     if (input.matches(validInput)) {
                         Move move = new Move(input);
@@ -219,7 +240,54 @@ public class Cli {
                             beatenString = String.join(",", beatenString, beatenMinion);
                         }
                         System.out.println(beatenString);
-                    } else {
+                    }
+                    else if(input.contains("save game")){
+                        saveGame = true;
+                        System.out.println("Type a file name:");
+                    }
+                    else if(saveGame){
+                        String gameName = input;
+                        File selectedFile = new File(gameName);    //creates a new file instance
+                        try {
+                            BufferedWriter writer = new BufferedWriter(new FileWriter(selectedFile)); //Erzeugen eines effizienten Writers für Textdateien
+                            for (Move move : board.getMoveList()){
+                                //move in string
+                                String moveString = move.getStart() + "-" + move.getEnd();
+                                writer.write(moveString);
+                                writer.newLine();
+                            }
+                            writer.write("|");
+                            writer.newLine();
+                            //TODO: evtl mehr eigenschaften speichern, netzwerkspiel?
+                            writer.write("AI-active ");
+                            if(board.settings.isAi_active()){
+                                writer.write("t");
+                            }
+                            else{
+                                writer.write("f");
+                            }
+                            writer.newLine();
+                            writer.write("AI-colour ");
+                            if(board.settings.isAi_colour()){
+                                writer.write("t");
+                            }
+                            else{
+                                writer.write("f");
+                            }
+                            writer.newLine();
+                            if(board.settings.isAi_active()){
+                                writer.write("AI-turnnumber ");
+                                int number = board.settings.getAi().getTurnNumber();
+                                writer.write(String.valueOf(number));
+                            }
+                            writer.flush();
+                            writer.close();
+                        }
+                        catch(IOException ioe) {
+                            System.err.println(ioe);
+                        }
+                    }
+                    else {
                         System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "76")));
                     }
 

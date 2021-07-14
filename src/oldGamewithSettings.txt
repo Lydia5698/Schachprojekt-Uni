@@ -1,0 +1,25 @@
+e2-e4
+e7-e5
+g1-f3
+d7-d6
+f3-e5
+d6-e5
+f1-c4
+g8-h6
+c4-f7
+h6-f7
+a2-a4
+f7-g5
+f2-f3
+g5-f3
+d1-f3
+f8-b4
+f3-d3
+d8-d3
+b1-c3
+d3-c3
+h1-g1
+|
+AI-active t
+AI-colour f
+AI-turnnumber 11
