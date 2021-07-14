@@ -171,11 +171,14 @@ public class ActiveGameController extends MainController {
 
             CellIndex endIndex = Board.cellIndexFor(move.getEnd());
             CellIndex startIndex = Board.cellIndexFor(move.getStart());
+            Cell startCell = board.getCheckerBoard()[startIndex.getRow()][startIndex.getColumn()];
             input = checkPromotion(input, startIndex, endIndex);
 
             Move moveNew = new Move(input);
+            if(!startCell.isEmpty()){
+                activeGameHelper.checkAndDoMove(fistField, endIndex, startIndex, moveNew);
 
-            activeGameHelper.checkAndDoMove(fistField, endIndex, startIndex, moveNew);
+            }
             if(getGui().getSettings().isNetwork_active()){ // netowkmove ausgabe
                 networkMove();
             }

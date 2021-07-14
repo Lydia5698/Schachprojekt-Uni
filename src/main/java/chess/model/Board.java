@@ -188,7 +188,7 @@ public class Board {
             }
             allowedMove = false;
         }
-        if (allowedMove && blackIsTurn != settings.isBlack()){
+        if (settings.isNetwork_active() && allowedMove && blackIsTurn != settings.isBlack()){
             try {
                 settings.getConnection().send(move.getStart() + "-" + move.getEnd() + promoteTo);
             } catch (Exception e) {

@@ -124,9 +124,9 @@ public class AI {
     public List<Move> possibleNextMoves(Board board) {
         // make list of all moves
         System.out.println(colourIsBlack);
-        System.out.println(board.checkerBoard);
+        System.out.println(board.showBoard());
         //TODO get random move
-        return board.staleMate.possibleMoveList(colourIsBlack, board.checkerBoard);
+        return board.staleMate.possibleMoveList(colourIsBlack, board.checkerBoard, board.getMoveList());
     }
 
     public boolean isColourIsBlack() {

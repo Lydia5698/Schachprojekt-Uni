@@ -41,6 +41,7 @@ public class Cli {
         board.setSimple(simple);
         boolean inSettingsMode = true;
         boolean inAISettingsMode = false;
+        boolean inNetworkSettingsMode = false;
         String languageNumber = "1";
         board.setSettings(settings);
 
@@ -54,25 +55,39 @@ public class Cli {
                     if (inputSetting.contains("exit")) {
                         inSettingsMode = false;
                     }
-                    if (inputSetting.matches("german") || inputSetting.contains("deutsch")) {
-                        settings.setLanguageGerman(true);
+                    if (inputSetting.matches("german") || inputSetting.contains("deutsch") || inputSetting.contains("chen")) {
                         settings.setLanguageEnglish(false);
+                        settings.setLanguageGerman(true);
+                        settings.setLanguageKlingon(false);
                         languageNumber = "2";
                     }
-                    if (inputSetting.matches("english") || inputSetting.contains("englisch")) {
-                        settings.setLanguageGerman(false);
+                    if (inputSetting.matches("english") || inputSetting.contains("englisch") || inputSetting.contains("Te ra'")) {
                         settings.setLanguageEnglish(true);
+                        settings.setLanguageGerman(false);
+                        settings.setLanguageKlingon(false);
                         languageNumber = "1";
                     }
-                    if (inputSetting.matches("human") || inputSetting.contains("mensch")) {
+                    if (inputSetting.matches("klingon") || inputSetting.contains("klingonisch") || inputSetting.contains("tlhIngan")) {
+                        settings.setLanguageEnglish(false);
+                        settings.setLanguageGerman(false);
+                        settings.setLanguageKlingon(true);
+                        languageNumber = "3";
+                    }
+                    if (inputSetting.matches("human") || inputSetting.contains("mensch") || inputSetting.contains("loD")) {
                         settings.setAi_active(false);
                         inSettingsMode = false;
 
-                    } else if (inputSetting.matches("ai") || inputSetting.contains("ki")) {
+                    } else if (inputSetting.matches("ai") || inputSetting.contains("ki")|| inputSetting.contains("Qeq")) {
                         settings.setAi_active(true);
                         inAISettingsMode = true;
                         inSettingsMode = false;
-                    } else if (inputSetting.contains("exit")) {
+                    } else if (inputSetting.matches("network") || inputSetting.contains("netzwerk")|| inputSetting.contains("joq")) {
+                        settings.createClient();
+                        inSettingsMode = false;
+                        inNetworkSettingsMode = true;
+                        // IP Addresse eingabe
+                    }
+                    else if (inputSetting.contains("exit")) {
                         inSettingsMode = false;
                     } else {
                         //wait
@@ -106,6 +121,38 @@ public class Cli {
                     e.printStackTrace();
                 }
 
+            }
+            while (inNetworkSettingsMode) {
+                boolean join = false;
+                if(!join){
+                    System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "05")));
+                }
+
+                try {
+                    String inputSetting = brs.readLine();
+                    if (inputSetting.matches("join")) {
+                        System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "06")));
+                    } else if (inputSetting.matches("host")) {
+                        settings.setConnection(settings.createServer());
+                        settings.setPort(4848);
+                        settings.setNetwork_active(true); // farbwahl
+                        inNetworkSettingsMode = false;
+                        try { settings.initCon();}
+                        catch (Exception e){
+                            System.out.println ("exception when establishing con"); }
+                    } else {
+                        settings.setIp(inputSetting);
+                        settings.setConnection(settings.createClient());
+                        settings.setPort(4848);
+                        settings.setNetwork_active(true);
+                        inNetworkSettingsMode = false;
+                        try { settings.initCon();}
+                        catch (Exception e){
+                            System.out.println ("exception when establishing con"); }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
 

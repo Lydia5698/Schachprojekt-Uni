@@ -106,7 +106,7 @@ public class StaleMate {
      * @return list of moves with all legal moves for this piece
      */
     //method, welche moves ok sind fuer ein piece
-    public List<Move> possibleMovesForOneFigureMoveList(CellIndex cellIndex, Cell[][] checkerBoard) {
+    public List<Move> possibleMovesForOneFigureMoveList(CellIndex cellIndex, Cell[][] checkerBoard, List<Move> moveList) {
         //TODO bauern schlagen und en passante einbauen!!!!!!!!!!!!!!
         List<Move> possibleMoves = new ArrayList<>();
         Cell cell = checkerBoard[cellIndex.getRow()][cellIndex.getColumn()];
@@ -115,12 +115,15 @@ public class StaleMate {
             for (int col = 0; col < 8; col++) {
                 CellIndex end = new CellIndex(row, col);
                 //check if move is legal
-                if (minion.validMove(cellIndex, end) && checkLegalMove(cellIndex, end, manuals, checkerBoard) && !(cellIndex.getRow() == end.getRow() && cellIndex.getColumn() == end.getColumn())) {
-                    //check ifLegalMove
-                    // make index into string
-                    String input = cellIndex.makeIndexIntoString(cellIndex, end);
-                    Move move = new Move(input);
-                    possibleMoves.add(move);
+                if (manuals.checkIfValidMove(cellIndex,end,checkerBoard) && checkLegalMove(cellIndex, end, manuals, checkerBoard) && !(cellIndex.getRow() == end.getRow() && cellIndex.getColumn() == end.getColumn())) {
+                    if(manuals.spManuals.isValidEnPassant(cellIndex,end,checkerBoard,moveList) || manuals.spManuals.figureRochadeHasMoved(moveList,cellIndex,end,checkerBoard)){
+                        //check ifLegalMove
+                        // make index into string
+                        String input = cellIndex.makeIndexIntoString(cellIndex, end);
+                        Move move = new Move(input);
+                        possibleMoves.add(move);
+                    }
+
                 }
             }
         }
@@ -134,7 +137,7 @@ public class StaleMate {
      * @param checkerBoard the current checkerBoard.
      * @return List of pairs of the moves possible for one colour.
      */
-    public List<Move> possibleMoveList(boolean isBlack, Cell[][] checkerBoard) {
+    public List<Move> possibleMoveList(boolean isBlack, Cell[][] checkerBoard, List<Move> boardMoveList) {
 
         boolean staleMate = false;
         List<Move> moveList = new ArrayList<>();
@@ -143,7 +146,7 @@ public class StaleMate {
             for (int col = 0; col < 8; col++) {
                 Cell cell = checkerBoard[row][col];
                 if (!cell.isEmpty() && cell.getMinion().isBlack() == isBlack) {
-                    moveList.addAll(possibleMovesForOneFigureMoveList(new CellIndex(row, col), checkerBoard));
+                    moveList.addAll(possibleMovesForOneFigureMoveList(new CellIndex(row, col), checkerBoard,boardMoveList));
                 }
             }
         }

@@ -39,6 +39,9 @@ public class Language {
         dic.put(202, "Anleitung");
         dic.put(203, "Flags/Klingon.png");
         dic.put(204, "Spiel laden");
+        // Cli Network
+        dic.put(205, "Wenn du einem Spiel beitreten möchtest, tippe 'join'. Wenn du ein Spiel hosten möchtest, tippe 'host' ");
+        dic.put(206, "Bitte gib die IP-Addresse ein, der du joinen möchtest");
         // GameChoice
         dic.put(210, "Wähle eine Spielart aus");
         dic.put(211, "Normales Spiel");
@@ -89,8 +92,8 @@ public class Language {
         dic.put(261, "Schwarz");
         dic.put(262, "Weiß");
         //Cli colour Select
-        dic.put(263, "Du befindest dich im Einstellungsmenü. Um die Sprache zu ändern, gib 'deutsch' oder 'englisch' ein, wenn du das Menü verlassen möchtest, gib 'exit' ein. Aber zuerst musst du dich entscheiden.");
-        dic.put(264, "Willst du gegen einen Menschen spielen, tippe 'mensch', willst gegen eine KI spielen, tippe 'ki':");
+        dic.put(263, "Du befindest dich im Einstellungsmenü. Um die Sprache zu ändern, gib 'deutsch', 'klingonisch' oder 'englisch' ein, wenn du das Menü verlassen möchtest, gib 'exit' ein. Aber zuerst musst du dich entscheiden.");
+        dic.put(264, "Willst du gegen einen Menschen spielen, tippe 'mensch', willst gegen eine KI spielen, tippe 'ki', möchtest du übers Netzwerk spielen, tippe 'netzwerk':");
         dic.put(265, "Bitte überprüfe deine Eingabe");
         dic.put(266, "Welche Farbe möchtest du Spielen?, 'schwarz' or 'weiß'?");
         dic.put(267, "Du spielst schwarz, die KI wird weiß spielen.");
@@ -137,9 +140,12 @@ public class Language {
         dic.put(102, "Manual");
         dic.put(103, "Flags/GermanFlag.png");
         dic.put(104, "Load Game");
+        // Cli Network
+        dic.put(105, "If you want to join a game, type 'join'. If you want to host a game, type 'host' ");
+        dic.put(106, "Please enter the IP address you want to join");
         // GameChoice
         dic.put(110, "Choose your Game");
-        dic.put(111, "pvp");
+        dic.put(111, "PvP");
         dic.put(112, "Against AI");
         dic.put(113, "Network Game");
         // active Game
@@ -187,8 +193,8 @@ public class Language {
         dic.put(161, "Black");
         dic.put(162, "White");
         //Cli colour Select
-        dic.put(163, "You are in the settings menu. To change the Language type 'german' or 'english' if you want to exit the menu type 'exit'. But first you have to choose.");
-        dic.put(164, "Do you want to play against a human, type 'human', want to play against an ai, type 'ai':");
+        dic.put(163, "You are in the settings menu. To change the Language type 'german', 'klingon' or 'english' if you want to exit the menu type 'exit'. But first you have to choose.");
+        dic.put(164, "Do you want to play against a human, type 'human', want to play against an ai, type 'ai', want to play over the network, type 'network':");
         dic.put(165, "Please correct your input");
         dic.put(166, "What colour do you want to play, 'black' or 'white'?");
         dic.put(167, "You play black, the ai plays white.");

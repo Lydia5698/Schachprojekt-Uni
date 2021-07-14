@@ -71,17 +71,19 @@ public class ActiveGameHelper {
      * @param moveNew    the move (startIndex + endIndex + promoteTo)
      */
     void checkAndDoMove(String fistField, CellIndex endIndex, CellIndex startIndex, Move moveNew) {
-        if (activeGameController.board.manuals.moveOfRightColour(moveNew, activeGameController.board) && activeGameController.board.manuals.checkIfValidMove(startIndex, endIndex, activeGameController.board.getCheckerBoard())) {
-            if (spManuals.isValidEnPassant(startIndex, endIndex, activeGameController.board.getCheckerBoard(), activeGameController.board.getMoveList())
-                    || spManuals.figureRochadeHasMoved(activeGameController.board.getMoveList(), startIndex, endIndex, activeGameController.board.getCheckerBoard())) {
+        if (activeGameController.board.manuals.moveOfRightColour(moveNew, activeGameController.board) && activeGameController.board.manuals.checkIfValidMove(startIndex, endIndex, activeGameController.board.getCheckerBoard())){
+
                 if (!activeGameController.getGui().getSettings().isDoubleClick() || (firstMinionClickedWhite.equals(fistField)) || firstMinionClickedBlack.equals(fistField)) {
                     applyCurrentMove(moveNew);
                 } else {
                     activeGameController.popups.popupDoubleClick(firstMinionClickedBlack, firstMinionClickedWhite, activeGameController.getGui());
                 }
-            }
-
         }
+        else if (spManuals.isValidEnPassant(startIndex, endIndex, activeGameController.board.getCheckerBoard(), activeGameController.board.getMoveList())
+                || spManuals.figureRochadeHasMoved(activeGameController.board.getMoveList(), startIndex, endIndex, activeGameController.board.getCheckerBoard())) {
+            applyCurrentMove(moveNew);
+        }
+
         else{
         activeGameController.popups.popupMoveNotAllowed(activeGameController.getGui());
         activeGameController.board.setAllowedMove(false);
@@ -102,13 +104,11 @@ public class ActiveGameHelper {
         Node sourceEnd = (Node) end.getSource();
         activeGameController.beatenMinionOutput();
         activeGameController.updateBoard();
-        // network move
         if (activeGameController.getGui().getSettings().isAi_active()) {
             Move aiMove = activeGameController.getGui().getSettings().getAi().getNextMove(activeGameController.board);
             activeGameController.board.applyMove(aiMove);
             // geschlagene figur vom AI Move
             CellIndex endIndex = Board.cellIndexFor(aiMove.getEnd());
-            sourceEnd = activeGameController.getNodeByCoordinate(endIndex.getRow(), endIndex.getColumn());
             activeGameController.getGui().getSettings().getAi().increaseTurnNumber();
             //update
             activeGameController.beatenMinionOutput();
@@ -129,7 +129,6 @@ public class ActiveGameHelper {
         if (activeGameController.getGui().getSettings().isAi_active() && !activeGameController.getGui().getSettings().isAi_colour()) {
             activeGameController.board.applyMove(activeGameController.getGui().getSettings().getAi().getNextMove(activeGameController.board));
             activeGameController.getGui().getSettings().getAi().increaseTurnNumber();
-            System.out.println(activeGameController.board.showBoard());
             //update
             activeGameController.updateBoard();
         }
@@ -145,7 +144,7 @@ public class ActiveGameHelper {
         CellIndex startIndex = new CellIndex(startRow, startCol);
         activeGameController.getChessBoard().getChildren().removeIf(node -> node instanceof Rectangle && ((Rectangle) node).getFill().equals(Paint.valueOf("#ff6347")));
         if (activeGameController.getNodeByCoordinate(startRow, startCol) instanceof ImageView && !activeGameController.board.getCheckerBoard()[startRow][startCol].isEmpty()) {
-            List<Move> possibleMoves = (activeGameController.board.staleMate.possibleMovesForOneFigureMoveList(startIndex, activeGameController.board.getCheckerBoard()));
+            List<Move> possibleMoves = (activeGameController.board.staleMate.possibleMovesForOneFigureMoveList(startIndex, activeGameController.board.getCheckerBoard(), activeGameController.board.getMoveList()));
 
             for (Move move : possibleMoves) {
                 String s = "abcdefgh";
@@ -162,11 +161,12 @@ public class ActiveGameHelper {
                         e.printStackTrace();
                     }
                 });
-                System.out.println(s.indexOf(move.getEnd().substring(0, 1)));
-                System.out.println(8 - Integer.parseInt(move.getEnd().substring(1, 2)));
-                activeGameController.getChessBoard().add(possMove, s.indexOf(move.getEnd().substring(0, 1)), 8 - Integer.parseInt(move.getEnd().substring(1, 2)));
-                activeGameController.getChessBoard().setAlignment(Pos.CENTER);
-                possMove.toFront();
+                if(activeGameController.counter == 0){
+                    activeGameController.getChessBoard().add(possMove, s.indexOf(move.getEnd().substring(0, 1)), 8 - Integer.parseInt(move.getEnd().substring(1, 2)));
+                    activeGameController.getChessBoard().setAlignment(Pos.CENTER);
+                    possMove.toFront();
+                }
+
             }
         }
     }

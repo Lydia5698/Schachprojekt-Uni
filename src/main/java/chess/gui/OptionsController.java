@@ -103,7 +103,11 @@ public class OptionsController extends MainController {
         getGui().getSettings().setBoard(board);
         getGui().getSettings().setNetwork_active(false);
         getGui().getSettings().setAi_active(false);
-
+        getGui().getSettings().setGameEnd(false);
+        getGui().getSettings().setHighlightPossibleMoves(false);
+        getGui().getSettings().setCheckVisible(false);
+        getGui().getSettings().setRotateBoard(false);
+        getGui().getSettings().setDoubleClick(false);
     }
 
     /**
