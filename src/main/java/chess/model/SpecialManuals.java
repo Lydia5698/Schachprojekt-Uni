@@ -8,10 +8,15 @@ import java.util.List;
 import static chess.model.Board.cellIndexFor;
 
 /**
+ * We suppress the PMD rules for CyclomaticComplexity in this case, as we only have one
+ * query too many at checkRochade. We know that we can still outsource some queries in the
+ * method, but that would only make the code cluttered. And that's where we decided that
+ * we'd rather have one query too many
  * Manuals with all the special rules
  *
  * @author Lydia Günther, Jasmin Wojtkiewicz
  */
+@SuppressWarnings({"PMD.CyclomaticComplexity"})
 public class SpecialManuals {
     /**
      * Creates a new SpecialMove instance.

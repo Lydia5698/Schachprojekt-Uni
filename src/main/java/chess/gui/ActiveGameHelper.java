@@ -104,7 +104,7 @@ public class ActiveGameHelper {
     private void checkPopups() {
         if (activeGameController.getGui().getSettings().isPlayerInCheck() && activeGameController.getGui().getSettings().isCheckVisible()) {
             activeGameController.popups.popupCheck(activeGameController.getGui());
-            activeGameController.getGui().getSettings().setIsInCheck(false);
+            activeGameController.getGui().getSettings().setPlayerInCheck(false);
         }
         if (activeGameController.getGui().getSettings().isGameEnd()) {
             activeGameController.popups.popupCheckMate(activeGameController.gui);

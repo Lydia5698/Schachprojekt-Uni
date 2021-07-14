@@ -32,7 +32,7 @@ import java.util.*;
  *
  * The Controller for the active game. Where you can see the chessboard
  */
-@SuppressWarnings({"PMD.TooManyFields","PMD.NcssCount", "CyclomaticComplexity"})
+@SuppressWarnings({"PMD.TooManyFields","PMD.NcssCount","PMD.CyclomaticComplexity"})
 public class ActiveGameController extends MainController {
     protected Board board;
     protected ActiveGameHelper activeGameHelper = new ActiveGameHelper(this);

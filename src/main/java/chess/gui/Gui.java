@@ -23,6 +23,7 @@ public class Gui extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception { //TODO oberklasse mit allen setter methoden, Menue controller , gamecontroller, bedienen das interface, in allen controllen soll die gui gesetzt werden
         stage = primaryStage;
+        settings.getBoard().setSimple(true);
         MainController.show_FXML("startScreen.fxml", primaryStage, this);
     }
 

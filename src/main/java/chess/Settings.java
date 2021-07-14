@@ -21,7 +21,7 @@ public class Settings {
     protected boolean gui_active = false;
     protected SettingsNetwork settingsNetwork;
     protected SettingsLanguage settingsLanguage = new SettingsLanguage();
-    protected boolean isPlayerInCheck = false;
+    protected boolean playerInCheck = false;
     protected boolean gameEnd = false;
     protected boolean ai_active = false;
     protected boolean ai_colour = false;
@@ -116,11 +116,11 @@ public class Settings {
     }
 
     public boolean isPlayerInCheck() {
-        return isPlayerInCheck;
+        return playerInCheck;
     }
 
-    public void setIsInCheck(boolean inCheck) {
-        isPlayerInCheck = inCheck;
+    public void setPlayerInCheck(boolean inCheck) {
+        playerInCheck = inCheck;
     }
 
     public boolean isGameEnd() {

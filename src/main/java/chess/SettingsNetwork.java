@@ -56,7 +56,7 @@ public class SettingsNetwork{
                     activeGameController.updateBoard();
                     if (activeGameController.getGui().getSettings().isPlayerInCheck() && activeGameController.getGui().getSettings().isCheckVisible()) {
                         activeGameController.getPopups().popupCheck(activeGameController.getGui());
-                        activeGameController.getGui().getSettings().setIsInCheck(false);
+                        activeGameController.getGui().getSettings().setPlayerInCheck(false);
                     }
                 }
             });
@@ -80,7 +80,7 @@ public class SettingsNetwork{
                     activeGameController.updateBoard();
                     if (activeGameController.getGui().getSettings().isPlayerInCheck() && activeGameController.getGui().getSettings().isCheckVisible()) {
                         activeGameController.getPopups().popupCheck(activeGameController.getGui());
-                        activeGameController.getGui().getSettings().setIsInCheck(false);
+                        activeGameController.getGui().getSettings().setPlayerInCheck(false);
                     }
                 }
             });

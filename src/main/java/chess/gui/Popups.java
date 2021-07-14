@@ -23,7 +23,7 @@ public class Popups extends MainController {
         } else {
             alert.setContentText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getSettingsLanguage().getLanguageNumber() + "81")));
         }
-        getGui().settings.setIsInCheck(false);
+        getGui().settings.setPlayerInCheck(false);
         alert.show();
     }
 
