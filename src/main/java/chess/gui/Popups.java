@@ -18,7 +18,7 @@ public class Popups extends MainController {
      * Pops up the popup for check
      */
     @FXML
-    void popupCheck(Gui gui) {
+    public void popupCheck(Gui gui) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getLanguageNumber() + "82")));
         if (gui.getSettings().getBoard().isBlackIsTurn()) {

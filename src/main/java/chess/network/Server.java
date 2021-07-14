@@ -4,7 +4,7 @@ import java.net.*;
 import java.io.*;
 
 public class Server extends Thread {
-    private int portNo = 4848;
+    private int portNo = 56337;
     private boolean black = false;
     private String input = "";
     private String output = "";

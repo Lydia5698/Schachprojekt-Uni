@@ -134,7 +134,7 @@ public class Cli {
                         System.out.println(settings.getLanguage().getDic().get(Integer.parseInt(languageNumber + "06")));
                     } else if (inputSetting.matches("host")) {
                         settings.setConnection(settings.createServer());
-                        settings.setPort(4848);
+                        settings.setPort(56337);
                         settings.setNetwork_active(true); // farbwahl
                         inNetworkSettingsMode = false;
                         try { settings.initCon();}
@@ -143,7 +143,7 @@ public class Cli {
                     } else {
                         settings.setIp(inputSetting);
                         settings.setConnection(settings.createClient());
-                        settings.setPort(4848);
+                        settings.setPort(56337);
                         settings.setNetwork_active(true);
                         inNetworkSettingsMode = false;
                         try { settings.initCon();}

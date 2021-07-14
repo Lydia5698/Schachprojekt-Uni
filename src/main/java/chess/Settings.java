@@ -1,21 +1,28 @@
 package chess;
 
+import chess.gui.ActiveGameController;
 import chess.model.AI;
 import chess.model.Board;
 import chess.model.Move;
+import chess.network.NetwChessProtocol;
 import chess.network.NetwCli;
 import chess.network.NetwCon;
 import chess.network.NetwSvr;
 import javafx.application.Platform;
+import javafx.event.Event;
+import javafx.scene.Node;
+
+import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * The Settings for the Gui and the Cli
  */
 public class Settings {
     //felder
-    AI ai = new AI(false);
-    Board board = new Board();
-    Language language = new Language();
+    private AI ai = new AI(false);
+    private Board board = new Board();
+    private Language language = new Language();
     protected boolean gui_active = false;
     protected boolean network_active = false;
     protected boolean isInCheck = false;
@@ -36,8 +43,9 @@ public class Settings {
     private int port;
     private String ip;
     private final boolean server = false;
-    String languageNumber = "1";
+    private String languageNumber = "1";
     private NetwCon connection;
+    private ActiveGameController activeGameController;
     /**
      * Sets the setting in the Board
      */
@@ -48,6 +56,14 @@ public class Settings {
 
     //methoden
 
+
+    public ActiveGameController getActiveGameController() {
+        return activeGameController;
+    }
+
+    public void setActiveGameController(ActiveGameController activeGameController) {
+        this.activeGameController = activeGameController;
+    }
 
     public boolean isAi_active() {
         return ai_active;
@@ -208,6 +224,13 @@ public class Settings {
                     this.clientMove = new Move(data);
                     moveReceived = true;
                     board.applyMove(clientMove);
+                    activeGameController.history();
+                    activeGameController.beatenMinionOutput();
+                    activeGameController.updateBoard();
+                    if (activeGameController.getGui().getSettings().getIsInCheck() && activeGameController.getGui().getSettings().isCheckVisible()) {
+                        activeGameController.getPopups().popupCheck(activeGameController.getGui());
+                        activeGameController.getGui().getSettings().setInCheck(false);
+                    }
                 }
             });
         });
@@ -221,7 +244,13 @@ public class Settings {
                     this.clientMove = new Move(data);
                     moveReceived = true;
                     board.applyMove(clientMove);
-
+                    activeGameController.history();
+                    activeGameController.beatenMinionOutput();
+                    activeGameController.updateBoard();
+                    if (activeGameController.getGui().getSettings().getIsInCheck() && activeGameController.getGui().getSettings().isCheckVisible()) {
+                        activeGameController.getPopups().popupCheck(activeGameController.getGui());
+                        activeGameController.getGui().getSettings().setInCheck(false);
+                    }
                 }
             });
         });

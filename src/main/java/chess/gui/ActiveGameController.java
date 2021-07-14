@@ -29,7 +29,7 @@ public class ActiveGameController extends MainController {
     protected Board board;
     protected ActiveGameHelper activeGameHelper = new ActiveGameHelper(this);
     protected Popups popups;
-    protected final List<String> halfMoves = new ArrayList<>();
+    protected List<String> halfMoves = new ArrayList<>();
     protected final List<Event> position = new ArrayList<>();
     protected int counter = 0;
     protected int counterBeatenMinionsWhite = 0;
@@ -79,9 +79,9 @@ public class ActiveGameController extends MainController {
         if (board.getMoveList().isEmpty()) {
             activeGameHelper.whiteAIMove();
         }
-        if(gui.getSettings().isNetwork_active()){
+        /*if(gui.getSettings().isNetwork_active()){
             networkMove();
-        }
+        }*/
         // network white Move
         changeToLanguage();
         updateBoard();
@@ -134,9 +134,9 @@ public class ActiveGameController extends MainController {
         updateBoard();
         Node source = (Node) event.getSource();
 
-        if(getGui().getSettings().isNetwork_active()){ // networkmove ausgabe
+        /*if(getGui().getSettings().isNetwork_active()){ // networkmove ausgabe
             networkMove();
-        }
+        }*/
 
         int colIndex;
         int rowIndex;
@@ -163,6 +163,7 @@ public class ActiveGameController extends MainController {
      *
      * @throws IOException for the popups if they dont get closed
      */
+    //TODO: Beliebige Züge möglich (evtl. Kontrolle in board.applymove ebenfalls nicht vorhanden)
     public void move() throws IOException {
         if (counter == 2 && !getGui().getSettings().isGameEnd()) {
             String fistField = halfMoves.get(0);
@@ -180,9 +181,9 @@ public class ActiveGameController extends MainController {
                 activeGameHelper.checkAndDoMove(fistField, endIndex, startIndex, moveNew);
 
             }
-            if(getGui().getSettings().isNetwork_active()){ // netowkmove ausgabe
+            /*if(getGui().getSettings().isNetwork_active()){ // netowkmove ausgabe
                 networkMove();
-            }
+            }*/
             counter = 0;
             halfMoves.clear();
             position.clear();
@@ -197,13 +198,13 @@ public class ActiveGameController extends MainController {
         }
     }
 
-    /**
+    /*/**TODO: Thread-Bombe!!!!!
      * Calls the methode crateClient in the Settings class. And after the move the board gets updated
      */
-    private void networkMove(){
+    /*private void networkMove(){
         getGui().getSettings().createClient();
         updateBoard();
-    }
+    }*/
 
     /**
      * checks if the Pawn is allowed to make a promotion
@@ -231,7 +232,7 @@ public class ActiveGameController extends MainController {
     /**
      * The history of the moves. It is getting printed above the chessboard
      */
-    void history() {
+    public void history() {
         String beatenString = "Moves";
         for (Move beatenMinion : board.getMoveList()) {
             String moveString = beatenMinion.getStart() + "-" + beatenMinion.getEnd();
@@ -355,7 +356,7 @@ public class ActiveGameController extends MainController {
     /**
      * Updates the Board after every drawn move. Rotation of the Board. Gets the Information from the board
      */
-    void updateBoard() {
+    public void updateBoard() {
         ImageView iv;
         chessBoard.getChildren().removeIf(node -> node instanceof ImageView);
         for (int i = 0; i < 8; i++) {
@@ -375,7 +376,7 @@ public class ActiveGameController extends MainController {
      * Sets the beaten Minions on the Grid next to the chessboard. It distinguished between black and white Minions beaten
      *
      */
-    void beatenMinionOutput() {
+    public void beatenMinionOutput() {
         String minion;
         ImageView iv;
         char minionType;
@@ -490,5 +491,7 @@ public class ActiveGameController extends MainController {
         return chessBoard;
     }
 
-
+    public Popups getPopups() {
+        return popups;
+    }
 }

@@ -85,16 +85,25 @@ public class NetworkController extends MainController {
         gui.settings.setIp(ipAddress.getText());
         gui.settings.setPort(4848);
         gui.getSettings().setNetwork_active(true);
+        gui.getSettings().setBlack(ckbxColour.isSelected());
         if (hostGame.isSelected()){
             gui.getSettings().setConnection(gui.getSettings().createServer());}
         else if(joinGame.isSelected()){
             gui.getSettings().setConnection(gui.getSettings().createClient());}
-        try { gui.getSettings().initCon();}
+        try {
+            gui.getSettings().initCon();
+        }
         catch (Exception e){
-            System.out.println ("exception when establishing con"); }
+            System.out.println ("exception when establishing con");
+        }
 
         Stage stage = (Stage) btnSubmit.getScene().getWindow();
-        show_FXML("activeGame.fxml", stage, getGui());
+        try {
+            ActiveGameController mainController = (ActiveGameController) show_FXML("activeGame.fxml", stage, getGui());
+            gui.getSettings().setActiveGameController(mainController);
+        }catch (Exception e){
+            show_FXML("activeGame.fxml", stage, getGui());
+        }
     }
 
     /**
