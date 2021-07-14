@@ -121,7 +121,6 @@ public class Parser {
 
 
             }
-            //TODO fuer spaeter : activeGameController.history();
 
             //Close the input stream
             fileInputStream.close();

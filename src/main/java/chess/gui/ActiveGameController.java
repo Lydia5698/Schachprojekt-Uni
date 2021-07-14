@@ -86,6 +86,7 @@ public class ActiveGameController extends MainController {
         changeToLanguage();
         updateBoard();
         history();
+        beatenMinionOutput();
     }
 
     public void setBoard(Board board) {
@@ -376,28 +377,33 @@ public class ActiveGameController extends MainController {
      *
      */
     void beatenMinionOutput() {
-        String minion;
         ImageView iv;
+        String minion = "";
         char minionType;
-        if (board.getBeaten().size() == 1) {
-            minion = board.getBeaten().get(0);
-            minionType = minion.charAt(0);
-            if (Character.isUpperCase(minionType)) {
-                //sourceEnd.set
-                iv = getImageView(0,1,true, false);
-                iv.setFitHeight(90);
-                iv.setFitWidth(90);
-                beatenMinion.add(iv, 0, counterBeatenMinionsWhite);
-                counterBeatenMinionsWhite++;
-            } else {
-                iv = getImageView(0,1,true,true);
-                iv.setFitHeight(90);
-                iv.setFitWidth(90);
-                beatenMinion.add(iv, 1, counterBeatenMinionsBlack);
-                counterBeatenMinionsBlack++;
+        if (board.getBeaten().size() >= 1) {
+            beatenMinion.getChildren().clear();
+            counterBeatenMinionsBlack = 0;
+            counterBeatenMinionsWhite = 0;
+            for (int i = 0; i < board.getBeaten().size(); i++){
+                minion = board.getBeaten().get(i);
+                minionType = minion.charAt(0);
+                if (Character.isUpperCase(minionType)) {
+                    //sourceEnd.set
+                    iv = getImageView(i,1,true, false);
+                    iv.setFitHeight(90);
+                    iv.setFitWidth(90);
+                    beatenMinion.add(iv, 0, counterBeatenMinionsWhite);
+                    counterBeatenMinionsWhite++;
+                } else {
+                    iv = getImageView(i,1,true,true);
+                    iv.setFitHeight(90);
+                    iv.setFitWidth(90);
+                    beatenMinion.add(iv, 1, counterBeatenMinionsBlack);
+                    counterBeatenMinionsBlack++;
+
+                }
             }
         }
-        board.getBeaten().clear();
     }
 
 
