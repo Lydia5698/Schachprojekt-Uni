@@ -1,5 +1,6 @@
 package chess.gui;
 
+import chess.Settings;
 import chess.model.Board;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -68,10 +69,7 @@ public class OptionsController extends MainController {
      */
     @FXML
     void exit() {
-        Stage stage = (Stage) btnExit.getScene().getWindow();
-        LoadSaveController loadSaveController = new LoadSaveController(getGui());
-        loadSaveController.saveFile(stage);
-        //System.exit(0);
+        System.exit(0);
     }
 
     /**
@@ -102,7 +100,7 @@ public class OptionsController extends MainController {
         Board board = new Board();
         board.setSettings(gui.settings);
         getGui().getSettings().setBoard(board);
-        getGui().getSettings().setNetwork_active(false);
+        getGui().settings.getSettingsNetwork().setNetwork_active(false);
         getGui().getSettings().setAi_active(false);
         getGui().getSettings().setGameEnd(false);
         getGui().getSettings().setHighlightPossibleMoves(false);
@@ -136,7 +134,7 @@ public class OptionsController extends MainController {
      */
     @FXML
     void changeLanguage() {
-        getGui().getSettings().changeLanguage();
+        getGui().getSettings().getSettingsLanguage().changeLanguage();
         changeToLanguage();
     }
 
@@ -144,14 +142,14 @@ public class OptionsController extends MainController {
      * Changes all buttons and text fields to the selected language
      */
     private void changeToLanguage() {
-        btnLanguage.setImage(new Image(Objects.requireNonNull(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "03")))).toExternalForm())));
-        btnChessBoard.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "30")));
-        title.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "31")));
-        HighlightPossibleMoves.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "32")));
-        checkVisible.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "33")));
-        cbDoubleClick.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "34")));
-        cbRotateBoard.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "35")));
-        btnStartScreen.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "36")));
+        btnLanguage.setImage(new Image(Objects.requireNonNull(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "03")))).toExternalForm())));
+        btnChessBoard.setText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "30")));
+        title.setText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "31")));
+        HighlightPossibleMoves.setText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "32")));
+        checkVisible.setText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "33")));
+        cbDoubleClick.setText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "34")));
+        cbRotateBoard.setText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "35")));
+        btnStartScreen.setText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "36")));
     }
 
     @Override

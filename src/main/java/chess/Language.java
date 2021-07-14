@@ -81,7 +81,8 @@ public class Language {
                 "\n" +
                 "Netzwerkspiel\n" +
                 "Bei diesem Spielmodus kannst du mit deinen Freund/-innen übers Netzwerk spielen. Um das Spiel zu starten muss eine Person das Spiel hosten und der andere muss dem Spiel beitreten\n" +
-                "Derjenige, der das Spiel hostet kann sich aussuchen, welche Farbe er spielen möchte. Der andere Spieler muss die IP-Addresse des Gegners eintagen." + "\n" +
+                "Derjenige, der das Spiel hostet kann sich aussuchen, welche Farbe er spielen möchte. Der andere Spieler muss die IP-Addresse des Gegners eintagen. wenn du das board updaten möchtest " +
+                "um den gegnerischen Zug zu sehen, musst du einmal auf das Spielfeld klicken" + "\n" +
                 "\n" +
                 "Dieses Schachspiel folgt den Allgemeinen Regeln des deutschen Schachbundes."); // Anleitung Text
         dic.put(242, "Anleitung");
@@ -182,7 +183,7 @@ public class Language {
                 "\n" +
                 "Network Game\n" +
                 "In this game mode you can play with your friends over the network. To Play one must Host a Game. This Person can choose which colour he wants to play." + "\n" +
-                "The second Player must Join a Game. He must enter the IP-Address of the Hosting Person" + "\n" +
+                "The second Player must Join a Game. He must enter the IP-Address of the Hosting Person. if you want to update the board to see the opponent's move you have to click once on the playing field" + "\n" +
                 "\n" +
                 "This chess game follows the general rules of the German Chess Federation."); // Anleitung Text
         dic.put(142, "Manual");
@@ -193,7 +194,7 @@ public class Language {
         dic.put(161, "Black");
         dic.put(162, "White");
         //Cli colour Select
-        dic.put(163, "You are in the settings menu. To change the Language type 'german', 'klingon' or 'english' if you want to exit the menu type 'exit'. But first you have to choose.");
+        dic.put(163, "You are in the settings menu. To change the Language type 'german', 'klingon' or 'english' if you want to exit the menu type 'exit'. If you want to save a game type 'save game'. But first you have to choose.");
         dic.put(164, "Do you want to play against a human, type 'human', want to play against an ai, type 'ai', want to play over the network, type 'network':");
         dic.put(165, "Please correct your input");
         dic.put(166, "What colour do you want to play, 'black' or 'white'?");
@@ -276,7 +277,7 @@ public class Language {
                 "\n" +
                 "rar\n" +
                 "ngaghwI'na' Dechbogh qo'mey puS. law'ta' ropmo' qechmaj boQ'a' neH.\n" +
-                "QuvvamDaq QottaHghach mIw wIje'laHbe'. latlh lut vIlaD." + "\n" +
+                "QuvvamDaq QottaHghach mIw wIje'laHbe'. latlh lut vIlaD. jagh Datuqchugh vaj mu'mey Dalo'taHvIS" + "\n" +
                 "\n" +
                 "ghIlghameSvaD ghIlghameS 'e' chaw' ghIlghameS"); // Anleitung Text
         dic.put(342, "ghojmoH");

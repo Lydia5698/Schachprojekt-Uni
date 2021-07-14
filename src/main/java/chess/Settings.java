@@ -3,28 +3,19 @@ package chess;
 import chess.gui.ActiveGameController;
 import chess.model.AI;
 import chess.model.Board;
-import chess.model.Move;
-import chess.network.NetwChessProtocol;
-import chess.network.NetwCli;
-import chess.network.NetwCon;
-import chess.network.NetwSvr;
-import javafx.application.Platform;
-import javafx.event.Event;
-import javafx.scene.Node;
 
-import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * The Settings for the Gui and the Cli
  */
 public class Settings {
     //felder
-    private AI ai = new AI(false);
-    private Board board = new Board();
-    private Language language = new Language();
+    AI ai = new AI(false);
+    Board board = new Board();
+    //Language language = new Language();
     protected boolean gui_active = false;
-    protected boolean network_active = false;
+    protected SettingsNetwork settingsNetwork;
+    protected SettingsLanguage settingsLanguage = new SettingsLanguage();
     protected boolean isInCheck = false;
     protected boolean gameEnd = false;
     protected boolean ai_active = false;
@@ -33,7 +24,7 @@ public class Settings {
     protected boolean lightPossibleMoves = false;
     protected boolean checkVisible = false;
     protected boolean doubleClick = false;
-    protected boolean languageGerman = false;
+/*    protected boolean languageGerman = false;
     protected boolean languageEnglish = true;
     protected boolean languageKlingon = false;
     protected boolean black = false;
@@ -46,12 +37,14 @@ public class Settings {
     private String languageNumber = "1";
     private NetwCon connection;
     private ActiveGameController activeGameController;
+    String languageNumber = "1";*/
     /**
      * Sets the setting in the Board
      */
     //constructor
     public Settings() {
         board.setSettings(this);
+        setSettingsNetwork(new SettingsNetwork(board));
     }
 
     //methoden
@@ -129,33 +122,7 @@ public class Settings {
         this.board = board;
     }
 
-    public Language getLanguage() {
-        return language;
-    }
 
-    public boolean isLanguageGerman() {
-        return languageGerman;
-    }
-
-    public void setLanguageGerman(boolean languageGerman) {
-        this.languageGerman = languageGerman;
-    }
-
-    public boolean isLanguageEnglish() {
-        return languageEnglish;
-    }
-
-    public void setLanguageEnglish(boolean languageEnglish) {
-        this.languageEnglish = languageEnglish;
-    }
-
-    public String getLanguageNumber() {
-        return languageNumber;
-    }
-
-    public void setLanguageNumber(String languageNumber) {
-        this.languageNumber = languageNumber;
-    }
 
     public boolean isGui_active() {
         return gui_active;
@@ -181,38 +148,15 @@ public class Settings {
         this.gameEnd = gameEnd;
     }
 
-    public boolean isLanguageKlingon() {
-        return languageKlingon;
+
+    public SettingsNetwork getSettingsNetwork() {
+        return settingsNetwork;
     }
-
-    public void setLanguageKlingon(boolean languageKlingon) {
-        this.languageKlingon = languageKlingon;
+    public void setSettingsNetwork(SettingsNetwork settingsNetwork) {
+        this.settingsNetwork = settingsNetwork;
     }
-
-
-
-    /**
-     * Changes the booleans for the Language and updates the Language number so the right Language is load from the Dictionary
-     */
-    public void changeLanguage() {
-        if(isLanguageEnglish()) {
-            setLanguageEnglish(false);
-            setLanguageGerman(true);
-            setLanguageKlingon(false);
-            setLanguageNumber("2");
-        }
-        else if(isLanguageGerman()){
-            setLanguageEnglish(false);
-            setLanguageGerman(false);
-            setLanguageKlingon(true);
-            setLanguageNumber("3");
-        }
-        else {
-            setLanguageEnglish(true);
-            setLanguageGerman(false);
-            setLanguageKlingon(false);
-            setLanguageNumber("1");
-        }
+    public SettingsLanguage getSettingsLanguage() {
+        return settingsLanguage;
     }
 
     public NetwSvr createServer() {
@@ -285,4 +229,7 @@ public class Settings {
         this.network_active = network_active;
     }
 
+    public void setSettingsLanguage(SettingsLanguage settingsLanguage) {
+        this.settingsLanguage = settingsLanguage;
+    }
 }

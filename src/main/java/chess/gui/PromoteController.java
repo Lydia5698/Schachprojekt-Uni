@@ -91,7 +91,7 @@ public class PromoteController extends MainController {
      */
     @FXML
     void changeLanguage() {
-        getGui().getSettings().changeLanguage();
+        getGui().getSettings().getSettingsLanguage().changeLanguage();
         changeToLanguage();
     }
 
@@ -99,8 +99,8 @@ public class PromoteController extends MainController {
      * Changes all buttons and text fields to the selected language
      */
     private void changeToLanguage() {
-        btnLanguage.setImage(new Image(Objects.requireNonNull(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "03")))).toExternalForm())));
-        header.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "50")));
+        btnLanguage.setImage(new Image(Objects.requireNonNull(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "03")))).toExternalForm())));
+        header.setText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "50")));
     }
 
     @Override

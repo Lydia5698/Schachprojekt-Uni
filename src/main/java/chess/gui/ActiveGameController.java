@@ -29,7 +29,7 @@ public class ActiveGameController extends MainController {
     protected Board board;
     protected ActiveGameHelper activeGameHelper = new ActiveGameHelper(this);
     protected Popups popups;
-    protected List<String> halfMoves = new ArrayList<>();
+    protected final List<String> halfMoves = new ArrayList<>();
     protected final List<Event> position = new ArrayList<>();
     protected int counter = 0;
     protected int counterBeatenMinionsWhite = 0;
@@ -86,6 +86,7 @@ public class ActiveGameController extends MainController {
         changeToLanguage();
         updateBoard();
         history();
+        beatenMinionOutput();
     }
 
     public void setBoard(Board board) {
@@ -97,7 +98,7 @@ public class ActiveGameController extends MainController {
      */
     @FXML
     void changeLanguage() {
-        getGui().getSettings().changeLanguage();
+        getGui().getSettings().getSettingsLanguage().changeLanguage();
         changeToLanguage();
     }
 
@@ -105,8 +106,8 @@ public class ActiveGameController extends MainController {
      * Changes all buttons and text fields to the selected language
      */
     private void changeToLanguage() {
-        btnLanguage.setImage(new Image(Objects.requireNonNull(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "03")))).toExternalForm())));
-        btnOptions.setText(gui.getSettings().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getLanguageNumber() + "31")));
+        btnLanguage.setImage(new Image(Objects.requireNonNull(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "03")))).toExternalForm())));
+        btnOptions.setText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "31")));
     }
 
     /**
@@ -117,7 +118,6 @@ public class ActiveGameController extends MainController {
         Stage stage = (Stage) btnSave.getScene().getWindow();
         LoadSaveController loadSaveController = new LoadSaveController(getGui());
         loadSaveController.saveFile(stage);
-        //show_FXML("saveScreen.fxml", stage, getGui());
     }
 
 
@@ -131,7 +131,6 @@ public class ActiveGameController extends MainController {
      */
     @FXML
     void mouseClicked(MouseEvent event) throws IOException {
-        updateBoard();
         Node source = (Node) event.getSource();
 
         /*if(getGui().getSettings().isNetwork_active()){ // networkmove ausgabe
@@ -178,7 +177,7 @@ public class ActiveGameController extends MainController {
 
             Move moveNew = new Move(input);
             if(!startCell.isEmpty()){
-                activeGameHelper.checkAndDoMove(fistField, endIndex, startIndex, moveNew);
+                activeGameHelper.checkAndDoMove(fistField ,moveNew);
 
             }
             /*if(getGui().getSettings().isNetwork_active()){ // netowkmove ausgabe
@@ -187,13 +186,11 @@ public class ActiveGameController extends MainController {
             counter = 0;
             halfMoves.clear();
             position.clear();
-            if (getGui().getSettings().isRotateBoard() && !getGui().getSettings().isAi_active()) {
-                boardRotation();
-            }
+
             if (getGui().getSettings().isGameEnd()) {
                 popups.popupCheckMate(gui);
                 getGui().getSettings().setAi_active(false);
-                getGui().getSettings().setNetwork_active(false);
+                getGui().settings.getSettingsNetwork().setNetwork_active(false);
             }
         }
     }
@@ -245,7 +242,7 @@ public class ActiveGameController extends MainController {
     /**
      * rotates the Board. Deletes the old images and sets the new one in a rotated order
      */
-    private void boardRotation() {
+    void boardRotation() {
         ImageView iv;
         chessBoard.getChildren().removeIf(node -> node instanceof ImageView);
 
@@ -376,29 +373,34 @@ public class ActiveGameController extends MainController {
      * Sets the beaten Minions on the Grid next to the chessboard. It distinguished between black and white Minions beaten
      *
      */
-    public void beatenMinionOutput() {
-        String minion;
+    void beatenMinionOutput() {
         ImageView iv;
+        String minion;
         char minionType;
-        if (board.getBeaten().size() == 1) {
-            minion = board.getBeaten().get(0);
-            minionType = minion.charAt(0);
-            if (Character.isUpperCase(minionType)) {
-                //sourceEnd.set
-                iv = getImageView(0,1,true, false);
-                iv.setFitHeight(90);
-                iv.setFitWidth(90);
-                beatenMinion.add(iv, 0, counterBeatenMinionsWhite);
-                counterBeatenMinionsWhite++;
-            } else {
-                iv = getImageView(0,1,true,true);
-                iv.setFitHeight(90);
-                iv.setFitWidth(90);
-                beatenMinion.add(iv, 1, counterBeatenMinionsBlack);
-                counterBeatenMinionsBlack++;
+        if (board.getBeaten().size() >= 1) {
+            beatenMinion.getChildren().clear();
+            counterBeatenMinionsBlack = 0;
+            counterBeatenMinionsWhite = 0;
+            for (int i = 0; i < board.getBeaten().size(); i++){
+                minion = board.getBeaten().get(i);
+                minionType = minion.charAt(0);
+                if (Character.isUpperCase(minionType)) {
+                    //sourceEnd.set
+                    iv = getImageView(i,1,true, false);
+                    iv.setFitHeight(90);
+                    iv.setFitWidth(90);
+                    beatenMinion.add(iv, 0, counterBeatenMinionsWhite);
+                    counterBeatenMinionsWhite++;
+                } else {
+                    iv = getImageView(i,1,true,true);
+                    iv.setFitHeight(90);
+                    iv.setFitWidth(90);
+                    beatenMinion.add(iv, 1, counterBeatenMinionsBlack);
+                    counterBeatenMinionsBlack++;
+
+                }
             }
         }
-        board.getBeaten().clear();
     }
 
 

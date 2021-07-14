@@ -12,6 +12,10 @@ import chess.model.Parser;
 
 import static chess.gui.MainController.show_FXML;
 
+/**
+ * Controller class for loading and saving games.
+ */
+
 public class LoadSaveController {
 
     private final Gui gui;
@@ -40,13 +44,11 @@ public class LoadSaveController {
         File selectedFile = fileChooser.showOpenDialog(stage);
         parser.parserLoadGui(selectedFile, gui);
 
-
         //zur active gamecontroller
         if (true){
             showGui(stage);
         }
 
-        //TODO: make parser for gui here
     }
 
     /**

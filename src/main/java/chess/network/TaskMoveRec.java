@@ -13,9 +13,9 @@ public class TaskMoveRec extends Task<Move> { //movereceived
     }
 
     @Override
-    public Move call() throws Exception {
-        if (ioController.isMoveReceived()) {
-            return ioController.isServer() ? ioController.getClientMove() : ioController.getServerMove();
+    public Move call(){
+        if (ioController.getSettingsNetwork().isMoveReceived()) {
+            return ioController.getSettingsNetwork().isServer() ? ioController.getSettingsNetwork().getClientMove() : ioController.getSettingsNetwork().getServerMove();
         }
         return new Move("A0-A0");
     }
