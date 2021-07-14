@@ -120,8 +120,6 @@ public class StaleMate {
                     String input = cellIndex.makeIndexIntoString(cellIndex, end);
                     Move move = new Move(input);
                     possibleMoves.add(move);
-
-
                 }
             }
         }

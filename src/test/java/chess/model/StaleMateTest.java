@@ -2,10 +2,14 @@ package chess.model;
 
 //import javafx.util.Pair;
 import chess.Settings;
+import javafx.util.Pair;
 import org.junit.jupiter.api.Test;
 
 //import java.util.ArrayList;
 //import java.util.List;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static chess.model.Board.cellIndexFor;
 
@@ -81,21 +85,33 @@ public class StaleMateTest {
 
     }
 
-    /*@Test
+    @Test
     void possibleMovesForOneFigureTest() {
         Board board = new Board();
-        CellIndex whiteKnightIndex = new CellIndex(7,1);
+        Move moveFirst = new Move("b1-a3");
+        CellIndex startIndex = cellIndexFor(moveFirst.getStart());
         List<Pair> possibleMoves = new ArrayList<>();
-        Pair pairLeft = new Pair(whiteKnightIndex, new CellIndex(5,0)); //("b1-a3")
-        Pair pairRight = new Pair(whiteKnightIndex, new CellIndex(5,2)); //("b1-c3")
+        Pair pairLeft = new Pair(startIndex, new CellIndex(0,5)); //("b1-a3")
+        Pair pairRight = new Pair(startIndex, new CellIndex(0,4)); //("b1-c3")
         possibleMoves.add(pairLeft);
         possibleMoves.add(pairRight);
         List <Pair> possibleMovesFromMethod = new ArrayList<>();
-        possibleMovesFromMethod.addAll(board.staleMate.possibleMovesForOneFigure(whiteKnightIndex, board.getCheckerBoard()));
-        assertEquals(possibleMovesFromMethod.get(0).getKey(), possibleMoves.get(0).getKey());
-        assertEquals(possibleMovesFromMethod.get(0).getValue(), possibleMoves.get(0).getValue());
-        assertEquals(possibleMovesFromMethod.get(1).getKey(), possibleMoves.get(1).getKey());
-        assertEquals(possibleMovesFromMethod.get(1).getValue(), possibleMoves.get(1).getValue());
+        possibleMovesFromMethod.addAll(board.staleMate.possibleMovesForOneFigure(startIndex, board.getCheckerBoard()));
+        assertEquals(possibleMovesFromMethod.get(0).getKey().toString(), possibleMoves.get(0).getKey().toString());
+        assertEquals(possibleMovesFromMethod.get(1).getKey().toString(), possibleMoves.get(1).getKey().toString());
+    }
 
-    }*/
+    @Test
+    void possibleMovesForOneFigureTestMoveList() {
+        Board board = new Board();
+        Move moveFirst = new Move("a2-a3");
+        Move moveSecond = new Move("a2-a4");
+        CellIndex startIndex = cellIndexFor(moveFirst.getStart());
+        List<Move> possibleMovesFromMethod;
+        possibleMovesFromMethod = board.staleMate.possibleMovesForOneFigureMoveList(startIndex, board.checkerBoard, board.getMoveList());
+        assertEquals(possibleMovesFromMethod.get(0).getStart(), moveSecond.getStart());
+        assertEquals(possibleMovesFromMethod.get(0).getEnd(), moveSecond.getEnd());
+        assertEquals(possibleMovesFromMethod.get(1).getStart(), moveFirst.getStart());
+        assertEquals(possibleMovesFromMethod.get(1).getEnd(), moveFirst.getEnd());
+    }
 }
