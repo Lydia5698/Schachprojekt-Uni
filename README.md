@@ -36,7 +36,7 @@ Die Gui startet mit dem Start Screen dort kann sich die `Anleitung` druchgelesen
   hier kann der Spieler gegen den Computer antreten. Dafür muss er als nächstes seine Farbe (weiß oder schwarz) wählen, damit das Spiel starten kann.
 
   4.3 `Netzwerkspiel`
-  Bei diesem Spielmodus kannst du mit deinen Freund/-innen übers Netzwerk spielen. Um das Spiel zu starten muss eine Person das Spiel hosten dieser wird dann die Farbe schwarz spielen. Die andere Person muss dem Spiel beitreten und wird dann weiß spielen. Außerdem muss der Spieler die IP-Addresse des Gegners eintagen.
+  Bei diesem Spielmodus kannst du mit deinen Freund/-innen übers Netzwerk spielen. Um das Spiel zu starten muss eine Person das Spiel hosten dieser wird dann die Farbe schwarz spielen und muss die Checkbox Spiel mit schwarz auswählen. Die andere Person muss dem Spiel beitreten und wird dann weiß spielen. Außerdem muss der Spieler die IP-Addresse des Gegners eintagen.
 
 Der Spieler kann während des Spiels jederzeit auf die `Optionen` zugreifen und folgende Dinge anpassen:
 
