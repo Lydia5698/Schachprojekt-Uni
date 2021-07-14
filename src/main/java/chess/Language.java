@@ -193,7 +193,7 @@ public class Language {
         dic.put(161, "Black");
         dic.put(162, "White");
         //Cli colour Select
-        dic.put(163, "You are in the settings menu. To change the Language type 'german', 'klingon' or 'english' if you want to exit the menu type 'exit'. But first you have to choose.");
+        dic.put(163, "You are in the settings menu. To change the Language type 'german', 'klingon' or 'english' if you want to exit the menu type 'exit'. If you want to save a game type 'save game'. But first you have to choose.");
         dic.put(164, "Do you want to play against a human, type 'human', want to play against an ai, type 'ai', want to play over the network, type 'network':");
         dic.put(165, "Please correct your input");
         dic.put(166, "What colour do you want to play, 'black' or 'white'?");
