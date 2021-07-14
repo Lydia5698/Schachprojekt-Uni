@@ -1,10 +1,7 @@
 package chess.gui;
 
-import javafx.css.converter.StringConverter;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.TextFormatter;
 
 
 /**

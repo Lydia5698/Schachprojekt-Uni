@@ -15,10 +15,9 @@
    <Label fx:id="txtIpAddress" layoutX="273.0" layoutY="192.0" text="IP-Address" visible="false" />
    <RadioButton fx:id="hostGame" layoutX="146.0" layoutY="102.0" mnemonicParsing="false" onAction="#hostNetworkGame" text="Host Game" />
    <RadioButton fx:id="joinGame" layoutX="373.0" layoutY="102.0" mnemonicParsing="false" onAction="#joinNetworkGame" text="Join Game" />
-   <CheckBox fx:id="ckbxColour" layoutX="132.0" layoutY="200.0" mnemonicParsing="false" text="Play with Black" visible="false" />
-   <ImageView fx:id="btnLanguage" fitHeight="18.0" fitWidth="66.0" layoutX="568.0" layoutY="14.0" onMouseClicked="#changeLanguage" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@Flags/GermanFlag.png" />
-      </image>
+   <ImageView fx:id="btnLanguage" fitHeight="18.0" fitWidth="66.0" layoutX="568.0" layoutY="14.0"
+              onMouseClicked="#changeLanguage" pickOnBounds="true" preserveRatio="true">
+      <Image url="@Flags/GermanFlag.png"/>
    </ImageView>
+   <CheckBox fx:id="ckbxColour" layoutX="131.0" layoutY="214.0" mnemonicParsing="false" text="Colour Black" visible="false" />
 </AnchorPane>

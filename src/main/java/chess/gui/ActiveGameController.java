@@ -23,8 +23,16 @@ import java.io.IOException;
 import java.util.*;
 
 /**
+ * We suppress the PMD rules for TooManyFields in this case, since we actually only have 8 fields,
+ * but with our FXML we have to create all fields from the FXML. and we can't
+ * outsource that
+ *
+ * We suppress the PMD rules for NcSSCount and CyclomaticComplexity in this case
+ * because we don't know how to outsource the switch case method or how to design it differently
+ *
  * The Controller for the active game. Where you can see the chessboard
  */
+@SuppressWarnings({"PMD.TooManyFields","PMD.NcssCount", "CyclomaticComplexity"})
 public class ActiveGameController extends MainController {
     protected Board board;
     protected ActiveGameHelper activeGameHelper = new ActiveGameHelper(this);
@@ -172,7 +180,6 @@ public class ActiveGameController extends MainController {
 
             CellIndex endIndex = Board.cellIndexFor(move.getEnd());
             CellIndex startIndex = Board.cellIndexFor(move.getStart());
-            Cell startCell = board.getCheckerBoard()[startIndex.getRow()][startIndex.getColumn()];
             input = checkPromotion(input, startIndex, endIndex);
 
             Move moveNew = new Move(input);

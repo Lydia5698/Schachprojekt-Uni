@@ -1,5 +1,6 @@
 package chess.model;
 
+import chess.Settings;
 import chess.model.figures.Minion;
 import org.junit.jupiter.api.Test;
 
@@ -23,6 +24,8 @@ public class BoardTest {
     void applyMoveE2E4MovesMinionIntoNewCellTest() {
         Move move = new Move("e2-e4");
         Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
         Cell startCell = board.checkerBoard[8-2][4];//board.getCell("e2");
         Minion minion = startCell.getMinion();
         board.applyMove(move);
@@ -46,8 +49,7 @@ public class BoardTest {
     @Test
     void cellIndexForB2GetsCellIndexInNumbersTest(){
         String input = "b2";
-        Board board =new Board();
-        CellIndex index = board.cellIndexFor(input);
+        CellIndex index = Board.cellIndexFor(input);
         assertEquals(index.getRow(),8-2);
         assertEquals(index.getColumn(),1);
 

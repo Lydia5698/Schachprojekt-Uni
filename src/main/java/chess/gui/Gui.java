@@ -1,7 +1,6 @@
 package chess.gui;
 
 import chess.Settings;
-import chess.SettingsNetwork;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

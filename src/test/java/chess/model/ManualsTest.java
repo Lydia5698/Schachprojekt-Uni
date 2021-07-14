@@ -119,6 +119,9 @@ public class ManualsTest {
     @Test
     void checkIfPieceCanNotProtectTheOwnKingBlack(){
         Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
+        settings.setGui_active(false);
         Move move = new Move("g2-g4"); // Move Pawn G2-G4
         board.applyMove(move);
         move = new Move("f2-f3"); // Move Pawn F2-F3
@@ -144,6 +147,8 @@ public class ManualsTest {
     @Test
     void checkIfPieceCanProtectTheOwnKingBlack(){
         Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
         Move move = new Move("a2-a4"); // Move Pawn G2-G4
         board.applyMove(move);
         move = new Move("e7-e5"); // Move Pawn E7-E5

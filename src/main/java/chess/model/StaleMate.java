@@ -136,8 +136,6 @@ public class StaleMate {
      * @return List of pairs of the moves possible for one colour.
      */
     public List<Move> possibleMoveList(boolean isBlack, Cell[][] checkerBoard, List<Move> boardMoveList) {
-
-        boolean staleMate = false;
         List<Move> moveList = new ArrayList<>();
         // check every field for figure of certain colour if colour, possibleMoves
         for (int row = 0; row < 8; row++) {

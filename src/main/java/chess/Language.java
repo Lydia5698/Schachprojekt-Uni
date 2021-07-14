@@ -80,9 +80,10 @@ public class Language {
                 "Bei diesem Spielmodus kannst du gegen den Computer spielen. Du kannst vor dem Spiel wählen, ob welche Farbe du spielen möchtest. Der Computer wird dann die andere Farbe spielen.\n" +
                 "\n" +
                 "Netzwerkspiel\n" +
-                "Bei diesem Spielmodus kannst du mit deinen Freund/-innen übers Netzwerk spielen. Um das Spiel zu starten muss eine Person das Spiel hosten und der andere muss dem Spiel beitreten\n" +
-                "Derjenige, der das Spiel hostet kann sich aussuchen, welche Farbe er spielen möchte. Der andere Spieler muss die IP-Addresse des Gegners eintagen. wenn du das board updaten möchtest " +
-                "um den gegnerischen Zug zu sehen, musst du einmal auf das Spielfeld klicken" + "\n" +
+                "Bei diesem Spielmodus kannst du mit deinen Freund/-innen übers Netzwerk spielen. Um das Spiel zu starten muss eine Person das Spiel hosten dieser wird dann die Farbe schwarz spielen" +
+                "und muss die CheckBox Spiel mit schwarz auswählen." +
+                "Die andere Person muss dem Spiel beitreten und wird dann weiß spielen.\n" +
+                "Außerdem muss der Spieler die IP-Addresse des Gegners eintagen." + "\n" +
                 "\n" +
                 "Dieses Schachspiel folgt den Allgemeinen Regeln des deutschen Schachbundes."); // Anleitung Text
         dic.put(242, "Anleitung");
@@ -182,8 +183,10 @@ public class Language {
                 "In this game mode you can play against the computer. Before starting the game, you can choose which color you want to play. The computer will then play the other color.\n" +
                 "\n" +
                 "Network Game\n" +
-                "In this game mode you can play with your friends over the network. To Play one must Host a Game. This Person can choose which colour he wants to play." + "\n" +
-                "The second Player must Join a Game. He must enter the IP-Address of the Hosting Person. if you want to update the board to see the opponent's move you have to click once on the playing field" + "\n" +
+                "In this game mode you can play with your friends over the network. In order to start the game a person has to host the game - this Person will then play the color black" +
+                "and must check the CheckBox Play with Black" + "\n" +
+                "The other person has to join the game and will then play white.\n" +
+                "In addition, the player must enter the opponent's IP address." + "\n" +
                 "\n" +
                 "This chess game follows the general rules of the German Chess Federation."); // Anleitung Text
         dic.put(142, "Manual");

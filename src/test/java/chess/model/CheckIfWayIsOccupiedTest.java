@@ -1,5 +1,6 @@
 package chess.model;
 
+import chess.Settings;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,6 +31,8 @@ public class CheckIfWayIsOccupiedTest {
     @Test
     void checkIfWayIsNotOccupiedA3D3RookHorizontal() {
         Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
         Move movePawn = new Move("a2-a4"); // Move Pawn A2-A4
         board.applyMove(movePawn);
         Move moveRook = new Move("a1-a3"); // Move Rook Vertical
@@ -43,6 +46,8 @@ public class CheckIfWayIsOccupiedTest {
     @Test
     void checkIfWayIsNotOccupiedH6D6RookHorizontal() {
         Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
         Move movePawn = new Move("h7-h5"); // Move Pawn H7-H5
         board.applyMove(movePawn);
         Move moveRook = new Move("h8-h6"); // Move Rook Vertical
@@ -56,6 +61,8 @@ public class CheckIfWayIsOccupiedTest {
     @Test
     void checkIfWayIsNotOccupiedC1F4BishopDiagonal() {
         Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
         Move movePawn = new Move("d2-d4"); // Move Pawn D2-D4
         board.applyMove(movePawn);
 
@@ -67,6 +74,8 @@ public class CheckIfWayIsOccupiedTest {
     @Test
     void checkIfWayIsNotOccupiedF8C5BishopDiagonal() {
         Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
         Move movePawn = new Move("g7-g5"); // Move Pawn E7-E5
         board.applyMove(movePawn);
 
@@ -86,6 +95,8 @@ public class CheckIfWayIsOccupiedTest {
     @Test
     void bishopBeatsPawnDiagonal() {
         Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
         Move movePawn = new Move("e7-e5"); // Move Pawn E7-E5
         board.applyMove(movePawn);
         Move moveBishop = new Move("f8-a3"); // Move Bishop F8-A3

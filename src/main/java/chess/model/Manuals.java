@@ -240,6 +240,13 @@ public class Manuals {
         return !manuals.getAttackers(isBlack, checkerBoard).isEmpty();
     }
 
+    /**
+     * checks if the king with the colour isBlack is in Check Mate
+     * @param isBlack the colour of the king
+     * @param checker the current checkerboard with all Minions on it
+     * @param manuals the manuals
+     * @return boolean if the king is in check Mate
+     */
     protected boolean checkMate(boolean isBlack, Cell[][] checker, Manuals manuals) {
         boolean checkMate = true;
         List<Cell> attackers = manuals.getAttackers(isBlack, checker);

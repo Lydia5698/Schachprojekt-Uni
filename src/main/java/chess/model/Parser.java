@@ -1,9 +1,6 @@
 package chess.model;
 
 import chess.gui.Gui;
-import javafx.fxml.FXML;
-import javafx.stage.Stage;
-
 import java.io.*;
 import java.util.ArrayList;
 

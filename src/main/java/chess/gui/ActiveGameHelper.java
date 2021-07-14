@@ -62,7 +62,7 @@ public class ActiveGameHelper {
      */
     void checkAndDoMove(String fistField, Move moveNew) {
         // checks if double click is active and the right figure is clicked
-        if (!activeGameController.getGui().getSettings().isDoubleClick() || (firstMinionClickedWhite.equals(fistField)) || firstMinionClickedBlack.equals(fistField)) {
+        if (!activeGameController.getGui().getSettings().isDoubleClick() || ((firstMinionClickedWhite.equals(fistField)) || firstMinionClickedBlack.equals(fistField))) {
             activeGameController.board.applyMove(moveNew);
         } // pops up the popup if the clicked figure isnt the first clicked figure
         else {
@@ -102,7 +102,7 @@ public class ActiveGameHelper {
     }
 
     private void checkPopups() {
-        if (activeGameController.getGui().getSettings().isInCheck() && activeGameController.getGui().getSettings().isCheckVisible()) {
+        if (activeGameController.getGui().getSettings().isPlayerInCheck() && activeGameController.getGui().getSettings().isCheckVisible()) {
             activeGameController.popups.popupCheck(activeGameController.getGui());
             activeGameController.getGui().getSettings().setIsInCheck(false);
         }

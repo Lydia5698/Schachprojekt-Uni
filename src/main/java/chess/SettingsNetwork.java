@@ -9,8 +9,13 @@ import chess.network.NetwSvr;
 import javafx.application.Platform;
 
 /**
+ * We are suppressing the PMD in this one, because we have 11 Fields this is only 2 Fields above the Requirement.
+ * To avoid the too Many Fields PMD we have to create another class and this would be too confusing, because we
+ * already split the settings.
+ *
  * The settingsNetwork is the settings class for the network
  */
+@SuppressWarnings("PMD.TooManyFields")
 public class SettingsNetwork{
     protected boolean black = false;
     protected Board board;
@@ -27,7 +32,7 @@ public class SettingsNetwork{
     /**
      * creates a SettingsNetwork instance and gets the current board
      *
-     * @param board
+     * @param board the current board
      */
     public SettingsNetwork(Board board){
         this.board = board;
@@ -49,7 +54,7 @@ public class SettingsNetwork{
                     activeGameController.history();
                     activeGameController.beatenMinionOutput();
                     activeGameController.updateBoard();
-                    if (activeGameController.getGui().getSettings().isInCheck() && activeGameController.getGui().getSettings().isCheckVisible()) {
+                    if (activeGameController.getGui().getSettings().isPlayerInCheck() && activeGameController.getGui().getSettings().isCheckVisible()) {
                         activeGameController.getPopups().popupCheck(activeGameController.getGui());
                         activeGameController.getGui().getSettings().setIsInCheck(false);
                     }
@@ -73,7 +78,7 @@ public class SettingsNetwork{
                     activeGameController.history();
                     activeGameController.beatenMinionOutput();
                     activeGameController.updateBoard();
-                    if (activeGameController.getGui().getSettings().isInCheck() && activeGameController.getGui().getSettings().isCheckVisible()) {
+                    if (activeGameController.getGui().getSettings().isPlayerInCheck() && activeGameController.getGui().getSettings().isCheckVisible()) {
                         activeGameController.getPopups().popupCheck(activeGameController.getGui());
                         activeGameController.getGui().getSettings().setIsInCheck(false);
                     }

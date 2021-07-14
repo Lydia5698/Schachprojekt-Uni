@@ -6,8 +6,14 @@ import chess.model.Board;
 
 
 /**
+ *  We are suppressing the PMD in this one, because we have 13 Fields this is 4 Fields above the Requirement.
+ *  To avoid the too Many Fields PMD we have to create another class and this would be too confusing, because we
+ *  already split the settings. And we would have to put all new settings in these settings so that we
+ *  don't have too many fields in the other classes.
+ *
  * The Settings for the Gui and the Cli
  */
+@SuppressWarnings("PMD.TooManyFields")
 public class Settings {
     //felder
     AI ai = new AI(false);
@@ -15,7 +21,7 @@ public class Settings {
     protected boolean gui_active = false;
     protected SettingsNetwork settingsNetwork;
     protected SettingsLanguage settingsLanguage = new SettingsLanguage();
-    protected boolean isInCheck = false;
+    protected boolean isPlayerInCheck = false;
     protected boolean gameEnd = false;
     protected boolean ai_active = false;
     protected boolean ai_colour = false;
@@ -109,12 +115,12 @@ public class Settings {
         this.gui_active = gui_active;
     }
 
-    public boolean isInCheck() {
-        return isInCheck;
+    public boolean isPlayerInCheck() {
+        return isPlayerInCheck;
     }
 
     public void setIsInCheck(boolean inCheck) {
-        isInCheck = inCheck;
+        isPlayerInCheck = inCheck;
     }
 
     public boolean isGameEnd() {
@@ -136,6 +142,10 @@ public class Settings {
         return settingsLanguage;
     }
 
+    /**
+     * sets the active Game Controller
+     * @param activeGameController the current activeGameController
+     */
     public void setActiveGameController(ActiveGameController activeGameController){
         this.settingsNetwork.setActiveGameController(activeGameController);
     }

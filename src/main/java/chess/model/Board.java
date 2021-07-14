@@ -1,7 +1,6 @@
 package chess.model;
 
 import chess.Settings;
-import chess.SettingsNetwork;
 import chess.model.figures.*;
 
 import java.util.ArrayList;
@@ -149,7 +148,6 @@ public class Board {
         Minion isBeaten = endCell.getMinion();
         String promoteTo = "";
 
-
         // makes promotion
         if (move.getEnd().length() > 2) {
             promoteTo = move.getEnd().substring(2, 3);
@@ -159,8 +157,22 @@ public class Board {
             beaten.add(String.valueOf(isBeaten.print_minions()));
 
         }
-
         // check if normal move
+        checkCurrentMove(move, minion, promoteTo);
+        if (settings.getSettingsNetwork().isNetwork_active() && allowedMove && blackIsTurn != settings.getSettingsNetwork().isBlack()){
+            try {
+                settings.getSettingsNetwork().getConnection().send(move.getStart() + "-" + move.getEnd() + promoteTo);
+            } catch (Exception e) {
+                System.out.println (" exception when send");
+            }
+        }
+    }
+
+    private void checkCurrentMove(Move move, Minion minion, String promoteTo) {
+        CellIndex startIndex = cellIndexFor(move.getStart());
+        CellIndex endIndex = cellIndexFor(move.getEnd());
+        Cell startCell = checkerBoard[startIndex.getRow()][startIndex.getColumn()];
+        Cell endCell = checkerBoard[endIndex.getRow()][endIndex.getColumn()];
         if (manuals.checkIfValidMove(startIndex, endIndex, checkerBoard) && manuals.checkMoveMakesNoSelfCheck(startIndex, endIndex, checkerBoard, manuals)) {
             startCell.setMinion(null);
             endCell.setMinion(minion);
@@ -177,6 +189,7 @@ public class Board {
         else if (specialMove(move, startIndex, endIndex)) {
             //check if in Check
             checkAndPrintCheckCheckMate(minion);
+            blackIsTurn = !blackIsTurn;
             allowedMove = true;
         }
         // move is not allowed
@@ -189,13 +202,6 @@ public class Board {
                 }
             }
             allowedMove = false;
-        }
-        if (settings.getSettingsNetwork().isNetwork_active() && allowedMove && blackIsTurn != settings.getSettingsNetwork().isBlack()){
-            try {
-                settings.getSettingsNetwork().getConnection().send(move.getStart() + "-" + move.getEnd() + promoteTo);
-            } catch (Exception e) {
-                System.out.println (" exception when send");
-            }
         }
     }
 
@@ -261,8 +267,7 @@ public class Board {
     }
 
     public Cell[][] getCheckerBoard() {
-        Cell[][] checkerBoardCopy = checkerBoard;
-        return checkerBoardCopy;
+        return checkerBoard;
     }
 
     public void setSimple(boolean simple) {
