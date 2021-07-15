@@ -1,10 +1,7 @@
 package chess.gui;
 
-import javafx.css.converter.StringConverter;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.TextFormatter;
 
 
 /**
@@ -18,7 +15,7 @@ public class Popups extends MainController {
      * Pops up the popup for check
      */
     @FXML
-    void popupCheck(Gui gui) {
+    public void popupCheck(Gui gui) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getSettingsLanguage().getLanguageNumber() + "82")));
         if (gui.getSettings().getBoard().isBlackIsTurn()) {
@@ -26,7 +23,7 @@ public class Popups extends MainController {
         } else {
             alert.setContentText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getSettingsLanguage().getLanguageNumber() + "81")));
         }
-
+        getGui().settings.setPlayerInCheck(false);
         alert.show();
     }
 

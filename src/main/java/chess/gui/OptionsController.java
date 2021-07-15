@@ -1,6 +1,5 @@
 package chess.gui;
 
-import chess.Settings;
 import chess.model.Board;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -68,7 +67,7 @@ public class OptionsController extends MainController {
      * Ends the Application
      */
     @FXML
-    void exit() {
+    void exit() throws Exception {
         System.exit(0);
     }
 
@@ -94,7 +93,7 @@ public class OptionsController extends MainController {
      * Changes the Stage to the startScreen.fxml when the button back is pushed
      */
     @FXML
-    void showStartScreen() {
+    void showStartScreen() throws Exception {
         Stage stage = (Stage) btnStartScreen.getScene().getWindow();
         show_FXML("startScreen.fxml", stage, getGui());
         Board board = new Board();

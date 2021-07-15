@@ -1,32 +1,35 @@
 package chess;
 
+import chess.gui.ActiveGameController;
 import chess.model.AI;
 import chess.model.Board;
 
 
 /**
+ *  We are suppressing the PMD in this one, because we have 13 Fields this is 4 Fields above the Requirement.
+ *  To avoid the too Many Fields PMD we have to create another class and this would be too confusing, because we
+ *  already split the settings. And we would have to put all new settings in these settings so that we
+ *  don't have too many fields in the other classes.
+ *
  * The Settings for the Gui and the Cli
  */
+@SuppressWarnings("PMD.TooManyFields")
 public class Settings {
     //felder
     AI ai = new AI(false);
     Board board = new Board();
-    //Language language = new Language();
     protected boolean gui_active = false;
     protected SettingsNetwork settingsNetwork;
     protected SettingsLanguage settingsLanguage = new SettingsLanguage();
-    protected boolean isInCheck = false;
+    protected boolean playerInCheck = false;
     protected boolean gameEnd = false;
     protected boolean ai_active = false;
     protected boolean ai_colour = false;
     protected boolean rotateBoard = false;
-    protected boolean lightPossibleMoves = false;
+    protected boolean HighlightPossibleMoves = false;
     protected boolean checkVisible = false;
     protected boolean doubleClick = false;
-/*    protected boolean languageGerman = false;
-    protected boolean languageEnglish = true;
-    protected boolean languageKlingon = false;
-    String languageNumber = "1";*/
+
     /**
      * Sets the setting in the Board
      */
@@ -37,7 +40,6 @@ public class Settings {
     }
 
     //methoden
-
 
     public boolean isAi_active() {
         return ai_active;
@@ -72,11 +74,11 @@ public class Settings {
     }
 
     public boolean isHighlightPossibleMoves() {
-        return lightPossibleMoves;
+        return HighlightPossibleMoves;
     }
 
     public void setHighlightPossibleMoves(boolean lightPossibleMoves) {
-        this.lightPossibleMoves = lightPossibleMoves;
+        this.HighlightPossibleMoves = lightPossibleMoves;
     }
 
     public boolean isCheckVisible() {
@@ -113,12 +115,12 @@ public class Settings {
         this.gui_active = gui_active;
     }
 
-    public boolean getIsInCheck() {
-        return isInCheck;
+    public boolean isPlayerInCheck() {
+        return playerInCheck;
     }
 
-    public void setInCheck(boolean inCheck) {
-        isInCheck = inCheck;
+    public void setPlayerInCheck(boolean inCheck) {
+        playerInCheck = inCheck;
     }
 
     public boolean isGameEnd() {
@@ -138,6 +140,14 @@ public class Settings {
     }
     public SettingsLanguage getSettingsLanguage() {
         return settingsLanguage;
+    }
+
+    /**
+     * sets the active Game Controller
+     * @param activeGameController the current activeGameController
+     */
+    public void setActiveGameController(ActiveGameController activeGameController){
+        this.settingsNetwork.setActiveGameController(activeGameController);
     }
 
     public void setSettingsLanguage(SettingsLanguage settingsLanguage) {

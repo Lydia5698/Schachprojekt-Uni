@@ -19,6 +19,8 @@ public class SpecialManualsTest {
     @Test
     void isValidEnPassantWhite(){
         Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
         List<Move> moveList = board.getMoveList();
         Move movePawn = new Move("d2-d4"); // Move Pawn D2-D4
         board.applyMove(movePawn);
@@ -72,6 +74,8 @@ public class SpecialManualsTest {
     @Test
     void isNotValidEnPassantWhite(){
         Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
         Move movePawn = new Move("g2-g4"); // Move Pawn G2-G4
         board.applyMove(movePawn);
         movePawn = new Move("g4-g5"); // Move Pawn G4-G5
@@ -91,6 +95,8 @@ public class SpecialManualsTest {
     @Test
     void isNotValidEnPassantBlack(){
         Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
         Move movePawn = new Move("g2-g4"); // Move Pawn G2-G4
         board.applyMove(movePawn);
         movePawn = new Move("g4-g5"); // Move Pawn G4-G5
@@ -151,6 +157,8 @@ public class SpecialManualsTest {
     @Test
     void promoteWhitePawnToKnight(){
         Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
         Move movePawn = new Move("f2-f4"); // Move Pawn F2-F4
         board.applyMove(movePawn);
         movePawn = new Move("f4-f5"); // Move Pawn F4-F5
@@ -194,6 +202,8 @@ public class SpecialManualsTest {
     @Test
     void promoteBlackPawn(){
         Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
         Move movePawn = new Move("a7-a6"); // Move Pawn A7-A6
         board.applyMove(movePawn);
         movePawn = new Move("a6-a5"); // Move Pawn A6-A5
@@ -216,6 +226,8 @@ public class SpecialManualsTest {
     @Test
     void rochadeShortWhite(){
         Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
         Move move = new Move("f2-f4"); // Move Pawn F2-F4
         board.applyMove(move);
         move = new Move("g2-g3"); // Move Pawn G2-G3
@@ -242,6 +254,8 @@ public class SpecialManualsTest {
     @Test
     void rochadeShortBlack(){
         Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
         Move move = new Move("f7-f5"); // Move Pawn F7-F5
         board.applyMove(move);
         move = new Move("g7-g5"); // Move Pawn G7-G5
@@ -268,6 +282,8 @@ public class SpecialManualsTest {
     @Test
     void rochadeLongWhite(){
         Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
         Move move = new Move("a2-a4"); // Move Pawn A2-A4
         board.applyMove(move);
         move = new Move("c2-c4"); // Move Pawn C2-C4
@@ -298,6 +314,8 @@ public class SpecialManualsTest {
     @Test
     void rochadeLongBlack(){
         Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
         Move move = new Move("a7-a5"); // Move Pawn A7-A5
         board.applyMove(move);
         move = new Move("b7-b5"); // Move Pawn B7-B5
@@ -329,6 +347,8 @@ public class SpecialManualsTest {
     @Test
     void rochadeWayOccupied(){
         Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
         Move move = new Move("a7-a5"); // Move Pawn A7-A5
         board.applyMove(move);
         move = new Move("c7-c5"); // Move Pawn C7-C5
@@ -342,6 +362,8 @@ public class SpecialManualsTest {
     @Test
     void rochadeRookMoved(){
         Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
         Move move = new Move("a7-a5"); // Move Pawn A7-A5
         board.applyMove(move);
         move = new Move("c7-c5"); // Move Pawn C7-C5
@@ -366,6 +388,8 @@ public class SpecialManualsTest {
     @Test
     void rochadeKingMoved(){
         Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
         Move move = new Move("f2-f4"); // Move Pawn F2-F4
         board.applyMove(move);
         move = new Move("g2-g3"); // Move Pawn G2-G3

@@ -16,7 +16,7 @@ public class Move {
     private final String end;
 
     /**
-     * Splits the input from the Console? in a Start and End point. And saves them in the private Strings start and end
+     * Splits the input in a Start and End point. And saves them in the private Strings start and end
      *
      * @param input is the input from the Console(Cli)
      * @see chess.cli.Cli

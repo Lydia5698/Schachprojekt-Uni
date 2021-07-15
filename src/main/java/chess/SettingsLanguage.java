@@ -1,5 +1,8 @@
 package chess;
 
+/**
+ * The settingsLanguage is the settings class for the language
+ */
 public class SettingsLanguage {
     protected boolean languageGerman = false;
     protected boolean languageEnglish = true;

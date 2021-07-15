@@ -1,8 +1,6 @@
 package chess.gui;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -11,6 +9,9 @@ import javafx.stage.Stage;
 import java.util.Objects;
 import java.util.function.UnaryOperator;
 
+/**
+ * The Controller for the network game. You need to host or join a Game to see the chessboard
+ */
 public class NetworkController extends MainController {
     private static final String ipAddressRegex = makePartialIPRegex();
 
@@ -81,20 +82,29 @@ public class NetworkController extends MainController {
     @FXML
     void submit() {
         ipAddress.getText();
-        getGui().settings.getSettingsNetwork().setBlack(ckbxColour.isSelected());
+        getGui().getSettings().getSettingsNetwork().setBlack(ckbxColour.isSelected());
         gui.settings.getSettingsNetwork().setIp(ipAddress.getText());
         gui.settings.getSettingsNetwork().setPort(4848);
-        gui.settings.getSettingsNetwork().setNetwork_active(true);
+        gui.getSettings().getSettingsNetwork().setNetwork_active(true);
+        gui.getSettings().getSettingsNetwork().setBlack(ckbxColour.isSelected());
         if (hostGame.isSelected()){
-            gui.settings.getSettingsNetwork().setConnection(gui.settings.getSettingsNetwork().createServer());}
+            gui.getSettings().getSettingsNetwork().setConnection(gui.getSettings().getSettingsNetwork().createServer());}
         else if(joinGame.isSelected()){
-            gui.settings.getSettingsNetwork().setConnection(gui.settings.getSettingsNetwork().createClient());}
-        try { gui.settings.getSettingsNetwork().initCon();}
+            gui.getSettings().getSettingsNetwork().setConnection(gui.getSettings().getSettingsNetwork().createClient());}
+        try {
+            gui.getSettings().getSettingsNetwork().initCon();
+        }
         catch (Exception e){
-            System.out.println ("exception when establishing con"); }
+            System.out.println ("exception when establishing con");
+        }
 
         Stage stage = (Stage) btnSubmit.getScene().getWindow();
-        show_FXML("activeGame.fxml", stage, getGui());
+        try {
+            ActiveGameController mainController = (ActiveGameController) show_FXML("activeGame.fxml", stage, getGui());
+            gui.getSettings().setActiveGameController(mainController);
+        }catch (Exception e){
+            show_FXML("activeGame.fxml", stage, getGui());
+        }
     }
 
     /**
