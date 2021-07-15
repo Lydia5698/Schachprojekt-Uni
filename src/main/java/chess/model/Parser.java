@@ -128,7 +128,45 @@ public class Parser {
     }
 
 
-    public static void parserSave(File txtList, ArrayList moveList ){
+    public static void parserSaveCli(File selectedFile, Board board, int turnNumber ){
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(selectedFile)); //Erzeugen eines effizienten Writers für Textdateien
+            for (Move move : board.getMoveList()){
+                //move in string
+                String moveString = move.getStart() + "-" + move.getEnd();
+                writer.write(moveString);
+                writer.newLine();
+            }
+            writer.write("|");
+            writer.newLine();
+            //TODO: evtl mehr eigenschaften speichern, netzwerkspiel?
+            writer.write("AI-active ");
+            if(board.settings.isAi_active()){
+                writer.write("t");
+            }
+            else{
+                writer.write("f");
+            }
+            writer.newLine();
+            writer.write("AI-colour ");
+            if(board.settings.isAi_colour()){
+                writer.write("t");
+            }
+            else{
+                writer.write("f");
+            }
+            writer.newLine();
+            if(board.settings.isAi_active()){
+                writer.write("AI-turnnumber ");
+                int number = turnNumber;
+                writer.write(String.valueOf(number));
+            }
+            writer.flush();
+            writer.close();
+        }
+        catch(IOException ioe) {
+            System.err.println(ioe);
+        }
 
     }
 
