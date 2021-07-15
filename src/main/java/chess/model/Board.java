@@ -157,7 +157,34 @@ public class Board {
 
         }
         // check if normal move
-        checkCurrentMove(move, minion, promoteTo);
+        if (manuals.checkIfValidMove(startIndex, endIndex, checkerBoard) && manuals.checkMoveMakesNoSelfCheck(startIndex, endIndex, checkerBoard, manuals)) {
+            startCell.setMinion(null);
+            endCell.setMinion(minion);
+            blackIsTurn = !blackIsTurn;
+            if (!settings.isGui_active()) {
+                System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
+            }
+            checkAndPrintCheckCheckMate(minion);
+            moveList.add(move);
+            manuals.spManuals.promote(endIndex, promoteTo, checkerBoard);
+            allowedMove = true;
+        }
+        // check if special move
+        else if (specialMove(move, startIndex, endIndex)) {
+            //check if in Check
+            checkAndPrintCheckCheckMate(minion);
+            blackIsTurn = !blackIsTurn;
+            allowedMove = true;
+        }
+        // move is not allowed
+        else {
+            if (simple && !settings.isGui_active()) {
+                System.out.println("!Move not allowed");
+            } else if (!simple) {
+                System.out.println(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "71")));
+            }
+            allowedMove = false;
+        }
         if (settings.getSettingsNetwork().isNetwork_active() && allowedMove && blackIsTurn != settings.getSettingsNetwork().isBlack()){
             try {
                 settings.getSettingsNetwork().getConnection().send(move.getStart() + "-" + move.getEnd() + promoteTo);
@@ -166,7 +193,7 @@ public class Board {
             }
         }
     }
-
+/*
     private void checkCurrentMove(Move move, Minion minion, String promoteTo) {
         CellIndex startIndex = cellIndexFor(move.getStart());
         CellIndex endIndex = cellIndexFor(move.getEnd());
@@ -200,7 +227,7 @@ public class Board {
             }
             allowedMove = false;
         }
-    }
+    }*/
 
     /**
      * makes the special moves Rochade and En Passant
