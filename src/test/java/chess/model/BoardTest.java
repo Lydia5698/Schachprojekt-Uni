@@ -80,4 +80,22 @@ public class BoardTest {
         board.checkCurrentMove(move,startMinion,"");
         assertFalse(board.isAllowedMove());
     }
+
+    @Test
+    void checkIfCheck(){
+        Board board = new Board();
+        Settings settings = new Settings();
+        board.setSimple(true);
+        board.setSettings(settings);
+        board.applyMove(new Move("e2-e4"));
+        assertFalse(board.settings.isPlayerInCheck());
+        board.applyMove(new Move("f7-f5"));
+        board.applyMove(new Move("d1-h5"));
+        assertTrue(board.settings.isPlayerInCheck());
+        board.setSimple(false);
+        board.applyMove(new Move("g7-g6"));
+        assertFalse(board.settings.isPlayerInCheck());
+        board.applyMove(new Move("h5-g6"));
+        assertTrue(board.settings.isPlayerInCheck());
+    }
 }
