@@ -96,6 +96,7 @@ public class PromoteController extends MainController {
     /**
      * The language is changed in the settings when the Image btnLanguage is pushed
      */
+    @SuppressWarnings("CPD-START")
     @FXML
     void changeLanguage() {
         getGui().getSettings().getSettingsLanguage().changeLanguage();
@@ -109,6 +110,7 @@ public class PromoteController extends MainController {
         btnLanguage.setImage(new Image(Objects.requireNonNull(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "03")))).toExternalForm())));
         header.setText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "50")));
     }
+    @SuppressWarnings("CPD-END")
 
     @Override
     public void setGui(Gui gui) {

@@ -91,11 +91,6 @@ public class ActiveGameController extends MainController {
         if (board.getMoveList().isEmpty()) {
             activeGameHelper.whiteAIMove();
         }
-        /*if(gui.getSettings().isNetwork_active()){
-            networkMove();
-        }
-        }*/
-        // network white Move
         changeToLanguage();
         updateBoard();
         history();
@@ -109,6 +104,7 @@ public class ActiveGameController extends MainController {
     /**
      * The language is changed in the settings when the Image btnLanguage is pushed
      */
+    @SuppressWarnings("CPD-START")
     @FXML
     void changeLanguage() {
         getGui().getSettings().getSettingsLanguage().changeLanguage();
@@ -122,6 +118,8 @@ public class ActiveGameController extends MainController {
         btnLanguage.setImage(new Image(Objects.requireNonNull(Objects.requireNonNull(getClass().getResource(getGui().getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "03")))).toExternalForm())));
         btnOptions.setText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "31")));
     }
+    @SuppressWarnings("CPD-END")
+
 
     /**
      * Opens the File Chooser were you can save the current Game
@@ -145,10 +143,6 @@ public class ActiveGameController extends MainController {
     @FXML
     void mouseClicked(MouseEvent event) throws IOException {
         Node source = (Node) event.getSource();
-
-        /*if(getGui().getSettings().isNetwork_active()){ // networkmove ausgabe
-            networkMove();
-        }*/
 
         int colIndex;
         int rowIndex;
@@ -175,7 +169,6 @@ public class ActiveGameController extends MainController {
      *
      * @throws IOException for the popups if they dont get closed
      */
-    //TODO: Beliebige Züge möglich (evtl. Kontrolle in board.applymove ebenfalls nicht vorhanden)
     public void move() throws IOException {
         if (counter == 2 && !getGui().getSettings().isGameEnd()) {
             String fistField = halfMoves.get(0);
@@ -194,28 +187,12 @@ public class ActiveGameController extends MainController {
             else {
                 popups.popupMoveNotAllowed(getGui());
             }
-            /*if(getGui().getSettings().isNetwork_active()){ // netowkmove ausgabe
-                networkMove();
-            }*/
             counter = 0;
             halfMoves.clear();
             position.clear();
 
-           /* if (getGui().getSettings().isGameEnd()) {
-                popups.popupCheckMate(gui);
-                getGui().getSettings().setAi_active(false);
-                getGui().settings.getSettingsNetwork().setNetwork_active(false);
-            }*/
         }
     }
-
-    /*/**TODO: Thread-Bombe!!!!!
-     * Calls the methode crateClient in the Settings class. And after the move the board gets updated
-     */
-    /*private void networkMove(){
-        getGui().getSettings().createClient();
-        updateBoard();
-    }*/
 
     /**
      * checks if the Pawn is allowed to make a promotion

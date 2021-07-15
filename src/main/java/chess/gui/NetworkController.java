@@ -54,6 +54,7 @@ public class NetworkController extends MainController {
     /**
      * The language is changed in the settings when the Image btnLanguage is pushed
      */
+    @SuppressWarnings("CPD-START")
     @FXML
     void changeLanguage() {
         getGui().getSettings().getSettingsLanguage().changeLanguage();
@@ -70,8 +71,9 @@ public class NetworkController extends MainController {
         ckbxColour.setText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "97")));
         txtIpAddress.setText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "98")));
         btnSubmit.setText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "99")));
-
     }
+    @SuppressWarnings("CPD-END")
+
 
 
     /**

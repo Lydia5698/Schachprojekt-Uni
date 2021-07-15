@@ -47,17 +47,10 @@ public class MainController {
             loader.setLocation(Gui.class.getResource(filename));
             Parent root = loader.load();
             Scene gameScene = new Scene(root);
-            ((MainController) loader.getController()).setGui(gui); //hier noch oberklasse
+            ((MainController) loader.getController()).setGui(gui);
             primaryStage.setScene(gameScene);
             primaryStage.show();
-         /*   primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                public void handle(WindowEvent we) {
-                     // TODO hier save funktion einfügen
-                }
-            });*/
             return loader.getController();
-
-
         } catch (IOException e) {
 
             e.printStackTrace();

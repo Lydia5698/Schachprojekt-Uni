@@ -106,6 +106,7 @@ public class GameChoiceController extends MainController {
     /**
      * The language is changed in the settings when the Image btnLanguage is pushed
      */
+    @SuppressWarnings("CPD-START")
     @FXML
     void changeLanguage() {
         getGui().getSettings().getSettingsLanguage().changeLanguage();
@@ -123,6 +124,8 @@ public class GameChoiceController extends MainController {
         btnChessKI.setText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "12")));
         btnNetwork.setText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "13")));
     }
+    @SuppressWarnings("CPD-END")
+
 
     @Override
     public void setGui(Gui gui) {

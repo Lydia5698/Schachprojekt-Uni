@@ -154,15 +154,52 @@ public class Board {
         // adds the beaten minion to the List beaten
         if (!endCell.isEmpty() && minion.isBlack() == !isBeaten.isBlack()){ //has to be in two steps to avoid nullpointer
             beaten.add(String.valueOf(isBeaten.print_minions()));
+
         }
-        checkCurrentMove(move, minion, promoteTo);
+        if(!startCell.isEmpty()) {
+            if (manuals.checkIfValidMove(startIndex, endIndex, checkerBoard) && manuals.checkMoveMakesNoSelfCheck(startIndex, endIndex, checkerBoard, manuals)) {
+                startCell.setMinion(null);
+                endCell.setMinion(minion);
+                blackIsTurn = !blackIsTurn;
+                if (!settings.isGui_active()) {
+                    System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
+                }
+                checkAndPrintCheckCheckMate(minion);
+                moveList.add(move);
+                manuals.spManuals.promote(endIndex, promoteTo, checkerBoard);
+                allowedMove = true;
+            }
+            // check if special move
+            else if (specialMove(move, startIndex, endIndex)) {
+                //check if in Check
+                checkAndPrintCheckCheckMate(minion);
+                allowedMove = true;
+            }
+            else {
+                printMoveNotAllowed();
+            }
+        }
+        // move is not allowed
+        else {
+            printMoveNotAllowed();
+        }
         if (settings.getSettingsNetwork().isNetwork_active() && allowedMove && blackIsTurn != settings.getSettingsNetwork().isBlack()){
             try {
                 settings.getSettingsNetwork().getConnection().send(move.getStart() + "-" + move.getEnd() + promoteTo);
             } catch (Exception e) {
                 System.out.println (" exception when send");
+
             }
         }
+    }
+
+    private void printMoveNotAllowed() {
+        if (simple && !settings.isGui_active()) {
+            System.out.println("!Move not allowed");
+        } else {
+            System.out.println(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "71")));
+        }
+        allowedMove = false;
     }
 
     private void checkCurrentMove(Move move, Minion minion, String promoteTo) {
@@ -190,7 +227,7 @@ public class Board {
         }
         // move is not allowed
         else {
-            if (simple && !settings.isGui_active()) {
+            if (simple && !getSettings().isGui_active()) {
                 System.out.println("!Move not allowed");
             } else if (!simple) {
                 System.out.println(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "71")));

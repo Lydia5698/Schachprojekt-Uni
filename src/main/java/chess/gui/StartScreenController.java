@@ -68,6 +68,7 @@ public class StartScreenController extends MainController {
     /**
      * The language is changed in the settings when the Image btnLanguage is pushed
      */
+    @SuppressWarnings("CPD-START")
     @FXML
     void changeLanguage() {
         getGui().getSettings().getSettingsLanguage().changeLanguage();
@@ -84,6 +85,7 @@ public class StartScreenController extends MainController {
         btnRules.setText(getGui().getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "02")));
         btnloadGame.setText(getGui().getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "04")));
     }
+    @SuppressWarnings("CPD-END")
 
     @Override
     public void setGui(Gui gui) {
