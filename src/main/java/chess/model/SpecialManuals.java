@@ -52,7 +52,7 @@ public class SpecialManuals {
      * @param victim   CellIndex of the victim
      * @return List of CellIndicies with all the attacker paths without the Knight path
      */
-    private List<CellIndex> attackerPathNoKnight(CellIndex attacker, CellIndex victim) {
+    List<CellIndex> attackerPathNoKnight(CellIndex attacker, CellIndex victim) {
         List<CellIndex> attackerPathNoKnight = new ArrayList<>();
         int diffRow = attacker.getRow() - victim.getRow(); //positiv dann gehen wir nach oben, negativ nach unten (weil wir von oben zählen)
         int diffColumn = attacker.getColumn() - victim.getColumn(); //negativ nach rechts, positiv nach links

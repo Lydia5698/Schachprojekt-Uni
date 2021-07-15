@@ -440,6 +440,46 @@ public class SpecialManualsTest {
         assertTrue(areEqual);
     }
 
+    @Test
+    void attackersPathWhiteRookTest() {
+        Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
+        Move movePawn = new Move("h2-h4"); // Move Pawn E2-E4
+        board.applyMove(movePawn);
+        Move moveBlackPawn = new Move("g7-g5"); //Move D7-D5
+        board.applyMove(moveBlackPawn);
+        movePawn = new Move("h4-g5");
+        board.applyMove(movePawn);
+        moveBlackPawn = new Move("f7-f5");
+        board.applyMove(moveBlackPawn);
+        Move moveRook = new Move("h1-h4"); // Move Bishop F1-B5
+        board.applyMove(moveRook);
+        moveBlackPawn = new Move("f5-f4");
+        board.applyMove(moveBlackPawn);
+        CellIndex rookAttacker = cellIndexFor(moveRook.getEnd()); //(7,4)
+        CellIndex kingVictim = cellIndexFor(moveBlackPawn.getEnd());
+        //get attackers path
+        List<CellIndex> attackerPathBishopKingFromMethod = board.manuals.spManuals.attackerPathNoKnight(rookAttacker, kingVictim);
+        List<CellIndex> attackersPathBishopKing = new ArrayList<>();
+        attackersPathBishopKing.add(rookAttacker);
+        Move move = new Move("g2-g4");
+        attackersPathBishopKing.add(cellIndexFor(move.getEnd()));
+        attackersPathBishopKing.add(kingVictim);
+        boolean sameAttackerCol = attackerPathBishopKingFromMethod.get(0).getColumn() == attackersPathBishopKing.get(0).getColumn();
+        boolean sameAttackerRow = attackerPathBishopKingFromMethod.get(0).getRow() == attackersPathBishopKing.get(0).getRow();
+        boolean sameAttacker = attackerPathBishopKingFromMethod.get(1).getColumn() == attackersPathBishopKing.get(1).getColumn();
+        boolean sameAttackerTwo = attackerPathBishopKingFromMethod.get(1).getRow() == attackersPathBishopKing.get(1).getRow();
+        boolean sameVictimCol = attackerPathBishopKingFromMethod.get(2).getColumn() == attackersPathBishopKing.get(2).getColumn();
+        boolean sameVictimRow = attackerPathBishopKingFromMethod.get(2).getRow() == attackersPathBishopKing.get(2).getRow();
+
+        assertTrue(sameAttackerCol && sameAttackerRow);
+        assertTrue(sameAttacker);
+        assertTrue(sameAttackerTwo);
+        assertTrue(sameVictimCol && sameVictimRow);
+    }
+
+
 
 
 }
