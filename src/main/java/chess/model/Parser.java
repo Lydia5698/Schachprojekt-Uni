@@ -2,10 +2,10 @@ package chess.model;
 
 import chess.gui.Gui;
 import java.io.*;
-import java.util.ArrayList;
 
 /**
  * Parser class to load the chess txt files.
+ * @author Jasmin Wojtkiewicz
  */
 
 public class Parser {
@@ -23,19 +23,14 @@ public class Parser {
             // Open the file
             FileInputStream fileInputStream = new FileInputStream(saved);
             BufferedReader br = new BufferedReader(new InputStreamReader(fileInputStream));
-
             String strLine;
             board.setSettings(gui.getSettings());
-
             Boolean movesOver = false;
 
             //Read File Line By Line
             while ((strLine = br.readLine()) != null)   {
-                // Print the content on the console
-                //System.out.println (strLine);
-                if(strLine.contains("|")){
+                if(strLine.contains("|")){//seperator between moves and settings
                     movesOver = true;
-                    //System.out.println("seperator is here");
                 }
                 if(!movesOver){
                     Move move = new Move(strLine);
@@ -43,7 +38,6 @@ public class Parser {
                     //System.out.println("Made move :" + strLine);
                 }
                 else{
-                    //System.out.println("set settings here for the game");
                     //set settings
                     if(strLine.equals("AI-active t")) {
                         board.getSettings().setAi_active(true);
@@ -57,14 +51,9 @@ public class Parser {
                         board.getSettings().getAi().setTurnNumber(Integer.parseInt(turnnumber));
                     }
                 }
-
-
             }
-            //TODO fuer spaeter : activeGameController.history();
-
             //Close the input stream
             fileInputStream.close();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -81,19 +70,15 @@ public class Parser {
             // Open the file
             FileInputStream fileInputStream = new FileInputStream(saved);
             BufferedReader br = new BufferedReader(new InputStreamReader(fileInputStream));
-
             String strLine;
             board.setSettings(board.getSettings());
-
             Boolean movesOver = false;
 
             //Read File Line By Line
             while ((strLine = br.readLine()) != null)   {
-                // Print the content on the console
-                System.out.println (strLine);
+
                 if(strLine.contains("|")){
                     movesOver = true;
-                    System.out.println("seperator is here");
                 }
                 if(!movesOver){
                     Move move = new Move(strLine);
@@ -101,7 +86,7 @@ public class Parser {
                     System.out.println("Made move :" + strLine);
                 }
                 else{
-                    System.out.println("set settings here for the game");
+                    System.out.println(strLine);
                     //set settings
                     if(strLine.equals("AI-active t")) {
                         board.getSettings().setAi_active(true);
@@ -116,7 +101,6 @@ public class Parser {
                     }
                 }
             }
-
             //Close the input stream
             fileInputStream.close();
         } catch (IOException e) {
@@ -124,7 +108,12 @@ public class Parser {
         }
     }
 
-
+    /**
+     * Saves chess games for the Cli as a txt file.
+     * @param selectedFile is the file with the filename
+     * @param board the chessboard
+     * @param turnNumber the turnnumber of the ai
+     */
     public static void parserSaveCli(File selectedFile, Board board, int turnNumber ){
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(selectedFile)); //Erzeugen eines effizienten Writers für Textdateien
@@ -136,7 +125,6 @@ public class Parser {
             }
             writer.write("|");
             writer.newLine();
-            //TODO: evtl mehr eigenschaften speichern, netzwerkspiel?
             writer.write("AI-active ");
             if(board.settings.isAi_active()){
                 writer.write("t");
@@ -164,9 +152,5 @@ public class Parser {
         catch(IOException ioe) {
             System.err.println(ioe);
         }
-
     }
-
-
-
 }

@@ -3,6 +3,10 @@ package chess.model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class Opening that defines a few chosen common chess openings like the sicilian opening or london opening.
+ * @author Jasmin Wojtkiewicz
+ */
 public class Opening {
     private final int openingNumber;
     private final boolean colour; // = true; // true = black, false = white
@@ -14,12 +18,16 @@ public class Opening {
     private final String[] italianWhite = {"e2-e4", "g1-f3", "f1-c4"};
     private final String[] italianBlack = {"e7-e5", "b8-c6", "f8-e7"};
 
+    /**
+     * Instantiates an Opening with a random chosen opening sequence and a given colour.
+     * @param openingNumber the random number that defines the opening sequence
+     * @param isBlack the colour of the opening
+     */
     public Opening(int openingNumber, boolean isBlack) {
         this.openingNumber = openingNumber;
         this.colour = isBlack;
         generateOpeningMoveList();
     }
-
 
     /**
      * Generates the List of Moves for the opening the AI will try to play.
@@ -33,7 +41,7 @@ public class Opening {
             } else if (openingNumber == 3) {
                 openingMoveList = makeStringArrayToMoveList(italianBlack);
             }
-        } else {
+        } else { //if white
             if (openingNumber == 1) {
                 openingMoveList = makeStringArrayToMoveList(londonOpeningWhite);
             } else if (openingNumber == 2) {
@@ -42,14 +50,13 @@ public class Opening {
                 openingMoveList = makeStringArrayToMoveList(italianWhite);
             }
         }
-        //return openingMoveList;
     }
 
     public List<Move> getOpeningMoveList() {
         return openingMoveList;
     }
 
-    public List<Move> makeStringArrayToMoveList(String[] array) {
+    private List<Move> makeStringArrayToMoveList(String[] array) {
         List<Move> moveList = new ArrayList<>();
         for (String x : array) {
             Move move = new Move(x);
@@ -58,7 +65,4 @@ public class Opening {
         return moveList;
     }
 
-    public int getOpeningNumber() {
-        return openingNumber;
-    }
 }

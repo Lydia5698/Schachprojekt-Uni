@@ -53,6 +53,7 @@ public class Cli {
                 System.out.println(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "66")));
                 try {
                     String inputSetting = brs.readLine();
+                    languageIsTyped(inputSetting);
                     if (isBlackTyped(inputSetting)) {
                         settings.setAi_colour(false);
                         System.out.println(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "67")));
@@ -161,6 +162,7 @@ public class Cli {
     }
 
     private static void makeMoveFromInputAndOutputBeatenFigures(String input, String validInput) {
+        languageIsTyped(input);
         if (input.matches(validInput)) {
             Move move = new Move(input);
             if (manuals.moveOfRightColour(move, board)) {
@@ -367,20 +369,20 @@ public class Cli {
         Boolean loadGame = lGame;
         if (inputSetting.contains("load game")){
             loadGame = true;
-            //TODO: print files in path
+
             System.out.println("Choose one of the following chess games to load by clicking enter before typing in the correct name of the file:");
         }
         else if(inputSetting.contains("Spiel laden")){
             //System.out.println("deutsch spielwahl");
             loadGame = true;
 
-            //TODO: print files in path
+
             System.out.println("Drücke Enter und wähle aus den folgenden Dateien durch Angabe des genauen Dateinamens:");
         }
         else if (inputSetting.contains("lIS")){
             loadGame = true;
 
-            //TODO: print files in path
+
             System.out.println("pa'QIS wa'DIch yI'el je lomqa'Vo'lI tlha'teywI'chegh teQ lI pupSIbI':");
 
         }
