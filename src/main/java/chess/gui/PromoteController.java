@@ -10,9 +10,16 @@ import javafx.stage.Stage;
 import java.util.Objects;
 
 /**
+ * We suppress the CPD rules in this controller because we cannot set the language differently.
+ * We always have to access the buttons directly. We also need the FXML method with onAction. So
+ * when you click on the picture the language changes.
+ *
  * The PromoteController is the Controller for the promote.fxml
  * The player can decide which Minion the Pawn is promote to
+ *
+ *  @author Lydia Günther
  */
+@SuppressWarnings({"PMD.CPD"})
 public class PromoteController extends MainController {
 
     ActiveGameController activeGameController;

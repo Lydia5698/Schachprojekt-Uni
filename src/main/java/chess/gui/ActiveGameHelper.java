@@ -12,8 +12,14 @@ import java.io.IOException;
 import java.util.List;
 
 /**
+ * We suppress the CPD rules in this controller because we cannot set the language differently.
+ * We always have to access the buttons directly. We also need the FXML method with onAction. So
+ * when you click on the picture the language changes.
+ *
  * Makes the moves and has the options for the Gui
+ * @author Lydia Günther
  */
+@SuppressWarnings({"PMD.CPD"})
 public class ActiveGameHelper {
     ActiveGameController activeGameController;
     protected String firstMinionClickedWhite = "";
@@ -62,7 +68,7 @@ public class ActiveGameHelper {
      */
     void checkAndDoMove(String fistField, Move moveNew) {
         // checks if double click is active and the right figure is clicked
-        if (!activeGameController.getGui().getSettings().isDoubleClick() || (firstMinionClickedWhite.equals(fistField)) || firstMinionClickedBlack.equals(fistField)) {
+        if (!activeGameController.getGui().getSettings().isDoubleClick() || firstMinionClickedWhite.equals(fistField) || firstMinionClickedBlack.equals(fistField)) {
             activeGameController.board.applyMove(moveNew);
         } // pops up the popup if the clicked figure isnt the first clicked figure
         else {

@@ -16,9 +16,16 @@ import java.io.IOException;
 import java.util.Objects;
 
 /**
+ * We suppress the CPD rules in this controller because we cannot set the language differently.
+ * We always have to access the buttons directly. We also need the FXML method with onAction. So
+ * when you click on the picture the language changes.
+ *
  * The GameChoiceController is the Controller for the gameChoice.fxml
  * The player can decide which Game(pvp,AI,Network) he wants to play
+ *
+ * @author Lydia Günther
  */
+@SuppressWarnings({"PMD.CPD"})
 public class GameChoiceController extends MainController {
 
 

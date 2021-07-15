@@ -9,6 +9,8 @@ import java.util.Hashtable;
  * to make many methods
 
  * This class has Dictionary for the different Languages
+ *
+ *  @author Lydia Günther
  */
 @SuppressWarnings("PMD.NcssCount")
 public class Language {

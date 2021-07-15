@@ -30,9 +30,14 @@ import java.util.*;
  * We suppress the PMD rules for NcSSCount and CyclomaticComplexity in this case
  * because we don't know how to outsource the switch case method or how to design it differently
  *
- * The Controller for the active game. Where you can see the chessboard
+ * We suppress the CPD rules in this controller because we cannot set the language differently.
+ * We always have to access the buttons directly. We also need the FXML method with onAction. So
+ * when you click on the picture the language changes.
+ *
+ * The Controller for the active game. Where you can see the chessboard.
+ * @author Lydia Günther
  */
-@SuppressWarnings({"PMD.TooManyFields","PMD.NcssCount","PMD.CyclomaticComplexity"})
+@SuppressWarnings({"PMD.TooManyFields","PMD.NcssCount","PMD.CyclomaticComplexity","PMD.CPD"})
 public class ActiveGameController extends MainController {
     protected Board board;
     protected ActiveGameHelper activeGameHelper = new ActiveGameHelper(this);

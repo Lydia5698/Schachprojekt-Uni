@@ -6,6 +6,8 @@ import javafx.scene.control.Alert;
 
 /**
  * Creates all the Popups for the Gui
+ *
+ *  @author Lydia Günther
  */
 public class Popups extends MainController {
     Gui gui;
@@ -23,7 +25,7 @@ public class Popups extends MainController {
         } else {
             alert.setContentText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(gui.getSettings().getSettingsLanguage().getLanguageNumber() + "81")));
         }
-        getGui().settings.setPlayerInCheck(false);
+       gui.getSettings().setPlayerInCheck(false);
         alert.show();
     }
 

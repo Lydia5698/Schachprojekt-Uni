@@ -77,7 +77,7 @@ public class Cli {
         } // bis hier hin normale ausgaben weil --simple false ist
 
         //create ai again
-        String validInput = "[a-h][1-8]-[a-h][1-8]\\D?"; // Sind eingaben nach e2-e4 egal? Also als bsp: e2-e4uiei soll trotzdem den move e2-e4 ausführen?
+        String validInput = "[a-h][1-8]-[a-h][1-8]\\D?";
 
         String output = board.showBoard();
         System.out.println(output);
