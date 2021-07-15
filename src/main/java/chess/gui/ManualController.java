@@ -46,6 +46,7 @@ public class ManualController extends MainController {
     /**
      * The language is changed in the settings when the Image btnLanguage is pushed
      */
+    @SuppressWarnings("CPD-START")
     @FXML
     void changeLanguage() {
         getGui().getSettings().getSettingsLanguage().changeLanguage();
@@ -61,6 +62,7 @@ public class ManualController extends MainController {
         text.setText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "41")));
         title.setText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "42")));
     }
+    @SuppressWarnings("CPD-END")
 
     @Override
     public void setGui(Gui gui) {

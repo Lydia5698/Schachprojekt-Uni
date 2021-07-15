@@ -21,7 +21,6 @@ import java.util.Objects;
  *
  * @author Lydia Günther
  */
-@SuppressWarnings({"PMD.CPD"})
 public class ColourSelectController extends MainController {
 
     @FXML
@@ -70,6 +69,7 @@ public class ColourSelectController extends MainController {
     /**
      * The language is changed in the settings when the Image btnLanguage is pushed
      */
+    @SuppressWarnings("CPD-START")
     @FXML
     void changeLanguage() {
         getGui().getSettings().getSettingsLanguage().changeLanguage();
@@ -85,6 +85,8 @@ public class ColourSelectController extends MainController {
         btnBlack.setText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "61")));
         btnWhite.setText(gui.getSettings().getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(getGui().getSettings().getSettingsLanguage().getLanguageNumber() + "62")));
     }
+    @SuppressWarnings("CPD-END")
+
 
 
     @Override

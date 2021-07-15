@@ -54,4 +54,48 @@ public class BoardTest {
         assertEquals(index.getColumn(),1);
 
     }
+
+    @Test
+    void checkIfCurrentMoveIsValid(){
+        Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
+        Move move = new Move("e2-e4");
+        CellIndex startIndex = Board.cellIndexFor(move.getStart());
+        Cell startCell = board.checkerBoard[startIndex.getRow()][startIndex.getColumn()];
+        Minion startMinion = startCell.getMinion();
+        board.checkCurrentMove(move,startMinion,"");
+        assertTrue(board.isAllowedMove());
+    }
+
+    @Test
+    void checkIfCurrentMoveIsNotValid(){
+        Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
+        Move move = new Move("e1-e5");
+        CellIndex startIndex = Board.cellIndexFor(move.getStart());
+        Cell startCell = board.checkerBoard[startIndex.getRow()][startIndex.getColumn()];
+        Minion startMinion = startCell.getMinion();
+        board.checkCurrentMove(move,startMinion,"");
+        assertFalse(board.isAllowedMove());
+    }
+
+    @Test
+    void checkIfCheck(){
+        Board board = new Board();
+        Settings settings = new Settings();
+        board.setSimple(true);
+        board.setSettings(settings);
+        board.applyMove(new Move("e2-e4"));
+        assertFalse(board.settings.isPlayerInCheck());
+        board.applyMove(new Move("f7-f5"));
+        board.applyMove(new Move("d1-h5"));
+        assertTrue(board.settings.isPlayerInCheck());
+        board.setSimple(false);
+        board.applyMove(new Move("g7-g6"));
+        assertFalse(board.settings.isPlayerInCheck());
+        board.applyMove(new Move("h5-g6"));
+        assertTrue(board.settings.isPlayerInCheck());
+    }
 }

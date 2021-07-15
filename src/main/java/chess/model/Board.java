@@ -154,18 +154,49 @@ public class Board {
         // adds the beaten minion to the List beaten
         if (!endCell.isEmpty() && minion.isBlack() == !isBeaten.isBlack()){ //has to be in two steps to avoid nullpointer
             beaten.add(String.valueOf(isBeaten.print_minions()));
+
         }
-        checkCurrentMove(move, minion, promoteTo);
+        if(!startCell.isEmpty()) {
+            checkCurrentMove(move, minion,promoteTo);
+        }
+        // move is not allowed
+        else {
+            printMoveNotAllowed();
+        }
         if (settings.getSettingsNetwork().isNetwork_active() && allowedMove && blackIsTurn != settings.getSettingsNetwork().isBlack()){
             try {
                 settings.getSettingsNetwork().getConnection().send(move.getStart() + "-" + move.getEnd() + promoteTo);
             } catch (Exception e) {
                 System.out.println (" exception when send");
+
             }
         }
     }
 
-    private void checkCurrentMove(Move move, Minion minion, String promoteTo) {
+    /**
+     * prints Move not allowed. When simple and Gui isnt active it only prints !Move not allowed. When not simple it prints
+     * in the correct language
+     */
+    private void printMoveNotAllowed() {
+        if (simple && !settings.isGui_active()) {
+            System.out.println("!Move not allowed");
+        }
+        if(!settings.isGui_active()){
+            System.out.println(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "71")));
+        }
+        else {
+            allowedMove = false;
+        }
+        allowedMove = false;
+    }
+
+    /**
+     * checks the current move if its valid, makes no self check or is a special moves
+     * @param move the current move
+     * @param minion the minion of the start Cell
+     * @param promoteTo the promotion letter
+     */
+    void checkCurrentMove(Move move, Minion minion, String promoteTo) {
         CellIndex startIndex = cellIndexFor(move.getStart());
         CellIndex endIndex = cellIndexFor(move.getEnd());
         Cell startCell = checkerBoard[startIndex.getRow()][startIndex.getColumn()];
@@ -190,12 +221,7 @@ public class Board {
         }
         // move is not allowed
         else {
-            if (simple && !settings.isGui_active()) {
-                System.out.println("!Move not allowed");
-            } else if (!simple) {
-                System.out.println(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "71")));
-            }
-            allowedMove = false;
+            printMoveNotAllowed();
         }
     }
 
@@ -294,36 +320,29 @@ public class Board {
      */
     protected void checkAndPrintCheckCheckMate(Minion minion) {
         if (manuals.isCheck(!(minion.isBlack()), checkerBoard, manuals)) {
-            if(simple){
-                settings.setPlayerInCheck(true);
-
-            }
-            else {
+            if (!simple) {
                 System.out.println("!" + settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "82")));
-
             }
+            settings.setPlayerInCheck(true);
 
+        }
+        else {
+            settings.setPlayerInCheck(false);
         }
         //check if in Check Mate
         if (manuals.checkMate(!(minion.isBlack()), checkerBoard, manuals)) {
-            if(simple){
-                settings.setPlayerInCheck(true);
-
-            }
-            else {
+            if (!simple) {
                 System.out.println("!" + settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "92")));
                 System.out.println(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "93")));
             }
+            settings.setPlayerInCheck(true);
 
         } else if (staleMate.isStaleMate(!minion.isBlack(), checkerBoard)) {
-            if(simple){
-                settings.setPlayerInCheck(true);
-
-            }
-            else {
+            if (!simple) {
                 System.out.println("!" + settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "94")));
                 System.out.println(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "93")));
             }
+            settings.setPlayerInCheck(true);
             settings.setGameEnd(true);
         }
 
