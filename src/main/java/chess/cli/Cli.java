@@ -123,7 +123,12 @@ public class Cli {
                 }
                 else if(saveGame){
                     File selectedFile = new File("src/" + input);    //creates a new file instance
-                    Parser.parserSaveCli(selectedFile, board, ai.turnNumber);
+                    if(ai != null){
+                        Parser.parserSaveCli(selectedFile, board, ai.turnNumber);
+                    }else{
+                        Parser.parserSaveCli(selectedFile, board, 0);
+                    }
+
                 }
             } catch (IOException e) {
                 e.printStackTrace();
