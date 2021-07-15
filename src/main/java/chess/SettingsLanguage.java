@@ -2,6 +2,8 @@ package chess;
 
 /**
  * The settingsLanguage is the settings class for the language
+ *
+ *  @author Lydia Günther
  */
 public class SettingsLanguage {
     protected boolean languageGerman = false;

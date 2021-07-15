@@ -11,9 +11,16 @@ import java.io.IOException;
 import java.util.Objects;
 
 /**
+ * We suppress the CPD rules in this controller because we cannot set the language differently.
+ * We always have to access the buttons directly. We also need the FXML method with onAction. So
+ * when you click on the picture the language changes.
+ *
  * The StartScreenController is the Controller for the startScreen.fxml
  * The first Stage where the player can access the rules or the game choice
+ *
+ *  @author Lydia Günther
  */
+@SuppressWarnings({"PMD.CPD"})
 public class StartScreenController extends MainController {
     //Popups popups = new Popups(getGui());
 

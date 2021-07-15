@@ -6,6 +6,8 @@ import javafx.scene.control.Alert;
 
 /**
  * Creates all the Popups for the Gui
+ *
+ *  @author Lydia Günther
  */
 public class Popups extends MainController {
     Gui gui;

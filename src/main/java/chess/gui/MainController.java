@@ -9,6 +9,7 @@ import java.io.IOException;
 
 /**
  * The MainController has the methode to show the FXML and sets the Gui
+ *  @author Lydia Günther
  */
 public class MainController {
     private String promoteTo;

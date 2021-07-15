@@ -10,8 +10,15 @@ import java.util.Objects;
 import java.util.function.UnaryOperator;
 
 /**
+ * We suppress the CPD rules in this controller because we cannot set the language differently.
+ * We always have to access the buttons directly. We also need the FXML method with onAction. So
+ * when you click on the picture the language changes.
+ *
  * The Controller for the network game. You need to host or join a Game to see the chessboard
+ *
+ *  @author Lydia Günther
  */
+@SuppressWarnings({"PMD.CPD"})
 public class NetworkController extends MainController {
     private static final String ipAddressRegex = makePartialIPRegex();
 

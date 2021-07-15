@@ -7,6 +7,8 @@ import javafx.stage.Stage;
 
 /**
  * Starting point of the JavaFX GUI
+ *
+ *  @author Lydia Günther
  */
 public class Gui extends Application {
 

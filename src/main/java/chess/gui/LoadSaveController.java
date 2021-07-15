@@ -13,7 +13,9 @@ import chess.model.Parser;
 import static chess.gui.MainController.show_FXML;
 
 /**
+ *
  * Controller class for loading and saving games.
+ *  @author Lydia Günther
  */
 
 public class LoadSaveController {

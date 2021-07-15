@@ -14,6 +14,8 @@ import javafx.application.Platform;
  * already split the settings.
  *
  * The settingsNetwork is the settings class for the network
+ *
+ *  @author Lydia Günther
  */
 @SuppressWarnings("PMD.TooManyFields")
 public class SettingsNetwork{

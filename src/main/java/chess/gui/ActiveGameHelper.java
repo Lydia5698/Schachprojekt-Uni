@@ -12,8 +12,14 @@ import java.io.IOException;
 import java.util.List;
 
 /**
+ * We suppress the CPD rules in this controller because we cannot set the language differently.
+ * We always have to access the buttons directly. We also need the FXML method with onAction. So
+ * when you click on the picture the language changes.
+ *
  * Makes the moves and has the options for the Gui
+ * @author Lydia Günther
  */
+@SuppressWarnings({"PMD.CPD"})
 public class ActiveGameHelper {
     ActiveGameController activeGameController;
     protected String firstMinionClickedWhite = "";

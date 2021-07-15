@@ -129,16 +129,16 @@ public class ManualsTest {
         move = new Move("e7-e5"); // Move Pawn E7-E5
         board.applyMove(move);
         move = new Move("d8-h4"); // Move Queen D8-H4
-        CellIndex startIndex = cellIndexFor(move.getStart());
         CellIndex endIndex = cellIndexFor(move.getEnd());
+        CellIndex startIndex = cellIndexFor(move.getStart());
         Cell startCell = board.checkerBoard[startIndex.getRow()][startIndex.getColumn()];
         Cell endCell = board.checkerBoard[endIndex.getRow()][endIndex.getColumn()];
         Minion minion = startCell.getMinion();
         startCell.setMinion(null);
         endCell.setMinion(minion);
-        CellIndex kingIndex = board.manuals.coordinatesKing(false, board.checkerBoard);
         List<CellIndex> attackersIndex = board.manuals.getAttackersAsIndexList(false, board.checkerBoard);
         CellIndex attackerIndex = attackersIndex.get(0);
+        CellIndex kingIndex = board.manuals.coordinatesKing(false, board.checkerBoard);
         List<CellIndex> attackerPath = board.manuals.spManuals.attackerPath(attackerIndex, kingIndex);
         boolean canProtect = board.manuals.checkIfPieceCanProtectTheOwnKing(board.checkerBoard, attackerPath, false);
         assertFalse(canProtect);

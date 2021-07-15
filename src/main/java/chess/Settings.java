@@ -12,6 +12,8 @@ import chess.model.Board;
  *  don't have too many fields in the other classes.
  *
  * The Settings for the Gui and the Cli
+ *
+ *  @author Lydia Günther
  */
 @SuppressWarnings("PMD.TooManyFields")
 public class Settings {
