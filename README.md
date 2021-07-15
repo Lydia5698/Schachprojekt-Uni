@@ -6,13 +6,12 @@ Bedienungsanleitung Schach Gruppe 38
 Dieses Schachspiel befindet sich noch in der Entwicklungsphase.
 Dies bedeutet, dass die Funktionalität rudimentär ist und entsprechend auf die Grundfunktionen beschränkt ist.
 Bitte genau an die im Folgenden beschriebenen Handlungsanweisungen, um fehlverhalten Seitens des Programms zu vermeiden.
-2.	CMD Interface: Nach Starten des Programms mit dem Argument `--no-gui`
+2.	Cl-Interface: Nach Starten des Programms mit dem Argument `--no-gui`
 Gelangt man in den AuswahlModus, hier kann zwischen KI oder Mensch gewählt werden. Außerdem kann man ein spiel geladen und jederzeit gespeichert werden und man 
 kann durchgehen die Sprache ändern.
 
   2.1 `KI`
-  wenn ki eingegeben wird startet das Spiel gegen die Ki. Zunächst musst du dir deine Farbe aussuchen und dann startet das Spiel und die Ki macht ihren Zug, wenn
-  sie dran ist
+  wenn ki eingegeben wird startet das Spiel gegen die Ki. Zunächst musst du dir deine Farbe aussuchen und dann startet das Spiel und die Ki macht ihren Zug, wenn sie dran ist
 
   2.2 `Mensch`
   wenn mensch eingegeben wird startet ein normales Spiel. Das heißt, man spielt in diesem Fall gegen eine andere Person lokal an seinem Computer.
