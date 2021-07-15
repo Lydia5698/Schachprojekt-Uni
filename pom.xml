@@ -181,10 +181,11 @@
                 </reportSets>
                 <configuration>
                     <excludes>
-                        <!-- Ignore GUI classes for coverage -->
+                        <!-- Ignore GUI, CLI, Network classes for coverage -->
                         <exclude>chess/cli/**/*</exclude>
                         <exclude>chess/gui/**/*</exclude>
                         <exclude>chess/Main.class</exclude>
+                        <exclude>chess/network/**/*</exclude>
                     </excludes>
                 </configuration>
             </plugin>
