@@ -62,13 +62,11 @@ public class StaleMate {
     //method, welche moves ok sind fuer ein piece
     public List<Pair> possibleMovesForOneFigure(CellIndex cellIndex, Cell[][] checkerBoard) {
         List<Pair> possibleMoves = new ArrayList<>();
-        Cell cell = checkerBoard[cellIndex.getRow()][cellIndex.getColumn()];
-        Minion minion = cell.getMinion();
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
                 CellIndex end = new CellIndex(row, col);
                 //check if move is legal
-                if (minion.validMove(cellIndex, end) && checkLegalMove(cellIndex, end, manuals, checkerBoard)) {
+                if (manuals.checkIfValidMove(cellIndex,end,checkerBoard) && checkLegalMove(cellIndex, end, manuals, checkerBoard)) {
                     //check ifLegalMove
                     Pair pair = new Pair<>(cellIndex, end);
                     possibleMoves.add(pair);
