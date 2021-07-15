@@ -1,21 +1,21 @@
 package chess.model;
 
 import chess.Settings;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+/**
+ * Test class to test the parser functions for the Cli.
+ * @author Jasmin Wojtkiewicz
+ */
 
 class ParserTest {
 
     @Test
     void parserLoadCli() {
-
-
     }
 
     @Test
@@ -78,15 +78,8 @@ class ParserTest {
         AI ai = new AI(true);
         List<Move> openingMoveL = ai.aiOpening.getOpeningMoveList();
         //make moves
-        List<String> ml = new ArrayList<>();
-        ml.add("e2-e4");
-        ml.add(openingMoveL.get(0).getStart()+"-"+openingMoveL.get(0).getEnd());
-        ai.increaseTurnNumber();
-        ml.add("g1-f3");
-        ml.add(openingMoveL.get(1).getStart()+"-"+openingMoveL.get(1).getEnd());
-        ai.increaseTurnNumber();
-        ml.add("f1-c4");
-        for(String m:ml){
+        String[] mla = {"e2-e4",openingMoveL.get(0).getStart()+"-"+openingMoveL.get(0).getEnd(),"g1-f3", openingMoveL.get(1).getStart()+"-"+openingMoveL.get(1).getEnd(), "f1-c4"};
+        for(String m:mla){
             Move mov = new Move(m);
             bo.applyMove(mov);
         }
@@ -94,7 +87,6 @@ class ParserTest {
         settings.setAi_active(true);
         settings.setAi_colour(true);
         ai.setTurnNumber(2);
-        bo.setSettings(settings);
         //save file
         File selectedFile = new File("src/testFileAI.txt");    //creates a new file instance
         Parser.parserSaveCli(selectedFile, bo, ai.turnNumber);
@@ -103,16 +95,11 @@ class ParserTest {
             FileInputStream fileInputStream = new FileInputStream(selectedFile);
             BufferedReader br = new BufferedReader(new InputStreamReader(fileInputStream));
             String strLine;
-            bo.setSettings(bo.getSettings());
             int counter=0;
-
             //Read File Line By Line
             while ((strLine = br.readLine()) != null)   {
-                if(counter<ml.size()){
-                    Assertions.assertTrue(ml.get(counter).contains(strLine));
-                }
-                else if(strLine.contains("|")){
-                    assertTrue(strLine.contains("|"));
+                if(counter< mla.length){
+                    assertTrue(mla[counter].contains(strLine));
                 }
                 else if(strLine.contains("AI-active")||strLine.contains("AI-colour")){
                     String[] splitI = strLine.split(" ");
@@ -120,7 +107,7 @@ class ParserTest {
                     if(splitI[1].contains("t")){
                         bool = true;
                     }
-                    assertEquals(bo.getSettings().isAi_active(), bool);
+                    assertTrue(bool);
                 }
                 else if(strLine.contains("AI-turnnumber")){
                     String[] splitI = strLine.split(" ");

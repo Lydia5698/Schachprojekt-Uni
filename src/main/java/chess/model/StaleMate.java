@@ -1,6 +1,5 @@
 package chess.model;
 
-import chess.model.figures.Minion;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
