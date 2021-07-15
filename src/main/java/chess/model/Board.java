@@ -157,27 +157,7 @@ public class Board {
 
         }
         if(!startCell.isEmpty()) {
-            if (manuals.checkIfValidMove(startIndex, endIndex, checkerBoard) && manuals.checkMoveMakesNoSelfCheck(startIndex, endIndex, checkerBoard, manuals)) {
-                startCell.setMinion(null);
-                endCell.setMinion(minion);
-                blackIsTurn = !blackIsTurn;
-                if (!settings.isGui_active()) {
-                    System.out.print("!" + move.getStart() + "-" + move.getEnd() + "\n");
-                }
-                checkAndPrintCheckCheckMate(minion);
-                moveList.add(move);
-                manuals.spManuals.promote(endIndex, promoteTo, checkerBoard);
-                allowedMove = true;
-            }
-            // check if special move
-            else if (specialMove(move, startIndex, endIndex)) {
-                //check if in Check
-                checkAndPrintCheckCheckMate(minion);
-                allowedMove = true;
-            }
-            else {
-                printMoveNotAllowed();
-            }
+            checkCurrentMove(move, minion,promoteTo);
         }
         // move is not allowed
         else {
@@ -227,12 +207,7 @@ public class Board {
         }
         // move is not allowed
         else {
-            if (simple && !getSettings().isGui_active()) {
-                System.out.println("!Move not allowed");
-            } else if (!simple) {
-                System.out.println(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "71")));
-            }
-            allowedMove = false;
+            printMoveNotAllowed();
         }
     }
 
