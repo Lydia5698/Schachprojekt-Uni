@@ -7,21 +7,22 @@ import java.util.List;
 import chess.model.figures.*;
 
 /**
- * Class AI that represents our artificiall intelligence that should be able to make a next move.
+ * Class AI that represents our artificial intelligence that should be able to make a next move.
  *
  * @author Jasmin Wojtkiewicz
  */
 
 public class AI {
     public int openingNumber = randomOpeningNumber();
-    public boolean colourIsBlack;// = false;
+    public boolean colourIsBlack;//  false = white;
     public int turnNumber = 0;
-    List<Move> moveList = new ArrayList<>();
     Opening aiOpening;
     Move move;
 
-
-    //constructor without input
+    /**
+     * Constructor that creates an instance of the ai with a certain colour and a randomly chosen opening sequence.
+     * @param colourIsBlack
+     */
     public AI(boolean colourIsBlack) {
         this.colourIsBlack = colourIsBlack;
         this.aiOpening = new Opening(openingNumber, colourIsBlack);
@@ -56,21 +57,15 @@ public class AI {
     public Move getNextMove(Board board) {
         List<Move> moveListOpening = aiOpening.getOpeningMoveList();
         List<Move> moveListPossible = possibleNextMoves(board);
-        Boolean noRandomMove = false;
-
         List<Move> takeMoveList = takesMove(moveListPossible, board);
         Move moveT = takeMoveList.get(0);
         String end = moveT.getEnd();
         if (!(end.equals("test"))) {
             //good move here~
-            //System.out.println("ai makes a veryyyy good move"); //TODO delete this line later
             move = moveT;
             return move;
-
         }
-        //gem move from openingList (place move integer) if exists
         else if (turnNumber < moveListOpening.size()) {
-            //System.out.println("ai opening turn number: " + turnNumber);
             //List<Move> moveList = aiOpening.getOpeningMoveList();
             move = moveListOpening.get(turnNumber);
             //make cellIndex start and cellindex end from move
@@ -80,30 +75,21 @@ public class AI {
             // make cell for cellindex start for getting the minion on this field
             Cell[][] checkerBoard = board.getCheckerBoard();
             Cell startCelle = checkerBoard[startCell.getRow()][startCell.getColumn()];
-            Minion minion = startCelle.getMinion(); //TODO minion darf nicht empty sein
-            //TODO check here if legal move, oly return legal moves!!!!!
-            if (!startCelle.isEmpty()){
-                if (minion.validMove(startCell, endCell) && board.staleMate.checkLegalMove(startCell, endCell, board.manuals, checkerBoard) && !(startCell.getRow() == endCell.getRow() && startCell.getColumn() == endCell.getColumn())) {
-                    //System.out.println("legal move check for move from openingsequence was succsessful");
-                    return move;
-                }
+            Minion minion = startCelle.getMinion();
+
+            if (!startCelle.isEmpty() && minion.validMove(startCell, endCell) && board.staleMate.checkLegalMove(startCell, endCell, board.manuals, checkerBoard) && !(startCell.getRow() == endCell.getRow() && startCell.getColumn() == endCell.getColumn())) {
+                return move;
             }
         }
-        //get move if it is possible to take
-        if(!noRandomMove){ //random move is in this else //TODO: remove bug else if geht er rein, aber wenn dann kein ergebnis kommt, dann geht er nicht mehr in die nachfolgende else
-            int number = generateRandomInteger(moveListPossible.size(), 0);
-            //System.out.println("random move number: " + number);
-            if(number < moveListPossible.size()) {
-                move = moveListPossible.get(number);
-            } else { //TODO check for check mate and stalemate!
-                move = moveListPossible.get(0);
-            }
+        //random move is in this part
+        int number = generateRandomInteger(moveListPossible.size(), 0);
+        if(number < moveListPossible.size()) {
+            move = moveListPossible.get(number);
+        } else {
+            move = moveListPossible.get(0);
         }
-        //generate random possible move
-        //System.out.println("this ai is playing: " );
         return move;
     }
-
 
     public int getTurnNumber() {
         return turnNumber;
@@ -119,30 +105,15 @@ public class AI {
         turnNumber = turnNumber + 1;
     }
 
-
     /**
      * Generates List of possible Moves for the ai
      *
      * @param board the current board with the current checkerBoard
      * @return list with all possible moves for the ai
      */
-    // possible next move
     public List<Move> possibleNextMoves(Board board) {
-        // make list of all moves
-        //System.out.println(colourIsBlack);
-        //System.out.println(board.showBoard());
-        //TODO get random move
         return board.staleMate.possibleMoveList(colourIsBlack, board.checkerBoard, board.getMoveList());
     }
-
-    public boolean isColourIsBlack() {
-        return colourIsBlack;
-    }
-
-    public void setColourIsBlack(boolean colourIsBlack) {
-        this.colourIsBlack = colourIsBlack;
-    }
-// possible next move that can take (dev: first step: take random piece, sec step: take piece with highest value
 
     /**
      * Looks for the move that captures pieces of the enemy in a list of moves. Please only give this method
@@ -166,8 +137,6 @@ public class AI {
         int min = -1;
         for (Move move : moveList) { // check every move if it is possible to take a figure and give it a score according to figure
             // check if last field is with piece
-            //String endField = move.getEnd();
-
             CellIndex endIndex = Board.cellIndexFor(move.getEnd());
             Cell endCell = board.checkerBoard[endIndex.getRow()][endIndex.getColumn()];
 
@@ -178,17 +147,10 @@ public class AI {
                 if (val > min) {
                     min = val;
                     bestMove = move;
-                    //System.out.println("best Move is :" + bestMove.getStart() + "-" + bestMove.getEnd());
-
                 }
-                //score move with number in hashmap /sorted map
             }
         }
         takesMoveList.add(bestMove);
-        //sort moves in hashmap or so, (add all remaining moves)
-
         return takesMoveList;
     }
-
-
 }
