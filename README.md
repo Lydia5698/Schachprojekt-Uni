@@ -6,13 +6,12 @@ Bedienungsanleitung Schach Gruppe 38
 Dieses Schachspiel befindet sich noch in der Entwicklungsphase.
 Dies bedeutet, dass die Funktionalität rudimentär ist und entsprechend auf die Grundfunktionen beschränkt ist.
 Bitte genau an die im Folgenden beschriebenen Handlungsanweisungen, um fehlverhalten Seitens des Programms zu vermeiden.
-2.	CMD Interface: Nach Starten des Programms mit dem Argument `--no-gui`
+2.	Cl-Interface: Nach Starten des Programms mit dem Argument `--no-gui`
 Gelangt man in den AuswahlModus, hier kann zwischen KI oder Mensch gewählt werden. Außerdem kann man ein spiel geladen und jederzeit gespeichert werden und man 
 kann durchgehen die Sprache ändern.
 
   2.1 `KI`
-  wenn ki eingegeben wird startet das Spiel gegen die Ki. Zunächst musst du dir deine Farbe aussuchen und dann startet das Spiel und die Ki macht ihren Zug, wenn
-  sie dran ist
+  wenn ki eingegeben wird startet das Spiel gegen die Ki. Zunächst musst du dir deine Farbe aussuchen und dann startet das Spiel und die Ki macht ihren Zug, wenn sie dran ist
 
   2.2 `Mensch`
   wenn mensch eingegeben wird startet ein normales Spiel. Das heißt, man spielt in diesem Fall gegen eine andere Person lokal an seinem Computer.
@@ -27,6 +26,10 @@ kann durchgehen die Sprache ändern.
   2.5 `Sprachen`
   Zur Auswahl stehen Englisch, Deutsch und Klingonisch. Um die Sprachen zu wechseln musst du entweder deutsch, englisch oder klinonisch eingeben. Danach sind
   alle ausgaben in dieser Sprache
+
+  2.6 `Geschlagene Figuren`
+  Wenn beaten eingegeben wird, wird eine Liste aller geschlagenen Figuren ausgegeben. Die Figuren werden der Reihe nach ausgegeben das heißt, dass die älteste
+  geschlagene Figur ganz am Anfang steht.
 
 Folgend die Symbole der Figuren: 
 Anmerkung: große Buchstaben für Weiße Figuren / kleine Buchstaben für schwarze Figuren
