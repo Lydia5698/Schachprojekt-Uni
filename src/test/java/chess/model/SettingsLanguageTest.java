@@ -17,11 +17,32 @@ class SettingsLanguageTest {
     }
 
     @Test
-    void ChangeLanguage(){
+    void ChangeLanguageToGerman(){
         Settings settings = new Settings();
         settings.getSettingsLanguage().changeLanguage();
         assertTrue(settings.getSettingsLanguage().isLanguageGerman());
         assertFalse(settings.getSettingsLanguage().isLanguageKlingon());
+        assertFalse(settings.getSettingsLanguage().isLanguageEnglish());
+    }
+
+    @Test
+    void ChangeLanguageToEnglish(){
+        Settings settings = new Settings();
+        settings.getSettingsLanguage().changeLanguage();
+        settings.getSettingsLanguage().changeLanguage();
+        settings.getSettingsLanguage().changeLanguage();
+        assertFalse(settings.getSettingsLanguage().isLanguageGerman());
+        assertFalse(settings.getSettingsLanguage().isLanguageKlingon());
+        assertTrue(settings.getSettingsLanguage().isLanguageEnglish());
+    }
+
+    @Test
+    void ChangeLanguageToKlingon(){
+        Settings settings = new Settings();
+        settings.getSettingsLanguage().changeLanguage();
+        settings.getSettingsLanguage().changeLanguage();
+        assertFalse(settings.getSettingsLanguage().isLanguageGerman());
+        assertTrue(settings.getSettingsLanguage().isLanguageKlingon());
         assertFalse(settings.getSettingsLanguage().isLanguageEnglish());
     }
 }
