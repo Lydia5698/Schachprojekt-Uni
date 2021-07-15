@@ -27,6 +27,10 @@ kann durchgehen die Sprache ändern.
   Zur Auswahl stehen Englisch, Deutsch und Klingonisch. Um die Sprachen zu wechseln musst du entweder deutsch, englisch oder klinonisch eingeben. Danach sind
   alle ausgaben in dieser Sprache
 
+  2.6 `Geschlagene Figuren`
+  Wenn beaten eingegeben wird, wird eine Liste aller geschlagenen Figuren ausgegeben. Die Figuren werden der Reihe nach ausgegeben das heißt, dass die älteste
+  geschlagene Figur ganz am Anfang steht.
+
 Folgend die Symbole der Figuren: 
 Anmerkung: große Buchstaben für Weiße Figuren / kleine Buchstaben für schwarze Figuren
 Bauern		(Pawn):		„P“
