@@ -9,8 +9,8 @@ import chess.model.*;
 import java.io.*;
 import java.util.Arrays;
 
-
-//@SuppressWarnings({"PMD.CyclomaticComplexity"})
+//CyclomaticComplexity for the whole class is 80.
+@SuppressWarnings({"PMD.CyclomaticComplexity"})
 
 /**
  * Starting point of the console game
@@ -149,9 +149,7 @@ public class Cli {
                     File selectedFile = new File("src/" + input);    //creates a new file instance
                     Parser.parserSaveCli(selectedFile, board, ai.turnNumber);
                 }
-                else {
-                    System.out.println(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "76")));
-                }
+
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -177,6 +175,8 @@ public class Cli {
                 beatenString = String.join(",", beatenString, beatenMinion);
             }
             System.out.println(beatenString);
+        }else {
+            System.out.println(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "76")));
         }
     }
 
