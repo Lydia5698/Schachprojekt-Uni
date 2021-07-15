@@ -6,14 +6,14 @@ import chess.model.Board;
 
 
 /**
- *  We are suppressing the PMD in this one, because we have 13 Fields this is 4 Fields above the Requirement.
- *  To avoid the too Many Fields PMD we have to create another class and this would be too confusing, because we
- *  already split the settings. And we would have to put all new settings in these settings so that we
- *  don't have too many fields in the other classes.
- *
+ * We are suppressing the PMD in this one, because we have 13 Fields this is 4 Fields above the Requirement.
+ * To avoid the too Many Fields PMD we have to create another class and this would be too confusing, because we
+ * already split the settings. And we would have to put all new settings in these settings so that we
+ * don't have too many fields in the other classes.
+ * <p>
  * The Settings for the Gui and the Cli
  *
- *  @author Lydia Günther
+ * @author Lydia Günther
  */
 @SuppressWarnings("PMD.TooManyFields")
 public class Settings {
@@ -108,7 +108,6 @@ public class Settings {
     }
 
 
-
     public boolean isGui_active() {
         return gui_active;
     }
@@ -133,22 +132,29 @@ public class Settings {
         this.gameEnd = gameEnd;
     }
 
-
+    /**
+     * Getter for settingsNetwork
+     *
+     * @return settings for network-game
+     */
     public SettingsNetwork getSettingsNetwork() {
         return settingsNetwork;
     }
+
     public void setSettingsNetwork(SettingsNetwork settingsNetwork) {
         this.settingsNetwork = settingsNetwork;
     }
+
     public SettingsLanguage getSettingsLanguage() {
         return settingsLanguage;
     }
 
     /**
      * sets the active Game Controller
+     *
      * @param activeGameController the current activeGameController
      */
-    public void setActiveGameController(ActiveGameController activeGameController){
+    public void setActiveGameController(ActiveGameController activeGameController) {
         this.settingsNetwork.setActiveGameController(activeGameController);
     }
 
