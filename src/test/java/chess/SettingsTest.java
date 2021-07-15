@@ -5,13 +5,32 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * tests the SettingsLanguage class. Sets the Dictionary and checks if the entry is the right one
+ * Tests the settings
  */
-class SettingsLanguageTest {
+class SettingsTest {
 
     @Test
-    void LanguageTest(){
+    void setSettings(){
         Settings settings = new Settings();
-        assertEquals("Chess", settings.getSettingsLanguage().getLanguage().getDic().get(100));
+        settings.setGui_active(true);
+        settings.setDoubleClick(true);
+        settings.setRotateBoard(true);
+        settings.setCheckVisible(true);
+        settings.setHighlightPossibleMoves(true);
+        settings.setGameEnd(true);
+        settings.setAi_active(true);
+        settings.setAi_colour(true);
+        settings.setPlayerInCheck(true);
+
+        assertTrue(settings.isGui_active());
+        assertTrue(settings.isDoubleClick());
+        assertTrue(settings.isRotateBoard());
+        assertTrue(settings.isCheckVisible());
+        assertTrue(settings.isHighlightPossibleMoves());
+        assertTrue(settings.isGameEnd());
+        assertTrue(settings.isAi_active());
+        assertTrue(settings.isAi_colour());
+        assertTrue(settings.isPlayerInCheck());
     }
+
 }

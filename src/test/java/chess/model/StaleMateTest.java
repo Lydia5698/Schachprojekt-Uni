@@ -32,34 +32,20 @@ public class StaleMateTest {
         board.applyMove(new Move("a7-a5"));
         board.applyMove(new Move("d1-h5"));
         board.applyMove(new Move("a8-a6"));
-        move = new Move("h5-a5");
-        board.applyMove(move);
-        move = new Move("h7-h5");
-        board.applyMove(move);
-        move = new Move("a5-c7");
-        board.applyMove(move);
-        move = new Move("a6-h6");
-        board.applyMove(move);
-        move = new Move("h2-h4");
-        board.applyMove(move);
-        move = new Move("f7-f6");
-        board.applyMove(move);
-        move = new Move("c7-d7");
-        board.applyMove(move);
-        move = new Move("e8-f7");
-        board.applyMove(move);
-        move = new Move("d7-b7");
-        board.applyMove(move);
-        move = new Move("d8-d3");
-        board.applyMove(move);
-        move = new Move("b7-b8");
-        board.applyMove(move);
-        move = new Move("d3-h7");
-        board.applyMove(move);
-        move = new Move("b8-c8");
-        board.applyMove(move);
-        move = new Move("f7-g6");
-        board.applyMove(move);
+        board.applyMove(new Move("h5-a5"));
+        board.applyMove(new Move("h7-h5"));
+        board.applyMove(new Move("a5-c7"));
+        board.applyMove(new Move("a6-h6"));
+        board.applyMove(new Move("h2-h4"));
+        board.applyMove(new Move("f7-f6"));
+        board.applyMove(new Move("c7-d7"));
+        board.applyMove(new Move("e8-f7"));
+        board.applyMove(new Move("d7-b7"));
+        board.applyMove(new Move("d8-d3"));
+        board.applyMove(new Move("b7-b8"));
+        board.applyMove(new Move("d3-h7"));
+        board.applyMove(new Move("b8-c8"));
+        board.applyMove(new Move("f7-g6"));
         move = new Move("c8-e6");
         board.applyMove(move);//white piece(isBlack = false)
         assertTrue(staleMate.isStaleMate(true, board.getCheckerBoard()));//black(true) team stalemate?
@@ -113,5 +99,24 @@ public class StaleMateTest {
         assertEquals(possibleMovesFromMethod.get(0).getEnd(), moveSecond.getEnd());
         assertEquals(possibleMovesFromMethod.get(1).getStart(), moveFirst.getStart());
         assertEquals(possibleMovesFromMethod.get(1).getEnd(), moveFirst.getEnd());
+    }
+
+    @Test
+    void attackerPathPawn() {
+        Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
+        Move moveFirst = new Move("e2-e4");
+        board.applyMove(moveFirst);
+        Move moveSecond = new Move("f7-f5");
+        board.applyMove(moveSecond);
+        CellIndex victim = cellIndexFor(moveSecond.getEnd());
+        CellIndex attacker = cellIndexFor(moveFirst.getEnd());
+        List<CellIndex> attackerPath;
+        attackerPath = board.manuals.spManuals.attackerPath(attacker,victim);
+        assertEquals(attackerPath.get(0).getColumn(), attacker.getColumn());
+        assertEquals(attackerPath.get(0).getRow(), attacker.getRow());
+        assertEquals(attackerPath.get(1).getColumn(), victim.getColumn());
+        assertEquals(attackerPath.get(1).getRow(), victim.getRow());
     }
 }

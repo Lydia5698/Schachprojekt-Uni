@@ -71,7 +71,7 @@ public class NetwChessProtocol {
         } else if (status == Wait) {
             if (white && workingInput.equals("black")) {
                 status = OutputMSG;
-            } else if (!white && workingInput.equals(("white"))) {
+            } else if (!white && workingInput.equals("white")) {
                 status = stillWait;
             }
         } else if (status == stillWait) {

@@ -62,7 +62,7 @@ public class ActiveGameHelper {
      */
     void checkAndDoMove(String fistField, Move moveNew) {
         // checks if double click is active and the right figure is clicked
-        if (!activeGameController.getGui().getSettings().isDoubleClick() || ((firstMinionClickedWhite.equals(fistField)) || firstMinionClickedBlack.equals(fistField))) {
+        if (!activeGameController.getGui().getSettings().isDoubleClick() || (firstMinionClickedWhite.equals(fistField)) || firstMinionClickedBlack.equals(fistField)) {
             activeGameController.board.applyMove(moveNew);
         } // pops up the popup if the clicked figure isnt the first clicked figure
         else {
@@ -135,7 +135,7 @@ public class ActiveGameHelper {
         CellIndex startIndex = new CellIndex(startRow, startCol);
         activeGameController.getChessBoard().getChildren().removeIf(node -> node instanceof Rectangle && ((Rectangle) node).getFill().equals(Paint.valueOf("#ff6347")));
         if (activeGameController.getNodeByCoordinate(startRow, startCol) instanceof ImageView && !activeGameController.board.getCheckerBoard()[startRow][startCol].isEmpty()) {
-            List<Move> possibleMoves = (activeGameController.board.staleMate.possibleMovesForOneFigureMoveList(startIndex, activeGameController.board.getCheckerBoard(), activeGameController.board.getMoveList()));
+            List<Move> possibleMoves = activeGameController.board.staleMate.possibleMovesForOneFigureMoveList(startIndex, activeGameController.board.getCheckerBoard(), activeGameController.board.getMoveList());
 
             for (Move move : possibleMoves) {
                 String s = "abcdefgh";

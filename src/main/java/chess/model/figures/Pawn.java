@@ -39,7 +39,7 @@ public class Pawn extends Minion {
         int diffRow = startIndex.getRow() - endIndex.getRow();
         int diffColumn = startIndex.getColumn() - endIndex.getColumn();
         //one field
-        if ((diffColumn == 0 && diffRow == 1 && !black) || (diffColumn == 0 && diffRow == -1 && black)) {
+        if (diffColumn == 0 && diffRow == 1 && !black || diffColumn == 0 && diffRow == -1 && black) {
             return true;
         }
         //two fields if first move (check start row)

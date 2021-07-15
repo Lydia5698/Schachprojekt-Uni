@@ -25,7 +25,7 @@ public class SpecialManuals {
     }
 
     /**
-     * All Atackers
+     * Gets all the Attackers for a victim
      *
      * @param attacker CellIndex of the attacker
      * @param victim   CellIndex of the victim
