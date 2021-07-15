@@ -39,9 +39,6 @@ public class Language {
         dic.put(202, "Anleitung");
         dic.put(203, "Flags/Klingon.png");
         dic.put(204, "Spiel laden");
-        // Cli Network
-        dic.put(205, "Wenn du einem Spiel beitreten möchtest, tippe 'join'. Wenn du ein Spiel hosten möchtest, tippe 'host' ");
-        dic.put(206, "Bitte gib die IP-Addresse ein, der du joinen möchtest");
         // GameChoice
         dic.put(210, "Wähle eine Spielart aus");
         dic.put(211, "Normales Spiel");
@@ -142,9 +139,6 @@ public class Language {
         dic.put(102, "Manual");
         dic.put(103, "Flags/GermanFlag.png");
         dic.put(104, "Load Game");
-        // Cli Network
-        dic.put(105, "If you want to join a game, type 'join'. If you want to host a game, type 'host' ");
-        dic.put(106, "Please enter the IP address you want to join");
         // GameChoice
         dic.put(110, "Choose your Game");
         dic.put(111, "PvP");
@@ -205,7 +199,7 @@ public class Language {
         dic.put(168, "You play white, the ai plays black.");
         dic.put(169, "Please choose a colour.");
         // move not allowed
-        dic.put(170, "Move Not Allowed");
+        dic.put(170, "Move not allowed");
         dic.put(171, "The Move you just made is not allowed.");
         // AI Cli
         dic.put(172, "AI moves: ");
