@@ -173,16 +173,30 @@ public class Board {
         }
     }
 
+    /**
+     * prints Move not allowed. When simple and Gui isnt active it only prints !Move not allowed. When not simple it prints
+     * in the correct language
+     */
     private void printMoveNotAllowed() {
         if (simple && !settings.isGui_active()) {
             System.out.println("!Move not allowed");
-        } else {
+        }
+        if(!settings.isGui_active()){
             System.out.println(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "71")));
+        }
+        else {
+            allowedMove = false;
         }
         allowedMove = false;
     }
 
-    private void checkCurrentMove(Move move, Minion minion, String promoteTo) {
+    /**
+     * checks the current move if its valid, makes no self check or is a special moves
+     * @param move the current move
+     * @param minion the minion of the start Cell
+     * @param promoteTo the promotion letter
+     */
+    void checkCurrentMove(Move move, Minion minion, String promoteTo) {
         CellIndex startIndex = cellIndexFor(move.getStart());
         CellIndex endIndex = cellIndexFor(move.getEnd());
         Cell startCell = checkerBoard[startIndex.getRow()][startIndex.getColumn()];

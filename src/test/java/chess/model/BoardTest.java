@@ -54,4 +54,30 @@ public class BoardTest {
         assertEquals(index.getColumn(),1);
 
     }
+
+    @Test
+    void checkIfCurrentMoveIsValid(){
+        Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
+        Move move = new Move("e2-e4");
+        CellIndex startIndex = Board.cellIndexFor(move.getStart());
+        Cell startCell = board.checkerBoard[startIndex.getRow()][startIndex.getColumn()];
+        Minion startMinion = startCell.getMinion();
+        board.checkCurrentMove(move,startMinion,"");
+        assertTrue(board.isAllowedMove());
+    }
+
+    @Test
+    void checkIfCurrentMoveIsNotValid(){
+        Board board = new Board();
+        Settings settings = new Settings();
+        board.setSettings(settings);
+        Move move = new Move("e1-e5");
+        CellIndex startIndex = Board.cellIndexFor(move.getStart());
+        Cell startCell = board.checkerBoard[startIndex.getRow()][startIndex.getColumn()];
+        Minion startMinion = startCell.getMinion();
+        board.checkCurrentMove(move,startMinion,"");
+        assertFalse(board.isAllowedMove());
+    }
 }
