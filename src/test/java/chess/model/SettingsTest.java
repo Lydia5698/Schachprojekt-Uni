@@ -1,5 +1,6 @@
-package chess;
+package chess.model;
 
+import chess.Settings;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
