@@ -1,19 +1,16 @@
 package chess.cli;
 
-
-//import chess.gui.Gui;
-
 import chess.Settings;
 import chess.model.*;
 
 import java.io.*;
 import java.util.Arrays;
 
-//CyclomaticComplexity for the whole class is 80.
+//CyclomaticComplexity for the whole class is 80 and it would be very unnecessary to make a new class for the reduction below 80.
 @SuppressWarnings({"PMD.CyclomaticComplexity"})
 
 /**
- * Starting point of the console game
+ * Starting point of the console game.
  *
  * @author Jasmin Wojtkiewicz
  */
@@ -23,13 +20,7 @@ public class Cli {
     protected static Settings settings = new Settings();
     protected static AI ai;
     static boolean inAISettingsMode = false;
-    //static boolean inNetworkSettingsMode = false;
-    //private static String languageNumber;
 
-
-    //protected boolean inSettingsMode = true;
-    // protected AI ai = new AI(); //TODO later integrate this bit
-    //TODO !!!! aufruf mit --simple und der gui sollte funktionieren, noch eine if einbauen
     //TODO Testcoverage
 
 
@@ -89,7 +80,7 @@ public class Cli {
 
     private static boolean isWhiteTyped(String inputSetting){
         Boolean whiteIsTyped = false;
-        if(inputSetting.matches("white")||inputSetting.matches("weiß")||inputSetting.matches("chIS")){
+        if(inputSetting.matches("white")||inputSetting.matches("weiss")||inputSetting.matches("chIS")){
             whiteIsTyped=true;
         }
         return whiteIsTyped;
@@ -116,22 +107,6 @@ public class Cli {
         if (isInputTurn()) {
             try {
                 String input = br.readLine();
-                /*if (input.matches(validInput)) {
-                    Move move = new Move(input);
-                    if (manuals.moveOfRightColour(move, board)) {
-                        board.applyMove(move);
-                        System.out.println(board.showBoard());
-                    } else {
-                        System.out.println("!" + settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "70")));
-                    }
-                } else if (input.equals("beaten")) {
-                    String beatenString = "Beaten Figures";
-                    for (String beatenMinion : board.getBeaten()) {
-                        beatenString = String.join(",", beatenString, beatenMinion);
-                    }
-                    System.out.println(beatenString);
-                }*/
-
                 makeMoveFromInputAndOutputBeatenFigures(input, validInput);
 
                 if(input.contains("save game")){
@@ -150,12 +125,8 @@ public class Cli {
                     File selectedFile = new File("src/" + input);    //creates a new file instance
                     Parser.parserSaveCli(selectedFile, board, ai.turnNumber);
                 }
-
-
             } catch (IOException e) {
                 e.printStackTrace();
-                //break; //TODO: prüfe, ob man den break braucht
-
             }
         }
         return saveGame;
@@ -181,22 +152,6 @@ public class Cli {
             System.out.println(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "76")));
         }
     }
-
-    /*private static boolean savingGame(String input, boolean saveGame){
-        if(input.contains("save game")){
-            saveGame = true;
-            System.out.println("Type a file name:");
-        }
-        else if(input.contains("Spiel speichern")){
-            saveGame = true;
-            System.out.println("Gib einen Dateinamen ein:");
-        }
-        else if (input.contains("choq")){
-            saveGame = true;
-            System.out.println("'enlIl 'enlIl");
-        }
-        return saveGame;
-    }*/
 
     private static boolean isGermanTyped(String inputSetting){
         boolean germanTyped=false;
@@ -239,77 +194,8 @@ public class Cli {
                 inSettingsMode = playerModeIsTyped(inputSetting, inSettingsMode);
                 loadGame=loadingGame(inputSetting, loadGame);
 
-                /*else if (inputSetting.contains("load game")){
-                    loadGame = true;
-
-                    //TODO: print files in path
-                    System.out.println("Choose one of the following chess games to load by clicking enter before typing in the correct name of the file:");
-
-                    File folder = new File("src");
-                    File[] listOfFiles = folder.listFiles();
-
-                    for (File file: listOfFiles) {
-                        if (file.isFile() && file.getName().endsWith(".txt")) {
-                            System.out.println(file.getName());
-                        }
-                    }
-
-                }
-                else{
-                    inSettingsMode=loadingGame(inputSetting, loadGame, inSettingsMode);
-                }
-                else if(inputSetting.contains("Spiel laden")){
-                    //System.out.println("deutsch spielwahl");
-                    loadGame = true;
-
-                    //TODO: print files in path
-                    System.out.println("Drücke Enter und wähle aus den folgenden Dateien durch Angabe des genauen Dateinamens:");
-
-                    File folder = new File("src");
-                    File[] listOfFiles = folder.listFiles();
-
-                    for (File file: listOfFiles) {
-                        if (file.isFile() && file.getName().endsWith(".txt")) {
-                            System.out.println(file.getName());
-                        }
-                    }
-                }
-                else if (inputSetting.contains("lIS")){
-                    loadGame = true;
-
-                    //TODO: print files in path
-                    System.out.println("pa'QIS wa'DIch yI'el je lomqa'Vo'lI tlha'teywI'chegh teQ lI pupSIbI':");
-
-                    File folder = new File("src");
-                    File[] listOfFiles = folder.listFiles();
-
-                    for (File file: listOfFiles) {
-                        if (file.isFile() && file.getName().endsWith(".txt")) {
-                            System.out.println(file.getName());
-                        }
-                    }
-
-                }
-                else if(loadGame) {
-                    File file = new File("src/" + brs.readLine());
-                    System.out.println("file was read, now give it to parser");
-                    Parser.parserLoadCli(file, board);
-                    System.out.println("file was parsed");
-                    loadGame = false;
-                    if(board.getSettings().isAi_active()){
-                        ai = board.getSettings().getAi();
-                    }
-                    //System.out.println(board.showBoard());
-                    inSettingsMode = false;
-                }
-                else {
-                    //wait
-                    System.out.println(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "65")));
-                }*/
-
-
                 if(inputSetting.contains("txt")){
-                    File file = new File("src/" + inputSetting); //TODO: vielleicht durch inputSettingsersetzbar
+                    File file = new File("src/" + inputSetting);
                     System.out.println("file was read, now give it to parser");
                     Parser.parserLoadCli(file, board);
                     System.out.println("file was parsed");
@@ -370,14 +256,13 @@ public class Cli {
         if (inputSetting.contains("load game")){
             loadGame = true;
 
-            System.out.println("Choose one of the following chess games to load by clicking enter before typing in the correct name of the file:");
+            System.out.println("Choose one of the following chess games to load by typing in the correct name of the file and clicking enter:");
         }
         else if(inputSetting.contains("Spiel laden")){
-            //System.out.println("deutsch spielwahl");
             loadGame = true;
 
 
-            System.out.println("Drücke Enter und wähle aus den folgenden Dateien durch Angabe des genauen Dateinamens:");
+            System.out.println("Waehle aus den folgenden Dateien durch Angabe des genauen Dateinamens und druecke enter:");
         }
         else if (inputSetting.contains("lIS")){
             loadGame = true;
