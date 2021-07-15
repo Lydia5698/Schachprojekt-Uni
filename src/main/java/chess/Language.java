@@ -84,6 +84,11 @@ public class Language {
                 "Die andere Person muss dem Spiel beitreten und wird dann weiß spielen.\n" +
                 "Außerdem muss der Spieler die IP-Addresse des Gegners eintagen." + "\n" +
                 "\n" +
+                "Spiel Laden\n"+
+                "Um ein Spiel zu laden, musst du auf den Button Spiel laden klicken. Danach öffnet sich dein Datei-Explorer und du kannst eine zuvor gespeicherte Datei laden.\n"+
+                "Save Game\n"+
+                "Um ein Spiel zu speichern musst du während des Spiels auf die Diskette neben der Flagge klicken. Danach wird dein Datei-Explorer geöffnet und du kannst dir aussuchen,\n " +
+                "wie die Datei heißen und wo sie gespeichert werden soll. Um das Spiel später auch auserhalb der Gui starten zu können muss der vorgeählte Ordner zum speichern ausgewählt werden.\n"+
                 "Dieses Schachspiel folgt den Allgemeinen Regeln des deutschen Schachbundes."); // Anleitung Text
         dic.put(242, "Anleitung");
         // promote
@@ -93,13 +98,13 @@ public class Language {
         dic.put(261, "Schwarz");
         dic.put(262, "Weiß");
         //Cli colour Select
-        dic.put(263, "Du befindest dich im Einstellungsmenü. Um die Sprache zu ändern, gib 'deutsch', 'klingonisch' oder 'englisch' ein, wenn du das Menü verlassen möchtest, gib 'exit' ein. Aber zuerst musst du dich entscheiden.");
-        dic.put(264, "Willst du gegen einen Menschen spielen, tippe 'mensch', willst gegen eine KI spielen, tippe 'ki', möchtest du übers Netzwerk spielen, tippe 'netzwerk':");
-        dic.put(265, "Bitte überprüfe deine Eingabe");
-        dic.put(266, "Welche Farbe möchtest du Spielen?, 'schwarz' or 'weiß'?");
-        dic.put(267, "Du spielst schwarz, die KI wird weiß spielen.");
+        dic.put(263, "Du befindest dich im Einstellungsmenue. Um die Sprache zu aendern, gib 'deutsch', 'klingonisch' oder 'englisch' ein, wenn du das Menue verlassen möchtest, gib 'exit' ein. Aber zuerst musst du dich entscheiden.");
+        dic.put(264, "Willst du gegen einen Menschen spielen, tippe 'mensch', willst gegen eine KI spielen, tippe 'ki', möchtest du uebers Netzwerk spielen, tippe 'netzwerk':");
+        dic.put(265, "Bitte ueberprüfe deine Eingabe");
+        dic.put(266, "Welche Farbe moechtest du Spielen?, 'schwarz' or 'weiss'?");
+        dic.put(267, "Du spielst schwarz, die KI wird weiss spielen.");
         dic.put(268, "Du spielst weiß, die KI wird schwarz spielen.");
-        dic.put(269, "Bitte wähle eine Farbe.");
+        dic.put(269, "Bitte waehle eine Farbe.");
         // move not allowed
         dic.put(270, "Dieser Zug ist nicht erlaubt");
         dic.put(271, "Dieser Zug ist nicht erlaubt");
@@ -107,8 +112,8 @@ public class Language {
         dic.put(272, "Die KI zieht: ");
         dic.put(273, "Gib einen Zug ein");
         dic.put(274, " für Schwarz\n");
-        dic.put(275, " für Weiß\n");
-        dic.put(276, "!Ungültiger Zug");
+        dic.put(275, " für Weiss\n");
+        dic.put(276, "!Ungueltiger Zug");
         // check
         dic.put(280, "Schwarz steht im Schach");
         dic.put(281, "Weiß steht im Schach");
@@ -184,6 +189,11 @@ public class Language {
                 "The other person has to join the game and will then play white.\n" +
                 "In addition, the player must enter the opponent's IP address." + "\n" +
                 "\n" +
+                "Load Game\n"+
+                "To load a game, click the Load Game button. Your file explorer will then open and you can load a previously saved file.\n"+
+                "Save Game\n"+
+                "To save a game you have to click on the floppy disk next to the flag during the game. Then your file explorer will open and you can choose what the file should be called and where it will be saved.\n" +
+                "In order to be able to start the game later outside of the GUI, the preselected folder needs to be selected.\n"+
                 "This chess game follows the general rules of the German Chess Federation."); // Anleitung Text
         dic.put(142, "Manual");
         // promote
@@ -194,7 +204,7 @@ public class Language {
         dic.put(162, "White");
         //Cli colour Select
         dic.put(163, "You are in the settings menu. To change the Language type 'german', 'klingon' or 'english' if you want to exit the menu type 'exit'. If you want to save a game type 'save game'. But first you have to choose.");
-        dic.put(164, "Do you want to play against a human, type 'human', want to play against an ai, type 'ai', want to play over the network, type 'network':");
+        dic.put(164, "Do you want to play against a human, type 'human', want to play against an ai, type 'ai':");
         dic.put(165, "Please correct your input");
         dic.put(166, "What colour do you want to play, 'black' or 'white'?");
         dic.put(167, "You play black, the ai plays white.");
@@ -278,6 +288,10 @@ public class Language {
                 "ngaghwI'na' Dechbogh qo'mey puS. law'ta' ropmo' qechmaj boQ'a' neH.\n" +
                 "QuvvamDaq QottaHghach mIw wIje'laHbe'. latlh lut vIlaD. jagh Datuqchugh vaj mu'mey Dalo'taHvIS" + "\n" +
                 "\n" +
+                "QI'yaH\n"+
+                "ghIlghameSvaD jatlh ghogh DapIHmoHchugh, vaj ghIlghameS chaq nIvpu'+ \\ bogh yablIj wanI'meyvam'e'.\n"+
+                "qeylIS mInDu'\n"+
+                "wo'Daq janvam chovutqa' wIje'meH matlhong wIneH. 'ej chaw'lIjvaD yap nIvqu' chaw'r upchu'.\n ghIlghameSvaD jatlh QOrwI'pu' lutu'lu' 'e' vIpIH.\n"+
                 "ghIlghameSvaD ghIlghameS 'e' chaw' ghIlghameS"); // Anleitung Text
         dic.put(342, "ghojmoH");
         // promote
