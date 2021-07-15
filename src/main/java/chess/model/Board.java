@@ -293,19 +293,37 @@ public class Board {
      * @param minion the Minion, that is moving in applyMove
      */
     protected void checkAndPrintCheckCheckMate(Minion minion) {
-        if (manuals.isCheck(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
-            System.out.println("!" + settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "82")));
-            settings.setPlayerInCheck(true);
+        if (manuals.isCheck(!(minion.isBlack()), checkerBoard, manuals)) {
+            if(simple){
+                settings.setPlayerInCheck(true);
+
+            }
+            else {
+                System.out.println("!" + settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "82")));
+
+            }
 
         }
         //check if in Check Mate
-        if (manuals.checkMate(!(minion.isBlack()), checkerBoard, manuals) && !simple) {
-            System.out.println("!" + settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "92")));
-            System.out.println(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "93")));
-            settings.setGameEnd(true);
-        } else if (staleMate.isStaleMate(!minion.isBlack(), checkerBoard) && !simple) {
-            System.out.println("!" + settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "94")));
-            System.out.println(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "93")));
+        if (manuals.checkMate(!(minion.isBlack()), checkerBoard, manuals)) {
+            if(simple){
+                settings.setPlayerInCheck(true);
+
+            }
+            else {
+                System.out.println("!" + settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "92")));
+                System.out.println(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "93")));
+            }
+
+        } else if (staleMate.isStaleMate(!minion.isBlack(), checkerBoard)) {
+            if(simple){
+                settings.setPlayerInCheck(true);
+
+            }
+            else {
+                System.out.println("!" + settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "94")));
+                System.out.println(settings.getSettingsLanguage().getLanguage().getDic().get(Integer.parseInt(settings.getSettingsLanguage().getLanguageNumber() + "93")));
+            }
             settings.setGameEnd(true);
         }
 
